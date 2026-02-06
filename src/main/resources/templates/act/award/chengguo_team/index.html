@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12" style="height: 80px;">
+            <iframe id="fujianCommit" style="height: auto; width: 100%;"
+                    frameborder='0' scrolling="yes"
+                    th:src="@{/chengguo_info/commit_review_btn?(proId=${proId},procInsId=${procInsId},validateType=team)}"></iframe>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#basic-1" aria-expanded="true"> 基本情况</a></li>
+                    <li class=""><a data-toggle="tab" href="#basic-2" aria-expanded="false">人员构成</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-3">团队标志性成果</a></li>
+
+                    <li class=""><a data-toggle="tab" href="#basic-6" aria-expanded="false">支持单位情况</a></li>
+                    <!--<li class=""><a data-toggle="tab" href="#basic-7" aria-expanded="false">附件列表</a> </li>-->
+
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-8">发表论文专著情况</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-9">学术交流情况</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-10">所获知识产权和技术标准情况</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-11">团队承担项目情况</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-12">第三方评价</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-13">团队曾获科技奖励情况</a></li>
+<!--                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-14">团队合作情况汇总表</a></li>-->
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-15">主要成员情况带头人</a></li>
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-16">主要成员情况-其他主要成员</a></li>
+
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-18"
+                                    onclick="againload('basic-18')">团队简介</a></li>
+
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-19"
+                                    onclick="againload('basic-19')">主要科技成就发展情况</a></li>
+
+                    <li class=""><a aria-expanded="false" data-toggle="tab" href="#basic-17">附件列表</a></li>
+
+
+                </ul>
+                <div class="tab-content">
+                    <div id="basic-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <iframe id="fujianBase" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_team/base_info_add?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div id="basic-2" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujianMembers" style="height: 450px; width: 100%;" frameborder='0'
+                                    scrolling="yes"
+                                    th:src="@{/chengguo_team/members?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div id="basic-3" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujianInfoEdit" style="height: 450px; width: 100%;" frameborder='0'
+                                    scrolling="yes"
+                                    th:src="@{/enterpriseTeam/toAchievementsList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div id="basic-6" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujianSupportCompany" style="height: 450px; width: 100%;" frameborder='0'
+                                    scrolling="yes"
+                                    th:src="@{/system/enterpriTeamSupportCompany/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <!--<div id="basic-7" class="tab-pane">-->
+                    <!--<div class="panel-body">-->
+                    <!--<iframe id="fujian" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"-->
+                    <!--th:src="@{/system/enterpriTeamEnclosureList/toList?(proId=${proId},taskId=${taskId},applyId=${applyId})}"></iframe>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="tab-pane" id="basic-8">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="paperFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamPaperInfo/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-9">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="achaexchangeFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamAcademicExchange/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-10">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="intellectPropertyFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamIntellectualProperty/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pane" id="basic-11">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="intellectualProFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamProjectInfo/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-12">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="evaluateFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamEvaluateOther/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-13">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="teamAwardFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamGetTechAward/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-14">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="teamCooperationFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamCooperation/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-15">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="teamLeaderFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamLeaderInfo/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-16">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="teamOtherMainFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/cpe/enterpriTeamOtherMain/toList?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="basic-17">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="attachmentFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/chengguo_team/toUploadTeamFile?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-18">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="teamProfileFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/chengguo_team/team_intrduction?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="basic-19">
+                        <div class="panel-body">
+                            <iframe frameborder='0' id="mainAchieveFrame" scrolling="yes"
+                                    style="height: 450px; width: 100%;"
+                                    th:src="@{/chengguo_team/major_achievement_dev?(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+
+</body>
+
+<script>
+    var basic18 = true;
+    var basic19 = true;
+
+    function againload(e) {
+        var Number = e.substring(e.length - 2);
+        if (Number == 18) {
+            if (basic18) {
+                var src = $("#" + e + " iframe").attr("src");
+                $("#" + e + " iframe").attr("src", src);
+                basic18 = false;
+            }
+        } else if (Number == 19) {
+            if (basic19) {
+                var src = $("#" + e + " iframe").attr("src");
+                $("#" + e + " iframe").attr("src", src);
+                basic19 = false;
+            }
+        }
+    }
+</script>
+</html>

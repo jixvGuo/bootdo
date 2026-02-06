@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<link href="/css/semantic/semantic.min.css" rel="stylesheet">
+
+<body class="gray-bg">
+<div class="ui container">
+    <div class="ui attached segment">
+        <form class="ui form">
+            <input id="taskId" name="taskId" type="hidden" th:value="${taskId}">
+            <input id="proIds" name="proIds" type="hidden">
+
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>专业范围</label>
+                    <div class="ui selection dropdown" id="awardTypeMenu">
+                        <input type="hidden" name="awardType" id="awardType" value="">
+                        <i class="dropdown icon"></i>
+                        <div class="default text" id="reward">专业范围</div>
+                        <div class="menu">
+                            <div class="item" data-value="管理">管理</div>
+                            <div class="item" data-value="管理类">管理类</div>
+                            <div class="item" data-value="监理">监理</div>
+                            <div class="item" data-value="监理、管理">监理、管理</div>
+                            <div class="item" data-value="勘察设计">勘察设计</div>
+                            <div class="item" data-value="施工">施工</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>协会外聘人员</label>
+                    <div class="ui selection dropdown" id="asWorkerMenu">
+                        <input type="hidden" name="asWorkerName" id="asWorkerName" value="">
+                        <i class="dropdown icon"></i>
+                        <div class="default text" id="outside_ass">协会外聘人员</div>
+                        <div class="menu" id="externalMenu">
+                            <div class='item' th:each="obj:${assWorkers}" th:data-value="${obj.username}" th:text="${obj.name}"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="ui wide grid">
+        <div class="seven wide column">
+            <div class="ui red segment">
+                <table class="ui selectable celled table">
+                    <thead id="leftthead">
+                    <tr>
+                        <th>
+                            <div class="ui fitted checkbox">
+                                <input type="checkbox">
+                                <label></label>
+                            </div>
+                        </th>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>企业名称</th>
+                        <th>专业</th>
+                    </tr>
+                    </thead>
+                    <tbody id="lefttbody">
+                    <tr th:each=" externalList: ${noAssignList}">
+                        <td name="option">
+                            <div class="ui fitted checkbox">
+                                <input type="checkbox">
+                                <label></label>
+                            </div>
+                        </td>
+                        <td th:text="${externalList.id}"></td>
+                        <td th:text="${externalList.taskName}"></td>
+                        <td th:text="${externalList.enterpriseName}"></td>
+                        <td th:text="${externalList.major}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="two wide column">
+            <div class="ui red segment">
+                <button class="ui fluid green basic button mini icon" onclick="leftbutton()"><i
+                        class="angle double left icon"></i></button>
+                <br>
+                <br>
+                <button class="ui fluid green basic button mini icon" onclick="rightbutton()"><i
+                        class="angle double right icon"></i></button>
+            </div>
+        </div>
+        <div class="seven wide column">
+            <div class="ui red segment">
+                <table class="ui selectable celled table">
+                    <thead id="rightthead">
+                    <tr>
+                        <th>
+                            <div class="ui fitted checkbox">
+                                <input type="checkbox">
+                                <label></label>
+                            </div>
+                        </th>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>企业名称</th>
+                        <th>专业</th>
+                    </tr>
+
+
+                    </thead>
+                    <tbody id="righttbody">
+                    <tr th:each=" externalList: ${assignList}">
+                        <td name="option">
+                            <div class="ui fitted checkbox">
+                                <input type="checkbox">
+                                <label></label>
+                            </div>
+                        </td>
+                        <input type="hidden" name="proId" th:value="${externalList.id}" />
+                        <td id="external" th:text="${externalList.serNum}"></td>
+                        <td th:text="${externalList.taskName}"></td>
+                        <td th:text="${externalList.enterpriseName}"></td>
+                        <td th:text="${externalList.major}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="ui basic center aligned segment">
+        <button class="ui button" type="submit" onclick="assignPro()">完成分配</button>
+        <div class="ui modal">
+            <div class="ui inverted segment">
+                <h2 class="ui center aligned icon header">
+                    <i class="check icon"></i>
+                    <div class="content">成功</div>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="firstWorkerName" th:value="${firstWorkerName}"/>
+<div th:include="include::footer"></div>
+
+<script type="text/javascript" src="/js/semantic/semantic.min.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/qcCheckAssignment/qc_assign_pro.js?v=1.0"></script>
+
+<script type="text/javascript">
+
+    $("#awardTypeMenu").dropdown({
+        onChange: (value, text, $choice) => {
+            console.log("---->awardTypeMenu ",value, text, $choice);
+            var asWorkerName = $("#asWorkerName").val();
+            $.ajax({
+                url:'/qcProcess/queryAssignPro',
+                type: "POST",
+                data:{
+                    asWorkerName: asWorkerName,
+                    major: value,
+                    awardType:'qc_group',
+                    taskId: $("#taskId").val()
+                },
+                success:function (data) {
+                    console.log("=awardTypeMenu====>data=", data);
+                    initSelContion(data.noAssignList, 'lefttbody', 'leftthead');
+                    initSelContion(data.assignList, 'righttbody', 'rightthead');
+                }
+            });
+        }
+    });
+    $('#asWorkerMenu').dropdown({
+        onChange: (value, text, $choice) => {
+            console.log("---->asWorkerMenu ",value, text, $choice);
+            var major = $("#awardType").val();
+            $.ajax({
+                url:'/qcProcess/queryAssignPro',
+                type: "POST",
+                data:{
+                    asWorkerName: value,
+                    major: major,
+                    awardType:'qc_group',
+                    taskId: $("#taskId").val()
+                },
+                success:function (data) {
+                    console.log("==asWorkerMenu===>data=", data);
+                    initSelContion(data.noAssignList, 'lefttbody', 'leftthead');
+                    initSelContion(data.assignList, 'righttbody', 'rightthead');
+                }
+            });
+        }
+    });
+
+    function initSelContion(proList, tbodyId, headId){
+        var trStr = "";
+        for (var i = 0; i < proList.length; i++) {
+            var obj = proList[i];
+            trStr += "<tr> " +
+                "                        <td name=\"option\"> " +
+                "                            <div class=\"ui fitted checkbox\"> " +
+                "                                <input type=\"checkbox\"> " +
+                "                                <label></label> " +
+                "                            </div> " +
+                "                        </td> " +
+                " <input type='hidden' name='proId' value='" + obj.id + "' />" +
+                "                        <td>" + obj.serNum + "</td> " +
+                "                        <td>" + obj.taskName + "</td> " +
+                "                        <td>" + obj.enterpriseName + "</td> " +
+                "                        <td>" + obj.major + "</td> " +
+                "                    </tr>";
+        }
+
+
+        $("#" + tbodyId).html(trStr);
+
+        $('#' + headId).click(function (e) {
+            if ($(this).find("input").is(':checked')) {
+                $('#lefttbody').find(".checkbox").checkbox('check');
+            } else {
+                $('#lefttbody').find(".checkbox").checkbox('uncheck');
+            }
+        });
+    }
+
+    $("#externalMenu").parent().dropdown('set selected', $("#firstWorkerName").val());
+    $("#awardType").parent().dropdown('set selected', 'science');
+
+    $('#leftthead').click(function (e) {
+        if ($(this).find("input").is(':checked')) {
+            $('#lefttbody').find(".checkbox").checkbox('check');
+        } else {
+            $('#lefttbody').find(".checkbox").checkbox('uncheck');
+        }
+    });
+
+    $('#rightthead').click(function (e) {
+        if ($(this).find("input").is(':checked')) {
+            $('#righttbody').find(".checkbox").checkbox('check');
+        } else {
+            $('#righttbody').find(".checkbox").checkbox('uncheck');
+        }
+    });
+
+    $('tbody').click(function (e) {
+        $(this).find('tr').each(function () {
+            if ($(this).find("input").is(':checked')) {
+                $(this).css("background-color", "#C0C0C0");
+            } else {
+                $(this).css("background-color", "");
+            }
+        });
+    });
+
+    function leftbutton() {
+        $('#righttbody tr').each(function () {
+            if ($(this).find("input").is(':checked')) {
+                $('#lefttbody').append(
+                    $(this)
+                );
+                $(this).find("input").removeAttr('checked');
+                $(this).css("background-color", "");
+            }
+        });
+    }
+
+    function rightbutton() {
+        $('#lefttbody tr').each(function () {
+            if ($(this).find("input").is(':checked')) {
+                $('#righttbody').append(
+                    $(this)
+                );
+                $(this).find("input").removeAttr('checked');
+                $(this).css("background-color", "");
+            }
+        });
+    }
+
+    function complete() {
+        $('.ui.modal').modal('show');
+        //$('.ui.field').addClass("disabled");
+        $('button').addClass("disabled");
+    }
+
+</script>
+
+</body>
+</html>

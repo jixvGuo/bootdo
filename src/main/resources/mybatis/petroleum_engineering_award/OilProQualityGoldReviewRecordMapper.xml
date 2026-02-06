@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.OilProQualityGoldReviewRecordDao">
+
+	<select id="get" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProQualityGoldReviewRecordDO">
+		select `id`,`pro_desc_is`,`apply_tabel_is`,`confirm_file_is`,`video_file_is`,`innovate_sum_is`,`confirm_cover_is`,`commitment_is`,`catalog_is`,`busi_license_is`,`approval_file_is`,`build_file_is`,`contract_is`,`certificate_is`,`completed_file_is`,`check_file_is`,`audit_repor_is`,`no_quality_is`,`bureau_level_engin_is`,`bureau_level_design_is`,`sign_contract_is`,`other_quality_is`,`out_confirm_cover_is`,`out_commitment_is`,`out_catalog_is`,`out_busi_license_is`,`out_contract_license_is`,`out_build_file_is`,`out_build_stand_is`,`out_check_file_is`,`out_use_opinion_is`,`out_book_opinion_is`,`out_bureau_level_engin_is`,`out_bureau_level_design_is`,`out_no_quality_is`,`out_other_quality_is`,`out_contributor_is`,`review_result`,`opinion_desc`,`created`,`updated`,`opt_uid`,`pro_id`,`task_id`,`apply_id` from ass_oil_pro_quality_gold_review_record where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProQualityGoldReviewRecordDO">
+		select `id`,`pro_desc_is`,`apply_tabel_is`,`confirm_file_is`,`video_file_is`,`innovate_sum_is`,`confirm_cover_is`,`commitment_is`,`catalog_is`,`busi_license_is`,`approval_file_is`,`build_file_is`,`contract_is`,`certificate_is`,`completed_file_is`,`check_file_is`,`audit_repor_is`,`no_quality_is`,`bureau_level_engin_is`,`bureau_level_design_is`,`sign_contract_is`,`other_quality_is`,`out_confirm_cover_is`,`out_commitment_is`,`out_catalog_is`,`out_busi_license_is`,`out_contract_license_is`,`out_build_file_is`,`out_build_stand_is`,`out_check_file_is`,`out_use_opinion_is`,`out_book_opinion_is`,`out_bureau_level_engin_is`,`out_bureau_level_design_is`,`out_no_quality_is`,`out_other_quality_is`,`out_contributor_is`,`review_result`,`opinion_desc`,`created`,`updated`,`opt_uid`,`pro_id`,`task_id`,`apply_id` from ass_oil_pro_quality_gold_review_record
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proDescIs != null and proDescIs != ''"> and pro_desc_is = #{proDescIs} </if>
+		  		  <if test="applyTabelIs != null and applyTabelIs != ''"> and apply_tabel_is = #{applyTabelIs} </if>
+		  		  <if test="confirmFileIs != null and confirmFileIs != ''"> and confirm_file_is = #{confirmFileIs} </if>
+		  		  <if test="videoFileIs != null and videoFileIs != ''"> and video_file_is = #{videoFileIs} </if>
+		  		  <if test="innovateSumIs != null and innovateSumIs != ''"> and innovate_sum_is = #{innovateSumIs} </if>
+		  		  <if test="confirmCoverIs != null and confirmCoverIs != ''"> and confirm_cover_is = #{confirmCoverIs} </if>
+		  		  <if test="commitmentIs != null and commitmentIs != ''"> and commitment_is = #{commitmentIs} </if>
+		  		  <if test="catalogIs != null and catalogIs != ''"> and catalog_is = #{catalogIs} </if>
+		  		  <if test="busiLicenseIs != null and busiLicenseIs != ''"> and busi_license_is = #{busiLicenseIs} </if>
+		  		  <if test="approvalFileIs != null and approvalFileIs != ''"> and approval_file_is = #{approvalFileIs} </if>
+		  		  <if test="buildFileIs != null and buildFileIs != ''"> and build_file_is = #{buildFileIs} </if>
+		  		  <if test="contractIs != null and contractIs != ''"> and contract_is = #{contractIs} </if>
+		  		  <if test="certificateIs != null and certificateIs != ''"> and certificate_is = #{certificateIs} </if>
+		  		  <if test="completedFileIs != null and completedFileIs != ''"> and completed_file_is = #{completedFileIs} </if>
+		  		  <if test="checkFileIs != null and checkFileIs != ''"> and check_file_is = #{checkFileIs} </if>
+		  		  <if test="auditReporIs != null and auditReporIs != ''"> and audit_repor_is = #{auditReporIs} </if>
+		  		  <if test="noQualityIs != null and noQualityIs != ''"> and no_quality_is = #{noQualityIs} </if>
+		  		  <if test="bureauLevelEnginIs != null and bureauLevelEnginIs != ''"> and bureau_level_engin_is = #{bureauLevelEnginIs} </if>
+		  		  <if test="bureauLevelDesignIs != null and bureauLevelDesignIs != ''"> and bureau_level_design_is = #{bureauLevelDesignIs} </if>
+		  		  <if test="signContractIs != null and signContractIs != ''"> and sign_contract_is = #{signContractIs} </if>
+		  		  <if test="otherQualityIs != null and otherQualityIs != ''"> and other_quality_is = #{otherQualityIs} </if>
+		  		  <if test="outConfirmCoverIs != null and outConfirmCoverIs != ''"> and out_confirm_cover_is = #{outConfirmCoverIs} </if>
+		  		  <if test="outCommitmentIs != null and outCommitmentIs != ''"> and out_commitment_is = #{outCommitmentIs} </if>
+		  		  <if test="outCatalogIs != null and outCatalogIs != ''"> and out_catalog_is = #{outCatalogIs} </if>
+		  		  <if test="outBusiLicenseIs != null and outBusiLicenseIs != ''"> and out_busi_license_is = #{outBusiLicenseIs} </if>
+		  		  <if test="outContractLicenseIs != null and outContractLicenseIs != ''"> and out_contract_license_is = #{outContractLicenseIs} </if>
+		  		  <if test="outBuildFileIs != null and outBuildFileIs != ''"> and out_build_file_is = #{outBuildFileIs} </if>
+		  		  <if test="outBuildStandIs != null and outBuildStandIs != ''"> and out_build_stand_is = #{outBuildStandIs} </if>
+		  		  <if test="outCheckFileIs != null and outCheckFileIs != ''"> and out_check_file_is = #{outCheckFileIs} </if>
+		  		  <if test="outUseOpinionIs != null and outUseOpinionIs != ''"> and out_use_opinion_is = #{outUseOpinionIs} </if>
+		  		  <if test="outBookOpinionIs != null and outBookOpinionIs != ''"> and out_book_opinion_is = #{outBookOpinionIs} </if>
+		  		  <if test="outBureauLevelEnginIs != null and outBureauLevelEnginIs != ''"> and out_bureau_level_engin_is = #{outBureauLevelEnginIs} </if>
+		  		  <if test="outBureauLevelDesignIs != null and outBureauLevelDesignIs != ''"> and out_bureau_level_design_is = #{outBureauLevelDesignIs} </if>
+		  		  <if test="outNoQualityIs != null and outNoQualityIs != ''"> and out_no_quality_is = #{outNoQualityIs} </if>
+		  		  <if test="outOtherQualityIs != null and outOtherQualityIs != ''"> and out_other_quality_is = #{outOtherQualityIs} </if>
+		  		  <if test="outContributorIs != null and outContributorIs != ''"> and out_contributor_is = #{outContributorIs} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="opinionDesc != null and opinionDesc != ''"> and opinion_desc = #{opinionDesc} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_oil_pro_quality_gold_review_record
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proDescIs != null and proDescIs != ''"> and pro_desc_is = #{proDescIs} </if>
+		  		  <if test="applyTabelIs != null and applyTabelIs != ''"> and apply_tabel_is = #{applyTabelIs} </if>
+		  		  <if test="confirmFileIs != null and confirmFileIs != ''"> and confirm_file_is = #{confirmFileIs} </if>
+		  		  <if test="videoFileIs != null and videoFileIs != ''"> and video_file_is = #{videoFileIs} </if>
+		  		  <if test="innovateSumIs != null and innovateSumIs != ''"> and innovate_sum_is = #{innovateSumIs} </if>
+		  		  <if test="confirmCoverIs != null and confirmCoverIs != ''"> and confirm_cover_is = #{confirmCoverIs} </if>
+		  		  <if test="commitmentIs != null and commitmentIs != ''"> and commitment_is = #{commitmentIs} </if>
+		  		  <if test="catalogIs != null and catalogIs != ''"> and catalog_is = #{catalogIs} </if>
+		  		  <if test="busiLicenseIs != null and busiLicenseIs != ''"> and busi_license_is = #{busiLicenseIs} </if>
+		  		  <if test="approvalFileIs != null and approvalFileIs != ''"> and approval_file_is = #{approvalFileIs} </if>
+		  		  <if test="buildFileIs != null and buildFileIs != ''"> and build_file_is = #{buildFileIs} </if>
+		  		  <if test="contractIs != null and contractIs != ''"> and contract_is = #{contractIs} </if>
+		  		  <if test="certificateIs != null and certificateIs != ''"> and certificate_is = #{certificateIs} </if>
+		  		  <if test="completedFileIs != null and completedFileIs != ''"> and completed_file_is = #{completedFileIs} </if>
+		  		  <if test="checkFileIs != null and checkFileIs != ''"> and check_file_is = #{checkFileIs} </if>
+		  		  <if test="auditReporIs != null and auditReporIs != ''"> and audit_repor_is = #{auditReporIs} </if>
+		  		  <if test="noQualityIs != null and noQualityIs != ''"> and no_quality_is = #{noQualityIs} </if>
+		  		  <if test="bureauLevelEnginIs != null and bureauLevelEnginIs != ''"> and bureau_level_engin_is = #{bureauLevelEnginIs} </if>
+		  		  <if test="bureauLevelDesignIs != null and bureauLevelDesignIs != ''"> and bureau_level_design_is = #{bureauLevelDesignIs} </if>
+		  		  <if test="signContractIs != null and signContractIs != ''"> and sign_contract_is = #{signContractIs} </if>
+		  		  <if test="otherQualityIs != null and otherQualityIs != ''"> and other_quality_is = #{otherQualityIs} </if>
+		  		  <if test="outConfirmCoverIs != null and outConfirmCoverIs != ''"> and out_confirm_cover_is = #{outConfirmCoverIs} </if>
+		  		  <if test="outCommitmentIs != null and outCommitmentIs != ''"> and out_commitment_is = #{outCommitmentIs} </if>
+		  		  <if test="outCatalogIs != null and outCatalogIs != ''"> and out_catalog_is = #{outCatalogIs} </if>
+		  		  <if test="outBusiLicenseIs != null and outBusiLicenseIs != ''"> and out_busi_license_is = #{outBusiLicenseIs} </if>
+		  		  <if test="outContractLicenseIs != null and outContractLicenseIs != ''"> and out_contract_license_is = #{outContractLicenseIs} </if>
+		  		  <if test="outBuildFileIs != null and outBuildFileIs != ''"> and out_build_file_is = #{outBuildFileIs} </if>
+		  		  <if test="outBuildStandIs != null and outBuildStandIs != ''"> and out_build_stand_is = #{outBuildStandIs} </if>
+		  		  <if test="outCheckFileIs != null and outCheckFileIs != ''"> and out_check_file_is = #{outCheckFileIs} </if>
+		  		  <if test="outUseOpinionIs != null and outUseOpinionIs != ''"> and out_use_opinion_is = #{outUseOpinionIs} </if>
+		  		  <if test="outBookOpinionIs != null and outBookOpinionIs != ''"> and out_book_opinion_is = #{outBookOpinionIs} </if>
+		  		  <if test="outBureauLevelEnginIs != null and outBureauLevelEnginIs != ''"> and out_bureau_level_engin_is = #{outBureauLevelEnginIs} </if>
+		  		  <if test="outBureauLevelDesignIs != null and outBureauLevelDesignIs != ''"> and out_bureau_level_design_is = #{outBureauLevelDesignIs} </if>
+		  		  <if test="outNoQualityIs != null and outNoQualityIs != ''"> and out_no_quality_is = #{outNoQualityIs} </if>
+		  		  <if test="outOtherQualityIs != null and outOtherQualityIs != ''"> and out_other_quality_is = #{outOtherQualityIs} </if>
+		  		  <if test="outContributorIs != null and outContributorIs != ''"> and out_contributor_is = #{outContributorIs} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="opinionDesc != null and opinionDesc != ''"> and opinion_desc = #{opinionDesc} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProQualityGoldReviewRecordDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_oil_pro_quality_gold_review_record
+		(
+			`pro_desc_is`, 
+			`apply_tabel_is`, 
+			`confirm_file_is`, 
+			`video_file_is`, 
+			`innovate_sum_is`, 
+			`confirm_cover_is`, 
+			`commitment_is`, 
+			`catalog_is`, 
+			`busi_license_is`, 
+			`approval_file_is`, 
+			`build_file_is`, 
+			`contract_is`, 
+			`certificate_is`, 
+			`completed_file_is`, 
+			`check_file_is`, 
+			`audit_repor_is`, 
+			`no_quality_is`, 
+			`bureau_level_engin_is`, 
+			`bureau_level_design_is`, 
+			`sign_contract_is`, 
+			`other_quality_is`, 
+			`out_confirm_cover_is`, 
+			`out_commitment_is`, 
+			`out_catalog_is`, 
+			`out_busi_license_is`, 
+			`out_contract_license_is`, 
+			`out_build_file_is`, 
+			`out_build_stand_is`, 
+			`out_check_file_is`, 
+			`out_use_opinion_is`, 
+			`out_book_opinion_is`, 
+			`out_bureau_level_engin_is`, 
+			`out_bureau_level_design_is`, 
+			`out_no_quality_is`, 
+			`out_other_quality_is`, 
+			`out_contributor_is`, 
+			`review_result`, 
+			`opinion_desc`, 
+			`created`, 
+			`updated`, 
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`
+		)
+		values
+		(
+			#{proDescIs}, 
+			#{applyTabelIs}, 
+			#{confirmFileIs}, 
+			#{videoFileIs}, 
+			#{innovateSumIs}, 
+			#{confirmCoverIs}, 
+			#{commitmentIs}, 
+			#{catalogIs}, 
+			#{busiLicenseIs}, 
+			#{approvalFileIs}, 
+			#{buildFileIs}, 
+			#{contractIs}, 
+			#{certificateIs}, 
+			#{completedFileIs}, 
+			#{checkFileIs}, 
+			#{auditReporIs}, 
+			#{noQualityIs}, 
+			#{bureauLevelEnginIs}, 
+			#{bureauLevelDesignIs}, 
+			#{signContractIs}, 
+			#{otherQualityIs}, 
+			#{outConfirmCoverIs}, 
+			#{outCommitmentIs}, 
+			#{outCatalogIs}, 
+			#{outBusiLicenseIs}, 
+			#{outContractLicenseIs}, 
+			#{outBuildFileIs}, 
+			#{outBuildStandIs}, 
+			#{outCheckFileIs}, 
+			#{outUseOpinionIs}, 
+			#{outBookOpinionIs}, 
+			#{outBureauLevelEnginIs}, 
+			#{outBureauLevelDesignIs}, 
+			#{outNoQualityIs}, 
+			#{outOtherQualityIs}, 
+			#{outContributorIs}, 
+			#{reviewResult}, 
+			#{opinionDesc}, 
+			now(),
+			#{updated}, 
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProQualityGoldReviewRecordDO">
+		update ass_oil_pro_quality_gold_review_record 
+		<set>
+			<if test="proDescIs != null">`pro_desc_is` = #{proDescIs}, </if>
+			<if test="applyTabelIs != null">`apply_tabel_is` = #{applyTabelIs}, </if>
+			<if test="confirmFileIs != null">`confirm_file_is` = #{confirmFileIs}, </if>
+			<if test="videoFileIs != null">`video_file_is` = #{videoFileIs}, </if>
+			<if test="innovateSumIs != null">`innovate_sum_is` = #{innovateSumIs}, </if>
+			<if test="confirmCoverIs != null">`confirm_cover_is` = #{confirmCoverIs}, </if>
+			<if test="commitmentIs != null">`commitment_is` = #{commitmentIs}, </if>
+			<if test="catalogIs != null">`catalog_is` = #{catalogIs}, </if>
+			<if test="busiLicenseIs != null">`busi_license_is` = #{busiLicenseIs}, </if>
+			<if test="approvalFileIs != null">`approval_file_is` = #{approvalFileIs}, </if>
+			<if test="buildFileIs != null">`build_file_is` = #{buildFileIs}, </if>
+			<if test="contractIs != null">`contract_is` = #{contractIs}, </if>
+			<if test="certificateIs != null">`certificate_is` = #{certificateIs}, </if>
+			<if test="completedFileIs != null">`completed_file_is` = #{completedFileIs}, </if>
+			<if test="checkFileIs != null">`check_file_is` = #{checkFileIs}, </if>
+			<if test="auditReporIs != null">`audit_repor_is` = #{auditReporIs}, </if>
+			<if test="noQualityIs != null">`no_quality_is` = #{noQualityIs}, </if>
+			<if test="bureauLevelEnginIs != null">`bureau_level_engin_is` = #{bureauLevelEnginIs}, </if>
+			<if test="bureauLevelDesignIs != null">`bureau_level_design_is` = #{bureauLevelDesignIs}, </if>
+			<if test="signContractIs != null">`sign_contract_is` = #{signContractIs}, </if>
+			<if test="otherQualityIs != null">`other_quality_is` = #{otherQualityIs}, </if>
+			<if test="outConfirmCoverIs != null">`out_confirm_cover_is` = #{outConfirmCoverIs}, </if>
+			<if test="outCommitmentIs != null">`out_commitment_is` = #{outCommitmentIs}, </if>
+			<if test="outCatalogIs != null">`out_catalog_is` = #{outCatalogIs}, </if>
+			<if test="outBusiLicenseIs != null">`out_busi_license_is` = #{outBusiLicenseIs}, </if>
+			<if test="outContractLicenseIs != null">`out_contract_license_is` = #{outContractLicenseIs}, </if>
+			<if test="outBuildFileIs != null">`out_build_file_is` = #{outBuildFileIs}, </if>
+			<if test="outBuildStandIs != null">`out_build_stand_is` = #{outBuildStandIs}, </if>
+			<if test="outCheckFileIs != null">`out_check_file_is` = #{outCheckFileIs}, </if>
+			<if test="outUseOpinionIs != null">`out_use_opinion_is` = #{outUseOpinionIs}, </if>
+			<if test="outBookOpinionIs != null">`out_book_opinion_is` = #{outBookOpinionIs}, </if>
+			<if test="outBureauLevelEnginIs != null">`out_bureau_level_engin_is` = #{outBureauLevelEnginIs}, </if>
+			<if test="outBureauLevelDesignIs != null">`out_bureau_level_design_is` = #{outBureauLevelDesignIs}, </if>
+			<if test="outNoQualityIs != null">`out_no_quality_is` = #{outNoQualityIs}, </if>
+			<if test="outOtherQualityIs != null">`out_other_quality_is` = #{outOtherQualityIs}, </if>
+			<if test="outContributorIs != null">`out_contributor_is` = #{outContributorIs}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="opinionDesc != null">`opinion_desc` = #{opinionDesc}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_oil_pro_quality_gold_review_record where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_oil_pro_quality_gold_review_record where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

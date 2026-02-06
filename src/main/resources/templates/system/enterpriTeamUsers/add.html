@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">总人数：</label>
+								<div class="col-sm-8">
+									<input id="totalCount" name="totalCount" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">男人数：</label>
+								<div class="col-sm-8">
+									<input id="manCount" name="manCount" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">女人数：</label>
+								<div class="col-sm-8">
+									<input id="womanCount" name="womanCount" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">65周岁以上 ：</label>
+								<div class="col-sm-8">
+									<input id="ageBeyond65Count" name="ageBeyond65Count" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label"> 50-65周岁：</label>
+								<div class="col-sm-8">
+									<input id="age50To65Count" name="age50To65Count" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label"> 35-50周岁：</label>
+								<div class="col-sm-8">
+									<input id="age35To50Count" name="age35To50Count" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label"> 35周岁以下：</label>
+								<div class="col-sm-8">
+									<input id="ageUnder36Count" name="ageUnder36Count" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">正高级：</label>
+								<div class="col-sm-8">
+									<input id="positionSenior" name="positionSenior" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">副高级：</label>
+								<div class="col-sm-8">
+									<input id="positionDeputySenior" name="positionDeputySenior" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">中级：</label>
+								<div class="col-sm-8">
+									<input id="positionIntermediate" name="positionIntermediate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">博士研究生 ：</label>
+								<div class="col-sm-8">
+									<input id="eduDoctoralCandidate" name="eduDoctoralCandidate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">硕士研究生：</label>
+								<div class="col-sm-8">
+									<input id="eduPostgraduates" name="eduPostgraduates" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">本科：</label>
+								<div class="col-sm-8">
+									<input id="eduUndergraduate" name="eduUndergraduate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="taskId" name="taskId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="optUid" name="optUid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="created" name="created" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/enterpriTeamUsers/add.js">
+	</script>
+</body>
+</html>

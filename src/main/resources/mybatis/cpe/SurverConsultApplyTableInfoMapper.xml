@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverConsultApplyTableInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverConsultApplyTableInfoDO">
+		select `id`,`apply_major`,`pro_name`,`pro_start_end`,`review_approval`,`production_time`,`apply_time`,`acceptance_department`,`acceptance_time`,`estimate`,`design_overview`,`overestimated`,`major_completion_units`,`cooperation_unit`,`contact_phone`,`contact_name`,`contact_fox`,`accessories_catalog`,`project_overview`,`reward_level`,`reporting_unit_opinion`,`up_recommendation`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_consult_apply_table_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverConsultApplyTableInfoDO">
+		select `id`,`apply_major`,`pro_name`,`pro_start_end`,`review_approval`,`production_time`,`apply_time`,`acceptance_department`,`acceptance_time`,`estimate`,`design_overview`,`overestimated`,`major_completion_units`,`cooperation_unit`,`contact_phone`,`contact_name`,`contact_fox`,`accessories_catalog`,`project_overview`,`reward_level`,`reporting_unit_opinion`,`up_recommendation`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_consult_apply_table_info
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="proStartEnd != null and proStartEnd != ''"> and pro_start_end = #{proStartEnd} </if>
+		  		  <if test="reviewApproval != null and reviewApproval != ''"> and review_approval = #{reviewApproval} </if>
+		  		  <if test="productionTime != null and productionTime != ''"> and production_time = #{productionTime} </if>
+		  		  <if test="applyTime != null and applyTime != ''"> and apply_time = #{applyTime} </if>
+		  		  <if test="acceptanceDepartment != null and acceptanceDepartment != ''"> and acceptance_department = #{acceptanceDepartment} </if>
+		  		  <if test="acceptanceTime != null and acceptanceTime != ''"> and acceptance_time = #{acceptanceTime} </if>
+		  		  <if test="estimate != null and estimate != ''"> and estimate = #{estimate} </if>
+		  		  <if test="designOverview != null and designOverview != ''"> and design_overview = #{designOverview} </if>
+		  		  <if test="overestimated != null and overestimated != ''"> and overestimated = #{overestimated} </if>
+		  		  <if test="majorCompletionUnits != null and majorCompletionUnits != ''"> and major_completion_units = #{majorCompletionUnits} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="contactPhone != null and contactPhone != ''"> and contact_phone = #{contactPhone} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactFox != null and contactFox != ''"> and contact_fox = #{contactFox} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="projectOverview != null and projectOverview != ''"> and project_overview = #{projectOverview} </if>
+		  		  <if test="rewardLevel != null and rewardLevel != ''"> and reward_level = #{rewardLevel} </if>
+		  		  <if test="reportingUnitOpinion != null and reportingUnitOpinion != ''"> and reporting_unit_opinion = #{reportingUnitOpinion} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_consult_apply_table_info
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="proStartEnd != null and proStartEnd != ''"> and pro_start_end = #{proStartEnd} </if>
+		  		  <if test="reviewApproval != null and reviewApproval != ''"> and review_approval = #{reviewApproval} </if>
+		  		  <if test="productionTime != null and productionTime != ''"> and production_time = #{productionTime} </if>
+		  		  <if test="applyTime != null and applyTime != ''"> and apply_time = #{applyTime} </if>
+		  		  <if test="acceptanceDepartment != null and acceptanceDepartment != ''"> and acceptance_department = #{acceptanceDepartment} </if>
+		  		  <if test="acceptanceTime != null and acceptanceTime != ''"> and acceptance_time = #{acceptanceTime} </if>
+		  		  <if test="estimate != null and estimate != ''"> and estimate = #{estimate} </if>
+		  		  <if test="designOverview != null and designOverview != ''"> and design_overview = #{designOverview} </if>
+		  		  <if test="overestimated != null and overestimated != ''"> and overestimated = #{overestimated} </if>
+		  		  <if test="majorCompletionUnits != null and majorCompletionUnits != ''"> and major_completion_units = #{majorCompletionUnits} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="contactPhone != null and contactPhone != ''"> and contact_phone = #{contactPhone} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactFox != null and contactFox != ''"> and contact_fox = #{contactFox} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="projectOverview != null and projectOverview != ''"> and project_overview = #{projectOverview} </if>
+		  		  <if test="rewardLevel != null and rewardLevel != ''"> and reward_level = #{rewardLevel} </if>
+		  		  <if test="reportingUnitOpinion != null and reportingUnitOpinion != ''"> and reporting_unit_opinion = #{reportingUnitOpinion} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverConsultApplyTableInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_consult_apply_table_info
+		(
+			`apply_major`,
+			`pro_name`,
+			`pro_start_end`,
+			`review_approval`,
+			`production_time`,
+			`apply_time`,
+			`acceptance_department`,
+			`acceptance_time`,
+			`estimate`,
+			`design_overview`,
+			`overestimated`,
+			`major_completion_units`,
+			`cooperation_unit`,
+			`contact_phone`,
+			`contact_name`,
+			`contact_fox`,
+			`accessories_catalog`,
+			`project_overview`,
+			`reward_level`,
+			`reporting_unit_opinion`,
+			`up_recommendation`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`
+		)
+		values
+		(
+			#{applyMajor},
+			#{proName},
+			#{proStartEnd},
+			#{reviewApproval},
+			#{productionTime},
+			#{applyTime},
+			#{acceptanceDepartment},
+			#{acceptanceTime},
+			#{estimate},
+			#{designOverview},
+			#{overestimated},
+			#{majorCompletionUnits},
+			#{cooperationUnit},
+			#{contactPhone},
+			#{contactName},
+			#{contactFox},
+			#{accessoriesCatalog},
+			#{projectOverview},
+			#{rewardLevel},
+			#{reportingUnitOpinion},
+			#{upRecommendation},
+			#{optUid},
+			#{proId},
+			#{taskId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverConsultApplyTableInfoDO">
+		update ass_surver_consult_apply_table_info
+		<set>
+			<if test="applyMajor != null">`apply_major` = #{applyMajor}, </if>
+			<if test="proName != null">`pro_name` = #{proName}, </if>
+			<if test="proStartEnd != null">`pro_start_end` = #{proStartEnd}, </if>
+			<if test="reviewApproval != null">`review_approval` = #{reviewApproval}, </if>
+			<if test="productionTime != null">`production_time` = #{productionTime}, </if>
+			<if test="applyTime != null">`apply_time` = #{applyTime}, </if>
+			<if test="acceptanceDepartment != null">`acceptance_department` = #{acceptanceDepartment}, </if>
+			<if test="acceptanceTime != null">`acceptance_time` = #{acceptanceTime}, </if>
+			<if test="estimate != null">`estimate` = #{estimate}, </if>
+			<if test="designOverview != null">`design_overview` = #{designOverview}, </if>
+			<if test="overestimated != null">`overestimated` = #{overestimated}, </if>
+			<if test="majorCompletionUnits != null">`major_completion_units` = #{majorCompletionUnits}, </if>
+			<if test="cooperationUnit != null">`cooperation_unit` = #{cooperationUnit}, </if>
+			<if test="contactPhone != null">`contact_phone` = #{contactPhone}, </if>
+			<if test="contactName != null">`contact_name` = #{contactName}, </if>
+			<if test="contactFox != null">`contact_fox` = #{contactFox}, </if>
+			<if test="accessoriesCatalog != null">`accessories_catalog` = #{accessoriesCatalog}, </if>
+			<if test="projectOverview != null">`project_overview` = #{projectOverview}, </if>
+			<if test="rewardLevel != null">`reward_level` = #{rewardLevel}, </if>
+			<if test="reportingUnitOpinion != null">`reporting_unit_opinion` = #{reportingUnitOpinion}, </if>
+			<if test="upRecommendation != null">`up_recommendation` = #{upRecommendation}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_consult_apply_table_info where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_consult_apply_table_info where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

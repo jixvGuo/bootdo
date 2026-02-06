@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui segment">
+    <div class="ui form">
+        <table class="ui celled table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>附件编号</th>
+                <th>附件名称</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e,eStat:${list}">
+                <td th:text="${eStat.count}"></td>
+                <td th:text="${e.encNum}"></td>
+                <td th:text="${e.encName}"></td>
+                <td class="tips" th:text="${e.encMemo}"></td>
+            </tr>
+            <div class="ui special popup">
+                <div class="ui button">新增</div>
+            </div>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div th:include="include::footer"></div>
+<script>
+
+
+</script>
+</body>
+</html>

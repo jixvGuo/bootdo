@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+
+							<button shiro:hasPermission="act:award:publish_award_task" type="button"
+								class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>创建
+							</button>
+
+							<button shiro:hasPermission="award_flow:publish_award_task:publish_award_task" type="button"
+								class="btn  btn-danger" onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="">
+						</div>
+					</div>
+					<form class="layui-form">
+						<table id="exampleTable" data-mobile-responsive="true">
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+	<div>
+		<input type="hidden" id="isAssociationRole" th:value="${isAssociationRole}">
+        <input type="hidden" id="isExpertRole" th:value="${isExpertRole}">
+
+        <script type="text/javascript">
+			var s_watch_h = 'hidden'// 查看
+			var s_edit_h = 'hidden';// 编辑
+			var s_remove_h = 'hidden';//删除
+			var s_resetPwd_h = 'hidden';
+            var s_management_h = 'hidden';//专业组管理
+			var s_task_assign_h = 'hidden';//分配
+			var s_selSpecialist_h = 'hidden';//选择专家
+            var s_project_summary = 'hidden'// 项目总结
+            var s_project_score = 'hidden'// 分数查询
+			var s_assciation_prolist = 'hidden';
+            var s_apply_qc_btn = 'hidden';
+			var s_apply_surver_btn = 'hidden';
+			var s_surver_pro_list_btn = 'hidden';
+			var s_surver_enterprise_list_btn = 'hidden';
+			var s_apply_technology_btn = 'hidden';
+			var s_science_pro_list_btn = 'hidden';
+			var s_qc_pro_list_btn = 'hidden';
+			var s_task_pro_clean_btn = 'hidden';
+			var s_apply_gf_btn = 'hidden'; //工法奖申报按钮
+            var s_gf_pro_list_btn = 'hidden';
+			var s_check_result_import = 'hidden';
+			var s_apply_best_pro_btn = 'hidden';
+			var s_best_pro_list_btn = 'hidden';
+
+            var s_expert_upload_file_btn = 'hidden';
+
+
+        </script>
+	</div>
+
+	<div shiro:haspermission="technologyaward:check:import">
+		<script type="text/javascript">
+			s_check_result_import = '';
+		</script>
+	</div>
+
+    <div shiro:haspermission="act:award:expert:upload">
+        <script type="text/javascript">
+            s_expert_upload_file_btn = '';
+        </script>
+    </div>
+
+
+	<div shiro:haspermission="taskamin:project:del">
+		<script type="text/javascript">
+			s_task_pro_clean_btn = '';
+		</script>
+	</div>
+
+	<div shiro:haspermission="surveraward:enterprise:list">
+		<script type="text/javascript">
+			s_surver_enterprise_list_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="surveraward:to:prolist">
+		<script type="text/javascript">
+			s_surver_pro_list_btn = '';
+		</script>
+	</div>
+
+	<div shiro:haspermission="bestproaward:to:prolist">
+		<script type="text/javascript">
+			s_apply_best_pro_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="bestproaward:to:mainprolist">
+		<script type="text/javascript">
+			s_best_pro_list_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="technologyaward:to:prolist">
+		<script type="text/javascript">
+			s_science_pro_list_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="qcaward:to:prolist">
+		<script type="text/javascript">
+			s_qc_pro_list_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="surveraward:to:apply">
+		<script type="text/javascript">
+			s_apply_surver_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="techonlogyaward:to:apply">
+		<script type="text/javascript">
+			s_apply_technology_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="cpe:qcAward:apply">
+		<script type="text/javascript">
+			s_apply_qc_btn = '';
+		</script>
+	</div>
+	<div shiro:haspermission="cpe:gfAward:apply">
+		<script type="text/javascript">
+			s_apply_gf_btn = '';
+		</script>
+	</div>
+    <div shiro:haspermission="gf:to:prolist">
+        <script type="text/javascript">
+            s_gf_pro_list_btn = '';
+        </script>
+    </div>
+
+	<div shiro:hasPermission="act:award:publish_award_task_wach">
+		<script type="text/javascript">
+            s_watch_h = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="surveraward:specialist:select">
+		<script type="text/javascript">
+			s_selSpecialist_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:award:publish_award_task_edit">
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="act:award:project_summary">
+		<script type="text/javascript">
+            s_project_summary = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="act:award:project_professional">
+		<script type="text/javascript">
+            s_management_h = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="act:award:watch_score">
+		<script type="text/javascript">
+            s_project_score = '';
+		</script>
+	</div>
+
+
+	<div shiro:hasPermission="act:award:publish_award_task_remove">
+		<script type="text/javascript">
+			s_remove_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="asso:task:assign">
+		<script type="text/javascript">
+			s_task_assign_h = '';
+		</script>
+	</div>
+
+	<div shiro:haspermission="qcaward:association:prolist">
+		<script type="text/javascript">
+			s_assciation_prolist = ''
+		</script>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script src="/js/layui.js"></script>
+	<script type="text/javascript" src="/js/appjs/act/award/award_task_list.js?v=3.19"></script>
+</body>
+</html>

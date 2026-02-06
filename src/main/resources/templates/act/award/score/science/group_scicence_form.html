@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <h2 class="ui center aligned header">石油工程建设科技进步奖专业组评审打分表</h2>
+        <h3 class="ui center aligned header" th:if="${major != null}">(<span th:text="${major}"></span>)</h3>
+        <table class="ui celled table">
+            <tbody>
+            <tr>
+                <td rowspan="2">项目编号</td>
+                <td rowspan="2">项目名称</td>
+                <td colspan="8" class="ui center aligned">打分</td>
+                <td rowspan="2">总分(100)</td>
+<!--                <td rowspan="2">推荐意见</td>-->
+            </tr>
+            <tr>
+                <td>技术先进程度</td>
+                <td>创新程度</td>
+                <td>难易与复杂程度</td>
+                <td>知识产权</td>
+                <td>经济效益</td>
+                <td>社会效益</td>
+                <td>推广应用前景</td>
+                <td>材料准备情况、表达能力</td>
+            </tr>
+            <tr>
+                <td th:text="${proInfo.showNum}"></td>
+                <td th:text="${proInfo.chengguo}"></td>
+                <td th:text="${scoreResultMap.get('technology_advancement')}"></td>
+                <td th:text="${scoreResultMap.get('degree_innovation')}"></td>
+                <td th:text="${scoreResultMap.get('difficulty_complex')}"></td>
+                <td th:text="${scoreResultMap.get('lore_property')}"></td>
+                <td th:text="${scoreResultMap.get('economic_benefit')}"></td>
+                <td th:text="${scoreResultMap.get('social_benefit')}"></td>
+                <td th:text="${scoreResultMap.get('promotion_prospect')}"></td>
+                <td th:text="${scoreResultMap.get('preparation_expression')}"></td>
+                <td th:text="${scoreResultMap.get('total')}"></td>
+<!--                <td th:text="${scoreResultMap.get('opinion_level')}"></td>-->
+
+
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <div class="ui basic center aligned segment">专家签字：<img width="75" height="40" th:src="${signature}"></div>
+                    <div class="ui basic right aligned segment" th:text="${#dates.format(created,'yyyy年MM月dd日')}"></div>
+                </td>
+                <td colspan="3" style="border-left-width: 0; "></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+ 
+</body>
+</html>

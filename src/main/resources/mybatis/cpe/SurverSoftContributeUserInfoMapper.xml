@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.SurverSoftContributeUserInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.SurverSoftContributeUserInfoDO">
+		select `id`,`username`,`gender`,`age`,`job`,`work_place`,`start_time`,`work_desc`,`opt_uid`,`pro_id`,`task_id`,`deleted`,`created`,`updated` from ass_surver_soft_contribute_user_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.SurverSoftContributeUserInfoDO">
+		select `id`,`username`,`gender`,`age`,`job`,`work_place`,`start_time`,`work_desc`,`opt_uid`,`pro_id`,`task_id`,`deleted`,`created`,`updated` from ass_surver_soft_contribute_user_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="gender != null and gender != ''"> and gender = #{gender} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="job != null and job != ''"> and job = #{job} </if>
+		  		  <if test="workPlace != null and workPlace != ''"> and work_place = #{workPlace} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="workDesc != null and workDesc != ''"> and work_desc = #{workDesc} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_soft_contribute_user_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="gender != null and gender != ''"> and gender = #{gender} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="job != null and job != ''"> and job = #{job} </if>
+		  		  <if test="workPlace != null and workPlace != ''"> and work_place = #{workPlace} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="workDesc != null and workDesc != ''"> and work_desc = #{workDesc} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.SurverSoftContributeUserInfoDO">
+		insert into ass_surver_soft_contribute_user_info
+		(
+			`id`, 
+			`username`, 
+			`gender`, 
+			`age`, 
+			`job`, 
+			`work_place`, 
+			`start_time`, 
+			`work_desc`, 
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`deleted`, 
+			`created`, 
+			`updated`
+		)
+		values
+		(
+			#{id}, 
+			#{username}, 
+			#{gender}, 
+			#{age}, 
+			#{job}, 
+			#{workPlace}, 
+			#{startTime}, 
+			#{workDesc}, 
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			#{deleted},
+		    now(),
+			#{updated}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.SurverSoftContributeUserInfoDO">
+		update ass_surver_soft_contribute_user_info 
+		<set>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="job != null">`job` = #{job}, </if>
+			<if test="workPlace != null">`work_place` = #{workPlace}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="workDesc != null">`work_desc` = #{workDesc}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_surver_soft_contribute_user_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_surver_soft_contribute_user_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

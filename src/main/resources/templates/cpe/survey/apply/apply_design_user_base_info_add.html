@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header_lu"></head>
+
+<body>
+    <div class="ui top attached tabular menu">
+        <a th:href="@{/surverApply/toBaseInfoList(proId=${proId},taskId=${taskId})}" class="item">列表 </a>
+        <a th:if="${readonly} eq null or ${readonly} ne 1" href="#" class="active item">新增 </a>
+    </div>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input name="id" th:value="${data.id}" type="hidden"/>
+                <input name="proId" th:value="${proId}" type="hidden">
+                <input name="taskId" th:value="${taskId}" type="hidden">
+
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>类别</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="userType">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">类别</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">勘察</div>
+                                <div class="item" data-value="2">设计</div>
+                                <div class="item" data-value="3">软件</div>
+                                <div class="item" data-value="4">标准设计</div>
+                                <div class="item" data-value="5">咨询</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui field">
+                        <label>排名</label>
+                        <input type="text" name="sortNum" placeholder="排名">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>项目名称</label>
+                        <input type="text" name="proName" placeholder="项目名称">
+                    </div>
+                    <div class="ui field">
+                        <label>主要贡献人名单（须与申报表一致）</label>
+                        <input type="text" name="contributeUserNames" placeholder="主要贡献人名单（须与申报表一致）">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>推荐等级</label>
+                        <input type="text" name="recommendLevel" placeholder="推荐等级">
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 详情页面 -->
+    <div th:include="include :: footer_lu"></div>
+
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/surverDesignApplyUserBaseInfo/add.js"></script>
+
+    <script>
+        $('.ui.dropdown').dropdown();
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                type: {
+                    identifier: 'type',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请选择类别'
+                    }]
+                },
+                ranking: {
+                    identifier: 'ranking',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写排名'
+                    }]
+                },
+                proname: {
+                    identifier: 'proname',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写项目名称'
+                    }]
+                },
+                contributor: {
+                    identifier: 'contributor',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写主要贡献人名单（须与申报表一致）'
+                    }]
+                },
+                level: {
+                    identifier: 'level',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写推荐等级'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

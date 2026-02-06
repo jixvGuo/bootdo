@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${awardStyleValidateTeam.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">申报单位：</label>
+								<div class="col-sm-8">
+									<input id="unit" name="unit" th:value="${awardStyleValidateTeam.unit}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">申报成果名称：</label>
+								<div class="col-sm-8">
+									<input id="name" name="name" th:value="${awardStyleValidateTeam.name}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">三年以上稳定合作：</label>
+								<div class="col-sm-8">
+									<input id="hezuo" name="hezuo" th:value="${awardStyleValidateTeam.hezuo}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">技术专家：</label>
+								<div class="col-sm-8">
+									<input id="zhuanjia" name="zhuanjia" th:value="${awardStyleValidateTeam.zhuanjia}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">科技奖励：</label>
+								<div class="col-sm-8">
+									<input id="jl" name="jl" th:value="${awardStyleValidateTeam.jl}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权证书：</label>
+								<div class="col-sm-8">
+									<input id="cqzs" name="cqzs" th:value="${awardStyleValidateTeam.cqzs}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">论文、论著证明：</label>
+								<div class="col-sm-8">
+									<input id="lw" name="lw" th:value="${awardStyleValidateTeam.lw}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">科技成果应用证明：</label>
+								<div class="col-sm-8">
+									<input id="zm" name="zm" th:value="${awardStyleValidateTeam.zm}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">营业执照：</label>
+								<div class="col-sm-8">
+									<input id="zz" name="zz" th:value="${awardStyleValidateTeam.zz}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">质量、安全环保证明：</label>
+								<div class="col-sm-8">
+									<input id="hbzm" name="hbzm" th:value="${awardStyleValidateTeam.hbzm}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">参评：</label>
+								<div class="col-sm-8">
+									<input id="cp" name="cp" th:value="${awardStyleValidateTeam.cp}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">完善后参评：</label>
+								<div class="col-sm-8">
+									<input id="wscp" name="wscp" th:value="${awardStyleValidateTeam.wscp}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">不评：</label>
+								<div class="col-sm-8">
+									<input id="bp" name="bp" th:value="${awardStyleValidateTeam.bp}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">缓评：</label>
+								<div class="col-sm-8">
+									<input id="hp" name="hp" th:value="${awardStyleValidateTeam.hp}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/awardStyleValidateTeam/edit.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item"
+       th:href="@{/cpe/enterpriTeamProjectInfo/toList(proId=${proId},taskId=${taskId},applyId=${applyId})}">列表 </a>
+    <a class="active item" href="#">新增 </a>
+    <!--<a href="#" class="item">打印 </a>-->
+</div>
+<div class="ui bottom attached segment">
+    <form action="" class="ui form" id="signupForm">
+        <input id="id" name="id" th:value="${enterpriTeamProjectInfo.id}" type="hidden">
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+        <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+        <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui field">
+            <label>项目名称</label>
+            <input name="proname" placeholder="项目名称" th:value="${enterpriTeamProjectInfo.proname}" type="text">
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>项目编号</label>
+                <input name="procode" placeholder="项目编号" th:value="${enterpriTeamProjectInfo.procode}" type="text">
+            </div>
+            <div class="ui field">
+                <label>研究经费(万元)</label>
+                <input name="funds" placeholder="研究经费(万元)" th:value="${enterpriTeamProjectInfo.funds}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>研发开始时间</label>
+                <input name="starttime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="研发开始时间"
+                       th:value="${enterpriTeamProjectInfo.starttime}" type="text">
+            </div>
+            <div class="ui field">
+                <label>研发结束时间</label>
+                <input name="endtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="研发结束时间"
+                       th:value="${enterpriTeamProjectInfo.endtime}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>状态</label>
+                <div class="ui selection dropdown">
+                    <input name="state" th:value="${enterpriTeamProjectInfo.state}" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">状态</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${r.name eq enterpriTeamProjectInfo.state} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}"
+                             th:each="r:${statList}" th:text="${r.name}">在研
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>负责人</label>
+                <input name="responsibilityname" placeholder="负责人"
+                       th:value="${enterpriTeamProjectInfo.responsibilityname}" type="text">
+            </div>
+        </div>
+        <div class="ui field">
+            <label>本团队主要成员中参与人/排序</label>
+            <textarea id="mainmember" autofocus name="mainmember" placeholder="本团队主要成员中参与人/排序"
+                      th:text="${enterpriTeamProjectInfo.mainmember}"></textarea>
+        </div>
+        <div class="ui field">
+            <label>证明材料编号/已验收</label>
+            <textarea id="materialcode" autofocus name="materialcode" placeholder="证明材料编号/已验收"
+                      th:text="${enterpriTeamProjectInfo.materialcode}"></textarea>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>项目来源</label>
+                <textarea id="prosource" autofocus name="prosource" placeholder="项目来源"
+                          th:text="${enterpriTeamProjectInfo.prosource}"></textarea>
+            </div>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/appjs/cpe/enterpriTeamProjectInfo/add.js" type="text/javascript"></script>
+
+<script>
+
+    let proId = $("#proId").val();
+    let uploadObj =  {
+        url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+    var materialcode = new Simditor({
+        textarea: $("#materialcode"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    var mainmember = new Simditor({
+        textarea: $("#mainmember"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    var prosource = new Simditor({
+        textarea: $("#prosource"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    $('.ui.dropdown').dropdown();
+    $("input[name='starttime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $("input[name='endtime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            proname: {
+                identifier: 'proname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写项目名称'
+                    }
+                ]
+            },
+            funds: {
+                identifier: 'funds',
+                rules: [
+                    {
+                        type: 'integer',
+                        prompt: '请填写研究经费，且为阿拉伯数字'
+                    }
+                ]
+            },
+            prosource: {
+                identifier: 'prosource',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写项目来源'
+                    }
+                ]
+            },
+            procode: {
+                identifier: 'procode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写项目编号'
+                    }
+                ]
+            },
+            starttime: {
+                identifier: 'starttime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择研发开始时间'
+                    }
+                ]
+            },
+            endtime: {
+                identifier: 'endtime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写研发结束时间'
+                    }
+                ]
+            },
+            state: {
+                identifier: 'state',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写状态'
+                    }
+                ]
+            },
+            responsibilityname: {
+                identifier: 'responsibilityname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写负责人'
+                    }
+                ]
+            },
+            mainmember: {
+                identifier: 'mainmember',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写本团队主要成员中参与人/排序'
+                    }
+                ]
+            },
+            materialcode: {
+                identifier: 'materialcode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写证明材料编号/已验收'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

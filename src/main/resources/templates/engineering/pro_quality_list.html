@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body class="gray-bg">
+<input type="hidden" id="isReadonly" th:value="${readonly}">
+<input name="proId" th:value="${proId}" type="hidden">
+<input name="taskId" th:value="${taskId}" type="hidden">
+<input name="applyId" th:value="${applyId}" type="hidden">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title" shiro:hasPermission="petroleumEngineering:qualityPro:toAdd">
+                        <button class="btn btn-primary btn-xs" th:disabled="${!isApply}" onclick="page('/enterpriseQualityAward/toAdd','申报优质工程奖','2021A')" style="width:100px" type="button"><i class="fa fa-plus"></i>&nbsp;申报</button>
+                        <span th:text="${msg}" style="color: red"></span>
+                    </div>
+                    <div class="ibox-content">
+                        <table id="exampleTable" class="table table-bordered">
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <script type="text/javascript">
+            var s_edit_h = 'hidden';
+            var s_remove_h = 'hidden';
+            var s_print_h = 'hidden';
+            var s_review_h = 'hidden';
+            var s_cancel_review_h = 'hidden';
+            var s_download_doc_h = 'hidden';
+            var s_parent_view = false;
+        </script>
+    </div>
+
+    <div shiro:hasPermission="petroleumEngineering:qualityPro:toEditApply">
+        <script type="text/javascript">
+            s_edit_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="petroleumEngineering:qualityPro:removeQualityPro">
+        <script type="text/javascript">
+            var s_remove_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="petroleumEngineering:qualityPro:toPrint">
+        <script type="text/javascript">
+            var s_print_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="petroleumEngineering:qualityPro:review">
+        <script type="text/javascript">
+            var s_review_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="petroleumEngineering:enterpriseApply:cancelReview">
+        <script type="text/javascript">
+            var s_cancel_review_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="petroleumEngineering:petroleum:downloadProDocFiles">
+        <script type="text/javascript">
+            var s_download_doc_h = '';
+        </script>
+    </div>
+    <div shiro:hasPermission="petroleumEngineering:qualityPro:viewPro">
+        <script type="text/javascript">
+            var s_parent_view = true;
+        </script>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/quality_pro_list.js?v=1.0"></script>
+
+
+</body>
+</html>

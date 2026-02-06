@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverReviewSurverResultDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverReviewSurverResultDO">
+		select `id`,`num_copies`,`apply_unit_is_bear`,`bureau_is_first_award`,`superior_is_opionion`,`unit_build_is_complete_time`,`complete_is_cert`,`unit_is_three_safe`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`plan_is_cert`,`groundwater_is_one_year`,`surver_is_cert`,`contract_is_cert`,`superior_is_evaluate`,`view_new_is_cert`,`technology_is_file`,`water_is_cert`,`surver_is_photo`,`surver_is_report`,`audio_is_need`,`review_result`,`remarks`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated` from ass_surver_review_surver_result where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverReviewSurverResultDO">
+		select cr.`id`,`num_copies`,`apply_unit_is_bear`,`bureau_is_first_award`,`superior_is_opionion`,`unit_build_is_complete_time`,`complete_is_cert`,`unit_is_three_safe`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`plan_is_cert`,`groundwater_is_one_year`,`surver_is_cert`,`contract_is_cert`,`superior_is_evaluate`,`view_new_is_cert`,`technology_is_file`,`water_is_cert`,`surver_is_photo`,`surver_is_report`,`audio_is_need`,`review_result`
+		     ,cr.`remarks`,cr.`opt_uid`,cr.`task_id`,cr.`created`,cr.`updated`,
+		     pro.id pro_id,
+		     pro.major,
+		     pro.pro_code,
+		     pro.pro_sub_type,
+		     pro.pro_type,
+		     pro.chengguo pro_name,
+		     sd.name apply_company
+		from
+		     boot_do.ass_award_enterprise_project pro
+                   JOIN
+             sys_user su on pro.create_uid = su.user_id
+                   JOIN
+             sys_dept sd ON su.dept_id = sd.dept_id
+		           LEFT JOIN
+		     ass_surver_review_surver_result cr on cr.pro_id = pro.id
+        <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="applyUnitIsBear != null and applyUnitIsBear != ''"> and apply_unit_is_bear = #{applyUnitIsBear} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="unitBuildIsCompleteTime != null and unitBuildIsCompleteTime != ''"> and unit_build_is_complete_time = #{unitBuildIsCompleteTime} </if>
+		  		  <if test="completeIsCert != null and completeIsCert != ''"> and complete_is_cert = #{completeIsCert} </if>
+		  		  <if test="unitIsThreeSafe != null and unitIsThreeSafe != ''"> and unit_is_three_safe = #{unitIsThreeSafe} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="planIsCert != null and planIsCert != ''"> and plan_is_cert = #{planIsCert} </if>
+		  		  <if test="groundwaterIsOneYear != null and groundwaterIsOneYear != ''"> and groundwater_is_one_year = #{groundwaterIsOneYear} </if>
+		  		  <if test="surverIsCert != null and surverIsCert != ''"> and surver_is_cert = #{surverIsCert} </if>
+		  		  <if test="contractIsCert != null and contractIsCert != ''"> and contract_is_cert = #{contractIsCert} </if>
+		  		  <if test="superiorIsEvaluate != null and superiorIsEvaluate != ''"> and superior_is_evaluate = #{superiorIsEvaluate} </if>
+		  		  <if test="viewNewIsCert != null and viewNewIsCert != ''"> and view_new_is_cert = #{viewNewIsCert} </if>
+		  		  <if test="technologyIsFile != null and technologyIsFile != ''"> and technology_is_file = #{technologyIsFile} </if>
+		  		  <if test="waterIsCert != null and waterIsCert != ''"> and water_is_cert = #{waterIsCert} </if>
+		  		  <if test="surverIsPhoto != null and surverIsPhoto != ''"> and surver_is_photo = #{surverIsPhoto} </if>
+		  		  <if test="surverIsReport != null and surverIsReport != ''"> and surver_is_report = #{surverIsReport} </if>
+		  		  <if test="audioIsNeed != null and audioIsNeed != ''"> and audio_is_need = #{audioIsNeed} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and cr.remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by cr.id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from boot_do.ass_award_enterprise_project pro
+		JOIN
+		sys_user su on pro.create_uid = su.user_id
+		JOIN
+		sys_dept sd ON su.dept_id = sd.dept_id
+		LEFT JOIN
+		ass_surver_review_surver_result cr on cr.pro_id = pro.id
+		 <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="applyUnitIsBear != null and applyUnitIsBear != ''"> and apply_unit_is_bear = #{applyUnitIsBear} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="unitBuildIsCompleteTime != null and unitBuildIsCompleteTime != ''"> and unit_build_is_complete_time = #{unitBuildIsCompleteTime} </if>
+		  		  <if test="completeIsCert != null and completeIsCert != ''"> and complete_is_cert = #{completeIsCert} </if>
+		  		  <if test="unitIsThreeSafe != null and unitIsThreeSafe != ''"> and unit_is_three_safe = #{unitIsThreeSafe} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="planIsCert != null and planIsCert != ''"> and plan_is_cert = #{planIsCert} </if>
+		  		  <if test="groundwaterIsOneYear != null and groundwaterIsOneYear != ''"> and groundwater_is_one_year = #{groundwaterIsOneYear} </if>
+		  		  <if test="surverIsCert != null and surverIsCert != ''"> and surver_is_cert = #{surverIsCert} </if>
+		  		  <if test="contractIsCert != null and contractIsCert != ''"> and contract_is_cert = #{contractIsCert} </if>
+		  		  <if test="superiorIsEvaluate != null and superiorIsEvaluate != ''"> and superior_is_evaluate = #{superiorIsEvaluate} </if>
+		  		  <if test="viewNewIsCert != null and viewNewIsCert != ''"> and view_new_is_cert = #{viewNewIsCert} </if>
+		  		  <if test="technologyIsFile != null and technologyIsFile != ''"> and technology_is_file = #{technologyIsFile} </if>
+		  		  <if test="waterIsCert != null and waterIsCert != ''"> and water_is_cert = #{waterIsCert} </if>
+		  		  <if test="surverIsPhoto != null and surverIsPhoto != ''"> and surver_is_photo = #{surverIsPhoto} </if>
+		  		  <if test="surverIsReport != null and surverIsReport != ''"> and surver_is_report = #{surverIsReport} </if>
+		  		  <if test="audioIsNeed != null and audioIsNeed != ''"> and audio_is_need = #{audioIsNeed} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverReviewSurverResultDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_review_surver_result
+		(
+			`num_copies`,
+			`apply_unit_is_bear`,
+			`bureau_is_first_award`,
+			`superior_is_opionion`,
+			`unit_build_is_complete_time`,
+			`complete_is_cert`,
+			`unit_is_three_safe`,
+			`apply_source_question`,
+			`feedback_info`,
+			`pro_contact`,
+			`main_user`,
+			`plan_is_cert`,
+			`groundwater_is_one_year`,
+			`surver_is_cert`,
+			`contract_is_cert`,
+			`superior_is_evaluate`,
+			`view_new_is_cert`,
+			`technology_is_file`,
+			`water_is_cert`,
+			`surver_is_photo`,
+			`surver_is_report`,
+			`audio_is_need`,
+			`review_result`,
+			`remarks`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`
+		)
+		values
+		(
+			#{numCopies},
+			#{applyUnitIsBear},
+			#{bureauIsFirstAward},
+			#{superiorIsOpionion},
+			#{unitBuildIsCompleteTime},
+			#{completeIsCert},
+			#{unitIsThreeSafe},
+			#{applySourceQuestion},
+			#{feedbackInfo},
+			#{proContact},
+			#{mainUser},
+			#{planIsCert},
+			#{groundwaterIsOneYear},
+			#{surverIsCert},
+			#{contractIsCert},
+			#{superiorIsEvaluate},
+			#{viewNewIsCert},
+			#{technologyIsFile},
+			#{waterIsCert},
+			#{surverIsPhoto},
+			#{surverIsReport},
+			#{audioIsNeed},
+			#{reviewResult},
+			#{remarks},
+			#{optUid},
+			#{proId},
+			#{taskId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverReviewSurverResultDO">
+		update ass_surver_review_surver_result
+		<set>
+			<if test="numCopies != null">`num_copies` = #{numCopies}, </if>
+			<if test="applyUnitIsBear != null">`apply_unit_is_bear` = #{applyUnitIsBear}, </if>
+			<if test="bureauIsFirstAward != null">`bureau_is_first_award` = #{bureauIsFirstAward}, </if>
+			<if test="superiorIsOpionion != null">`superior_is_opionion` = #{superiorIsOpionion}, </if>
+			<if test="unitBuildIsCompleteTime != null">`unit_build_is_complete_time` = #{unitBuildIsCompleteTime}, </if>
+			<if test="completeIsCert != null">`complete_is_cert` = #{completeIsCert}, </if>
+			<if test="unitIsThreeSafe != null">`unit_is_three_safe` = #{unitIsThreeSafe}, </if>
+			<if test="applySourceQuestion != null">`apply_source_question` = #{applySourceQuestion}, </if>
+			<if test="feedbackInfo != null">`feedback_info` = #{feedbackInfo}, </if>
+			<if test="proContact != null">`pro_contact` = #{proContact}, </if>
+			<if test="mainUser != null">`main_user` = #{mainUser}, </if>
+			<if test="planIsCert != null">`plan_is_cert` = #{planIsCert}, </if>
+			<if test="groundwaterIsOneYear != null">`groundwater_is_one_year` = #{groundwaterIsOneYear}, </if>
+			<if test="surverIsCert != null">`surver_is_cert` = #{surverIsCert}, </if>
+			<if test="contractIsCert != null">`contract_is_cert` = #{contractIsCert}, </if>
+			<if test="superiorIsEvaluate != null">`superior_is_evaluate` = #{superiorIsEvaluate}, </if>
+			<if test="viewNewIsCert != null">`view_new_is_cert` = #{viewNewIsCert}, </if>
+			<if test="technologyIsFile != null">`technology_is_file` = #{technologyIsFile}, </if>
+			<if test="waterIsCert != null">`water_is_cert` = #{waterIsCert}, </if>
+			<if test="surverIsPhoto != null">`surver_is_photo` = #{surverIsPhoto}, </if>
+			<if test="surverIsReport != null">`surver_is_report` = #{surverIsReport}, </if>
+			<if test="audioIsNeed != null">`audio_is_need` = #{audioIsNeed}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_review_surver_result where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_review_surver_result where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

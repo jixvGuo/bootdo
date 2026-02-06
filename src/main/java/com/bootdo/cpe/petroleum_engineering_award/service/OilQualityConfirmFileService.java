@@ -1,0 +1,30 @@
+package com.bootdo.cpe.petroleum_engineering_award.service;
+
+import com.bootdo.cpe.petroleum_engineering_award.domain.OilQualityConfirmFileDO;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 优质工程证实性文件
+ * 
+ * @author chglee
+ * @email mrhouzhibin@163.com
+ * @date 2021-03-14 22:54:14
+ */
+public interface OilQualityConfirmFileService {
+	
+	OilQualityConfirmFileDO get(Integer id);
+	
+	List<OilQualityConfirmFileDO> list(Map<String, Object> map);
+	
+	int count(Map<String, Object> map);
+	
+	int save(OilQualityConfirmFileDO oilQualityConfirmFile);
+	
+	int update(OilQualityConfirmFileDO oilQualityConfirmFile);
+	
+	int remove(Integer id);
+	
+	int batchRemove(Integer[] ids);
+}

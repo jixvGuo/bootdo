@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+    <!--<a th:href="@{/chengguo_team/base_info(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">列表 </a>-->
+    <!--<a href="#" class="active item" th:text="${title}"> </a>-->
+    <!--<a th:href="@{/chengguo_team/base_info_print(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="item">打印 </a>-->
+</div>
+<div class="ui bottom attached segment">
+    <input type="hidden" id="proStat" th:value="${projectInfo.proStat}"/>
+
+    <form action="" class="ui form" id="signupForm">
+        <input id="id" name="id" th:value="${enterpriTeamInfo.id}" type="hidden">
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+        <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+        <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>团队名称</label>
+                <input type="text" name="teamName" th:value="${enterpriTeamInfo.teamName}" placeholder="团队名称">
+            </div>
+            <div class="ui field">
+                <label>研究方向</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="researchDirection" th:value="${enterpriTeamInfo.researchDirection}">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">研究方向</div>
+                    <div class="menu">
+                        <div th:each="r:${researchDirectList}"
+                             class=""th:classappend="${r.name eq enterpriTeamInfo.researchDirection} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}" th:text="${r.name}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>团队带头人</label>
+                <input type="text" name="leader" th:value="${enterpriTeamInfo.leader}" placeholder="团队带头人">
+            </div>
+            <div class="ui field">
+                <label>主要支持单位</label>
+                <input type="text" name="mainSupportCompany" th:value="${enterpriTeamInfo.mainSupportCompany}"
+                       placeholder="主要支持单位">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>团队成立时间</label>
+                <input type="text" name="teamBuildTime" th:value="${enterpriTeamInfo.teamBuildTime}"
+                       placeholder="团队成立时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+            </div>
+            <div class="ui field">
+                <label>申报材料密级</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="securityLevel" th:value="${enterpriTeamInfo.securityLevel}">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">申报材料密级</div>
+                    <div class="menu">
+                        <div class=""th:classappend="${enterpriTeamInfo.securityLevel eq '秘密'} ? 'item active selected' : 'item'" data-value="秘密">秘密</div>
+                        <div class=""th:classappend="${enterpriTeamInfo.securityLevel eq '机密'} ? 'item active selected' : 'item'" data-value="机密">机密</div>
+                        <div class=""th:classappend="${enterpriTeamInfo.securityLevel eq '绝密'} ? 'item active selected' : 'item'" data-value="绝密">绝密</div>
+                        <div class=""th:classappend="${enterpriTeamInfo.securityLevel eq '无'} ? 'item active selected' : 'item'" data-value="无">无</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>可否公示</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="isPublic" th:value="${enterpriTeamInfo.isPublic}">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">可否公示</div>
+                    <div class="menu">
+                        <div class=""th:classappend="${enterpriTeamInfo.isPublic eq '是'} ? 'item active selected' : 'item'" data-value="是">是</div>
+                        <div class=""th:classappend="${enterpriTeamInfo.isPublic eq '否'} ? 'item active selected' : 'item'" data-value="否">否</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>可否公开宣传</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="isPropaganda" th:value="${enterpriTeamInfo.isPropaganda}">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">可否公开宣传</div>
+                    <div class="menu">
+                        <div class=""th:classappend="${enterpriTeamInfo.isPropaganda eq '是'} ? 'item active selected' : 'item'" data-value="是">是</div>
+                        <div class=""th:classappend="${enterpriTeamInfo.isPropaganda eq '否'} ? 'item active selected' : 'item'" data-value="否">否</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>学科分类名称</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="subjectClassificationName"
+                           th:value="${enterpriTeamInfo.subjectClassificationName}">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">学科分类名称</div>
+                    <div class="menu">
+                        <div th:each="ct:${classTypeList}" th:text="${ct.name}" class=""th:classappend="${ct.name eq enterpriTeamInfo.subjectClassificationName} ? 'item active selected' : 'item'"
+                             th:data-value="${ct.name}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>所属国民经济行业</label>
+                <input type="text" name="industryNationalEconomy" th:value="${enterpriTeamInfo.industryNationalEconomy}"
+                       placeholder="所属国民经济行业">
+            </div>
+        </div>
+        <div class="ui field">
+            <label>所属国家重点发展领域</label>
+            <input type="text" name="nationalKeyDevelopmentAreas"
+                   th:value="${enterpriTeamInfo.nationalKeyDevelopmentAreas}" placeholder="所属国家重点发展领域">
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script th:if="${enterpriTeamInfo.id != null && enterpriTeamInfo.id > 0}" type="text/javascript"
+        src="/js/appjs/system/enterpriTeamInfo/edit.js"></script>
+<script th:if="${enterpriTeamInfo.id == null || enterpriTeamInfo.id == 0}" type="text/javascript"
+        src="/js/appjs/system/enterpriTeamInfo/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/common/pro_stat.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+
+    $("input[name='teamBuildTime']").blur(function(){
+       $(this).parent().attr("class","ui field");
+    });
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            teamName: {
+                identifier: 'teamName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写团队名称'
+                    }
+                ]
+            },
+            researchDirection: {
+                identifier: 'researchDirection',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择研究方向'
+                    }
+                ]
+            },
+            leader: {
+                identifier: 'leader',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写团队带头人'
+                    }
+                ]
+            },
+            mainSupportCompany: {
+                identifier: 'mainSupportCompany',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写主要支持单位'
+                    }
+                ]
+            },
+            teamBuildTime: {
+                identifier: 'teamBuildTime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择团队成立时间'
+                    }
+                ]
+            },
+            securityLevel: {
+                identifier: 'securityLevel',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择申报材料密级'
+                    }
+                ]
+            },
+            isPublic: {
+                identifier: 'isPublic',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择是否公示'
+                    }
+                ]
+            },
+            isPropaganda: {
+                identifier: 'isPropaganda',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择可否公开宣传'
+                    }
+                ]
+            },
+            subjectClassificationName: {
+                identifier: 'subjectClassificationName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择学科分类名称'
+                    }
+                ]
+            },
+            industryNationalEconomy: {
+                identifier: 'industryNationalEconomy',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写所属国民经济行业'
+                    }
+                ]
+            },
+            nationalKeyDevelopmentAreas: {
+                identifier: 'nationalKeyDevelopmentAreas',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写所属国家重点发展领域'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

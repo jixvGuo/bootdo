@@ -1,0 +1,145 @@
+<!--<!DOCTYPE html>-->
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=0.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>-->
+    <title>中油建设协会数字化管理平台</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/font_3045003_lkxtjaj4m6.css">
+    <link rel="stylesheet" href="/css/rotation3D.css?v=1.0">
+    <style>
+        body{
+            background-color: #292a38;
+        }
+        .rotation3D-baseMap{
+            position: absolute; left: 10px; right: 0; top: 160px; margin: auto;
+            width: 1312px; height: 516px;
+            background: url("/image/baseMap.png");
+        }
+        .rotation3D-baseMap::before{
+            position: absolute; left: 150px; right: 0; top: 100px; margin: auto; z-index: 99;
+            width: 342px;
+            height: 318px;
+            display: block;
+            content: '';
+            background: url("/image/Logo.png");
+            background-size: 50% 50%;
+            background-repeat: no-repeat;
+            animation: 10s bounceUpDown infinite;
+        }
+    </style>
+</head>
+<body>
+<div id="app" style="padding: 50px;">
+    <!--底座-->
+    <div class="rotation3D-baseMap"></div>
+    <!--旋转3D-->
+    <div id="rotation3D" class="rotation3D" >
+        <button class="center">中心</button>
+        <div class="itemList">
+            <div class="rotation3D__item" :class="item.type" v-for="item in itemList" @click="CurrentlySelected = item.name">
+                <div class="scale">
+                    <div class="baseImg"></div>
+                    <div class="cont">
+                        <i class="iconfont" :class="item.icon"></i>
+                        <p style="font-size: 23px;">{{item.name}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lineList">
+            <div class="rotation3D__line" v-for="item in itemList" :class="item.type">
+                <div v-if="item.type=='blue'" class="pos">
+                    <svg width="10" height="400">
+                        <path id="path1" d="M0 400, 0 0" stroke-dasharray="5,10"></path>
+                    </svg>
+                    <div class="dot dot1 el-icon-caret-right"></div>
+                </div>
+                <div v-if="item.type=='yellow'" class="pos">
+                    <svg width="10" height="400">
+                        <path id="path2" d="M0 400, 0 0" stroke-dasharray="5,10"></path>
+                    </svg>
+                    <div class="dot dot2"><i class="el-icon-close"></i></div>
+                </div>
+                <div v-if="item.type=='green'" class="pos" style="left: -16px;">
+                    <svg width="50" height="400">
+                        <path id="path3" d="M20 400 S 0 200, 20 0" stroke-dasharray="5,10"></path>
+                        <path id="path4" d="M20 400 S 40 200, 20 0" stroke-dasharray="5,10"></path>
+                    </svg>
+                    <div class="dot dot3 el-icon-caret-right"></div>
+                    <div class="dot dot4 el-icon-caret-right"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/jquery-1.10.2.js"></script>
+<script src="/js/vue2.6.10.min.js"></script>
+<script src="/js/rotation3D.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        //数据
+        data: {
+            itemList: [
+                { name:'工法奖', type:'blue', icon:'icon-renyuanguanli', },
+                { name:'科学技术奖', type:'blue', icon:'icon-GPS', },
+                { name:'优秀勘察设计奖', type:'blue', icon:'icon-a-lujishigong2x', },
+                { name:'QC奖', type:'blue', icon:'icon-shujufuwuzhongxin', },
+                { name:'优质工程奖', type:'blue', icon:'icon-liangchang', }
+                // { name:'咨询奖', type:'blue', icon:'icon-liangchang', }
+            ],
+            CurrentlySelected : ""
+        },
+        mounted: function () {
+            new Rotation3D({
+                id: '#rotation3D',
+                farScale: 0.6,
+                xRadius: 0,  //x半径压缩
+                yRadius: 220  //y半径压缩
+            })
+        },
+        methods: {
+            choice : function(){
+
+              if(this.CurrentlySelected == '工法奖') {
+                toLogin('/toLogin?award=gongfa&awardId=5', 5);
+                return;
+              }
+              if(this.CurrentlySelected == '科学技术奖') {
+                 toLogin('/toLogin?award=science&awardId=1', 1);
+                 return;
+              }
+              if(this.CurrentlySelected == '优秀勘察设计奖') {
+                 toLogin('/toLogin?award=surver_pro&awardId=2', 2);
+                 return;
+              }
+              if(this.CurrentlySelected == 'QC奖') {
+                 toLogin('/toLogin?award=qc&awardId=3', 3);
+                 return;
+              }
+              if(this.CurrentlySelected == '优质工程奖') {
+                 toLogin('/toLogin?award=engineer&awardId=4', 4);
+                 return;
+              }
+            }
+        },
+    });
+
+    function btnAction(type)
+	{
+		localStorage.setItem("enterType",type); //存入 参数： 1.调用的值 2.所要存入的数据
+		console.log(localStorage.getItem("enterType") +" ===============");//输出
+	}
+    function buildTip() {
+		alert("建设中。。。");
+	}
+
+	function toLogin(url, type) {
+		btnAction(type);
+		window.location.href = url;
+	}
+</script>
+</html>

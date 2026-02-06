@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.AwardStyleValidateTeamDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.AwardStyleValidateTeamDO">
+		select `id`,`apply_company`,`apply_name`,`is_three_years`,`enclosure_appraisal_book`,`is_science_award`,`is_knowledge_book`,`is_paper`,`is_apply`,`is_business_license`,`is_quality`,`validate_result`,`validate_uid`,`pro_id`,`is_last_validate`,`created`,`reject_reason`,
+		(SELECT pro_group_name FROM boot_do.ass_award_enterprise_project where id = vt.pro_id limit 1) proGroupName
+		from ass_award_style_validate_team vt where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.AwardStyleValidateTeamDO">
+		select `id`,(SELECT
+		sd.name
+		FROM
+		boot_do.ass_award_enterprise_project pro
+		JOIN
+		sys_user su ON pro.create_uid = su.user_id
+		JOIN
+		sys_dept sd ON sd.dept_id = su.dept_id
+		WHERE
+		pro.id = vt.pro_id
+		LIMIT 1) `apply_company`,
+		(SELECT
+		team_name
+		FROM
+		boot_do.ass_enterpri_team_info
+		WHERE
+		pro_id = vt.pro_id
+		LIMIT 1) `apply_name`,`is_three_years`,`enclosure_appraisal_book`,`is_science_award`,`is_knowledge_book`,`is_paper`,`is_apply`,`is_business_license`,`is_quality`,`validate_result`,`validate_uid`,`pro_id`,`is_last_validate`,`created`,`reject_reason`,team_id,
+		(SELECT pro_group_name FROM boot_do.ass_award_enterprise_project where id = vt.pro_id limit 1) proGroupName
+		from ass_award_style_validate_team vt
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyName != null and applyName != ''"> and apply_name = #{applyName} </if>
+		  		  <if test="isThreeYears != null and isThreeYears != ''"> and is_three_years = #{isThreeYears} </if>
+		  		  <if test="enclosureAppraisalBook != null and enclosureAppraisalBook != ''"> and enclosure_appraisal_book = #{enclosureAppraisalBook} </if>
+		  		  <if test="isScienceAward != null and isScienceAward != ''"> and is_science_award = #{isScienceAward} </if>
+		  		  <if test="isKnowledgeBook != null and isKnowledgeBook != ''"> and is_knowledge_book = #{isKnowledgeBook} </if>
+		  		  <if test="isPaper != null and isPaper != ''"> and is_paper = #{isPaper} </if>
+		  		  <if test="isApply != null and isApply != ''"> and is_apply = #{isApply} </if>
+		  		  <if test="isBusinessLicense != null and isBusinessLicense != ''"> and is_business_license = #{isBusinessLicense} </if>
+		  		  <if test="isQuality != null and isQuality != ''"> and is_quality = #{isQuality} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="validateUid != null and validateUid != ''"> and validate_uid = #{validateUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="isLastValidate != null and isLastValidate != ''"> and is_last_validate = #{isLastValidate} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+			      <if test="teamId != null and teamId != ''"> and team_id = #{teamId} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_style_validate_team
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyName != null and applyName != ''"> and apply_name = #{applyName} </if>
+		  		  <if test="isThreeYears != null and isThreeYears != ''"> and is_three_years = #{isThreeYears} </if>
+		  		  <if test="enclosureAppraisalBook != null and enclosureAppraisalBook != ''"> and enclosure_appraisal_book = #{enclosureAppraisalBook} </if>
+		  		  <if test="isScienceAward != null and isScienceAward != ''"> and is_science_award = #{isScienceAward} </if>
+		  		  <if test="isKnowledgeBook != null and isKnowledgeBook != ''"> and is_knowledge_book = #{isKnowledgeBook} </if>
+		  		  <if test="isPaper != null and isPaper != ''"> and is_paper = #{isPaper} </if>
+		  		  <if test="isApply != null and isApply != ''"> and is_apply = #{isApply} </if>
+		  		  <if test="isBusinessLicense != null and isBusinessLicense != ''"> and is_business_license = #{isBusinessLicense} </if>
+		  		  <if test="isQuality != null and isQuality != ''"> and is_quality = #{isQuality} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="validateUid != null and validateUid != ''"> and validate_uid = #{validateUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="isLastValidate != null and isLastValidate != ''"> and is_last_validate = #{isLastValidate} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.AwardStyleValidateTeamDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_award_style_validate_team
+		(
+			`apply_company`, 
+			`apply_name`, 
+			`is_three_years`, 
+			`enclosure_appraisal_book`, 
+			`is_science_award`, 
+			`is_knowledge_book`, 
+			`is_paper`, 
+			`is_apply`, 
+			`is_business_license`, 
+			`is_quality`, 
+			`validate_result`, 
+			`validate_uid`, 
+			`pro_id`, 
+			`is_last_validate`, 
+			`created`,
+			reject_reason,
+			team_id
+		)
+		values
+		(
+			#{applyCompany}, 
+			#{applyName}, 
+			#{isThreeYears}, 
+			#{enclosureAppraisalBook}, 
+			#{isScienceAward}, 
+			#{isKnowledgeBook}, 
+			#{isPaper}, 
+			#{isApply}, 
+			#{isBusinessLicense}, 
+			#{isQuality}, 
+			#{validateResult}, 
+			#{validateUid}, 
+			#{proId}, 
+			#{isLastValidate}, 
+			now(),
+			#{rejectReason},
+			#{teamId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.AwardStyleValidateTeamDO">
+		update ass_award_style_validate_team 
+		<set>
+			<if test="applyCompany != null">`apply_company` = #{applyCompany}, </if>
+			<if test="applyName != null">`apply_name` = #{applyName}, </if>
+			<if test="isThreeYears != null">`is_three_years` = #{isThreeYears}, </if>
+			<if test="enclosureAppraisalBook != null">`enclosure_appraisal_book` = #{enclosureAppraisalBook}, </if>
+			<if test="isScienceAward != null">`is_science_award` = #{isScienceAward}, </if>
+			<if test="isKnowledgeBook != null">`is_knowledge_book` = #{isKnowledgeBook}, </if>
+			<if test="isPaper != null">`is_paper` = #{isPaper}, </if>
+			<if test="isApply != null">`is_apply` = #{isApply}, </if>
+			<if test="isBusinessLicense != null">`is_business_license` = #{isBusinessLicense}, </if>
+			<if test="isQuality != null">`is_quality` = #{isQuality}, </if>
+			<if test="validateResult != null">`validate_result` = #{validateResult}, </if>
+			<if test="validateUid != null">`validate_uid` = #{validateUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="isLastValidate != null">`is_last_validate` = #{isLastValidate}, </if>
+			<if test="created != null">`created` = #{created}</if>
+			<if test="rejectReason != null and rejectReason != ''">`reject_reason` = #{rejectReason}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="cleanLastValidate" parameterType="int">
+		update ass_award_style_validate_team set is_last_validate = 0 where pro_id = #{proId} and team_id = #{teamId} and is_last_validate = 1
+	</update>
+	
+	<delete id="remove">
+		delete from ass_award_style_validate_team where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_award_style_validate_team where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

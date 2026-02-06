@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriTeamEnclosureListDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriTeamEnclosureListDO">
+		select `id`,`enc_num`,`enc_name`,`enc_memo`,`opt_uid`,`task_id`,`pro_id`,`created`,
+		 (select url from sys_file where id = en.file_id) file_url
+		 from ass_enterpri_team_enclosure_list en where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriTeamEnclosureListDO">
+		select `id`,`enc_num`,`enc_name`,`enc_memo`,`opt_uid`,`task_id`,`pro_id`,`created`,
+		(select url from sys_file where id = en.file_id) file_url
+		from ass_enterpri_team_enclosure_list en
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="encNum != null and encNum != ''"> and enc_num = #{encNum} </if>
+		  		  <if test="encName != null and encName != ''"> and enc_name = #{encName} </if>
+		  		  <if test="encMemo != null and encMemo != ''"> and enc_memo = #{encMemo} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_team_enclosure_list
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="encNum != null and encNum != ''"> and enc_num = #{encNum} </if>
+		  		  <if test="encName != null and encName != ''"> and enc_name = #{encName} </if>
+		  		  <if test="encMemo != null and encMemo != ''"> and enc_memo = #{encMemo} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriTeamEnclosureListDO">
+		insert into ass_enterpri_team_enclosure_list
+		(
+			`id`, 
+			`enc_num`, 
+			`enc_name`, 
+			`enc_memo`, 
+			`opt_uid`, 
+			`task_id`, 
+			`pro_id`,
+			file_id
+		)
+		values
+		(
+			#{id}, 
+			#{encNum}, 
+			#{encName}, 
+			#{encMemo}, 
+			#{optUid}, 
+			#{taskId}, 
+			#{proId},
+			#{fileId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriTeamEnclosureListDO">
+		update ass_enterpri_team_enclosure_list 
+		<set>
+			<if test="encNum != null">`enc_num` = #{encNum}, </if>
+			<if test="encName != null">`enc_name` = #{encName}, </if>
+			<if test="encMemo != null">`enc_memo` = #{encMemo}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="fileId != null">`file_id` = #{fileId},</if>
+			<if test="created != null">`created` = #{created}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_team_enclosure_list where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_team_enclosure_list where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

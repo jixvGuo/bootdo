@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header_lu"></head>
+
+<body>
+
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form id="signupForm" action="" class="ui basic form">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${reviewResult.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+            <h4 class="ui red horizontal divider header">基本信息</h4>
+            <div class="ui two fields">
+                <div class="ui field disabled">
+                    <label>编码</label>
+                    <input type="text" name="proCode" th:value="${reviewResult.proCode}" placeholder="编码">
+                </div>
+                <div class="ui field disabled">
+                    <label>申报单位</label>
+                    <input type="text" name="applyCompany" th:value="${reviewResult.applyCompany}" placeholder="申报单位">
+                </div>
+            </div>
+            <div class="ui field disabled">
+                <label>申报项目名称</label>
+                <input type="text" name="proName" th:value="${reviewResult.proName}" placeholder="申报项目名称">
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>册数</label>
+                    <input type="text" name="numCopies" th:value="${reviewResult.numCopies}" placeholder="册数">
+                </div>
+            </div>
+            <div class="ui field disabled">
+                <label>类别编号</label>
+                <input type="text" name="remarks" th:value="${reviewResult.major}" placeholder="专业">
+            </div>
+            <div class="ui field">
+                <label>备注</label>
+                <input type="text" name="remarks" th:value="${reviewResult.remarks}" placeholder="备注">
+            </div>
+            <h4 class="ui red horizontal divider header">设计类一</h4>
+            <div class="inline fields">
+                <label>是否申报单位承担</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="applyUnitIsBear" th:checked="${reviewResult.applyUnitIsBear} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="applyUnitIsBear" th:checked="${reviewResult.applyUnitIsBear} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>是否局级 一二等奖</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="bureauIsFirstAward" th:checked="${reviewResult.bureauIsFirstAward} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="bureauIsFirstAward" th:checked="${reviewResult.bureauIsFirstAward} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>上级意见及盖章</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="superiorIsOpionion" th:checked="${reviewResult.superiorIsOpionion} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="superiorIsOpionion" th:checked="${reviewResult.superiorIsOpionion} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>建设单位证明的投运时间</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="useTimeIsCert" th:checked="${reviewResult.useTimeIsCert} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="useTimeIsCert" th:checked="${reviewResult.useTimeIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label> 引进国外技术或中外合作设计，在国内建设且由申报单位进行初设</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="technologyIsStart" th:checked="${reviewResult.technologyIsStart} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="technologyIsStart" th:checked="${reviewResult.technologyIsStart} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>是否有批准立项文件或初设批复(分期、分单项或单位工程申报）</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="fileIsApproval" th:checked="${reviewResult.fileIsApproval} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="fileIsApproval" th:checked="${reviewResult.fileIsApproval} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>投资是否超概算</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="investmentIsBeyond" th:checked="${reviewResult.investmentIsBeyond} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="investmentIsBeyond" th:checked="${reviewResult.investmentIsBeyond} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>设计资质</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designIsCert" th:checked="${reviewResult.designIsCert} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designIsCert" th:checked="${reviewResult.designIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>单位三年无事故安全证明</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="unitIsThreeSafe" th:checked="${reviewResult.unitIsThreeSafe} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="unitIsThreeSafe" th:checked="${reviewResult.unitIsThreeSafe} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>人员名单数</label>
+                <input type="text" name="userList" th:value="${reviewResult.userList}" placeholder="人员名单数">
+            </div>
+            <div class="ui field">
+                <label>申报材料存在问题</label>
+                <input type="text" name="applySourceQuestion" th:value="${reviewResult.applySourceQuestion}" placeholder="申报材料存在问题">
+            </div>
+            <div class="ui field">
+                <label>问题回馈情况</label>
+                <input type="text" name="feedbackInfo" th:value="${reviewResult.feedbackInfo}" placeholder="问题回馈情况">
+            </div>
+            <div class="ui field">
+                <label>项目联系人及电话</label>
+                <input type="text" name="proContact" th:value="${reviewResult.proContact}" placeholder="项目联系人及电话">
+            </div>
+            <div class="ui field">
+                <label>主要完成人</label>
+                <input type="text" name="mainUser" th:value="${reviewResult.mainUser}" placeholder="主要完成人">
+            </div>
+            <h4 class="ui blue horizontal divider header">项目建设基本程序</h4>
+            <div class="inline fields">
+                <label>地方政府审批意见</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="localGovIsOpinion" th:checked="${reviewResult.localGovIsOpinion} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="localGovIsOpinion" th:checked="${reviewResult.localGovIsOpinion} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>建设方评价意见</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="buildIsOpinion" th:checked="${reviewResult.buildIsOpinion} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="buildIsOpinion" th:checked="${reviewResult.buildIsOpinion} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui blue horizontal divider header">国（境）外项目</h4>
+            <div class="inline fields">
+                <label>合同</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="contractIsCert" th:checked="${reviewResult.contractIsCert} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="contractIsCert" th:checked="${reviewResult.contractIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>上级或建设方证明</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="superiorIsCert" th:checked="${reviewResult.superiorIsCert} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="superiorIsCert" th:checked="${reviewResult.superiorIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>地方政府证明</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="localGovIsCert" th:checked="${reviewResult.localGovIsCert} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="localGovIsCert" th:checked="${reviewResult.localGovIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui blue horizontal divider header">附件</h4>
+            <div class="inline fields">
+                <label>查新报告（报一等奖）</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="viewNewIsReport" th:checked="${reviewResult.viewNewIsReport} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="viewNewIsReport" th:checked="${reviewResult.viewNewIsReport} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>技术审定文件</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="techFileIsCheck" th:checked="${reviewResult.techFileIsCheck} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="techFileIsCheck" th:checked="${reviewResult.techFileIsCheck} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">设计类二</h4>
+            <h4 class="ui blue horizontal divider header">申报表</h4>
+            <h4 class="ui yellow horizontal divider header">工程概况、工程设计的难点及先进性</h4>
+            <div class="inline fields">
+                <label>工程项目简单介绍</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="proIsDesc" th:checked="${reviewResult.proIsDesc} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="proIsDesc" th:checked="${reviewResult.proIsDesc} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>申报理由</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="applyIsReason" th:checked="${reviewResult.applyIsReason} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="applyIsReason" th:checked="${reviewResult.applyIsReason} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>主要经济指标对比情况</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="mainEconomicIsOk" th:checked="${reviewResult.mainEconomicIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="mainEconomicIsOk" th:checked="${reviewResult.mainEconomicIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>主要技术成果对比情况</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="mainTechnologyIsOk" th:checked="${reviewResult.mainTechnologyIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="mainTechnologyIsOk" th:checked="${reviewResult.mainTechnologyIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>采用新技术的名称及来源</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="newTechnologyIsOk" th:checked="${reviewResult.newTechnologyIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="newTechnologyIsOk" th:checked="${reviewResult.newTechnologyIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui blue horizontal divider header">附件</h4>
+            <h4 class="ui yellow horizontal divider header">图纸</h4>
+            <h4 class="ui purple horizontal divider header">工艺项目</h4>
+            <div class="inline fields">
+                <label>总平面图</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="generalLayoutIsOk" th:checked="${reviewResult.generalLayoutIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="generalLayoutIsOk" th:checked="${reviewResult.generalLayoutIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>主要工艺流程图</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="workmanshipIsOk" th:checked="${reviewResult.workmanshipIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="workmanshipIsOk" th:checked="${reviewResult.workmanshipIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>设备表</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="equTableIsOk" th:checked="${reviewResult.equTableIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="equTableIsOk" th:checked="${reviewResult.equTableIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>新工艺的系统图</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="workmanshipSysIsOk" th:checked="${reviewResult.workmanshipSysIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="workmanshipSysIsOk" th:checked="${reviewResult.workmanshipSysIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui purple horizontal divider header">普通建筑</h4>
+            <div class="inline fields">
+                <label>总平面图（平、立、剖面）</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="normalGeneralLayoutIsOk" th:checked="${reviewResult.normalGeneralLayoutIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="normalGeneralLayoutIsOk" th:checked="${reviewResult.normalGeneralLayoutIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui purple horizontal divider header">高层及大跨度</h4>
+            <div class="inline fields">
+                <label>总平面图（平、立、剖面）</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="highGeneralLayoutIsOk" th:checked="${reviewResult.highGeneralLayoutIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="highGeneralLayoutIsOk" th:checked="${reviewResult.highGeneralLayoutIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>结构主要图纸</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="structuralPicIsOk" th:checked="${reviewResult.structuralPicIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="structuralPicIsOk" th:checked="${reviewResult.structuralPicIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>设备主要图纸</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="equPicIsOk" th:checked="${reviewResult.equPicIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="equPicIsOk" th:checked="${reviewResult.equPicIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>勘察报告</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="surverIsReport" th:checked="${reviewResult.surverIsReport} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="surverIsReport" th:checked="${reviewResult.surverIsReport} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui yellow horizontal divider header">证明材料</h4>
+            <div class="inline fields">
+                <label>各专业应用计算机软件表</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="softListIsOk" th:checked="${reviewResult.softListIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="softListIsOk" th:checked="${reviewResult.softListIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>交竣工证明</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="completeIsCert" th:checked="${reviewResult.completeIsCert} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="completeIsCert" th:checked="${reviewResult.completeIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>经济</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="economicIsOk" th:checked="${reviewResult.economicIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="economicIsOk" th:checked="${reviewResult.economicIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>社会</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="socialIsOk" th:checked="${reviewResult.socialIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="socialIsOk" th:checked="${reviewResult.socialIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>环境</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="envIsOk" th:checked="${reviewResult.envIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="envIsOk" th:checked="${reviewResult.envIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>安全</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="safeIsOk" th:checked="${reviewResult.safeIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="safeIsOk" th:checked="${reviewResult.safeIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui yellow horizontal divider header">对照表</h4>
+            <div class="inline fields">
+                <label>工业项目主要原料、材料消耗定额与生产实际值对比表</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="rawMaterialIsOk" th:checked="${reviewResult.rawMaterialIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="rawMaterialIsOk" th:checked="${reviewResult.rawMaterialIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>产品质量设计值与生产实际值对比表</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="qualityIsOk" th:checked="${reviewResult.qualityIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="qualityIsOk" th:checked="${reviewResult.qualityIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>公用工程消耗定额设计值与生产实际值对比表</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="expendIsOk" th:checked="${reviewResult.expendIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="expendIsOk" th:checked="${reviewResult.expendIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>工业项目废渣、废液、废气排放量及排放指标设计值与生产实际值对比表</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="residueIsOk" th:checked="${reviewResult.residueIsOk} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="residueIsOk" th:checked="${reviewResult.residueIsOk} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui yellow horizontal divider header">VCD</h4>
+            <div class="inline fields">
+                <label>需要时提供项目和新技术有关音像制品</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="audioIsNeed" th:checked="${reviewResult.audioIsNeed} eq 是" value="是"  tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="audioIsNeed" th:checked="${reviewResult.audioIsNeed} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="ui red horizontal divider header">形式审查意见</h4>
+            <div class="inline fields">
+                <label>形式审查意见</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 参评" value="参评">
+                        <label>参评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 完善后参评" value="完善后参评">
+                        <label>完善后参评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 不评" value="不评">
+                        <label>不评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 缓评" value="缓评">
+                        <label>缓评</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button">提交</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/cpe/surverReviewDesignResult/add.js?v=1.1"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.radio.checkbox').checkbox();
+    $('.ui.form').form({});
+</script>
+</body>
+
+</html>

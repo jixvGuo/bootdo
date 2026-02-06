@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+					<h5 style="width:100%;vertical-align:middle;text-align:center;font-weight:bold;font-size:18px;">一、成果基本情况</h5>
+                        <input type="hidden" th:value="${projectInfo.proStat}" id="proStat">
+                        <input type="hidden" id="isReadonly" th:value="${readonly}">
+                        <form method="post" class="form-horizontal" action="#"  id="signupForm">
+                            <input id="id" name="id" th:value="${enterpriseChengguoBaseInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">成果名称
+                                        </td>
+                                        <td id="chengguoName" pname="chengguoName" name="chengguoName" style="width:70%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="7" th:text="${enterpriseChengguoBaseInfo.chengguoName}"></td>
+                                    </tr>
+                                    <tr th:each="m,mstat:${enterpriseChengguoBaseInfo.applyEnterpriseList}" >
+                                        <td th:if="${mstat.index == 0}" id="inputtrigger1" style="width:30%;vertical-align:middle;text-align:center" colspan="2" th:rowspan="${mstat.size}">申报单位
+                                        </td>
+                                        <td th:if="${mstat.index == 0}" style="width:70%;height:150px;vertical-align:top;text-align:left"
+                                            contentEditable="plaintext-only" colspan="7" pname="applyEnterpriseList" name="inputtrigger10" th:text="${m}">
+												申报单位一(盖章)
+                                        </td>
+                                        <td th:if="${mstat.index > 0}"  style="width:70%;height:150px;vertical-align:top;text-align:left" contentEditable="plaintext-only"
+                                           colspan="7" pname="applyEnterpriseList" name="inputtrigger1" th:text="${m}">
+                                            申报单位一(盖章)
+                                        </td>
+                                    </tr>
+
+                                    <tr th:each="m,mstat:${enterpriseChengguoBaseInfo.masterEnterpriseList}">
+                                        <td th:if="${mstat.index == 0}" style="width:30%;vertical-align:middle;text-align:center" colspan="2"  th:rowspan="${mstat.size}" id="inputtrigger2">主要完成单位
+                                        </td>
+                                        <td th:if="${mstat.index == 0}" style="width:70%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="7" id="masterCompleteEnterprise" pname="masterEnterpriseList" name='inputtrigger20' th:text="${m}">
+                                        </td>
+                                        <td th:if="${mstat.index > 0}"  style="width:70%;vertical-align:middle;text-align:left" contentEditable="plaintext-only" colspan="7" pname="masterEnterpriseList" name="inputtrigger2" th:text="${m}">
+                                            申报单位
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1" >主要完成人员
+                                        </td>
+                                        <td colspan="7">
+                                            <textarea id="mainCompleteUsers" autofocus name="mainCompleteUsers"
+                                                      th:text="${enterpriseChengguoBaseInfo.mainCompleteUsers}"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">成果所属专业
+                                        </td>
+                                        <td style="width:70%;vertical-align:top;text-align:left"
+                                             colspan="7">
+											<select style="width:100%;height:100%" name="major" id="major">
+											<option th:each="m:${majors}" th:value="${m.name}" th:selected="${enterpriseChengguoBaseInfo.major} eq ${m.name}"  th:text="${m.name}"></option>
+											</select>
+                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">成果所属学科分类
+                                        </td>
+                                        <td style="width:70%;vertical-align:top;text-align:left"
+                                             colspan="7">
+											<select style="width:100%;height:100%" name="subjectType" id="subjectType" >
+                                                <option th:each="c:${classes}" th:value="${c.name}" th:selected="${enterpriseChengguoBaseInfo.subjectType} eq ${c.name}" th:text="${c.name}">  </option>
+											</select>
+                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">联系人
+                                        </td>
+                                        <td style="width:20%;vertical-align:top;text-align:left" colspan="1">
+                                           <input id="concatUser" pname="concatUser" name="concatUser" th:value="${enterpriseChengguoBaseInfo.concatUser}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">部门
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left" colspan="3">
+                                            <input id="concatDepartment" pname="concatDepartment" name="concatDepartment" th:value="${enterpriseChengguoBaseInfo.concatDepartment}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">职务
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left" colspan="1">
+                                            <input id="concatWorkPosition"  th:value="${enterpriseChengguoBaseInfo.concatWorkPosition}" pname="concatWorkPosition" name="concatWorkPosition" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">电话
+                                        </td>
+                                        <td style="width:20%;vertical-align:top;text-align:left" colspan="1">
+                                            <input id="concatTel" name="concatTel" pname="concatTel" th:value="${enterpriseChengguoBaseInfo.concatTel}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">手机
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left" colspan="3">
+                                            <input id="concatPhone" pname="concatPhone" name="concatPhone" th:value="${enterpriseChengguoBaseInfo.concatPhone}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">传真
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left" colspan="1">
+                                            <input id="concatFax" pname="concatFax" name="concatFax" th:value="${enterpriseChengguoBaseInfo.concatFax}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">邮编
+                                        </td>
+                                        <td style="width:20%;vertical-align:top;text-align:left" colspan="1">
+                                            <input id="concatCode" pname="concatCode" name="concatCode" th:value="${enterpriseChengguoBaseInfo.concatCode}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">地址
+                                        </td>
+                                        <td style="width:60%;vertical-align:top;text-align:left" colspan="6">
+                                            <input id="concatAddr" pname="concatAddr" name="concatAddr" th:value="${enterpriseChengguoBaseInfo.concatAddr}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">电子邮件
+                                        </td>
+                                        <td style="width:30%;vertical-align:top;text-align:left" colspan="7">
+                                            <input id="concatEmail" pname="concatEmail" name="concatEmail" th:value="${enterpriseChengguoBaseInfo.concatEmail}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">任务来源
+                                        </td>
+                                        <td colspan="7">
+                                            <textarea id="taskSource" autofocus name="taskSource"
+                                                      th:text="${enterpriseChengguoBaseInfo.taskSource}"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">具体计划、基金的名称及编号
+                                        </td>
+                                        <td colspan="7">
+                                            <textarea id="planDetalNameCode" autofocus name="planDetalNameCode"
+                                                      th:text="${enterpriseChengguoBaseInfo.planDetalNameCode}"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">项目起止时间
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:center" colspan="1" rowspan="1">开始：
+                                        </td>
+                                        <td id="selStartTime" pname="startTime" style="width:30%;vertical-align:top;text-align:left" contentEditable="plaintext-only" colspan="2" th:text="${enterpriseChengguoBaseInfo.startTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">完成：
+                                        </td>
+                                        <td id="selEndTime" pname="endTime" style="width:30%;vertical-align:top;text-align:left" contentEditable="plaintext-only" colspan="3" th:text="${enterpriseChengguoBaseInfo.endTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">成果评价（鉴定）部门
+                                        </td>
+                                        <td id="reiewDepartment" pname="reiewDepartment" name="reiewDepartment" th:text="${enterpriseChengguoBaseInfo.reiewDepartment}" style="width:25%;vertical-align:top;text-align:left"contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3" rowspan="1">评价结论
+                                        </td>
+                                        <td id="commentReult" pname="commentReult" name="commentReult" th:text="${enterpriseChengguoBaseInfo.commentReult}" style="width:25%;vertical-align:top;text-align:left"contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">项目密级
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left" colspan="2">
+                                            <!--<input id="securityLevel" name="securityLevel" th:value="${enterpriseChengguoBaseInfo.securityLevel}" class="form-control" type="text">-->
+
+
+                                            <select style="width:100%;height:100%" name="securityLevel" id="securityLevel">
+                                                <option th:each="c:${securityList}"  th:selected="${enterpriseChengguoBaseInfo.securityLevel} eq ${c.name}" th:value="${c.name}" th:text="${c.name}"></option>
+                                            </select>
+
+
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3" rowspan="1">保密期限
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left"contentEditable="plaintext-only" colspan="2">
+                                            <input id="securityTimeLen" pname="securityTimeLen" name="securityTimeLen" th:value="${enterpriseChengguoBaseInfo.securityTimeLen}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">定密日期
+                                        </td>
+                                        <td id="selSureSecurityDate" pname="sureSecurityDate" style="width:25%;vertical-align:top;text-align:left" colspan="2" th:text="${enterpriseChengguoBaseInfo.sureSecurityDate}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3" rowspan="1">定密审查单位
+                                        </td>
+                                        <td style="width:25%;vertical-align:top;text-align:left" colspan="2">
+                                            <input id="sureSecurityDepartment" pname="sureSecurityDepartment" name="sureSecurityDepartment" th:value="${enterpriseChengguoBaseInfo.sureSecurityDepartment}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="1">本成果曾获何部门何种奖励，奖励等级及奖金
+                                        </td>
+                                        <td colspan="7">
+                                            <textarea id="departmentAwardInfo" autofocus name="departmentAwardInfo"
+                                                      th:text="${enterpriseChengguoBaseInfo.departmentAwardInfo}"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="2">申报单位意见
+                                        </td>
+                                        <td colspan="7">
+                                            <textarea id="enterpriseOpinion" autofocus name="enterpriseOpinion"
+                                                      th:text="${enterpriseChengguoBaseInfo.enterpriseOpinion}"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:70%;vertical-align:bottom;text-align:right" colspan="7">
+												<span>申报单位公章&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br> &nbsp;&nbsp;&nbsp;&nbsp;年  &nbsp;&nbsp;&nbsp;&nbsp;月  &nbsp;&nbsp;&nbsp;&nbsp;日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>
+                                         </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include::footer"></div>
+    <script src="/js/plugins/datepicker/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" th:if="${enterpriseChengguoBaseInfo.id > 0}" src="/js/appjs/system/enterpriseChengguoBaseInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${enterpriseChengguoBaseInfo.id == null || enterpriseChengguoBaseInfo.id == 0}" src="/js/appjs/system/enterpriseChengguoBaseInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/pro_stat.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+
+    <script type="text/javascript">
+        let proId = $("#proId").val();
+        let uploadObj =  {
+            url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+            fileKey: 'file[]', //服务器端获取文件数据的参数名
+            connectionCount: 3,
+            leaveConfirm: '正在上传文件'
+        };
+
+        var mainCompleteUsers = new Simditor({
+            textarea: $("#mainCompleteUsers"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var taskSource = new Simditor({
+            textarea: $("#taskSource"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var planDetalNameCode = new Simditor({
+            textarea: $("#planDetalNameCode"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var departmentAwardInfo = new Simditor({
+            textarea: $("#departmentAwardInfo"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var enterpriseOpinion = new Simditor({
+            textarea: $("#enterpriseOpinion"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+
+        function addRowByID(e, c){
+            var line = 0;
+            if(c == 1){
+                line += Number($("#inputtrigger1").attr("rowspan"));
+            } else {
+                line += Number($("#inputtrigger1").attr("rowspan"));
+                line += Number($("#inputtrigger2").attr("rowspan"));
+            }
+            var str = "";
+            if(c == 1){
+                str =   "<tr>"+
+                    "    <td style=\"width:70%;height:150px;vertical-align:top;text-align:left\" contentEditable=\"true\" "+
+                    "        colspan=\"7\" pname=\"applyEnterpriseList\" name=\"inputtrigger1\" >"+
+                    "		 申报单位一(盖章)"+
+                    "    </td>"+
+                    "</tr>";
+            } else {
+                str =  "<tr>"+
+                    "    <td style=\"width:70%;vertical-align:middle;text-align:left\" contentEditable=\"true\" colspan=\"7\" pname=\"masterEnterpriseList\" name=\"inputtrigger2\">" +
+                    "申报单位" +
+                    "</td>"+
+                    "</tr>";
+            }
+            currentRow = $('table:first tbody tr:eq(' + line + ')');
+            currentRow.after(str);
+            var rowspan = Number($("#" + e).attr("rowspan")) + 1;
+            $("#" + e).attr("rowspan", rowspan);
+
+            $("td[name='inputtrigger1']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger1',1)\"><i class=\"fa fa-plus\" ></i></a>");
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"deleteRowByID(this, 'inputtrigger1')\"><i class=\"fa fa-trash-o\" ></i></a>");
+            }, function() {
+                $(this).text($(this).text());
+            });
+            $("td[name='inputtrigger2']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger2',2)\"><i class=\"fa fa-plus\" ></i></a>");
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"deleteRowByID(this, 'inputtrigger2')\"><i class=\"fa fa-trash-o\" ></i></a>");
+            }, function() {
+                $(this).text($(this).text());
+            });
+
+            $("td[name='inputtrigger10']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger1',1)\"><i class=\"fa fa-plus\" ></i></a>");
+            }, function() {
+                $(this).text($(this).text());
+            });
+            $("td[name='inputtrigger20']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger2',2)\"><i class=\"fa fa-plus\" ></i></a>");
+            }, function() {
+                $(this).text($(this).text());
+            });
+        }
+
+        $(document).ready(function(){
+            $("td[name='inputtrigger10']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger1',1)\"><i class=\"fa fa-plus\" ></i></a>");
+
+                /*let size = $("td[name='inputtrigger1']").length;
+                if(size > 0) {
+                    $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"deleteRowByID(this'inputtrigger1')\"><i class=\"fa fa-trash-o\" ></i></a>");
+                }*/
+            }, function() {
+                $(this).text($(this).text());
+            });
+            $("td[name='inputtrigger20']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger2',2)\"><i class=\"fa fa-plus\" ></i></a>");
+
+                /*let size = $("td[name='inputtrigger2']").length;
+                if(size > 0) {
+                    $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"deleteRowByID(this, 'inputtrigger2')\"><i class=\"fa fa-trash-o\" ></i></a>");
+                }*/
+            }, function() {
+                $(this).text($(this).text());
+            });
+
+            $("td[name='inputtrigger1']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger1',1)\"><i class=\"fa fa-plus\" ></i></a>");
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"deleteRowByID(this,'inputtrigger1')\"><i class=\"fa fa-trash-o\" ></i></a>");
+            }, function() {
+                $(this).text($(this).text());
+            });
+            $("td[name='inputtrigger2']").hover(function(){
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID('inputtrigger2',2)\"><i class=\"fa fa-plus\" ></i></a>");
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"deleteRowByID(this,'inputtrigger2')\"><i class=\"fa fa-trash-o\" ></i></a>");
+            }, function() {
+                $(this).text($(this).text());
+            });
+
+        });
+
+
+        function deleteRowByID(c, id){
+            $(c).parent().parent().remove();
+            let size = $("td[name='"+id+"']").length + 1;
+            $("#" + id).attr("rowspan", size);
+        }
+	
+	</script>  
+</body>
+
+</html>

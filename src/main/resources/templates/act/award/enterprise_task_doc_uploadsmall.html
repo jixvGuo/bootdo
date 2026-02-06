@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_file_upload.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:33 GMT -->
+<head th:include="include :: header"></head>
+<link href="/css/plugins/dropzone/basic.css" th:href="@{/css/plugins/dropzone/basic.css}" rel="stylesheet">
+<link href="/css/plugins/dropzone/dropzone.css" th:href="@{/css/plugins/dropzone/dropzone.css}" rel="stylesheet">
+<link href="/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet">
+<link href="/css/style.min862f.css?v=4.1.0" th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+<link href="/css/font-awesome.min93e3.css?v=4.4.0" th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>文件上传</h5>
+                    </div>
+                    <div class="">
+                        <form  id="my-awesome-dropzone" enctype="multipart/form-data"
+                               class="dropzone" action="/enterprise_pro/upload_doc">
+                            <input type="hidden" th:value="${proId}" name="proId" id="proId" />
+                            <input type="hidden" th:value="${taskId}" name="taskId" id="taskId" />
+                            <input type="hidden" th:value="${fileType}" name="fileType" id="fileType" />
+                            <div class="dropzone-previews"></div>
+                            <div class="dz-default dz-message">
+                                将文件放在此处或单击以上传
+                            </div>
+                            <button type="submit" class="btn btn-primary pull-right">提交</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <!--<script src="/js/content.min.js?v=1.0.0"></script>-->
+    <script src="/js/plugins/dropzone/dropzone.js"></script>
+    <script>
+        $(document).ready(function(){
+            Dropzone.options.myAwesomeDropzone={
+                addRemoveLinks:true,
+                autoProcessQueue:false,
+                uploadMultiple:true,
+                parallelUploads:100,
+                maxFiles:100,
+                init:function(){
+                    var myDropzone=this;
+                    this.element.querySelector("button[type=submit]").addEventListener("click",function(e){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue()});
+                    this.on("sendingmultiple",function(){});
+                    this.on("successmultiple",function(files,response){
+                        console.log("successmultiple===>",response);
+                        var fileStr = "";
+                        var fileSize = response.fileSize;
+                        for(var i=0;i< fileSize;i++) {
+                            var f = response.files[i];
+                            var content = '<div class="file-box">' +
+                                '                       <div class="file">' +
+                                '                            <input type="hidden" name="upDocId" value="'+f.id+'"/>'+
+                                '                            <a href="javascript:void(0)" ' +
+                                ' onclick="javascript:toViewUploadDoc(\''+f.fileName+'\',\''+f.url+'\')" >' +
+                                '                                   <span class="corner"></span>' +
+                                '                                   <div class="icon">' +
+                                '                                        <i class="fa fa-file"></i>' +
+                                '                                   </div>' +
+                                '                                   <div class="file-name">' +
+                                '                                         <span>'+f.fileName+'</span>' +
+                                '                                         <br>' +
+                                '                                         <small>添加时间：<span>'+f.created+'</span></small> ' +
+                                '                                   </div>' +
+                                '                             </a>' +
+                                '                       </div> ' +
+                                '            </div>';
+                            fileStr += content;
+                        }
+                        console.log("AllData" + fileStr);
+
+
+                        var fileType = response.fileType;
+
+                        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+
+                        console.log("index-->",index)
+                        console.log("parent--->",parent)
+                        console.log("window.name-->",window.name)
+
+                        console.log("w========-->",$(window.parent.document).contents())
+
+
+                        var iframe = $(window.parent.document).contents().find("iframe").contents();
+                        console.log(iframe.find("#"+fileType));
+
+                        console.log("--html-->",iframe.find("#"+fileType).find(".col-sm-12").html());
+
+                        iframe.find("#"+fileType).find(".col-sm-12").prepend(fileStr);
+                        var curSize = iframe.find("#"+fileType).find(".file").size();
+                        console.log("curSize=",curSize);
+                         parent.layer.close(index);
+                        // parent.location.reload();
+                    });
+                    this.on("success",function(files,response){
+                        console.log("success--aaa-->",response);
+                        location.reload();
+                    });
+                    this.on("errormultiple",function(files,response){})
+                }
+          }
+        });
+    </script>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_file_upload.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:35 GMT -->
+</html>

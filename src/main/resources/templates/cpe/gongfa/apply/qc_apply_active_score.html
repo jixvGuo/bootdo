@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body>
+    <div class="ui bottom attached segment">
+        <h1 style="text-align: center;">质量管理小组活动现场评价表</h1>
+        <table class="ui celled  table" id="scoreTable">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${score.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+            <tr>
+                <th style="width: 10%;text-align: center;">序号</th>
+                <th style="width: 10%;text-align: center;">评审项目</th>
+                <th style="width: 10%;text-align: center;">评审方法</th>
+                <th style="width: 50%;text-align: center;">评审内容</th>
+                <th style="width: 10%;text-align: center;">配分</th>
+                <th style="width: 10%;text-align: center;">得分</th>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">1</td>
+                <td style="width: 10%;text-align: center;">质量管理小组活动的组织</td>
+                <td style="width: 10%;text-align: center;">查看记录</td>
+                <td style="width: 50%;text-align: left;">(1)小组和课题进行注册登记；<br>
+                    (2)小组活动时，小组成员出勤及参与各步骤活动情况；<br>
+                    (3)小组活动计划及完成情况
+                     </td>
+                <td style="width: 10%;text-align: center;">10分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"   id="organizationScore" th:text="${score.organizationScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">2</td>
+                <td style="width: 10%;text-align: center;">活动情况与活动记录</td>
+                <td style="width: 10%;text-align: center;">听取介绍<br>
+                    查看记录<br>
+                    现场验证
+                    </td>
+                <td style="width: 50%;text-align: left;">(1)活动过程按质量管理小组活动程序开展；<br>
+                    (2)活动记录（包括各项原始数据、统计方法等）保存完整、真实；<br>
+                    (3)活动记录的内容与发表资料一致
+
+                     </td>
+                <td style="width: 10%;text-align: center;">30分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"   id="activeDescScore" th:text="${score.activeDescScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">3</td>
+                <td style="width: 10%;text-align: center;">活动真实性与有效性</td>
+                <td style="width: 10%;text-align: center;">现场验证<br>
+                    查看记录<br>
+                    谈话询问
+                    </td>
+                <td style="width: 50%;text-align: left;">(1)小组课题对技术、管理、服务的改进点有改善；<br>
+                    (2)各项改进在专业方面科学有效；<br>
+                    (3)取得的经济效益得到相关部门的认可；<br>
+                    (4)统计方法运用正确、适宜
+
+                     </td>
+                <td style="width: 10%;text-align: center;">30分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"   id="activeRealScore" th:text="${score.activeRealScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">4</td>
+                <td style="width: 10%;text-align: center;">成果的维持与巩固</td>
+                <td style="width: 10%;text-align: center;">查看记录<br>
+                    现场验证
+                    </td>
+                <td style="width: 50%;text-align: left;">(1)小组活动课题目标达成，有验证记录；<br>
+                    (2)改进的有效措施或创新成果已纳入有关标准或制度；<br>
+                    (3)现场已按新标准或制度执行；<br>
+                    (4)活动成果应用于生产和服务实践
+
+                     </td>
+                <td style="width: 10%;text-align: center;">20分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"  id="resultMaintainScore"    th:text="${score.resultMaintainScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">5</td>
+                <td style="width: 10%;text-align: center;">质量管理小组教育</td>
+                <td style="width: 10%;text-align: center;">提问<br>
+                    考试
+                    </td>
+                <td style="width: 50%;text-align: left;">(1)小组成员掌握质量管理小组活动程序；<br>
+                    (2)小组成员对方法的掌握程度和水平；<br>
+                    (3)通过本次活动，小组成员的专业技术、管理方法和综合素质得到提升
+
+                     </td>
+                <td style="width: 10%;text-align: center;">10分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true"     name="score"  id="groupEducationScore" th:text="${score.groupEducationScore}"></td>
+            </tr>
+
+            <tr>
+                <td style="width: 10%;text-align: center;">总体<br>评价</td>
+                <td style="width: 50%;text-align: left;" colspan="3" contentEditable="true" id="sumRecommend" th:text="${score.sumRecommend}"></td>
+                <td style="width: 10%;text-align: center;">总分</td>
+                <td style="width: 10%;text-align: center;" id="totalScore"  name="totalScore"  th:text="${score.totalScore}"  ></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;" colspan="3">评价组织方签字盖章</td>
+                <td style="width: 10%;text-align: center;"colspan="3"></td>
+            </tr>
+
+        </table>
+        <form id="signupForm" action="" class="ui basic form">
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="save()">保存</div>
+            </div>
+        </form>
+
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/qcAppraiseActiveScore/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+    <script>
+
+    </script>
+</body>
+
+</html>

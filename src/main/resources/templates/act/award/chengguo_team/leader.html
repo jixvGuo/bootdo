@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">姓名
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">性别
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">序号
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">出生年月
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                            contentEditable="plaintext-only" colspan="2"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">出生地
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">民族
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">身份证号
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">是否归国人员
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">归国时间
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"  onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">技术职称
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">最高学历
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">最高学位
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">毕业学校
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">毕业时间
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">所学专业
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">电子邮箱
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">办公电话
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">移动电话
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">通讯地址
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="4"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">邮政编码
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">工作单位
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="4"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">行政职务
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">二级单位
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="4"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">党派
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">参加本团队的起止时间
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                            contentEditable="plaintext-only" colspan="3"></td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                                            contentEditable="plaintext-only" colspan="3"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">主要学习经历
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">科研工作经历
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">主要学术兼职
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">代表性成果
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">代表性论文和著作获奖励情况
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:left" colspan="7">对团队发展的贡献： 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;text-align:left;height: 100px;" 
+                                            contentEditable="plaintext-only" colspan="7"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+
+</body>
+
+</html>

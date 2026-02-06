@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form id="signupForm" method="post" class="form-horizontal">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <input id="id" name="id" th:value="${scienceKpi.id}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="2">1、近十年内由申报人参与完成并取得授权的专利
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">专利名称
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">类型（发明、实用新型、外观设计）
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">所起作用（主持完成排名1~2、主要参加完成排名3~5、排名6及以后）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="patentName" name="patentName" th:value="${scienceKpi.patentName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="patentType" name="patentType" th:value="${scienceKpi.patentType}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="patentEffect" name="patentEffect" th:value="${scienceKpi.patentEffect}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="2">2、近十年内由申报人参与完成并获批工法
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">工法名称
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">审批机构
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">所起作用（主持完成排名1~2、主要参加完成排名3~5、排名6及以后）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="methodName" name="methodName" th:value="${scienceKpi.methodName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="methodApprova" name="methodApprova" th:value="${scienceKpi.methodApprova}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="methodEffect" name="methodEffect" th:value="${scienceKpi.methodEffect}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="2">3、近十年内由申报人参与完成并通过具有科技成果鉴定权机构鉴定的科技成果(不含QC)
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">成果名称
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">鉴定结论（国际领先、国际先进、国内领先、国内先进）
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">所起作用（主持完成排名1~2、主要参加完成排名3~5、排名6及以后）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="resultName" name="resultName" th:value="${scienceKpi.resultName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="resultAppraisal" name="resultAppraisal" th:value="${scienceKpi.resultAppraisal}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="resultEffect" name="resultEffect" th:value="${scienceKpi.resultEffect}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="2">4、近十年内由申报人参与完成的成果所获科技类奖项（不含QC）
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">成果名称及获奖等级
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">奖项名称及发奖机构
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">所起作用（主持完成排名1~2、主要参加完成排名3~5、排名6及以后）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="awardName" name="awardName" th:value="${scienceKpi.awardName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="awardOrganization" name="awardOrganization" th:value="${scienceKpi.awardOrganization}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="awardEffect" name="awardEffect" th:value="${scienceKpi.awardEffect}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="2">5、近十年内由申报人参与完成并公开发表、发行的论文及专著
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">名称及发表（发行）时间
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">类别（著作、期刊、会议论文）
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">所起作用（主持完成排名1~2、主要参加完成排名3~5、排名6及以后）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="paperName" name="paperName" th:value="${scienceKpi.paperName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="paperType" name="paperType" th:value="${scienceKpi.paperType}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="paperEffect" name="paperEffect" th:value="${scienceKpi.paperEffect}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="2">6. 近十年内申报人获得的科技类个人荣誉（称号）奖
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">荣誉名称
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">发奖机构
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">获奖年份
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="honorName" name="honorName" th:value="${scienceKpi.honorName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="honorOrganization" name="honorOrganization" th:value="${scienceKpi.honorOrganization}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left">
+                                            <input id="honorTime" name="honorTime" th:value="${scienceKpi.honorTime}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script th:if="${scienceKpi.id == null || scienceKpi.id == 0}" type="text/javascript" src="/js/appjs/system/enterpriPersonalInfoScienceKpi/add.js"></script>
+    <script th:if="${scienceKpi.id != null && scienceKpi.id > 0}" type="text/javascript" src="/js/appjs/system/enterpriPersonalInfoScienceKpi/edit.js"></script>
+</body>
+
+</html>

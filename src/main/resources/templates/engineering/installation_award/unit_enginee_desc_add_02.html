@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="item" th:classappend="${data.id > 0} ? '': 'disabled'">申报单位 </a>
+    <a th:href="@{/enterpriseUnitApply/toEngineeDescAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="active item">申报工程概况 </a>
+    <a th:href="@{/enterpriseUnitApply/toUnitOpinionList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="item" th:classappend="${data.id > 0} ? '': 'disabled'">有关单位意见 </a>
+    <a th:href="@{/enterpriseUnitApply/to_upload_real_file(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item" th:classappend="${data.id > 0} ? '': 'disabled'">证实性文件上传</a>
+
+
+</div>
+<div class="ui container segment">
+
+        <!--<a th:href="@{/enterpriseUnitApply/toEngineeDescList(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+           class="item">列表 </a>
+        <a th:href="@{/enterpriseUnitApply/toEngineeDescAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}" th:classappend="${tagName==null || tagName == ''} ? 'active': ''" class="item">新增 </a>
+        <a href="#" class="active item" th:text="${tagName}" th:if="${tagName != null && tagName != ''}"></a>-->
+
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" class="ui form" id="signupForm">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input name="id" id="awardId" th:value="${data.id}" type="hidden"/>
+                <input name="proId" th:value="${proId}" type="hidden">
+                <input name="taskId" th:value="${taskId}" type="hidden">
+                <input name="applyId" th:value="${applyId}" type="hidden">
+                <div style="text-align: center;color:red;" th:text="${desc}"></div>
+                <div class="ui field">
+                    <label>工程名称</label>
+                    <input type="text" name="projectName" th:value="${data.projectName}" placeholder="工程名称">
+                </div>
+                <div class="ui field">
+                    <label>建设地点</label>
+                    <input type="text" name="buildLocation" th:value="${data.buildLocation}" placeholder="建设地点">
+                </div>
+                <div class="ui field">
+                    <label>工程类别</label>
+                    <input type="text" name="projectCategory" th:value="${data.projectCategory}" placeholder="工程类别">
+                </div>
+                <div class="ui field">
+                    <label>工程规模</label>
+                    <input type="text" name="projectScale" th:value="${data.projectScale}" placeholder="工程规模">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>开工时间</label>
+                        <input type="text" name="startTime" placeholder="开工时间"
+                               th:value="${#dates.format(data.startTime, 'yyyy-MM-dd')}"
+                               onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+                    <div class="ui field">
+                        <label>竣工时间</label>
+                        <input type="text" name="completionTime" placeholder="竣工时间"
+                               th:value="${#dates.format(data.completionTime, 'yyyy-MM-dd')}"
+                               onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>是否立项批复</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="projectApproval" th:value="${data.projectApproval}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">是否立项批复</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">是</div>
+                                <div class="item" data-value="0">否</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui field">
+                        <label>是否有竣工验收报告</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="completionAcceptanceReport"
+                                   th:value="${data.completionAcceptanceReport}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">是否有竣工验收报告</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">是</div>
+                                <div class="item" data-value="0">否</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>备案时间</label>
+                    <input type="text" name="recordTime"
+                           th:value="${#dates.format(data.recordTime, 'yyyy-MM-dd')}"
+                           placeholder="备案时间"
+                           onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="ui field">
+                    <label>申报内容</label>
+                    <input type="text" name="declarationContent" th:value="${data.declarationContent}"
+                           placeholder="申报内容">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>工程投资（万元）</label>
+                        <input type="text" name="projectInvestment" th:value="${data.projectInvestment}"
+                               placeholder="工程投资（万元）">
+                    </div>
+                    <div class="ui field">
+                        <label>工程决算（万元）</label>
+                        <input type="text" name="projectFinalAccounts" th:value="${data.projectFinalAccounts}"
+                               placeholder="工程决算（万元）">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>工程合同（万元）</label>
+                        <input type="text" name="engineeringContract" th:value="${data.engineeringContract}"
+                               placeholder="工程合同（万元）">
+                    </div>
+                    <div class="ui field">
+                        <label>工程结算（万元）</label>
+                        <input type="text" name="projectSettlement" th:value="${data.projectSettlement}"
+                               placeholder="工程结算（万元）">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>运行效果</label>
+                    <input type="text" name="operationEffect" th:value="${data.operationEffect}" placeholder="运行效果">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>设计是否先进合理</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="designAdvancedReasonable"
+                                   th:value="${data.hasEnvironmentalAssessment}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text" th:value="${data.designAdvancedReasonable}">设计是否先进合理</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">是</div>
+                                <div class="item" data-value="0">否</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui field">
+                        <label>有无证明</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="hasAnyProof" th:value="${data.hasAnyProof}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text" th:value="${data.hasAnyProof}">有无证明</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">是</div>
+                                <div class="item" data-value="0">否</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>是否通过安全评估</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="passedSafetyAssessment"
+                                   th:value="${data.passedSafetyAssessment}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text" th:value="${data.passedSafetyAssessment}">是否通过安全评估</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">是</div>
+                                <div class="item" data-value="0">否</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui field">
+                        <label>是否通过环保评估</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="hasEnvironmentalAssessment"
+                                   th:value="${data.hasEnvironmentalAssessment}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text" th:value="${data.hasEnvironmentalAssessment}">是否通过环保评估</div>
+                            <div class="menu">
+                                <div class="item" data-value="1">是</div>
+                                <div class="item" data-value="0">否</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>建设单位</label>
+                    <input type="text" name="constructionUnit" th:value="${data.constructionUnit}" placeholder="建设单位">
+                </div>
+                <div class="ui field">
+                    <label>使用单位</label>
+                    <input type="text" name="exploitingUnit" th:value="${data.exploitingUnit}" placeholder="使用单位">
+                </div>
+                <div class="ui field">
+                    <label>设计单位</label>
+                    <input type="text" name="designInstitute" th:value="${data.designInstitute}" placeholder="设计单位">
+                </div>
+                <div class="ui field">
+                    <label>监理单位</label>
+                    <input type="text" name="constructionControlUnit" th:value="${data.constructionControlUnit}"
+                           placeholder="监理单位">
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui button" onclick="saveBaseInfo()">保存</div>
+                </div>
+            </form>
+            <h4 class="ui red horizontal divider header">设计获奖 </h4>
+            <div class="ui two horizontal segments">
+                <div class="ui segment">
+                    <form action="" class="ui form" id="signupFormDesignAward">
+                        <input name="tagName" type="hidden" th:value="${tagName}" />
+                        <input name="engineeDescId" th:value="${data.id}" type="hidden"/>
+                        <input name="id" type="hidden"/>
+                        <input name="proId" th:value="${proId}" type="hidden">
+                        <input name="taskId" th:value="${taskId}" type="hidden">
+                        <input name="applyId" th:value="${applyId}" type="hidden">
+                        <div class="ui field">
+                            <label>获奖名称</label>
+                            <input type="text" name="nameAward" th:value="${designAward.nameAward}" placeholder="获奖名称">
+                        </div>
+                        <div class="ui field">
+                            <label>获奖时间</label>
+                            <input type="text" name="awardWinningTime"
+                                   th:value="${#dates.format(designAward.awardWinningTime, 'yyyy-MM-dd')}"
+                                   placeholder="获奖时间" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                        </div>
+                        <div class="ui field">
+                            <label>颁奖单位</label>
+                            <input type="text" name="awardingUnit" th:value="${designAward.awardingUnit}"
+                                   placeholder="颁奖单位">
+                        </div>
+                        <div class="ui error message"></div>
+                        <div class="ui basic center aligned segment">
+                            <div class="ui button" onclick="saveDesignAwardInfo()">保存</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="ui segment">
+                    <table class="ui table">
+                        <thead>
+                        <th></th>
+                        <th>获奖名称</th>
+                        <th>颁奖单位</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody id="designAwardTboday">
+                        <tr th:each="data,dataStat:${data.designAwardList}" th:id="'design_'+${data.id}">
+                            <td th:text="${dataStat.count}" name="desginSortNum"></td>
+                            <td th:text="${data.nameAward}"></td>
+                            <td th:text="${data.awardingUnit}"></td>
+                            <td>
+                                <a href="javascript:;" th:onclick="'javascript:updateAward(\'design_'+${data.id}+'\')'"
+                                   class="ui teal mini basic button">查看</a>
+                                <a href="javascript:;" th:onclick="'javascript:updateAward(\'design_'+${data.id}+'\')'"
+                                   class="ui teal mini basic button">修改</a>
+                                <a href="javascript:;" th:onclick="'javascript:delAward(\'design_'+${data.id}+'\')'"
+                                   class="ui teal mini basic button">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">工程获奖 </h4>
+            <div class="ui two horizontal segments">
+                <div class="ui segment">
+                    <form action="" class="ui form" id="signupFormEngineeAward">
+                        <input name="tagName" type="hidden" th:value="${tagName}" />
+                        <input name="engineeDescId" th:value="${data.id}" type="hidden"/>
+                        <input name="id" type="hidden"/>
+                        <input name="proId" th:value="${proId}" type="hidden">
+                        <input name="taskId" th:value="${taskId}" type="hidden">
+                        <input name="applyId" th:value="${applyId}" type="hidden">
+                        <div class="ui field">
+                            <label>获奖名称</label>
+                            <input type="text" name="engineeNameAward" th:value="${engineeAward.engineeNameAward}"
+                                   placeholder="获奖名称">
+                        </div>
+                        <div class="ui field">
+                            <label>获奖时间</label>
+                            <input type="text" name="engineeAwardWinningTime"
+                                   th:value="${#dates.format(engineeAward.engineeAwardWinningTime, 'yyyy-MM-dd')}"
+                                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                        </div>
+                        <div class="ui field">
+                            <label>颁奖单位</label>
+                            <input type="text" name="engineeAwardingUnit" th:value="${engineeAward.engineeAwardingUnit}"
+                                   placeholder="颁奖单位">
+                        </div>
+                        <div class="ui error message"></div>
+                        <div class="ui basic center aligned segment">
+                            <div class="ui button" onclick="saveEngineeAwardInfo()">保存</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="ui segment">
+                    <table class="ui table">
+                        <thead>
+                        <th></th>
+                        <th>获奖名称</th>
+                        <th>颁奖单位</th>
+                        <th>操作</th>
+                        </thead>
+                        <tbody id="engineeAwardTboday">
+                        <tr th:each="data,dataStat:${data.engineeAwardList}" th:id="'enginee_' + ${data.id}">
+                            <td th:text="${dataStat.count}" name="engineeSortNum"></td>
+                            <td th:text="${data.engineeNameAward}"></td>
+                            <td th:text="${data.engineeAwardingUnit}"></td>
+                            <td>
+                                <a href="javascript:;" th:onclick="'javascript:updateAward(\'enginee_'+${data.id}+'\')'"
+                                   class="ui teal mini basic button">查看</a>
+                                <a href="javascript:;" th:onclick="'javascript:updateAward(\'enginee_'+${data.id}+'\')'"
+                                   class="ui teal mini basic button">修改</a>
+                                <a href="javascript:;" th:onclick="'javascript:delAward(\'enginee_'+${data.id}+'\')'"
+                                   class="ui teal mini basic button">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--
+                    </form>
+            -->
+        </div>
+    </div>
+</div>
+<!-- 详情页面 -->
+<div th:include="include::footer"></div>
+<script src="/js/appjs/cpe/petroleum_engineering_award/oilProGeneralSituation/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+
+    var signForm = $('#signupForm').form({
+        on: 'blur',
+        fields: {
+            projectName: {
+                identifier: 'projectName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程名称'
+                    }
+                ]
+            },
+            buildLocation: {
+                identifier: 'buildLocation',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写建设地点'
+                    }
+                ]
+            },
+            projectCategory: {
+                identifier: 'projectCategory',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程类别'
+                    }
+                ]
+            },
+            projectScale: {
+                identifier: 'projectScale',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程规模'
+                    }
+                ]
+            },
+            startTime: {
+                identifier: 'startTime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择开工时间'
+                    }
+                ]
+            },
+            completionTime: {
+                identifier: 'completionTime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择竣工时间'
+                    }
+                ]
+            },
+            projectApproval: {
+                identifier: 'projectApproval',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择是否立项批复'
+                    }
+                ]
+            },
+            completionAcceptanceReport: {
+                identifier: 'completionAcceptanceReport',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择是否有竣工验收报告'
+                    }
+                ]
+            },
+            recordTime: {
+                identifier: 'recordTime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择备案时间'
+                    }
+                ]
+            },
+            declarationContent: {
+                identifier: 'declarationContent',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写申报内容'
+                    }
+                ]
+            },
+            projectInvestment: {
+                identifier: 'projectInvestment',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程投资（万元）'
+                    }
+                ]
+            },
+            projectFinalAccounts: {
+                identifier: 'projectFinalAccounts',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程决算（万元）'
+                    }
+                ]
+            },
+            engineeringContract: {
+                identifier: 'engineeringContract',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程合同（万元）'
+                    }
+                ]
+            },
+            projectSettlement: {
+                identifier: 'projectSettlement',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工程结算（万元）'
+                    }
+                ]
+            },
+            operationEffect: {
+                identifier: 'operationEffect',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写运行效果'
+                    }
+                ]
+            },
+            designAdvancedReasonable: {
+                identifier: 'designAdvancedReasonable',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择设计是否先进合理'
+                    }
+                ]
+            },
+            hasAnyProof: {
+                identifier: 'hasAnyProof',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择有无证明'
+                    }
+                ]
+            },
+            passedSafetyAssessment: {
+                identifier: 'passedSafetyAssessment',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择是否通过安全评估'
+                    }
+                ]
+            },
+            hasEnvironmentalAssessment: {
+                identifier: 'hasEnvironmentalAssessment',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择是否通过环保评估'
+                    }
+                ]
+            },
+            constructionUnit: {
+                identifier: 'constructionUnit',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写建设单位'
+                    }
+                ]
+            },
+            exploitingUnit: {
+                identifier: 'exploitingUnit',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写使用单位'
+                    }
+                ]
+            },
+            designInstitute: {
+                identifier: 'designInstitute',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写设计单位'
+                    }
+                ]
+            },
+            constructionControlUnit: {
+                identifier: 'constructionControlUnit',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写监理单位'
+                    }
+                ]
+            }
+        }
+    });
+    $("#signupFormDesignAward").form({
+            on: 'blur',
+            fields: {
+                nameAward: {
+                    identifier: 'nameAward',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: '请填写获奖名称'
+                        }
+                    ]
+                },
+                awardWinningTime: {
+                    identifier: 'awardWinningTime',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: '请选择获奖时间'
+                        }
+                    ]
+                },
+                awardingUnit: {
+                    identifier: 'awardingUnit',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: '请填写颁奖单位'
+                        }
+                    ]
+                }
+            }
+        }
+    );
+
+    $("#signupFormEngineeAward").form({
+            on: 'blur',
+            fields: {
+                engineeNameAward: {
+                    identifier: 'engineeNameAward',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: '请填写获奖名称'
+                        }
+                    ]
+                },
+                engineeAwardWinningTime: {
+                    identifier: 'engineeAwardWinningTime',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: '请选择获奖时间'
+                        }
+                    ]
+                },
+                engineeAwardingUnit: {
+                    identifier: 'engineeAwardingUnit',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: '请填写颁奖单位'
+                        }
+                    ]
+                }
+            }
+        }
+    );
+
+
+    function delAward(trId) {
+
+        layer.confirm('确定要删除选中的记录？', {
+            btn : [ '确定', '取消' ]
+        }, function() {
+
+            var arr = trId.split("_");
+            var interfaceUrl = arr[0] == 'design' ? "/petroleum_engineering_award/oilProDesignAward/remove" : "/petroleum_engineering_award/oilProEngineeAward/remove";
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: interfaceUrl,
+                data: {
+                    id: arr[1]
+                },// 你的formid
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        $("#" + trId).remove();
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+
+                }
+            });
+
+        })
+
+
+    }
+
+    function updateAward(trId) {
+        var arr = trId.split("_");
+        var interfaceUrl = arr[0] == 'design' ? "/petroleum_engineering_award/oilProDesignAward/get" : "/petroleum_engineering_award/oilProEngineeAward/get";
+
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: interfaceUrl,
+            data: {
+                id: arr[1]
+            },// 你的formid
+            async: true,
+            error: function (request) {
+                parent.layer.alert("Connection error");
+            },
+            success: function (data) {
+                if (data.code == 0) {
+                    if (arr[0] == 'design') {
+                        $("#signupFormDesignAward").find("input[name='id']").val(data.data.id);
+                        $("input[name='nameAward']").val(data.data.nameAward);
+                        $("input[name='awardWinningTime']").val(data.data.awardWinningTime);
+                        $("input[name='awardingUnit']").val(data.data.awardingUnit);
+                    } else {
+                        $("#signupFormEngineeAward").find("input[name='id']").val(data.data.id);
+                        $("input[name='engineeNameAward']").val(data.data.engineeNameAward);
+                        $("input[name='engineeAwardWinningTime']").val(data.data.engineeAwardWinningTime);
+                        $("input[name='engineeAwardingUnit']").val(data.data.engineeAwardingUnit);
+                    }
+                } else {
+                    parent.layer.alert(data.msg)
+                }
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

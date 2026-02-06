@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+<!--
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 基本表单</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+-->
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12" style="height: 80px;">
+
+            <iframe id="fujianCommit" style="height: auto; width: 100%;"
+                    frameborder='0' scrolling="yes"
+                    th:src="@{/chengguo_info/commit_review_btn?(proId=${proId},procInsId=${procInsId},validateType=science,readonly=${readonly})}"></iframe>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#basic-1" aria-expanded="true"> 成果基本情况</a></li>
+                    <li class=""><a data-toggle="tab" href="#basic-2" onclick="againload('basic-2')" aria-expanded="false">成果简介</a></li>
+                    <li class=""><a data-toggle="tab" href="#basic-3" onclick="againload('basic-3')" aria-expanded="false">主要科技创新</a></li>
+
+                    <!-- <li class=""><a data-toggle="tab" href="#basic-4" aria-expanded="false">第三方资料</a> </li>
+                    <li class=""><a data-toggle="tab" href="#basic-5" aria-expanded="false">特殊成果资料</a> </li>-->
+                    <li class=""><a data-toggle="tab" href="#basic-6" onclick="againload('basic-6')" aria-expanded="false">成果主要知识产权证明目录</a></li>
+                    <li class=""><a data-toggle="tab" href="#basic-7" onclick="againload('basic-7')" aria-expanded="false">成果推广应用情况、经济效益和社会效益</a></li>
+                    <li class=""><a data-toggle="tab" href="#basic-8" onclick="againload('basic-8')" aria-expanded="false">第三方评价</a></li>
+                    <li class=""><a data-toggle="tab" href="#basic-9" onclick="againload('basic-9')" aria-expanded="false">主要完成单位及主要完成人情况表</a></li>
+                    <!-- <li class=""><a data-toggle="tab" href="#basic-10" aria-expanded="false">已获奖项</a> </li>-->
+                    <li class=""><a data-toggle="tab" href="#basic-11" onclick="againload('basic-11')" aria-expanded="false">附件上传</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="basic-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <iframe id="fujianTable" style="height: 450px; width: 100%;"
+                                    frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/base_info?(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <!--<div id="basic-2" class="tab-pane active">-->
+                    <!--<div class="panel-body">-->
+                    <!--<iframe id="introduceTable" style="height: 450px; width: 100%;"-->
+                    <!--frameborder='0' scrolling="yes"-->
+                    <!--th:src="@{/chengguo_info/res_introduction?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div id="basic-2" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="introduceTable" style="height: 450px; width: 100%;"
+                                    frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/edit_info?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div id="basic-3" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="main_technological_innovation_id" style="height: 450px; width: 100%;"
+                                    frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/edit_info?page=&eType=main_technological_innovation(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+
+                    <div id="basic-6" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujian1" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/knowledge_right?eType=intellectual_property(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div id="basic-7" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujian2" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/edit_info?eType=chengguo_standard(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div id="basic-8" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujian3" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/edit_info?eType=third_opinion(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <div id="basic-9" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujian4" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/toMainEnterprisePersonList?eType=main_enterprise_completer(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                    <!--<div id="basic-10" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujian" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                th:src="@{/chengguo_info/edit_info?eType=main_enterprise_completer_awards(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>-->
+                    <div id="basic-11" class="tab-pane">
+                        <div class="panel-body">
+                            <iframe id="fujian" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_info/toUploadEnclosure?eType=main_enterprise_completer_awards(proId=${proId},readonly=${readonly})}"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+</body>
+<script>
+    var basic2 = true;
+    var basic3 = true;
+    var basic4 = true;
+    var basic5 = true;
+    var basic6 = true;
+    var basic7 = true;
+    var basic8 = true;
+    var basic9 = true;
+    var basic10 = true;
+    var basic11 = true;
+
+    function againload(e){
+        var Number = e.charAt(e.length - 1);
+        if(Number == 2){
+            if(basic2){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic2 = false;
+            }
+        } else if(Number == 3){
+            if(basic3){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic3 = false;
+            }
+        } else if(Number == 6){
+            if(basic6){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic6 = false;
+            }
+        } else if(Number == 7){
+            if(basic7){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic7 = false;
+            }
+        } else if(Number == 8){
+            if(basic8){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic8 = false;
+            }
+        } else if(Number == 9){
+            if(basic9){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic9 = false;
+            }
+        } else if(Number == 11){
+            if(basic11){
+                var src = $("#"+e+" iframe").attr("src");
+                $("#"+e+" iframe").attr("src",src);
+                basic11 = false;
+            }
+        }
+    }
+</script>
+</html>

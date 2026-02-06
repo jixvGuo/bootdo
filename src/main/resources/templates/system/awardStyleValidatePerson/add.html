@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="/css/animate.min.css" rel="stylesheet">
+	<link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	<link href="/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.staticfile.org/font-awesome/4.4.0/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../css/plugins/markdown/bootstrap-markdown.min.css" />
+	<link href="/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<link href="/css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+	<link href="/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+	<link href="/css/plugins/switchery/switchery.css" rel="stylesheet">
+	<link href="/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+	<link href="/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+	<link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+	<link href="/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+	<link href="/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+	<link href="/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/simditor/simditor.css" />
+</head>
+
+<html>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content" style="overflow:scroll">
+					<form method="post" id="signupForm" class="form-horizontal" style="width:100%;overflow:scroll">
+						<input type="hidden" name="proId" th:value="${projectInfo.id}" />
+						<input type="hidden" name="personId" th:value="${personId}" />
+						<table class="table table-bordered" >
+							<thead>
+							<tr>
+								<th style="text-align:center;vertical-align:middle;width:100px" rowspan="2">申报单位</th>
+								<th style="text-align:center;vertical-align:middle;width:60px" rowspan="2">姓名</th>
+								<th style="text-align:center;vertical-align:middle;width:100px" rowspan="2">分组</th>
+								<th style="text-align:center;vertical-align:middle;width:70px" rowspan="2">是否受雇申报企业</th>
+								<th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">是否有违反职业道德行为</th>
+								<th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">知识产权证明</th>
+								<th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">科技奖证明</th>
+								<th style="text-align:center;vertical-align:middle;width:5px" rowspan="2">论著</th>
+								<th style="text-align:center;vertical-align:middle;width:10px" rowspan="2">标准（工法）</th>
+								<th style="text-align:center;vertical-align:middle;width:15px" rowspan="2">其它科技荣誉</th>
+								<th style="text-align:center;vertical-align:middle;width:10px" rowspan="2">审查结论</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td contentEditable="false" pname="enterpriseName" th:text="${projectInfo.enterpriseName}"></td>
+								<td contentEditable="false" pname="showProName" th:text="${awardStyleValidatePerson.applyName}"></td>
+								<td contentEditable="true" id ="tdProGroupName" pname="proGroupName" th:text="${projectInfo.proGroupName}"></td>
+								<input type="hidden" id="proGroupName" name="proGroupName" th:value="${projectInfo.proGroupName}" />
+
+								<td style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isEmploymentRelationship" name="isEmploymentRelationship" th:checked="${awardStyleValidatePerson.isEmploymentRelationship == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isMorality" name="isMorality" th:checked="${awardStyleValidatePerson.isMorality == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isKnowledgeRight" name="isKnowledgeRight" th:checked="${awardStyleValidatePerson.isKnowledgeRight == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isScience" name="isScience" th:checked="${awardStyleValidatePerson.isScience == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isPaper" name="isPaper" th:checked="${awardStyleValidatePerson.isPaper == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isStandard" name="isStandard" th:checked="${awardStyleValidatePerson.isStandard == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="checkbox i-checks">
+										<label>
+											<input type="checkbox" id="isOtherHonour" name="isOtherHonour" th:checked="${awardStyleValidatePerson.isOtherHonour == 1}" value="1">
+										</label>
+									</div>
+								</td>
+								<td  style="text-align:center;vertical-align:middle;">
+									<div class="radio i-checks">
+										<label>
+											<select name="validateResult" class="form-control m-b">
+												<option th:selected="${awardStyleValidatePerson.validateResult == 'to_assign_experts' || awardStyleValidatePerson.validateResult == 'score'}" value="to_assign_experts">参评</option>
+												<option th:selected="${awardStyleValidatePerson.validateResult == 'reject'}" value="reject">完善后参评</option>
+												<option th:selected="${awardStyleValidatePerson.validateResult == 'no_award' || awardStyleValidatePerson.validateResult == 'no_score'}" value="no_award">不评</option>
+												<option th:selected="${awardStyleValidatePerson.validateResult == 'delayed_award' || awardStyleValidatePerson.validateResult == 'defer_score'}" value="delayed_award">缓评</option>
+											</select>
+										</label>
+									</div>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="form-group" id="data_5" >
+							<div class="col-sm-10" >
+								<textarea id="rejectReason" cols="120" name="rejectReason" th:text="${awardStyleValidatePerson.rejectReason}"  placeholder="请输入驳回意见" autofocus></textarea>
+							</div>
+						</div>
+						<div class="hr-line-dashed"></div>
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-offset-2">
+								<button class="btn btn-primary" type="submit">保存内容</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/system/awardStyleValidatePerson/add.js"></script>
+
+<script type="text/javascript">
+    $(".i-checks").iCheck({ checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green", });
+    var editor = new Simditor({ textarea: $("#editor"), defaultImage: "img/a9.jpg" })
+    $(document).ready(function () {
+        $(" .i-checks").iCheck({
+            checkboxClass: "icheckbox_square-green",
+            radioClass: "iradio_square-green"
+        })
+    });
+
+    $("#data_5").hide();
+
+    $('tbody').click(function(e){
+        var a = $(this).find("select").val();
+        if(a == "2" || a == "3" || a == "4")
+            $("#data_5").show();
+        else
+            $("#data_5").hide();
+    });
+</script>
+<script type="text/javascript" src="/js/appjs/system/awardStyleValidatePerson/add.js">
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

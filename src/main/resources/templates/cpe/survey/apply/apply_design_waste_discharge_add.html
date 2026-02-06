@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header"></head>
+
+
+<body>
+    <div class="ui top attached tabular menu">
+        <a th:href="@{/surverApply/toApplyWasteDischargeList(proId=${proId},taskId=${taskId})}" class="item">列表</a>
+        <a th:if="${readonly} eq null or ${readonly} ne 1" href="#" class="active item">新增</a>
+    </div>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form id="signupForm" action="" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${wasteInfo.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>项目</label>
+                        <input type="text" name="proName" th:value="${wasteInfo.proName}" placeholder="项目">
+                    </div>
+                    <div class="ui field">
+                        <label>计量单位</label>
+                        <input type="text" contenteditable="true" name="calUnit" th:value="${wasteInfo.calUnit}" placeholder="计量单位">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>设计值</label>
+                        <input type="text" contenteditable="true" name="setVal" th:value="${wasteInfo.setVal}" placeholder="设计值">
+                    </div>
+                    <div class="ui field">
+                        <label>实际值</label>
+                        <input type="text" contenteditable="true" name="realVal" th:value="${wasteInfo.realVal}" placeholder="实际值">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>国家允许排放指标</label>
+                        <input type="text" contenteditable="true" name="innerAllowDischargeLevel" th:value="${wasteInfo.innerAllowDischargeLevel}" placeholder="国内先进水平">
+                    </div>
+                    <div class="ui field">
+                        <label>备注</label>
+                        <input type="text" name="memo" th:value="${wasteInfo.memo}" placeholder="备注">
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 详情页面 -->
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverDesignWasteDischargeInfo/add.js?v=1.0"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+    <script>
+        $('.ui.dropdown').dropdown();
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                proname: {
+                    identifier: 'proname',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写项目'
+                    }]
+                },
+                Unitofmeasure: {
+                    identifier: 'Unitofmeasure',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写设计单位'
+                    }]
+                },
+                designvalue: {
+                    identifier: 'designvalue',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写设计值'
+                    }]
+                },
+                actualvalue: {
+                    identifier: 'actualvalue',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写实际值'
+                    }]
+                },
+                domestic: {
+                    identifier: 'domestic',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写国内先进水平'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header"></head>
+
+
+<body>
+    <div class="ui top attached tabular menu">
+        <a th:href="@{/surverApply/toApplyContributeUserList(proId=${proId},taskId=${taskId})}" class="item">列表</a>
+        <a th:if="${readonly} eq null or ${readonly} ne 1" href="#" class="active item">新增</a>
+    </div>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form id="signupForm" action="" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${contributeUserInfo.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>姓名</label>
+                        <input type="text" name="username" th:value="${contributeUserInfo.username}" placeholder="姓名">
+                    </div>
+                    <div class="ui field">
+                        <label>性别</label>
+                        <input type="text" name="gender" th:value="${contributeUserInfo.gender}" placeholder="性别">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>年龄</label>
+                        <input type="number" name="age" th:value="${contributeUserInfo.age}" placeholder="年龄">
+                    </div>
+                    <div class="ui field">
+                        <label>职务或职称</label>
+                        <input type="text" name="job" th:value="${contributeUserInfo.job}" placeholder="职务或职称">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>工作单位</label>
+                        <input type="text" name="workPlace" th:value="${contributeUserInfo.workPlace}" placeholder="工作单位">
+                    </div>
+                    <div class="ui field">
+                        <label>参加本项目的起止日期</label>
+                        <input type="text" name="startTime" th:value="${contributeUserInfo.startTime}" placeholder="参加本项目的起止日期">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>在本项目中担任的主要工作职责</label>
+                    <textarea id="workDesc" autofocus name="workDesc" th:text="${contributeUserInfo.workDesc}"></textarea>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 详情页面 -->
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverDesiginContributeUserInfo/add.js?v=1.0"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+    <script>
+        $('.ui.dropdown').dropdown();
+        let proId = $("#proId").val();
+        let uploadObj =  {
+            url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+            fileKey: 'file[]', //服务器端获取文件数据的参数名
+            connectionCount: 3,
+            leaveConfirm: '正在上传文件'
+        };
+        var briefintroduction = new Simditor({
+            textarea: $("#workDesc"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                username: {
+                    identifier: 'username',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写姓名'
+                    }]
+                },
+                gender: {
+                    identifier: 'gender',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请选择性别'
+                    }]
+                },
+                age: {
+                    identifier: 'age',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写年龄'
+                    }]
+                },
+                job: {
+                    identifier: 'job',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '职务或职称'
+                    }]
+                },
+                workPlace: {
+                    identifier: 'workPlace',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写工作单位'
+                    }]
+                },
+                startTime: {
+                    identifier: 'startTime',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写参加本项目的起止日期'
+                    }]
+                },
+                workDesc: {
+                    identifier: 'workDesc',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写在本项目中担任的主要工作职责'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

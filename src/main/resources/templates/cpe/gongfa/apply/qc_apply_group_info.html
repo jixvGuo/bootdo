@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body >
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <input type="hidden" th:value="${groupInfo.proStat}" id="proStat">
+            <form id="signupForm" action="" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${groupInfo.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>小组名称</label>
+                        <input type="text" th:value="${groupInfo.groupName}" name="groupName" placeholder="小组名称">
+                    </div>
+                    <div class="ui field">
+                        <label>课题名称</label>
+                        <input type="text" th:value="${groupInfo.topicName}" name="topicName" placeholder="课题名称">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>课题类型</label>
+                        <input type="text" th:if="${readonly} eq 1" th:value="${groupInfo.topicType}" name="" placeholder="">
+                        <div th:if="${readonly} ne 1" class="ui selection dropdown" >
+                            <input type="hidden" name="topicType" th:value="${groupInfo.topicType}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">课题类型</div>
+                            <div class="menu">
+                                <div class="item" data-value="问题解决型">问题解决型</div>
+                                <div class="item" data-value="创新型">创新型</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui field">
+                        <label>联系人</label>
+                        <input th:value="${groupInfo.contacts}" type="text" name="contacts" placeholder="联系人">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>小组所在单位名称</label>
+                    <input  th:value="${groupInfo.unitName}"   type="text" name="unitName"   placeholder="小组所在单位名称">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>联系电话</label>
+                        <input th:value="${groupInfo.phone}" type="text" name="phone" placeholder="联系电话">
+                    </div>
+                    <div class="ui field">
+                        <label>专业范围</label>
+                        <input type="text" th:if="${readonly} eq 1" th:value="${groupInfo.professionalScope}" name="" placeholder="">
+                        <div th:if="${readonly} ne 1" class="ui selection  dropdown">
+                            <input type="hidden" name="professionalScope" th:value="${groupInfo.professionalScope}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">专业范围</div>
+                            <div class="menu">
+                                <div class="item" data-value="管理">管理</div>
+                                <div class="item" data-value="管理类">管理类</div>
+                                <div class="item" data-value="监理">监理</div>
+                                <div class="item" data-value="监理、管理">监理、管理</div>
+                                <div class="item" data-value="勘察设计">勘察设计</div>
+                                <div class="item" data-value="施工">施工</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="ui red horizontal divider header">小组简介（注明小组人数） </h4>
+                <div class="ui field">
+                    <textarea id="groupDesc" autofocus name="groupDesc" th:text="${groupInfo.groupDesc}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">选择课题理由 </h4>
+                <div class="ui field">
+                    <textarea id="selTopicReason" autofocus name="selTopicReason" th:text="${groupInfo.selTopicReason}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">活动概况 </h4>
+                <div class="ui field">
+                    <textarea id="actDesc" autofocus name="actDesc" th:text="${groupInfo.actDesc}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">取得的主要成果（写明成果排列名次） </h4>
+                <div class="ui field">
+                    <textarea id="mainResult" autofocus name="mainResult" th:text="${groupInfo.mainResult}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">主管局（公司、院）推荐意见 </h4>
+                <div class="ui field">
+                    <textarea id="recommendAction" autofocus name="recommendAction" th:text="${groupInfo.recommendAction}"></textarea>
+                </div>
+                <label>
+                    注：<br>
+                    1.	单位名称要写全称，即发证书名称。<br>
+                    2.	 课题类型：问题解决型课题、创新型课题<br>
+                </label>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 详情页面 -->
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/qcGroupApplyInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+   <!-- <script>
+
+        function checkData(){
+
+            let readonly = $("#isReadonly").val();
+            console.log("AA" + readonly);
+            if (readonly == 1){
+                $(".simditor-body").attr("contenteditable",false);
+                $('.ui.dropdown').addClass("disabled");
+            }else  {
+                $('.ui.dropdown').dropdown();
+            }
+        }
+        checkData();
+
+    </script>-->
+    <script type="text/javascript">
+
+           let proId = $("#proId").val();
+           let uploadObj =  {
+                    url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+                    params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                    fileKey: 'file[]', //服务器端获取文件数据的参数名
+                    connectionCount: 3,
+                    leaveConfirm: '正在上传文件'
+                };
+           $('.ui.dropdown').dropdown();
+            var briefintroduction = new Simditor({
+                textarea: $("#groupDesc"),
+                defaultImage: "/img/p3.jpg",
+                upload : uploadObj,
+                pasteImage: true
+            })
+            var reason = new Simditor({
+                textarea: $("#selTopicReason"),
+                defaultImage: "/img/p3.jpg",
+                upload : uploadObj,
+                pasteImage: true
+            })
+            var survey = new Simditor({
+                textarea: $("#actDesc"),
+                defaultImage: "/img/p3.jpg",
+                upload : uploadObj,
+                pasteImage: true
+            })
+            var MainCh = new Simditor({
+                textarea: $("#mainResult"),
+                defaultImage: "/img/p3.jpg",
+                upload : uploadObj,
+                pasteImage: true
+            })
+            var opinion = new Simditor({
+                textarea: $("#recommendAction"),
+                defaultImage: "/img/p3.jpg",
+                upload : uploadObj,
+                pasteImage: true
+            })
+
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+
+
+
+            $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                groupname: {
+                    identifier: 'groupName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组名称'
+                    }]
+                },
+                topicname: {
+                    identifier: 'topicName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写课题名称'
+                    }]
+                },
+                topicType: {
+                    identifier: 'topicType',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组类型'
+                    }]
+                },
+                contacts: {
+                    identifier: 'contacts',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写联系人'
+                    }]
+                },
+                phone: {
+                    identifier: 'phone',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写联系电话'
+                    }]
+                },
+                professionalScope: {
+                    identifier: 'professionalScope',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组类型'
+                    }]
+                },
+                groupDesc: {
+                    identifier: 'groupDesc',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组简介（注明小组人数）'
+                    }]
+                },
+                selTopicReason: {
+                    identifier: 'selTopicReason',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写选题理由'
+                    }]
+                },
+                selTopicReason: {
+                    identifier: 'selTopicReason',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写选题理由'
+                    }]
+                },
+                mainResult: {
+                    identifier: 'mainResult',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写取得的主要成果（写明油田成果会排列名次）'
+                    }]
+                },
+                recommendAction: {
+                    identifier: 'recommendAction',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写主管局（公司、院）推荐意见'
+                    }]
+                }
+            }
+        });
+
+
+
+
+
+    </script>
+</body>
+
+</html>

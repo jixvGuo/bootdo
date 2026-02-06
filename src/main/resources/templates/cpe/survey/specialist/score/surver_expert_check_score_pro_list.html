@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div class="fixed-table-toolbar">
+                    <div class="columns pull-left">
+                        <input type="hidden" name="scoreType" th:value="${scoreType}"/>
+                        <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                        <input id="account" name="account" th:value="${account}"  type="hidden">
+                        <input id="major" name="major" th:value="${major}"  type="hidden">
+                        <input id="proType" name="major" th:value="${proType}"  type="hidden">
+
+                        <button   type="button"
+                                class="btn  btn-primary" onclick="add()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>提交最终打分结果
+                        </button>
+
+                        <button th:if="${scoreIsOver == 1}"  type="button"
+                                  class="btn  btn-primary" onclick="cancelSubmit()">
+                            撤回打分提交
+                        </button>
+
+                    </div>
+                </div>
+
+                <table id="exampleTable" data-mobile-responsive="true">
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/cpe/surver/surverExpertCheckScoreProList.js?v=2.1"></script>
+
+</body>
+</html>

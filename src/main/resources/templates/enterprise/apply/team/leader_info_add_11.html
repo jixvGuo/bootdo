@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item" th:href="@{/cpe/enterpriTeamLeaderInfo/toList(proId=${proId},taskId=${taskId},applyId=${applyId})}">列表 </a>
+    <a class="active item" href="#">新增 </a>
+    <!--<a href="#" class="item">打印 </a>-->
+</div>
+<div class="ui bottom attached segment">
+    <form action="" class="ui form" id="signupForm">
+        <input id="id" name="id" th:value="${enterpriTeamLeaderInfo.id}" type="hidden">
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+        <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+        <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>姓名</label>
+                <input name="name" placeholder="姓名" th:value="${enterpriTeamLeaderInfo.name}" type="text">
+            </div>
+            <div class="ui field">
+                <label>性别</label>
+                <div class="ui selection dropdown">
+                    <input name="gender" th:value="${enterpriTeamLeaderInfo.gender}" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">性别</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${r.name eq enterpriTeamLeaderInfo.gender} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}"
+                             th:each="r:${genderList}" th:text="${r.name}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>序号</label>
+                <input name="serialnumber" placeholder="序号" th:value="${enterpriTeamLeaderInfo.serialnumber}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>出生年月</label>
+                <input name="birthtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="出生年月"
+                       th:value="${#dates.format(enterpriTeamLeaderInfo.birthtime,'yyyy-MM-dd')}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>出生地</label>
+                <input name="birthaddress" placeholder="出生地" th:value="${enterpriTeamLeaderInfo.birthaddress}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>民族</label>
+                <input name="nation" placeholder="民族" th:value="${enterpriTeamLeaderInfo.nation}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>身份证号</label>
+                <input name="identitynumber" placeholder="身份证号" th:value="${enterpriTeamLeaderInfo.identitynumber}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>是否归国人员</label>
+                <div class="ui selection dropdown">
+                    <input name="whetherreturntochina" th:value="${enterpriTeamLeaderInfo.whetherreturntochina}"
+                           type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">是否归国人员</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${r.name eq enterpriTeamLeaderInfo.whetherreturntochina} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}"
+                             th:each="r:${backList}" th:text="${r.name}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>归国时间</label>
+                <input name="returnhometime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="归国时间"
+                       th:value="${#dates.format(enterpriTeamLeaderInfo.returnhometime,'yyyy-MM-dd')}" type="text">
+            </div>
+            <div class="ui field">
+                <label>技术职称</label>
+                <input name="technologytitle" placeholder="技术职称" th:value="${enterpriTeamLeaderInfo.technologytitle}"
+                       type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>最高学历</label>
+                <div class="ui selection dropdown">
+                    <input name="education" th:value="${enterpriTeamLeaderInfo.education}" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">最高学历</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${r.name eq enterpriTeamLeaderInfo.education} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}"
+                             th:each="r:${eduList}" th:text="${r.name}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>最高学位</label>
+                <div class="ui selection dropdown">
+                    <input name="academicdegree" th:value="${enterpriTeamLeaderInfo.academicdegree}" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">最高学位</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${r.name eq enterpriTeamLeaderInfo.academicdegree} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}"
+                             th:each="r:${acaList}" th:text="${r.name}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>毕业学校</label>
+                <input name="graduateschool" placeholder="毕业学校" th:value="${enterpriTeamLeaderInfo.graduateschool}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>毕业时间</label>
+                <input name="graduationtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="毕业时间"
+                       th:value="${#dates.format(enterpriTeamLeaderInfo.graduationtime,'yyyy-MM-dd')}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>所学专业</label>
+                <input name="major" placeholder="所学专业" th:value="${enterpriTeamLeaderInfo.major}" type="text">
+            </div>
+            <div class="ui field">
+                <label>电子邮箱</label>
+                <input name="mailbox" placeholder="电子邮箱" th:value="${enterpriTeamLeaderInfo.mailbox}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>办公电话</label>
+                <input name="telephone" placeholder="办公电话" th:value="${enterpriTeamLeaderInfo.telephone}" type="text">
+            </div>
+            <div class="ui field">
+                <label>移动电话</label>
+                <input name="mobilephone" placeholder="移动电话" th:value="${enterpriTeamLeaderInfo.mobilephone}"
+                       type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>通讯地址</label>
+                <input name="contactaddress" placeholder="通讯地址" th:value="${enterpriTeamLeaderInfo.contactaddress}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>邮政编码</label>
+                <input name="postcode" placeholder="邮政编码" th:value="${enterpriTeamLeaderInfo.postcode}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>工作单位</label>
+                <input name="workcompany" placeholder="工作单位" th:value="${enterpriTeamLeaderInfo.workcompany}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>行政职务</label>
+                <input name="administrationpost" placeholder="行政职务"
+                       th:value="${enterpriTeamLeaderInfo.administrationpost}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>二级单位</label>
+                <input name="secondlevelcompany" placeholder="二级单位"
+                       th:value="${enterpriTeamLeaderInfo.secondlevelcompany}" type="text">
+            </div>
+            <div class="ui field">
+                <label>党派</label>
+                <input name="parties" placeholder="党派" th:value="${enterpriTeamLeaderInfo.parties}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>参加本团队的开始时间</label>
+                <input name="attendstarttime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                       placeholder="参加本团队的开始时间"
+                       th:value="${#dates.format(enterpriTeamLeaderInfo.attendstarttime,'yyyy-MM-dd')}" type="text">
+            </div>
+            <div class="ui field">
+                <label>参加本团队的结束时间</label>
+                <input name="attendendtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                       placeholder="参加本团队的结束时间"
+                       th:value="${#dates.format(enterpriTeamLeaderInfo.attendendtime,'yyyy-MM-dd')}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>主要学习经历</label>
+                <textarea id="educationundergo" name="educationundergo" th:text="${enterpriTeamLeaderInfo.educationundergo}" style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+            <div class="ui field">
+                <label>科研工作经历</label>
+                <textarea id="workundergo" name="workundergo" th:text="${enterpriTeamLeaderInfo.workundergo}" style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>主要学术兼职</label>
+                <textarea id="learningconcurrent" name="learningconcurrent" th:text="${enterpriTeamLeaderInfo.learningconcurrent}" style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+            <div class="ui field">
+                <label>代表性成果</label>
+                <textarea id="deputyfruit" name="deputyfruit" th:text="${enterpriTeamLeaderInfo.deputyfruit}" style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>代表性论文和著作获奖励情况</label>
+                <textarea id="rewardsituation" name="rewardsituation" th:text="${enterpriTeamLeaderInfo.rewardsituation}" style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+            <div class="ui field">
+                <label>对团队发展的贡献：</label>
+                <textarea id="contribution" name="contribution" th:text="${enterpriTeamLeaderInfo.contribution}" style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/appjs/cpe/enterpriTeamLeaderInfo/add.js" type="text/javascript"></script>
+<script>
+    let proId = $("#proId").val();
+    let uploadObj =  {
+        url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+
+    var contribution = new Simditor({
+        textarea: $("#contribution"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    var rewardsituation = new Simditor({
+        textarea: $("#rewardsituation"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    var deputyfruit = new Simditor({
+        textarea: $("#deputyfruit"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    var learningconcurrent = new Simditor({
+        textarea: $("#learningconcurrent"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    var workundergo = new Simditor({
+        textarea: $("#workundergo"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    var educationundergo = new Simditor({
+        textarea: $("#educationundergo"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    $('.ui.dropdown').dropdown();
+    $("input[name='birthtime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $("input[name='returnhometime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $("input[name='graduationtime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $("input[name='attendstarttime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $("input[name='attendendtime']").blur(function () {
+        $(this).parent().attr("class", "ui field");
+    });
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写姓名'
+                    }
+                ]
+            },
+            gender: {
+                identifier: 'gender',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择性别'
+                    }
+                ]
+            },
+            serialnumber: {
+                identifier: 'serialnumber',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写序号'
+                    }
+                ]
+            },
+            birthtime: {
+                identifier: 'birthtime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择出生日期'
+                    }
+                ]
+            },
+            birthaddress: {
+                identifier: 'birthaddress',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写出生地'
+                    }
+                ]
+            },
+            nation: {
+                identifier: 'nation',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写民族'
+                    }
+                ]
+            },
+            identitynumber: {
+                identifier: 'identitynumber',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写身份证号'
+                    }
+                ]
+            },
+            whetherreturntochina: {
+                identifier: 'whetherreturntochina',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择是否归国人员'
+                    }
+                ]
+            },
+            returnhometime: {
+                identifier: 'returnhometime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择归国时间'
+                    }
+                ]
+            },
+            technologytitle: {
+                identifier: 'technologytitle',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写技术职称'
+                    }
+                ]
+            },
+            education: {
+                identifier: 'education',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择最高学历'
+                    }
+                ]
+            },
+            academicdegree: {
+                identifier: 'academicdegree',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择最高学位'
+                    }
+                ]
+            },
+            graduateschool: {
+                identifier: 'graduateschool',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写毕业学校'
+                    }
+                ]
+            },
+            graduationtime: {
+                identifier: 'graduationtime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择毕业时间'
+                    }
+                ]
+            },
+            major: {
+                identifier: 'major',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写所学专业'
+                    }
+                ]
+            },
+            mailbox: {
+                identifier: 'mailbox',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写电子邮箱'
+                    }
+                ]
+            },
+            telephone: {
+                identifier: 'telephone',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写办公电话'
+                    }
+                ]
+            },
+            mobilephone: {
+                identifier: 'mobilephone',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写移动电话'
+                    }
+                ]
+            },
+            contactaddress: {
+                identifier: 'contactaddress',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写通讯地址'
+                    }
+                ]
+            },
+            postcode: {
+                identifier: 'postcode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写邮政编码'
+                    }
+                ]
+            },
+            workcompany: {
+                identifier: 'workcompany',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写工作单位'
+                    }
+                ]
+            },
+            administrationpost: {
+                identifier: 'administrationpost',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写行政职务'
+                    }
+                ]
+            },
+            secondlevelcompany: {
+                identifier: 'secondlevelcompany',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写二级单位'
+                    }
+                ]
+            },
+            parties: {
+                identifier: 'parties',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写党派'
+                    }
+                ]
+            },
+            attendstarttime: {
+                identifier: 'attendstarttime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择参加团队的开始时间'
+                    }
+                ]
+            },
+            attendendtime: {
+                identifier: 'attendendtime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择参加团队的结束时间'
+                    }
+                ]
+            },
+            educationundergo: {
+                identifier: 'educationundergo',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写主要学习经历'
+                    }
+                ]
+            },
+            workundergo: {
+                identifier: 'workundergo',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写科研工作经历'
+                    }
+                ]
+            },
+            learningconcurrent: {
+                identifier: 'learningconcurrent',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写主要学术兼职'
+                    }
+                ]
+            },
+            deputyfruit: {
+                identifier: 'deputyfruit',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写代表性成果'
+                    }
+                ]
+            },
+            rewardsituation: {
+                identifier: 'rewardsituation',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写代表性论文和著作获奖励情况'
+                    }
+                ]
+            },
+            contribution: {
+                identifier: 'contribution',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写对团队发展的贡献'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

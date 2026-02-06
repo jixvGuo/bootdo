@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.OilProGeneralSituationDao">
+
+	<select id="get" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProGeneralSituationDO">
+		select `id`,`project_name`,`build_location`,`project_category`,`project_scale`,`start_time`,`completion_time`,`project_approval`,`completion_acceptance_report`,`record_time`,`declaration_content`,`project_investment`,`project_final_accounts`,`engineering_contract`,`project_settlement`,`operation_effect`,`design_advanced_reasonable`,`has_any_proof`,`passed_safety_assessment`,`has_environmental_assessment`,`construction_unit`,`exploiting_unit`,`design_institute`,`construction_control_unit`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated` from ass_oil_pro_general_situation where id = #{value}
+	</select>
+
+	<select id="getByProId" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProGeneralSituationDO">
+		select `id`,`project_name`,`build_location`,`project_category`,`project_scale`,`start_time`,`completion_time`,
+		`project_approval`,`completion_acceptance_report`,`record_time`,`declaration_content`,`project_investment`,
+		`project_final_accounts`,`engineering_contract`,`project_settlement`,`operation_effect`,`design_advanced_reasonable`,`has_any_proof`,`passed_safety_assessment`,`has_environmental_assessment`,`construction_unit`,`exploiting_unit`,`design_institute`,`construction_control_unit`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated`
+		 from ass_oil_pro_general_situation where pro_id = #{value} order by id desc limit 1
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProGeneralSituationDO">
+		select `id`,`project_name`,`build_location`,`project_category`,`project_scale`,`start_time`,`completion_time`,`project_approval`,`completion_acceptance_report`,`record_time`,`declaration_content`,`project_investment`,`project_final_accounts`,`engineering_contract`,`project_settlement`,`operation_effect`,`design_advanced_reasonable`,`has_any_proof`,`passed_safety_assessment`,`has_environmental_assessment`,`construction_unit`,`exploiting_unit`,`design_institute`,`construction_control_unit`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated` from ass_oil_pro_general_situation
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="buildLocation != null and buildLocation != ''"> and build_location = #{buildLocation} </if>
+		  		  <if test="projectCategory != null and projectCategory != ''"> and project_category = #{projectCategory} </if>
+		  		  <if test="projectScale != null and projectScale != ''"> and project_scale = #{projectScale} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="completionTime != null and completionTime != ''"> and completion_time = #{completionTime} </if>
+		  		  <if test="projectApproval != null and projectApproval != ''"> and project_approval = #{projectApproval} </if>
+		  		  <if test="completionAcceptanceReport != null and completionAcceptanceReport != ''"> and completion_acceptance_report = #{completionAcceptanceReport} </if>
+		  		  <if test="recordTime != null and recordTime != ''"> and record_time = #{recordTime} </if>
+		  		  <if test="declarationContent != null and declarationContent != ''"> and declaration_content = #{declarationContent} </if>
+		  		  <if test="projectInvestment != null and projectInvestment != ''"> and project_investment = #{projectInvestment} </if>
+		  		  <if test="projectFinalAccounts != null and projectFinalAccounts != ''"> and project_final_accounts = #{projectFinalAccounts} </if>
+		  		  <if test="engineeringContract != null and engineeringContract != ''"> and engineering_contract = #{engineeringContract} </if>
+		  		  <if test="projectSettlement != null and projectSettlement != ''"> and project_settlement = #{projectSettlement} </if>
+		  		  <if test="operationEffect != null and operationEffect != ''"> and operation_effect = #{operationEffect} </if>
+		  		  <if test="designAdvancedReasonable != null and designAdvancedReasonable != ''"> and design_advanced_reasonable = #{designAdvancedReasonable} </if>
+		  		  <if test="hasAnyProof != null and hasAnyProof != ''"> and has_any_proof = #{hasAnyProof} </if>
+		  		  <if test="passedSafetyAssessment != null and passedSafetyAssessment != ''"> and passed_safety_assessment = #{passedSafetyAssessment} </if>
+		  		  <if test="hasEnvironmentalAssessment != null and hasEnvironmentalAssessment != ''"> and has_environmental_assessment = #{hasEnvironmentalAssessment} </if>
+		  		  <if test="constructionUnit != null and constructionUnit != ''"> and construction_unit = #{constructionUnit} </if>
+		  		  <if test="exploitingUnit != null and exploitingUnit != ''"> and exploiting_unit = #{exploitingUnit} </if>
+		  		  <if test="designInstitute != null and designInstitute != ''"> and design_institute = #{designInstitute} </if>
+		  		  <if test="constructionControlUnit != null and constructionControlUnit != ''"> and construction_control_unit = #{constructionControlUnit} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_oil_pro_general_situation
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="buildLocation != null and buildLocation != ''"> and build_location = #{buildLocation} </if>
+		  		  <if test="projectCategory != null and projectCategory != ''"> and project_category = #{projectCategory} </if>
+		  		  <if test="projectScale != null and projectScale != ''"> and project_scale = #{projectScale} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="completionTime != null and completionTime != ''"> and completion_time = #{completionTime} </if>
+		  		  <if test="projectApproval != null and projectApproval != ''"> and project_approval = #{projectApproval} </if>
+		  		  <if test="completionAcceptanceReport != null and completionAcceptanceReport != ''"> and completion_acceptance_report = #{completionAcceptanceReport} </if>
+		  		  <if test="recordTime != null and recordTime != ''"> and record_time = #{recordTime} </if>
+		  		  <if test="declarationContent != null and declarationContent != ''"> and declaration_content = #{declarationContent} </if>
+		  		  <if test="projectInvestment != null and projectInvestment != ''"> and project_investment = #{projectInvestment} </if>
+		  		  <if test="projectFinalAccounts != null and projectFinalAccounts != ''"> and project_final_accounts = #{projectFinalAccounts} </if>
+		  		  <if test="engineeringContract != null and engineeringContract != ''"> and engineering_contract = #{engineeringContract} </if>
+		  		  <if test="projectSettlement != null and projectSettlement != ''"> and project_settlement = #{projectSettlement} </if>
+		  		  <if test="operationEffect != null and operationEffect != ''"> and operation_effect = #{operationEffect} </if>
+		  		  <if test="designAdvancedReasonable != null and designAdvancedReasonable != ''"> and design_advanced_reasonable = #{designAdvancedReasonable} </if>
+		  		  <if test="hasAnyProof != null and hasAnyProof != ''"> and has_any_proof = #{hasAnyProof} </if>
+		  		  <if test="passedSafetyAssessment != null and passedSafetyAssessment != ''"> and passed_safety_assessment = #{passedSafetyAssessment} </if>
+		  		  <if test="hasEnvironmentalAssessment != null and hasEnvironmentalAssessment != ''"> and has_environmental_assessment = #{hasEnvironmentalAssessment} </if>
+		  		  <if test="constructionUnit != null and constructionUnit != ''"> and construction_unit = #{constructionUnit} </if>
+		  		  <if test="exploitingUnit != null and exploitingUnit != ''"> and exploiting_unit = #{exploitingUnit} </if>
+		  		  <if test="designInstitute != null and designInstitute != ''"> and design_institute = #{designInstitute} </if>
+		  		  <if test="constructionControlUnit != null and constructionControlUnit != ''"> and construction_control_unit = #{constructionControlUnit} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProGeneralSituationDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_oil_pro_general_situation
+		(
+			`project_name`,
+			`build_location`,
+			`project_category`,
+			`project_scale`,
+			`start_time`,
+			`completion_time`,
+			`project_approval`,
+			`completion_acceptance_report`,
+			`record_time`,
+			`declaration_content`,
+			`project_investment`,
+			`project_final_accounts`,
+			`engineering_contract`,
+			`project_settlement`,
+			`operation_effect`,
+			`design_advanced_reasonable`,
+			`has_any_proof`,
+			`passed_safety_assessment`,
+			`has_environmental_assessment`,
+			`construction_unit`,
+			`exploiting_unit`,
+			`design_institute`,
+			`construction_control_unit`,
+			`pro_id`,
+			`task_id`,
+			`apply_id`,
+			`opt_uid`,
+			`created`,
+			`updated`
+		)
+		values
+		(
+			#{projectName},
+			#{buildLocation},
+			#{projectCategory},
+			#{projectScale},
+			#{startTime},
+			#{completionTime},
+			#{projectApproval},
+			#{completionAcceptanceReport},
+			#{recordTime},
+			#{declarationContent},
+			#{projectInvestment},
+			#{projectFinalAccounts},
+			#{engineeringContract},
+			#{projectSettlement},
+			#{operationEffect},
+			#{designAdvancedReasonable},
+			#{hasAnyProof},
+			#{passedSafetyAssessment},
+			#{hasEnvironmentalAssessment},
+			#{constructionUnit},
+			#{exploitingUnit},
+			#{designInstitute},
+			#{constructionControlUnit},
+			#{proId},
+			#{taskId},
+			#{applyId},
+			#{optUid},
+			now(),
+			#{updated}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProGeneralSituationDO">
+		update ass_oil_pro_general_situation
+		<set>
+			<if test="projectName != null">`project_name` = #{projectName}, </if>
+			<if test="buildLocation != null">`build_location` = #{buildLocation}, </if>
+			<if test="projectCategory != null">`project_category` = #{projectCategory}, </if>
+			<if test="projectScale != null">`project_scale` = #{projectScale}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="completionTime != null">`completion_time` = #{completionTime}, </if>
+			<if test="projectApproval != null">`project_approval` = #{projectApproval}, </if>
+			<if test="completionAcceptanceReport != null">`completion_acceptance_report` = #{completionAcceptanceReport}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="declarationContent != null">`declaration_content` = #{declarationContent}, </if>
+			<if test="projectInvestment != null">`project_investment` = #{projectInvestment}, </if>
+			<if test="projectFinalAccounts != null">`project_final_accounts` = #{projectFinalAccounts}, </if>
+			<if test="engineeringContract != null">`engineering_contract` = #{engineeringContract}, </if>
+			<if test="projectSettlement != null">`project_settlement` = #{projectSettlement}, </if>
+			<if test="operationEffect != null">`operation_effect` = #{operationEffect}, </if>
+			<if test="designAdvancedReasonable != null">`design_advanced_reasonable` = #{designAdvancedReasonable}, </if>
+			<if test="hasAnyProof != null">`has_any_proof` = #{hasAnyProof}, </if>
+			<if test="passedSafetyAssessment != null">`passed_safety_assessment` = #{passedSafetyAssessment}, </if>
+			<if test="hasEnvironmentalAssessment != null">`has_environmental_assessment` = #{hasEnvironmentalAssessment}, </if>
+			<if test="constructionUnit != null">`construction_unit` = #{constructionUnit}, </if>
+			<if test="exploitingUnit != null">`exploiting_unit` = #{exploitingUnit}, </if>
+			<if test="designInstitute != null">`design_institute` = #{designInstitute}, </if>
+			<if test="constructionControlUnit != null">`construction_control_unit` = #{constructionControlUnit}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_oil_pro_general_situation where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_oil_pro_general_situation where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

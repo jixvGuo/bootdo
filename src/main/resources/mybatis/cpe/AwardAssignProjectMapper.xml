@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.AwardAssignProjectDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.AwardAssignProjectDO">
+		select `id`,`assign_uid`,`uid`,`pro_id`,`created` from ass_award_assign_project where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.AwardAssignProjectDO">
+		select `id`,`assign_uid`,`uid`,`pro_id`,`created` from ass_award_assign_project
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="assignUid != null and assignUid != ''"> and assign_uid = #{assignUid} </if>
+		  		  <if test="uid != null and uid != ''"> and uid = #{uid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_assign_project
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="assignUid != null and assignUid != ''"> and assign_uid = #{assignUid} </if>
+		  		  <if test="uid != null and uid != ''"> and uid = #{uid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.AwardAssignProjectDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_award_assign_project
+		(
+			`assign_uid`, 
+			`uid`, 
+			`pro_id`, 
+			`created`
+		)
+		values
+		(
+			#{assignUid}, 
+			#{uid}, 
+			#{proId},
+		    now()
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.AwardAssignProjectDO">
+		update ass_award_assign_project 
+		<set>
+			<if test="assignUid != null">`assign_uid` = #{assignUid}, </if>
+			<if test="uid != null">`uid` = #{uid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="created != null">`created` = #{created}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_award_assign_project where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_award_assign_project where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

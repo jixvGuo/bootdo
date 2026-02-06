@@ -1,0 +1,215 @@
+package com.bootdo.system.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+
+/**
+ * 
+ * 
+ * @author chglee
+ * @email mrhouzhibin@163.com
+ * @date 2022-03-27 21:44:17
+ */
+public class SurverStandardContributeUserInfoDO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	//
+	private Integer id;
+	//姓名
+	private String username;
+	// 性别
+	private String gender;
+	//
+	private Integer age;
+	//
+	private String job;
+	//
+	private String workPlace;
+	//
+	private String startTime;
+	//
+	private String workDesc;
+	//
+	private Integer optUid;
+	//
+	private Integer proId;
+	//
+	private String taskId;
+	//
+	private Date created;
+	//
+	private Date updated;
+	//
+	private Integer deleted;
+
+	/**
+	 * 设置：
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getId() {
+		return id;
+	}
+	/**
+	 * 设置：姓名
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	/**
+	 * 获取：姓名
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * 设置： 性别
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	/**
+	 * 获取： 性别
+	 */
+	public String getGender() {
+		return gender;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getAge() {
+		return age;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setJob(String job) {
+		this.job = job;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getJob() {
+		return job;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setWorkPlace(String workPlace) {
+		this.workPlace = workPlace;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getWorkPlace() {
+		return workPlace;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getStartTime() {
+		return startTime;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setWorkDesc(String workDesc) {
+		this.workDesc = workDesc;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getWorkDesc() {
+		return workDesc;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setOptUid(Integer optUid) {
+		this.optUid = optUid;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getOptUid() {
+		return optUid;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setProId(Integer proId) {
+		this.proId = proId;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getProId() {
+		return proId;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+	/**
+	 * 获取：
+	 */
+	public String getTaskId() {
+		return taskId;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+	/**
+	 * 获取：
+	 */
+	public Date getCreated() {
+		return created;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+	/**
+	 * 获取：
+	 */
+	public Date getUpdated() {
+		return updated;
+	}
+	/**
+	 * 设置：
+	 */
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}
+	/**
+	 * 获取：
+	 */
+	public Integer getDeleted() {
+		return deleted;
+	}
+}

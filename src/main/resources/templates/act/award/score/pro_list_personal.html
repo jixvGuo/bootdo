@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;vertical-align:middle;width:5%" rowspan="2">
+											<input type="checkbox" id="multiplechoice" class="i-checks">
+										</th>
+										<th style="text-align:center;vertical-align:middle;width:5%" rowspan="2">项目编号</th>
+                                        <th style="text-align:center;vertical-align:middle;width:25%" rowspan="2">项目名称</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="p:${personalProList}">
+										<td style="text-align:center;"><input  th:value="${p.proId}" type="checkbox" class="i-checks"></td>
+                                        <td style="text-align:center;" th:text="${p.proId}"></td>
+                                        <td style="text-align:center;"><a th:onclick="|toScore('/specialist/toScoreProPersonal?proId=${p.proId}','${p.proName}')|" target="_parent" th:text="${p.proName}"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">生成打分表</button>
+                                    <button class="btn btn-primary" type="submit">生成专家评审意见表</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#multiplechoice").click(function(){
+				if($("#multiplechoice")[0].checked){
+					$("input[type='checkbox']").each(function(){
+						this.checked = true;
+					});
+				}else{
+					$("input[type='checkbox']").each(function(){
+						this.checked = false;
+					});
+				}
+			});
+		});
+        function toScore(url,title) {
+            parent.layer.open({
+                type : 2,
+                title : title,
+                maxmin : true,
+                shadeClose : false,
+                area : [ '800px', '520px' ],
+                content : url // iframe的url
+            });
+        }
+	</script>
+</body>
+
+</html>

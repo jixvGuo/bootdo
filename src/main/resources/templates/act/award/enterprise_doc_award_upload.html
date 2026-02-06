@@ -1,0 +1,1059 @@
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<link href="/css/layui.css" th:href="@{/css/layui.css}" rel="stylesheet">
+<style>
+    .validateFileCheckbox{
+        float: right;
+        margin-right: 55px;
+    }
+    .validateExtFormTitle{
+        width: 150px;
+    }
+    .validateExtFormInput{
+        width: 94%;
+    }
+    .validateExtFormTxt{
+        padding-top: 10px;
+    }
+</style>
+<body class="gray-bg">
+    <div class="animated fadeInRight">
+        <input type="hidden" id="rstScienceValiFile" th:value="${projectInfoDo.rstScienceValiFile}"/>
+        <input type="hidden" id="rstTuanduiValiFile" th:value="${projectInfoDo.rstTuanduiValiFile}"/>
+        <input type="hidden" id="rstPersonalValiFile" th:value="${projectInfoDo.rstPersonalValiFile}"/>
+        <input type="hidden" id="procInsId" th:value="${procInsId}" />
+        <input type="hidden" id="publishTaskId" th:value="${taskId}" />
+        <input type="hidden" id="taskId" th:value="${taskId}" />
+        <input type="hidden" id="actRunTaskId" th:value="${actRunTaskId}" />
+        <input type="hidden" id="proId" th:value="${proId}" />
+        <input type="hidden" id="fileSize" th:value="${fileSize}" />
+        <div class="row" th:if="${procInsId ne '0' && ass_validate_pro eq 1 && pageSource == 'enterprise_validate_menu'}" shiro:hasPermission="act:award:ass_validate_pro">
+               <div style="text-align:right;margin-right:30px; ">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-primary" id="assOverValidateBtn" >完成审核</button>
+                                </div>
+                            </div>
+               </div>
+        </div>
+        <div class="row" style="text-align: center;font-size: 24px;" th:if="${associationReviewRst != null && associationReviewRst != ''}">
+            <span th:if="${associationReviewRst == 'yes'}" style="color: #00B83F;">审核通过</span>
+            <span th:if="${associationReviewRst == 'no'}" style="color:red;">驳回</span>
+            <span th:if="${associationReviewRst == 'over'}" style="color:red;">不参评</span>
+        </div>
+        <div class="row">
+            <div class="clients-list">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#technology">科技进步奖材料</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#technology1">科技创新团队材料</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#technology2">先进个人材料</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div style="text-align:right;margin-right:30px; " th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">
+                        <form class="form-horizontal m-t" id="signupForm">
+                            <input type="hidden" th:value="${proId}" name="proId"/>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-primary" id="submitValidate">提交审核</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="technology" class="tab-pane active">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>科技进步奖申报材料上传</h5>
+                                    </div>
+                                    <div class="ibox-content" style="overflow:scroll">
+                                        <div class="wrapper wrapper-content">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="ibox float-e-margins">
+                                                        <div class="ibox-content">
+                                                            <div class="file-manager">
+                                                                <h5>申报材料分类</h5>
+                                                                <ul class="folder-list" id="science_doc_list" style="padding: 0">
+                                                                    <li>
+                                                                        <input th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" name="science_doc_validate" class="validateFileCheckbox" th:value="shenbaoshu" />
+                                                                        <input th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" name="science_doc_validate" class="validateFileCheckbox" th:value="shenbaoshu" />
+                                                                        <a href="javascript:showUpload('shenbaoshu','b')" ><i class="fa fa-folder"></i> 申报书</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="yanjiubaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="yanjiubaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('yanjiubaogao','b')"><i class="fa fa-folder"></i> 研究报告</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="chengguolixiangwenjian" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="chengguolixiangwenjian" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('chengguolixiangwenjian','b')"><i class="fa fa-folder"></i> 成果立项文件</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="chengguoyanshoubaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="chengguoyanshoubaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('chengguoyanshoubaogao','b')"><i class="fa fa-folder"></i> 成果验收报告</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="kejichengguojiandingzhengshu" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="kejichengguojiandingzhengshu" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('kejichengguojiandingzhengshu','b')"><i class="fa fa-folder"></i> 科技成果鉴定证书</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="chaxinbaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="chaxinbaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('chaxinbaogao','b')"><i class="fa fa-folder"></i> 查新报告</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="qitazhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="qitazhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('qitazhengming','b')"><i class="fa fa-folder"></i> 其它证明</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="chengguoxingchengdeguobiao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="chengguoxingchengdeguobiao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('chengguoxingchengdeguobiao','b')"><i class="fa fa-folder"></i> 成果形成的国标、行标</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="jiancebaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="jiancebaogao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('jiancebaogao','b')"><i class="fa fa-folder"></i> 检测报告</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="chengguoyingyongzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="chengguoyingyongzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('chengguoyingyongzhengming','b')"><i class="fa fa-folder"></i> 成果应用证明</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input name="science_doc_validate" th:value="wanchengrenmingdanpaixubiao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                        <input name="science_doc_validate" th:value="wanchengrenmingdanpaixubiao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                        <a href="javascript:showUpload('wanchengrenmingdanpaixubiao','b')"><i class="fa fa-folder"></i> 完成人名单排序表等</a>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="shenbaoshu"  class="updocss_b col-sm-9 animated fadeInRight" >
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传申报书</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'shenbaoshu'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="yanjiubaogao" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传研究报告</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'yanjiubaogao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="chengguolixiangwenjian"   style="display: none;"  class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传成果立项文件</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'chengguolixiangwenjian'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="chengguoyanshoubaogao" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传成果验收报告</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'chengguoyanshoubaogao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="kejichengguojiandingzhengshu" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传科技成功过鉴定书</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'kejichengguojiandingzhengshu'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="chaxinbaogao" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传查新报告</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'chaxinbaogao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="qitazhengming" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传其他证明</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'qitazhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="chengguoxingchengdeguobiao" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传成果形成的国标、行标</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'chengguoxingchengdeguobiao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="jiancebaogao" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传检测报告</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'jiancebaogao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="chengguoyingyongzhengming" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传成果应用证明</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'chengguoyingyongzhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="wanchengrenmingdanpaixubiao" style="display: none;" class="updocss_b col-sm-9 animated fadeInRight">
+                                                    <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传完成人名单排序表等</button>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'wanchengrenmingdanpaixubiao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="scienceExtForm"  th:if="${procInsId ne '0' && (ass_validate_pro eq 1 || ass_validate_pro eq 0)}">
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-9">
+                                                    <div class="layui-form">
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">申报单位</label>
+                                                             <div class="layui-input-block validateExtFormTxt">
+                                                                 <span th:text="${enterpriseName}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">申报成果名称</label>
+                                                             <div class="layui-input-block validateExtFormTxt">
+                                                                 <span th:text="${chengguo}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">成果鉴定等级</label>
+                                                             <div class="layui-input-block">
+                                                                 <input th:if="${ass_validate_pro eq 1}" type="text" id="scienceLevel" name="scienceLevel" required="" lay-verify="required" placeholder="请输入成果鉴定等级" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                 <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.scienceLevel}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">知识产权证明数量</label>
+                                                             <div class="layui-input-block">
+                                                                 <input th:if="${ass_validate_pro eq 1}" type="text" id="scienceKnowledgeCount" name="scienceKnowledgeCount" required="" lay-verify="required" placeholder="请输入知识产权证明数量" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                 <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.scienceKnowledgeCount}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">检测报告出具单位</label>
+                                                             <div class="layui-input-block">
+                                                                 <input th:if="${ass_validate_pro eq 1}" type="text" id="scienceVliEnterprise" name="scienceVliEnterprise" required="" lay-verify="required" placeholder="请输入检测报告出具单位" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                 <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.scienceVliEnterprise}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">成果应用时间</label>
+                                                             <div class="layui-input-block">
+                                                                 <input th:if="${ass_validate_pro eq 1}" type="text" id="scienceApplyTime" name="scienceApplyTime" required="" lay-verify="required" placeholder="请输入成果应用时间" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                 <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.scienceApplyTime}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">应用单位数量</label>
+                                                             <div class="layui-input-block">
+                                                                 <input th:if="${ass_validate_pro eq 1}" type="text" id="scienceApplyEnterpriseCount" name="scienceApplyEnterpriseCount" required="" lay-verify="required" placeholder="请输入应用单位数量" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                 <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.scienceApplyEnterpriseCount}"></span>
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item" th:if="${ass_validate_pro eq 1}">
+                                                             <label class="layui-form-label validateExtFormTitle">审查结论</label>
+                                                             <div class="layui-input-block validateExtFormInput">
+                                                                 <input type="radio" name="scienceRst" value="参评" title="参评">
+                                                                 <input type="radio" name="scienceRst" value="完善后参评" title="完善后参评">
+                                                                 <input type="radio" name="scienceRst" value="不评" title="不评">
+<!--
+                                                                 <input type="radio" name="scienceRst" value="缓评" title="缓评">
+-->
+                                                             </div>
+                                                         </div>
+                                                         <div class="layui-form-item">
+                                                             <label class="layui-form-label validateExtFormTitle">主要完成人</label>
+                                                             <div class="layui-input-block validateExtFormTxt">
+                                                                 <span th:text="${person}"></span>
+                                                             </div>
+                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script src="/js/jquery.min.js?v=2.1.4"></script>
+                                        <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+                                        <script src="/js/content.min.js?v=1.0.0"></script>
+                                        <script>
+                                            $(document).ready(function(){$(".file-box").each(function(){animationHover(this,"pulse")})});
+                                         </script>
+                                        <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="technology1" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>科技创新先进团队申报材料上传</h5>
+                                        </div>
+                                        <div class="ibox-content" style="overflow:scroll">
+                                            <div class="wrapper wrapper-content">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="ibox float-e-margins">
+                                                            <div class="ibox-content">
+                                                                <div class="file-manager">
+                                                                    <h5>申报材料分类</h5>
+                                                                    <ul class="folder-list" id="tuandui_doc_list" style="padding: 0">
+                                                                        <li>
+                                                                            <input name="tuandui_doc_validate" th:value="kejijiangli" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="tuandui_doc_validate" th:value="kejijiangli" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('kejijiangli','a')" ><i class="fa fa-folder"></i> 科技奖励</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="tuandui_doc_validate" th:value="zhishichanquanzhengshu" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="tuandui_doc_validate" th:value="zhishichanquanzhengshu" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('zhishichanquanzhengshu','a')"><i class="fa fa-folder"></i> 知识产权证书</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="tuandui_doc_validate" th:value="lunwenzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="tuandui_doc_validate" th:value="lunwenzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('lunwenzhengming','a')"><i class="fa fa-folder"></i> 论文、论著证明</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="tuandui_doc_validate" th:value="kejichengguoyingyongzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="tuandui_doc_validate" th:value="kejichengguoyingyongzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('kejichengguoyingyongzhengming','a')"><i class="fa fa-folder"></i> 科技成果应用证明</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="tuandui_doc_validate" th:value="yingyezhizhao" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="tuandui_doc_validate" th:value="yingyezhizhao" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('yingyezhizhao','a')"><i class="fa fa-folder"></i> 营业执照</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="tuandui_doc_validate" th:value="zhilianghuanbaozhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="tuandui_doc_validate" th:value="zhilianghuanbaozhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('zhilianghuanbaozhengming','a')"><i class="fa fa-folder"></i> 质量、安全环保证明</a>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="kejijiangli" class="updocss_a col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传科技奖励</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'kejijiangli'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="zhishichanquanzhengshu" style="display: none;" class="updocss_a col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传知识产权证书</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'zhishichanquanzhengshu'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="lunwenzhengming" style="display: none;" class="updocss_a col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传论文、论著证明</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'lunwenzhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="kejichengguoyingyongzhengming" style="display: none;" class="updocss_a col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传科技成果应用证明</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'kejichengguoyingyongzhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="yingyezhizhao" style="display: none;" class="updocss_a col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传营业执照</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'yingyezhizhao'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="zhilianghuanbaozhengming" style="display: none;" class="updocss_a col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传质量、安全环保证明</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'zhilianghuanbaozhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row" id="tuanduiExtForm"  th:if="${procInsId ne '0' && (ass_validate_pro eq 1 || ass_validate_pro eq 0)}" shiro:hasPermission="act:award:ass_validate_pro">
+                                                    <div class="col-sm-3"></div>
+                                                    <div class="col-sm-9">
+                                                        <div class="layui-form">
+                                                            <div class="layui-form-item">
+                                                               <label class="layui-form-label validateExtFormTitle">编号</label>
+                                                               <div class="layui-input-block">
+                                                                   <input th:if="${ass_validate_pro eq 1}" type="text" id="tuanduiCode" name="tuanduiCode" required="" lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                   <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.tuanduiCode}"></span>
+                                                               </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                               <label class="layui-form-label validateExtFormTitle">申报单位</label>
+                                                               <div class="layui-input-block validateExtFormTxt">
+                                                                   <span th:text="${enterpriseName}"></span>
+                                                               </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <label class="layui-form-label validateExtFormTitle">申报团队名称</label>
+                                                                <div class="layui-input-block validateExtFormTxt">
+                                                                    <span th:text="${tuandui}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <label class="layui-form-label validateExtFormTitle">3年以上稳定合作</label>
+                                                                <div class="layui-input-block">
+                                                                    <input th:if="${ass_validate_pro eq 1}" type="text" id="tuanduiCooperate" name="tuanduiCooperate" required="" lay-verify="required" placeholder="请输入3年以上稳定合作" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                    <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.tuanduiCooperate}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <label class="layui-form-label validateExtFormTitle">技术专家（具有高级职称，必要条件）</label>
+                                                                <div class="layui-input-block">
+                                                                    <input th:if="${ass_validate_pro eq 1}" type="text" id="tuanduiSpecialist" name="tuanduiSpecialist" required="" lay-verify="required" placeholder="请输入技术专家（具有高级职称，必要条件）" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                    <span th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.tuanduiSpecialist}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="layui-form-item" th:if="${ass_validate_pro eq 1}">
+                                                                <label class="layui-form-label validateExtFormTitle">审查结论</label>
+                                                                <div class="layui-input-block validateExtFormInput">
+                                                                    <input type="radio" name="tuanduiRst" value="参评" title="参评">
+                                                                    <input type="radio" name="tuanduiRst" value="完善后参评" title="完善后参评">
+                                                                    <input type="radio" name="tuanduiRst" value="不评" title="不评">
+                                                                    <!--<input type="radio" name="tuanduiRst" value="缓评" title="缓评">-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script src="/js/jquery.min.js?v=2.1.4"></script>
+                                            <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+                                            <script src="/js/content.min.js?v=1.0.0"></script>
+                                            <script>
+                                                $(document).ready(function(){$(".file-box").each(function(){animationHover(this,"pulse")})});
+                                                function showUpload(upId,cssType) {
+                                                    console.log("-----aaaa>showUpload=",upId,$("#"+upId));
+                                                    $(".updocss_"+cssType).attr('style','display:none');
+                                                    $("#"+upId).attr('style','display:block');
+                                                }
+                                            </script>
+                                            <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="technology2" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>科技创新先进个人申报材料上传</h5>
+                                        </div>
+                                        <div class="ibox-content" style="overflow:scroll">
+                                            <div class="wrapper wrapper-content">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="ibox float-e-margins">
+                                                            <div class="ibox-content">
+                                                                <div class="file-manager">
+                                                                    <h5>申报材料分类</h5>
+                                                                    <ul class="folder-list" id="personal_doc_list" style="padding: 0">
+                                                                        <li>
+                                                                            <input name="personal_doc_validate" th:value="zhishichanquanzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 1}" shiro:hasPermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="personal_doc_validate" th:value="zhishichanquanzhengming" th:if="${procInsId ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('zhishichanquanzhengming','c')" ><i class="fa fa-folder"></i> 知识产权证明</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="personal_doc_validate" th:value="kejijiangzhengming" th:if="${procinsid ne '0' && ass_validate_pro eq 1}" shiro:haspermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="personal_doc_validate" th:value="kejijiangzhengming" th:if="${procinsid ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('kejijiangzhengming','c')"><i class="fa fa-folder"></i> 科技奖证明</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="personal_doc_validate" th:value="lunzhu" th:if="${procinsid ne '0' && ass_validate_pro eq 1}" shiro:haspermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="personal_doc_validate" th:value="lunzhu" th:if="${procinsid ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('lunzhu','c')"><i class="fa fa-folder"></i> 论著</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="personal_doc_validate" th:value="biahzhungongfa" th:if="${procinsid ne '0' && ass_validate_pro eq 1}" shiro:haspermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="personal_doc_validate" th:value="biahzhungongfa" th:if="${procinsid ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('biahzhungongfa','c')"><i class="fa fa-folder"></i> 标准（工法）</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="personal_doc_validate" th:value="qitakejirongyu" th:if="${procinsid ne '0' && ass_validate_pro eq 1}" shiro:haspermission="act:award:ass_validate_pro" type="checkbox" class="validateFileCheckbox"/>
+                                                                            <input name="personal_doc_validate" th:value="qitakejirongyu" th:if="${procinsid ne '0' && ass_validate_pro eq 0}" disabled type="checkbox" class="validateFileCheckbox"/>
+                                                                            <a href="javascript:showUpload('qitakejirongyu','c')"><i class="fa fa-folder"></i> 其它科技荣誉</a>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="zhishichanquanzhengming" class="updocss_c col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传知识产权证明</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'zhishichanquanzhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="kejijiangzhengming" style="display: none;" class="updocss_c col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传科技奖证明</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'kejijiangzhengming'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="lunzhu" style="display: none;" class="updocss_c col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传论著</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'lunzhu'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="biaozhungongfa" style="display: none;" class="updocss_c col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传标准(工法)</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'biaozhungongfa'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="qitakejirongyu" style="display: none;" class="updocss_c col-sm-9 animated fadeInRight">
+                                                        <button class="btn btn-primary btn-block" th:if=" ${couldSubmitReview && (procInsId eq '0' || associationReviewRst == 'no')}">上传其他科技荣誉</button>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'qitakejirongyu'"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row" id="personalExtForm" th:if="${procInsId ne '0' && (ass_validate_pro eq 1 || ass_validate_pro eq 0)}" shiro:hasPermission="act:award:ass_validate_pro">
+                                                    <div class="col-sm-3"></div>
+                                                    <div class="col-sm-9">
+                                                        <div class="layui-form">
+                                                            <div class="layui-form-item">
+                                                               <label class="layui-form-label validateExtFormTitle">申报单位</label>
+                                                               <div class="layui-input-block validateExtFormTxt">
+                                                                   <span th:text="${enterpriseName}"></span>
+                                                               </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <label class="layui-form-label validateExtFormTitle">姓名</label>
+                                                                <div class="layui-input-block validateExtFormTxt">
+                                                                    <span th:text="${advancedIndividual}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <label class="layui-form-label validateExtFormTitle">是否受雇申报企业</label>
+                                                                <div class="layui-input-block">
+                                                                    <input th:if="${ass_validate_pro eq 1}" type="text" id="personalIsEmploy" name="personalIsEmploy" required="" lay-verify="required" placeholder="请输入是否受雇申报企业" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                    <sapn th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.personalIsEmploy}"></sapn>
+                                                                </div>
+                                                            </div>
+                                                            <div class="layui-form-item">
+                                                                <label class="layui-form-label validateExtFormTitle">是否有违反职业道德行为</label>
+                                                                <div class="layui-input-block">
+                                                                    <input  th:if="${ass_validate_pro eq 1}" type="text" id="personalIsWorkEthics" name="personalIsWorkEthics" required="" lay-verify="required" placeholder="请输入是否有违反职业道德行为" autocomplete="off" class="layui-input validateExtFormInput">
+                                                                    <sapn th:if="${ass_validate_pro eq 0}" th:text="${projectInfoDo.personalIsWorkEthics}"></sapn>
+                                                                </div>
+                                                            </div>
+                                                            <div class="layui-form-item" th:if="${ass_validate_pro eq 1}">
+                                                                <label class="layui-form-label validateExtFormTitle">审查结论</label>
+                                                                <div class="layui-input-block validateExtFormInput">
+                                                                    <input type="radio" name="personalRst" value="参评" title="参评">
+                                                                    <input type="radio" name="personalRst" value="完善后参评" title="完善后参评">
+                                                                    <input type="radio" name="personalRst" value="不评" title="不评">
+                                                                    <!--<input type="radio" name="personalRst" value="缓评" title="缓评">-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <script src="/js/jquery.min.js?v=2.1.4"></script>
+                                            <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+                                            <script src="/js/content.min.js?v=1.0.0"></script>
+                                            <script>
+                                                $(document).ready(function(){$(".file-box").each(function(){animationHover(this,"pulse")})});
+                                            </script>
+                                            <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/js/demo/peity-demo.min.js"></script>
+    <script src="/js/layui.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+    <div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/act/award/enterprise_doc_award_upload.js"></script>
+<!--
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+-->
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+</html>

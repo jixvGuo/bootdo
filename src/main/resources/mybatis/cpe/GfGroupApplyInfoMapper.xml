@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.GfGroupApplyInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.GfGroupApplyInfoDO">
+		select `id`,`gf_name`,`gf_unit`,`gf_recommend_unit`,`gf_address`,`gf_code`,`gf_contact`,`gf_phone`,`gf_apply_info`,`gf_key_info`,`gf_key_award`,`gf_origin_info`,`gf_desc`,`gf_key_secret`,`gf_technology_level`,`gf_reliable_desc`,`gf_apply_desc`,`gf_benefit`,`pro_id`,`created`,`update`,`task_id`,`apply_id`,`opt_uid` from ass_gf_group_apply_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.dto.GfProDataDto">
+		select gf.`id`,`gf_name`,`gf_unit`,`gf_recommend_unit`,`gf_address`,`gf_code`,`gf_contact`,`gf_phone`,`gf_apply_info`,`gf_key_info`,`gf_key_award`,`gf_origin_info`,`gf_desc`,`gf_key_secret`,`gf_technology_level`,`gf_reliable_desc`,`gf_apply_desc`,`gf_benefit`,
+		       gf.`pro_id`,gf.`created`,gf.`update`,gf.`task_id`,gf.`apply_id`,gf.`opt_uid`,
+	     	   (SELECT sd.name FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id where  su.user_id = gf.opt_uid limit 1) company_name,
+               (select username from sys_user where user_id = gf.opt_uid limit 1) apply_account,
+               pt.apply_start_date,
+               pt.apply_end_date,
+               pt.expert_start_time,
+               pt.expert_end_time,
+               pt.expert_start_time_second,
+               pt.expert_end_time_second,
+               pt.check_start_time,
+               pt.check_end_time,
+               pt.task_stat,
+               pro.pro_stat,
+               pro.pro_result_code proCode,
+               (SELECT username FROM boot_do.sys_user where user_id = gf.opt_uid limit 1) opt_account
+		from ass_gf_group_apply_info gf
+		          JOIN
+               ass_award_publish_task pt on gf.task_id = pt.id
+                  JOIN
+               ass_award_enterprise_project pro ON gf.pro_id = pro.id
+        <where>  
+		  		  <if test="id != null and id != ''"> and gf.id = #{id} </if>
+		  		  <if test="gfName != null and gfName != ''"> and gf_name = #{gfName} </if>
+		  		  <if test="gfUnit != null and gfUnit != ''"> and gf_unit = #{gfUnit} </if>
+		  		  <if test="gfRecommendUnit != null and gfRecommendUnit != ''"> and gf_recommend_unit = #{gfRecommendUnit} </if>
+		  		  <if test="gfAddress != null and gfAddress != ''"> and gf_address = #{gfAddress} </if>
+		  		  <if test="gfCode != null and gfCode != ''"> and gf_code = #{gfCode} </if>
+		  		  <if test="gfContact != null and gfContact != ''"> and gf_contact = #{gfContact} </if>
+		  		  <if test="gfPhone != null and gfPhone != ''"> and gf_phone = #{gfPhone} </if>
+		  		  <if test="gfApplyInfo != null and gfApplyInfo != ''"> and gf_apply_info = #{gfApplyInfo} </if>
+		  		  <if test="gfKeyInfo != null and gfKeyInfo != ''"> and gf_key_info = #{gfKeyInfo} </if>
+		  		  <if test="gfKeyAward != null and gfKeyAward != ''"> and gf_key_award = #{gfKeyAward} </if>
+		  		  <if test="gfOriginInfo != null and gfOriginInfo != ''"> and gf_origin_info = #{gfOriginInfo} </if>
+		  		  <if test="gfDesc != null and gfDesc != ''"> and gf_desc = #{gfDesc} </if>
+		  		  <if test="gfKeySecret != null and gfKeySecret != ''"> and gf_key_secret = #{gfKeySecret} </if>
+		  		  <if test="gfTechnologyLevel != null and gfTechnologyLevel != ''"> and gf_technology_level = #{gfTechnologyLevel} </if>
+		  		  <if test="gfReliableDesc != null and gfReliableDesc != ''"> and gf_reliable_desc = #{gfReliableDesc} </if>
+		  		  <if test="gfApplyDesc != null and gfApplyDesc != ''"> and gf_apply_desc = #{gfApplyDesc} </if>
+		  		  <if test="gfBenefit != null and gfBenefit != ''"> and gf_benefit = #{gfBenefit} </if>
+		  		  <if test="proId != null and proId != ''"> and gf.pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and gf.created = #{created} </if>
+		  		  <if test="update != null and update != ''"> and gf.update = #{update} </if>
+		  		  <if test="taskId != null and taskId != ''"> and gf.task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and gf.apply_id = #{applyId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and gf.opt_uid = #{optUid} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_gf_group_apply_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="gfName != null and gfName != ''"> and gf_name = #{gfName} </if>
+		  		  <if test="gfUnit != null and gfUnit != ''"> and gf_unit = #{gfUnit} </if>
+		  		  <if test="gfRecommendUnit != null and gfRecommendUnit != ''"> and gf_recommend_unit = #{gfRecommendUnit} </if>
+		  		  <if test="gfAddress != null and gfAddress != ''"> and gf_address = #{gfAddress} </if>
+		  		  <if test="gfCode != null and gfCode != ''"> and gf_code = #{gfCode} </if>
+		  		  <if test="gfContact != null and gfContact != ''"> and gf_contact = #{gfContact} </if>
+		  		  <if test="gfPhone != null and gfPhone != ''"> and gf_phone = #{gfPhone} </if>
+		  		  <if test="gfApplyInfo != null and gfApplyInfo != ''"> and gf_apply_info = #{gfApplyInfo} </if>
+		  		  <if test="gfKeyInfo != null and gfKeyInfo != ''"> and gf_key_info = #{gfKeyInfo} </if>
+		  		  <if test="gfKeyAward != null and gfKeyAward != ''"> and gf_key_award = #{gfKeyAward} </if>
+		  		  <if test="gfOriginInfo != null and gfOriginInfo != ''"> and gf_origin_info = #{gfOriginInfo} </if>
+		  		  <if test="gfDesc != null and gfDesc != ''"> and gf_desc = #{gfDesc} </if>
+		  		  <if test="gfKeySecret != null and gfKeySecret != ''"> and gf_key_secret = #{gfKeySecret} </if>
+		  		  <if test="gfTechnologyLevel != null and gfTechnologyLevel != ''"> and gf_technology_level = #{gfTechnologyLevel} </if>
+		  		  <if test="gfReliableDesc != null and gfReliableDesc != ''"> and gf_reliable_desc = #{gfReliableDesc} </if>
+		  		  <if test="gfApplyDesc != null and gfApplyDesc != ''"> and gf_apply_desc = #{gfApplyDesc} </if>
+		  		  <if test="gfBenefit != null and gfBenefit != ''"> and gf_benefit = #{gfBenefit} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="update != null and update != ''"> and update = #{update} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.GfGroupApplyInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_gf_group_apply_info
+		(
+			`gf_name`, 
+			`gf_unit`, 
+			`gf_recommend_unit`, 
+			`gf_address`, 
+			`gf_code`, 
+			`gf_contact`, 
+			`gf_phone`, 
+			`gf_apply_info`, 
+			`gf_key_info`, 
+			`gf_key_award`, 
+			`gf_origin_info`, 
+			`gf_desc`, 
+			`gf_key_secret`, 
+			`gf_technology_level`, 
+			`gf_reliable_desc`, 
+			`gf_apply_desc`, 
+			`gf_benefit`, 
+			`pro_id`, 
+			`created`, 
+			`update`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`
+		)
+		values
+		(
+			#{gfName}, 
+			#{gfUnit}, 
+			#{gfRecommendUnit}, 
+			#{gfAddress}, 
+			#{gfCode}, 
+			#{gfContact}, 
+			#{gfPhone}, 
+			#{gfApplyInfo}, 
+			#{gfKeyInfo}, 
+			#{gfKeyAward}, 
+			#{gfOriginInfo}, 
+			#{gfDesc}, 
+			#{gfKeySecret}, 
+			#{gfTechnologyLevel}, 
+			#{gfReliableDesc}, 
+			#{gfApplyDesc}, 
+			#{gfBenefit}, 
+			#{proId}, 
+			now(),
+			#{update}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.GfGroupApplyInfoDO">
+		update ass_gf_group_apply_info 
+		<set>
+			<if test="gfName != null">`gf_name` = #{gfName}, </if>
+			<if test="gfUnit != null">`gf_unit` = #{gfUnit}, </if>
+			<if test="gfRecommendUnit != null">`gf_recommend_unit` = #{gfRecommendUnit}, </if>
+			<if test="gfAddress != null">`gf_address` = #{gfAddress}, </if>
+			<if test="gfCode != null">`gf_code` = #{gfCode}, </if>
+			<if test="gfContact != null">`gf_contact` = #{gfContact}, </if>
+			<if test="gfPhone != null">`gf_phone` = #{gfPhone}, </if>
+			<if test="gfApplyInfo != null">`gf_apply_info` = #{gfApplyInfo}, </if>
+			<if test="gfKeyInfo != null">`gf_key_info` = #{gfKeyInfo}, </if>
+			<if test="gfKeyAward != null">`gf_key_award` = #{gfKeyAward}, </if>
+			<if test="gfOriginInfo != null">`gf_origin_info` = #{gfOriginInfo}, </if>
+			<if test="gfDesc != null">`gf_desc` = #{gfDesc}, </if>
+			<if test="gfKeySecret != null">`gf_key_secret` = #{gfKeySecret}, </if>
+			<if test="gfTechnologyLevel != null">`gf_technology_level` = #{gfTechnologyLevel}, </if>
+			<if test="gfReliableDesc != null">`gf_reliable_desc` = #{gfReliableDesc}, </if>
+			<if test="gfApplyDesc != null">`gf_apply_desc` = #{gfApplyDesc}, </if>
+			<if test="gfBenefit != null">`gf_benefit` = #{gfBenefit}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="update != null">`update` = #{update}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_gf_group_apply_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_gf_group_apply_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

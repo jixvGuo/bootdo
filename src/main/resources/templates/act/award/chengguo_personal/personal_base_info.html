@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form id="signupForm" method="post" class="form-horizontal">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <input id="id" name="id" th:value="${enterpriPersonalInfo.id}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">申报人姓名
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            colspan="2" rowspan="1">
+                                            <input id="userName" name="userName" th:value="${enterpriPersonalInfo.userName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="1">性别
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left" rowspan="1"
+                                            colspan="1">
+                                            <input id="gender" name="gender" th:value="${enterpriPersonalInfo.gender}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="1">出生年月
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left" rowspan="1"
+                                            colspan="2">
+                                            <input id="birthday" name="birthday" th:value="${enterpriPersonalInfo.birthday}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="1">照片
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">民族
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="nation" name="nation" th:value="${enterpriPersonalInfo.nation}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">从事专业
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="1">
+                                            <input id="workMajor" name="workMajor" th:value="${enterpriPersonalInfo.workMajor}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">技术职称
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="technicalTitle" name="technicalTitle" th:value="${enterpriPersonalInfo.technicalTitle}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="2">上传
+                                            <input id="photo" name="photo" th:value="${enterpriPersonalInfo.photo}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">身份证
+                                        </td>
+                                        <td style="width:45%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="userIden" name="userIden" th:value="${enterpriPersonalInfo.userIden}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">技术职务
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="technicalPosition" name="technicalPosition" th:value="${enterpriPersonalInfo.technicalPosition}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">最高学历
+                                        </td>
+                                        <td style="width:45%;vertical-align:middle;text-align:left"
+                                             colspan="3">
+                                            <input id="highestEducation" name="highestEducation" th:value="${enterpriPersonalInfo.highestEducation}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">毕业学校
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="graduateSchool" name="graduateSchool" th:value="${enterpriPersonalInfo.graduateSchool}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">所学专业
+                                        </td>
+                                        <td style="width:45%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="major" name="major" th:value="${enterpriPersonalInfo.major}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">毕业时间
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left" colspan="1" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                                            <input id="graduationTime" name="graduationTime" th:value="${enterpriPersonalInfo.graduationTime}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+                                            是否享受政府津贴
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="isEnjoyGovernmentSubsidies" name="isEnjoyGovernmentSubsidies" th:value="${enterpriPersonalInfo.isEnjoyGovernmentSubsidies}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="3">联系人
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">姓名
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="contactsName" name="contactsName" th:value="${enterpriPersonalInfo.contactsName}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+                                            电话
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="contactsTelphone" name="contactsTelphone" th:value="${enterpriPersonalInfo.contactsTelphone}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">手机
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                             colspan="4">
+                                            <input id="contactsPhone" name="contactsPhone" th:value="${enterpriPersonalInfo.contactsPhone}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+                                            传真
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="contactsFax" name="contactsFax" th:value="${enterpriPersonalInfo.contactsFax}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">通讯地址
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                             colspan="4">
+                                            <input id="contactsAddress" name="contactsAddress" th:value="${enterpriPersonalInfo.contactsAddress}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+                                            邮政编码
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="contactsPostcode" name="contactsPostcode" th:value="${enterpriPersonalInfo.contactsPostcode}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="3">主要技术（科技）工作经历
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="4">
+                                            起止时间
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+                                            单位名称
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+                                            职务
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+                                            从事工作
+                                        </td>
+                                    </tr>
+                                    <tr th:each="work,stat: ${workHistory}">
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                             colspan="4">
+                                            <input th:id="workStartEndTime+${stat.count}" name="workStartEndTime" th:value="${work.workStartEndTime}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input th:id="workCompany+${stat.count}" name="workCompany" th:value="${work.workCompany}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="1">
+                                            <input th:id="workPosition+${stat.count}" name="workPosition" th:value="${work.workPosition}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input th:id="workContent+${stat.count}" name="workContent" th:value="${work.workContent}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:left" colspan="10">
+                                            个人综述
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;text-align:left;height: 300px;"
+                                             colspan="10">
+                                            <input id="personalSummary" name="personalSummary" th:value="${enterpriPersonalInfo.personalSummary}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+                                            （公章）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+                                            <span th:text="${curDate}"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+                                            申报人所在单位意见：
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;text-align:left;height: 300px;"
+                                            colspan="10">
+                                            <input id="companyOpinion" name="companyOpinion" th:value="${enterpriPersonalInfo.companyOpinion}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+                                            （公章）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+                                            年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/system/enterpriPersonalInfo/add.js"></script>
+    <script>
+        $("input[name='graduationTime']").blur(function(){
+            $(this).parent().attr("class","ui field");
+        });
+    </script>
+</body>
+
+</html>

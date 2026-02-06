@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: bootstrap">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.4.0/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/plugins/markdown/bootstrap-markdown.min.css" />
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <!--<div class="col-sm-8">
+            <div class="ibox">-->
+        <div class="ibox-content">
+            <div class="clients-list">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-file-text-o" style="font-size:20px;color:green"></i> 评审须知</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-1"><i class="fa fa-check-circle" style="font-size:20px;color:green"></i> 科技进步奖评分标准</a>
+                    </li>
+                    <li class="" ><a data-toggle="tab" href="#tab-2"><i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i> 科技进步奖缓评和不评标准</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab-3" class="tab-pane active">
+                        <div class="full-height-scroll">
+                            <div class="ui container">
+                            <h3 style="text-align: center">2022年中国石油工程建设科学技术奖评审须知</h3>
+                            <p>
+                                一、请各位评委对照“中国石油工程建设科学技术奖评选标准”，认真阅读、研判本组所有成果的申报材料，给出每个成果的评审分数并将每个项目的评审分填入评分表。
+                            </p>
+                            <p>
+                                二、请各位评委首先对组内形式审查缓评和不评的成果（或团队、或个人）进行核实，如同意形式审查意见可不给出评审分数，如认为应参评可给出评审分数；再对形式审查通过的成果按入门条件进行核查，如有不满足的可给出缓评和不评意见，并把不满足入门条件的问题填写到打分表的备注栏，可不给评审分数；然后各位评委对通过审核的成果给出评审分数。
+                            </p>
+                            <p>
+                                三、各位评委在完成评分后，请按下述第六条表1的要求对获奖成果和获奖等级给出推荐意见，坚持宁缺毋滥的原则，不够一、二、三等奖标准的不凑数。
+                            </p>
+                            <p>
+                                四、请各位评委将完成的评分和推荐意见表签字并提交。
+                            </p>
+                            <p>
+                                五、计分原则：本次评审分组计分，每组每个评委对本组每个成果的评分，分别去掉1个最高分和一个最低分，以其余评委分数的算术平均值计算总分。
+                            </p>
+                            <p>
+                                六、中国石油工程建设科学技术奖科技进步奖设一、二、三等奖。获奖成果比例为申报项目的70%，各组一、二、三等奖数量按表1推荐。
+                            </p>
+                            <div class="ui segment">
+                                <table class="ui fixed single line celled table "  >
+                                    <thead>
+                                    <tr>
+                                        <th colspan="6">表1         各组获奖比例分配表</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">组别</th>
+                                        <th rowspan="2">参评数量</th>
+                                        <th rowspan="2">获奖数（项）</th>
+                                        <th colspan="3">获奖等级指标（项）</th>
+                                    </tr>
+                                    <tr>
+                                        <th>一等</th>
+                                        <th>二等</th>
+                                        <th>三等</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1.油气集输与储运</td>
+                                        <td>25</td>
+                                        <td>18</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.施工组</td>
+                                        <td>21</td>
+                                        <td>15</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>7</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.软件组</td>
+                                        <td>25</td>
+                                        <td>18</td>
+                                        <td>3</td>
+                                        <td>6</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4.综合组</td>
+                                        <td>12</td>
+                                        <td>8</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>合计</td>
+                                        <td>83</td>
+                                        <td>59</td>
+                                        <td>12</td>
+                                        <td>18</td>
+                                        <td>29</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p>
+                                    七、各组按项目得分排序确定获奖项目名单及推荐获奖等级。
+                                </p>
+                                <p>八、评选原则为“宁缺毋滥”原则上各等级分数应满足如下要求。</p>
+                                <p>一等：总分90分及以上；</p>
+                                <p>二等：总分76及以上-89分；</p>
+                                <p>三等：总分61-75分；</p>
+                                <p>落选：60分以下。</p>
+                                <p>确定的各等级成果应满足该等级的分数要求，进入分数段的成果数量如超出表1要求，按表1执行。</p>
+                                <p>九、科技创新先进团队和科技创新先进个人不分等级，由评委投票确定获奖名单。</p>
+                                <p>十、在评审过程中如发现申报材料不实的问题，请及时与会务组联系，一经查实，取消其参评资格。</p>
+                                <p>十一、评审纪律：各位评委必须遵循“公平、公正、实事求是的原则”进行评审，在评审期间不得泄露评委名单及本组评选成果名单，不打听其他评委的评审情况，不泄露评分情况，不向其他评委“拉分”。</p>
+                                <p>联系人及联系方式：</p>
+                                <p>赵玉华：010-86301505</p>
+                                <p>李  丹：15510199396 /010-61915853.86301562</p>
+                                <p style="text-align: center">中国石油工程建设协会</p>
+                                <p style="text-align: center">2022年9月5日</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div id="tab-1" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="3" style="text-align:center;width:90%">评价指标</td>
+                                        <td style="text-align:center">分值</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle" rowspan="10">技术指标（40分）</td>
+                                        <td style="width:20%;vertical-align:middle" rowspan="4">1、技术先进程度（15分）</td>
+                                        <td colspan="2">国际领先</td>
+                                        <td style="text-align:center">15</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">国际先进</td>
+                                        <td style="text-align:center">11</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">国内领先</td>
+                                        <td style="text-align:center">8</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">国内先进</td>
+                                        <td style="text-align:center">6</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle" rowspan="3">2、创新程度（15分）</td>
+                                        <td colspan="2">在原理、结构、技术特征方面属国内首创</td>
+                                        <td style="text-align:center">15</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">在原理、结构、技术特征方面属本企业首创</td>
+                                        <td style="text-align:center">11</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">创新部分较少</td>
+                                        <td style="text-align:center">7</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle" rowspan="3">3、难易与复杂程度（10分）</td>
+                                        <td colspan="2">技术复杂、难度大</td>
+                                        <td style="text-align:center">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">技术不复杂，有一定难度</td>
+                                        <td style="text-align:center">8</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">技术属于模仿，难度一般</td>
+                                        <td style="text-align:center">6</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle" rowspan="5">知识产权（10分）</td>
+                                        <td style="width:10%;vertical-align:middle" rowspan="5">4、类型（10分）</td>
+                                        <td style="width:20%;vertical-align:middle">发明专利</td>
+                                        <td>两项以上</td>
+                                        <td style="text-align:center">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>发明专利</td>
+                                        <td>有</td>
+                                        <td style="text-align:center">8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>实用新型专利</td>
+                                        <td>有</td>
+                                        <td style="text-align:center">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>软件著作权</td>
+                                        <td>有</td>
+                                        <td style="text-align:center">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>形成行业以上标准（有标准号）</td>
+                                        <td>有</td>
+                                        <td style="text-align:center">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle" rowspan="7">经济指标（35分）</td>
+                                        <td style="width:20%;vertical-align:middle" rowspan="4">5、经济效益（25分）</td>
+                                        <td colspan="2">自应用起创造直接经济效益1200万元以上</td>
+                                        <td style="text-align:center">25</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">自应用起一年内创造直接经济效益800万元或在生产中应用效果很显著</td>
+                                        <td style="text-align:center">20</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">自应用起一年内实现利润500万元或在生产中应用效果显著</td>
+                                        <td style="text-align:center">15</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">自应用起一年内实现利润50万元以下或在生产中应用效果较显著</td>
+                                        <td style="text-align:center">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle" rowspan="3">6、社会效益（10分）</td>
+                                        <td colspan="2">很显著</td>
+                                        <td style="text-align:center">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">显著</td>
+                                        <td style="text-align:center">7</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">较显著</td>
+                                        <td style="text-align:center">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle" rowspan="6">综合指标（20分）</td>
+                                        <td style="width:20%;vertical-align:middle" rowspan="3">7、推广应用前景（10分）</td>
+                                        <td colspan="2">很大</td>
+                                        <td style="text-align:center">10</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">较大</td>
+                                        <td style="text-align:center">8</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">一般</td>
+                                        <td style="text-align:center">6</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle" rowspan="3">8、材料准备情况、表达能力（5分）</td>
+                                        <td colspan="2">材料准备充分，表达清楚</td>
+                                        <td style="text-align:center">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">材料准备充分，表达较清楚</td>
+                                        <td style="text-align:center">3</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">材料准备不充分，表达一般</td>
+                                        <td style="text-align:center">1</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">最高分合计</td>
+                                        <td style="text-align:center">100</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="hr-line-dashed"></div>
+                                <p>注：1、三项指标的7个考核内容中，每一个内容设3~5档，如果不够最低档视为“0”分；</p>
+                                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp2、知识产权要查看扫描件，要核实日期是否是项目研究期间或完成后取得的，并与项目内容有关；</p>
+                                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp3、水平及创新参考鉴定意见；</p>
+                                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4、效益参用户效益证明或用户报告等；</p>
+                                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5、一般情况一等奖为90分及以上，二等奖为89~76分，三等奖为75~60分。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td width="4%" valign="top" style="text-align: center">序号</td>
+                                        <td width="67%" colspan="2" valign="top"><p>内容 </p></td>
+                                        <td width="4%" valign="top"><p>缓评</p></td>
+                                        <td width="3%" valign="top"><p>不评</p></td>
+                                        <td width="21%" valign="top"><p>备注 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="4%" rowspan="5" valign="top" style="text-align: center;">1</td>
+                                        <td valign="top">资料</td>
+                                        <td width="4%" valign="top">按管理办法的必要条件，必要资料不齐的</td>
+                                        <td width="3%" valign="top">ⅴ</td>
+                                        <td width="3%" valign="top"></td>
+                                        <td width="21%" valign="top">补齐明年可继续申报</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="4" valign="center">基本条件</td>
+                                        <td valign="top">是否通过行业（省、部级）及以上有关单位组织的鉴定（如 “无”）。 </td>
+                                        <td valign="top"><p>ⅴ </p></td>
+                                        <td valign="top"><p>&nbsp;</p></td>
+                                        <td valign="top"><p>补上可继续申报 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>成果推广应用是否满一年（如“否”）。 </p></td>
+                                        <td width="4%" valign="top"><p>ⅴ </p></td>
+                                        <td width="3%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="21%" valign="top"><p>满一年后可继续申报 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top">按着附件清单核实附件是否齐全（如“不齐”）。如，中试环节效果材料、产品执行标准、检测报告、查新报告、涉及安全及环保的环保及安全验收合格证明、用户应用报告、鉴定证书等。</td>
+                                        <td width="4%" valign="top">ⅴ</td>
+                                        <td width="3%" valign="top">ⅴ</td>
+                                        <td width="21%" valign="top"><p>补齐可参评，不补齐不参评 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>有知识产权之争 </p></td>
+                                        <td width="4%" valign="top"><p>ⅴ </p></td>
+                                        <td width="3%" valign="top"><p>ⅴ </p></td>
+                                        <td width="21%" valign="top"><p>厘清产权后再参评 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="4%" rowspan="2" valign="top" style="text-align: center;"><p>2</p></td>
+                                        <td width="7%" rowspan="2" valign="top"><p>技术性 </p></td>
+                                        <td width="59%" valign="top"><p>技术水平达不到国内先进的成果 </p></td>
+                                        <td width="4%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="3%" valign="top"><p>ⅴ </p></td>
+                                        <td width="21%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>无创新 </p></td>
+                                        <td width="4%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="3%" valign="top"><p>ⅴ </p></td>
+                                        <td width="21%" valign="top"><p>一般鉴定意见都给出是否有创新 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="4%" rowspan="3" valign="top" style="text-align: center;"><p>3</p></td>
+                                        <td width="7%" valign="top"><p>应用型 </p></td>
+                                        <td width="59%" valign="top"><p>不具备推广应用价值 </p></td>
+                                        <td width="4%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="3%" valign="top"><p>ⅴ </p></td>
+                                        <td width="21%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="7%" rowspan="2" valign="top"><p>效益型 </p></td>
+                                        <td width="59%" valign="top"><p>不具备经济效益 </p></td>
+                                        <td width="4%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="3%" valign="top"><p>ⅴ </p></td>
+                                        <td width="21%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>不具备社会效益 </p></td>
+                                        <td width="4%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="3%" valign="top"><p>ⅴ </p></td>
+                                        <td width="21%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--</div>
+    </div>-->
+    </div>
+</div>
+
+
+<div th:include="include :: footer"></div>
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script>
+    $(function(){$(".full-height-scroll").slimScroll({height:"100%"})});
+</script>
+
+</body>
+</html>
+
+

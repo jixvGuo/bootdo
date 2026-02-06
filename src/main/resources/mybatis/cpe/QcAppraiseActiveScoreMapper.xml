@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.QcAppraiseActiveScoreDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.QcAppraiseActiveScoreDO">
+		select `id`,`opt_uid`,`pro_id`,`task_id`,`apply_id`,`organization_score`,`active_desc_score`,`active_real_score`,`result_maintain_score`,`group_education_score`,`total_score`,`sum_recommend`,`created`,`updated`,`deleted` from ass_qc_appraise_active_score where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.QcAppraiseActiveScoreDO">
+		select `id`,`opt_uid`,`pro_id`,`task_id`,`apply_id`,`organization_score`,`active_desc_score`,`active_real_score`,`result_maintain_score`,`group_education_score`,`total_score`,`sum_recommend`,`created`,`updated`,`deleted` from ass_qc_appraise_active_score
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="organizationScore != null and organizationScore != ''"> and organization_score = #{organizationScore} </if>
+		  		  <if test="activeDescScore != null and activeDescScore != ''"> and active_desc_score = #{activeDescScore} </if>
+		  		  <if test="activeRealScore != null and activeRealScore != ''"> and active_real_score = #{activeRealScore} </if>
+		  		  <if test="resultMaintainScore != null and resultMaintainScore != ''"> and result_maintain_score = #{resultMaintainScore} </if>
+		  		  <if test="groupEducationScore != null and groupEducationScore != ''"> and group_education_score = #{groupEducationScore} </if>
+		  		  <if test="totalScore != null and totalScore != ''"> and total_score = #{totalScore} </if>
+		  		  <if test="sumRecommend != null and sumRecommend != ''"> and sum_recommend = #{sumRecommend} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_qc_appraise_active_score
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="organizationScore != null and organizationScore != ''"> and organization_score = #{organizationScore} </if>
+		  		  <if test="activeDescScore != null and activeDescScore != ''"> and active_desc_score = #{activeDescScore} </if>
+		  		  <if test="activeRealScore != null and activeRealScore != ''"> and active_real_score = #{activeRealScore} </if>
+		  		  <if test="resultMaintainScore != null and resultMaintainScore != ''"> and result_maintain_score = #{resultMaintainScore} </if>
+		  		  <if test="groupEducationScore != null and groupEducationScore != ''"> and group_education_score = #{groupEducationScore} </if>
+		  		  <if test="totalScore != null and totalScore != ''"> and total_score = #{totalScore} </if>
+		  		  <if test="sumRecommend != null and sumRecommend != ''"> and sum_recommend = #{sumRecommend} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.QcAppraiseActiveScoreDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_qc_appraise_active_score
+		(
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`organization_score`, 
+			`active_desc_score`, 
+			`active_real_score`, 
+			`result_maintain_score`, 
+			`group_education_score`, 
+			`total_score`, 
+			`sum_recommend`, 
+			`created`, 
+			`updated`, 
+			`deleted`
+		)
+		values
+		(
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{organizationScore}, 
+			#{activeDescScore}, 
+			#{activeRealScore}, 
+			#{resultMaintainScore}, 
+			#{groupEducationScore}, 
+			#{totalScore}, 
+			#{sumRecommend},
+		    now(),
+			#{updated}, 
+			#{deleted}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.QcAppraiseActiveScoreDO">
+		update ass_qc_appraise_active_score 
+		<set>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="organizationScore != null">`organization_score` = #{organizationScore}, </if>
+			<if test="activeDescScore != null">`active_desc_score` = #{activeDescScore}, </if>
+			<if test="activeRealScore != null">`active_real_score` = #{activeRealScore}, </if>
+			<if test="resultMaintainScore != null">`result_maintain_score` = #{resultMaintainScore}, </if>
+			<if test="groupEducationScore != null">`group_education_score` = #{groupEducationScore}, </if>
+			<if test="totalScore != null">`total_score` = #{totalScore}, </if>
+			<if test="sumRecommend != null">`sum_recommend` = #{sumRecommend}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_qc_appraise_active_score where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_qc_appraise_active_score where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

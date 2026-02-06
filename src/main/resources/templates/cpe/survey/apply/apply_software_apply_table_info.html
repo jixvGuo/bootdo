@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+
+
+<body>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form id="signupForm" action="" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${table.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui field">
+                    <label>申报专业</label>
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="applyMajor" th:value="${table.applyMajor}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">申报专业</div>
+                        <div class="menu">
+                            <div class="item" data-value="勘察">勘察</div>
+                            <div class="item" data-value="测量">测量</div>
+                            <div class="item" data-value="岩土">岩土</div>
+                            <div class="item" data-value="炼油化工">炼油化工</div>
+                            <div class="item" data-value="油气集输">油气集输</div>
+                            <div class="item" data-value="油气储运6">油气储运</div>
+                            <div class="item" data-value="油气加工">油气加工</div>
+                            <div class="item" data-value="矿业">矿业</div>
+                            <div class="item" data-value="建筑">建筑</div>
+                            <div class="item" data-value="结构">结构</div>
+                            <div class="item" data-value="桥梁">桥梁</div>
+                            <div class="item" data-value="土壤修复">土壤修复</div>
+                            <div class="item" data-value="环境工程">环境工程</div>
+                            <div class="item" data-value="电气">电气</div>
+                            <div class="item" data-value="电力系统">电力系统</div>
+                            <div class="item" data-value="给排水">给排水</div>
+                            <div class="item" data-value="水处理">水处理</div>
+                            <div class="item" data-value="热力">热力</div>
+                            <div class="item" data-value="仪表、自动化、自控">仪表、自动化、自控</div>
+                            <div class="item" data-value="安全">安全</div>
+                            <div class="item" data-value="包装">包装</div>
+                            <div class="item" data-value="海洋石油开发工程">海洋石油开发工程</div>
+                            <div class="item" data-value="软件">软件</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>软件全称</label>
+                        <input type="text" name="softName" th:value="${table.softName}" placeholder="软件全称">
+                    </div>
+                    <div class="ui field">
+                        <label>软件简称</label>
+                        <input type="text" name="softShortName" th:value="${table.softShortName}" placeholder="软件简称">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="inline field">
+                        <label>软件类型</label>
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden" name="softType" value="原创软件" th:checked="${#strings.contains(table.softType, '原创软件')}">
+                            <label>原创软件</label>
+                        </div>
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="1" class="hidden" name="softType" value="合作开发" th:checked="${#strings.contains(table.softType, '合作开发')}">
+                            <label>合作开发</label>
+                        </div>
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="2" class="hidden" name="softType" value="二次开发" th:checked="${#strings.contains(table.softType, '二次开发')}">
+                            <label>二次开发</label>
+                        </div>
+                    </div>
+                    <div class="inline field">
+                        <label>软件类别</label>
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden" name="softCategory" value="辅助设计" th:checked="${#strings.contains(table.softCategory, '辅助设计')}">
+                            <label>辅助设计</label>
+                        </div>
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="1" class="hidden" name="softCategory" value="信息管理" th:checked="${#strings.contains(table.softCategory, '信息管理')}">
+                            <label>信息管理</label>
+                        </div>
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="2" class="hidden" name="softCategory" value="其他" th:checked="${#strings.contains(table.softCategory, '其他')}">
+                            <label>其他</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>软件符合哪类现行国家规范</label>
+                        <input type="text" name="softNationalStandard" placeholder="软件符合哪类现行国家规范" th:value="${table.softNationalStandard}">
+                    </div>
+                    <div class="ui field">
+                        <label>任务来源</label>
+                        <input type="text" name="softTaskSource" placeholder="任务来源" th:value="${table.softTaskSource}">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>开发起止时间</label>
+                        <input type="text" name="softStartEnd" placeholder="开发起止时间" th:value="${table.softStartEnd}">
+                    </div>
+                    <div class="ui field">
+                        <label>试用时间</label>
+                        <input type="text" name="softTrialTime" placeholder="试用时间" th:value="${table.softTrialTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>鉴定部门</label>
+                        <input type="text" name="identificationDepartment" placeholder="鉴定部门" th:value="${table.identificationDepartment}">
+                    </div>
+                    <div class="ui field">
+                        <label>鉴定时间</label>
+                        <input type="text" name="identificationTime" placeholder="鉴定时间" th:value="${table.identificationTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>评测公司</label>
+                        <input type="text" name="evaluationCompany" placeholder="评测公司" th:value="${table.evaluationCompany}">
+                    </div>
+                    <div class="ui field">
+                        <label>评测时间</label>
+                        <input type="text" name="evaluationTime" placeholder="评测时间" th:value="${table.evaluationTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>主编单位</label>
+                    <input type="text" name="editorChief" placeholder="主编单位" th:value="${table.editorChief}">
+                </div>
+                <div class="ui field">
+                    <label>协作单位</label>
+                    <input type="text" name="CooperationUnit" placeholder="协作单位" th:value="${table.CooperationUnit}">
+                </div>
+                <div class="ui field">
+                    <label>联系人</label>
+                    <input type="text" name="contactName" placeholder="联系人" th:value="${table.contactName}">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>电话/手机</label>
+                        <input type="text" name="contactPhone" placeholder="电话/手机" th:value="${table.contactPhone}">
+                    </div>
+                    <div class="ui field">
+                        <label>传真</label>
+                        <input type="text" name="fax" placeholder="传真" th:value="${table.fax}">
+                    </div>
+                </div>
+                <div class="inline field">
+                    <label>保密级别</label>
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="0" class="hidden" name="securityLevel" value="绝密" th:checked="${#strings.contains(table.securityLevel, '绝密')}">
+                        <label>绝密</label>
+                    </div>
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="1" class="hidden" name="securityLevel" value="机密" th:checked="${#strings.contains(table.securityLevel, '机密')}">
+                        <label>机密</label>
+                    </div>
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="2" class="hidden" name="securityLevel" value="秘密" th:checked="${#strings.contains(table.securityLevel, '秘密')}">
+                        <label>秘密</label>
+                    </div>
+                    <div class="ui checkbox">
+                        <input type="checkbox" tabindex="3" class="hidden" name="securityLevel" value="不限制" th:checked="${#strings.contains(table.securityLevel, '不限制')}">
+                        <label>不限制</label>
+                    </div>
+                </div>
+                <h4 class="ui red horizontal divider header">软件环境 </h4>
+                <div class="ui field">
+                    <label>运行操作系统名称及版本号</label>
+                    <input type="text" name="osVersion" placeholder="运行操作系统名称及版本号" th:value="${table.osVersion}">
+                </div>
+                <div class="ui field">
+                    <label>支撑环境名称及版本号</label>
+                    <input type="text" name="supportEnvironment" placeholder="支撑环境名称及版本号" th:value="${table.supportEnvironment}">
+                </div>
+                <div class="ui field">
+                    <label>编程语言名称及版本号</label>
+                    <input type="text" name="osLan" placeholder="编程语言名称及版本号" th:value="${table.osLan}">
+                </div>
+                <h4 class="ui red horizontal divider header">适用范围 </h4>
+                <div class="ui field">
+                    <label>主要适用行业</label>
+                    <input type="text" name="mainApplicableIndusty" placeholder="主要适用行业" th:value="${table.mainApplicableIndusty}">
+                </div>
+                <div class="ui field">
+                    <label>主要用途</label>
+                    <input type="text" name="mainPurpose" placeholder="主要用途" th:value="${table.mainPurpose}">
+                </div>
+
+                <h4 class="ui red horizontal divider header">软件主要功能及创新概述（附查新报告） </h4>
+                <div class="ui field">
+                    <textarea id="softwareMainFunctions" autofocus name="softwareMainFunctions" th:text="${table.softwareMainFunctions}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">该软件与当前国内外同类软件的综合比较（包括存在问题及改进措施） </h4>
+                <div class="ui field">
+                    <textarea id="comprehensiveSimilarSoftware" autofocus name="comprehensiveSimilarSoftware" th:text="${table.comprehensiveSimilarSoftware}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">该软件的经济与社会效益 </h4>
+                <div class="ui field">
+                    <textarea id="cconomicSocialBenefits" autofocus name="cconomicSocialBenefits" th:text="${table.cconomicSocialBenefits}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">附件目录 </h4>
+                <div class="ui field">
+                    <textarea id="accessoriesCatalog" autofocus name="accessoriesCatalog" th:text="${table.accessoriesCatalog}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">获奖情况 </h4>
+                <div class="ui field">
+                    <textarea id="awards" autofocus name="awards" th:text="${table.awards}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">申报单位意见 </h4>
+                <div class="ui field">
+                    <textarea id="rportingOpinion" autofocus name="rportingOpinion" th:text="${table.rportingOpinion}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">上级主管部门（或建设单位）推荐意见 </h4>
+                <div class="ui field">
+                    <textarea id="upRecommendation" autofocus name="upRecommendation" th:text="${table.upRecommendation}"></textarea>
+                </div>
+
+
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverSoftApplyTableInfo/add.js?v=1.0"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+
+    <script>
+        let proId = $("#proId").val();
+        let uploadObj =  {
+            url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+            fileKey: 'file[]', //服务器端获取文件数据的参数名
+            connectionCount: 3,
+            leaveConfirm: '正在上传文件'
+        };
+
+        var softwareMainFunctions = new Simditor({
+            textarea: $("#softwareMainFunctions"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var comprehensiveSimilarSoftware = new Simditor({
+            textarea: $("#comprehensiveSimilarSoftware"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var cconomicSocialBenefits = new Simditor({
+            textarea: $("#cconomicSocialBenefits"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var accessoriesCatalog = new Simditor({
+            textarea: $("#accessoriesCatalog"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var awards = new Simditor({
+            textarea: $("#awards"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var rportingOpinion = new Simditor({
+            textarea: $("#rportingOpinion"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var upRecommendation = new Simditor({
+            textarea: $("#upRecommendation"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        $(".simditor-clean-paste-area").hide();
+
+        $('.ui.dropdown').dropdown();
+        $('.ui.checkbox').checkbox();
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                softName: {
+                    identifier: 'softName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写软件全称'
+                    }]
+                },
+                softShortName: {
+                    identifier: 'softShortName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写软件简称'
+                    }]
+                },
+                softType: {
+                    identifier: 'softType',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写软件类型'
+                    }]
+                },
+                softCategory: {
+                    identifier: 'softCategory',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写软件类别'
+                    }]
+                },
+                softNationalStandard: {
+                    identifier: 'softNationalStandard',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写软件符合哪类现行国家规范'
+                    }]
+                },
+                softTaskSource: {
+                    identifier: 'softTaskSource',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写任务来源'
+                    }]
+                },
+                softStartEnd: {
+                    identifier: 'softStartEnd',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写开发起止时间'
+                    }]
+                },
+                softTrialTime: {
+                    identifier: 'softTrialTime',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写试用时间'
+                    }]
+                },
+                identificationDepartment: {
+                    identifier: 'identificationDepartment',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写鉴定部门'
+                    }]
+                },
+                identificationTime: {
+                    identifier: 'identificationTime',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写鉴定时间'
+                    }]
+                },
+                evaluationCompany: {
+                    identifier: 'evaluationCompany',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写评测公司'
+                    }]
+                },
+                evaluationTime: {
+                    identifier: 'evaluationTime',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写评测时间'
+                    }]
+                },
+                editorChief: {
+                    identifier: 'editorChief',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写主编单位'
+                    }]
+                },
+                Collaborationunit: {
+                    identifier: 'Collaborationunit',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写协作单位'
+                    }]
+                },
+                contactName: {
+                    identifier: 'contactName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写联系人'
+                    }]
+                },
+                contactPhone: {
+                    identifier: 'contactPhone',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写电话/手机'
+                    }]
+                },
+                fax: {
+                    identifier: 'fax',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写传真'
+                    }]
+                },
+                securityLevel: {
+                    identifier: 'securityLevel',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写保密级别'
+                    }]
+                },
+                osVersion: {
+                    identifier: 'osVersion',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写运行操作系统名称及版本号'
+                    }]
+                },
+                supportEnvironment: {
+                    identifier: 'supportEnvironment',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写支撑环境名称及版本号'
+                    }]
+                },
+                osLan: {
+                    identifier: 'osLan',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写编程语言名称及版本号'
+                    }]
+                },
+                mainApplicableIndusty: {
+                    identifier: 'mainApplicableIndusty',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写主要适用行业'
+                    }]
+                },
+                mainPurpose: {
+                    identifier: 'mainPurpose',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写主要用途'
+                    }]
+                },
+                softwareMainFunctions: {
+                    identifier: 'softwareMainFunctions',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写软件主要功能及创新概述（附查新报告）'
+                    }]
+                },
+                comprehensiveSimilarSoftware: {
+                    identifier: 'comprehensiveSimilarSoftware',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写该软件与当前国内外同类软件的综合比较（包括存在问题及改进措施）'
+                    }]
+                },
+                cconomicSocialBenefits: {
+                    identifier: 'cconomicSocialBenefits',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写该软件的经济与社会效益'
+                    }]
+                },
+                accessoriesCatalog: {
+                    identifier: 'accessoriesCatalog',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写附件目录'
+                    }]
+                },
+                awards: {
+                    identifier: 'awards',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写获奖情况'
+                    }]
+                },
+                rportingOpinion: {
+                    identifier: 'rportingOpinion',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写申报单位意见'
+                    }]
+                },
+                upRecommendation: {
+                    identifier: 'upRecommendation',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写上级主管部门（或建设单位）推荐意见'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

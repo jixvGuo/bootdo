@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.AwardPublishTaskDao">
+
+	<select id="get" resultType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		select pt.`id`, `task_name`, `association_userid`,
+		`apply_start_date`,
+		`apply_end_date`,
+         task_stat,
+		`expert_start_time`,
+		`expert_end_time`,
+		`expert_start_time_second`, `expert_end_time_second`,
+		`check_start_time`,
+		`check_end_time`,
+		`process_status`,
+		`validate_require`,
+		publish_date,
+		su.name association_user_name,pt.PROC_INS_ID,award_id,
+		file_id,major_team_ids major_ids,
+		(select sd.name from sys_user su join sys_dept sd on su.dept_id = sd.dept_id where su.user_id = su.user_id limit 1) enterprise_name,
+		(SELECT url FROM sys_file where id = file_id) file_url,
+		(SELECT concat(award_name,'#',if(updoc_url is null,'',updoc_url)) FROM ass_award where id = award_id) award_info
+		from ass_award_publish_task pt
+		join sys_user su on pt.association_userid = su.user_id
+		 where pt.id = #{value}
+	</select>
+
+
+	<select id="getByProId" resultType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		select pt.`id`, `task_name`, `association_userid`,
+		 `expert_start_time`,`expert_end_time`,
+		 `expert_start_time_second`, `expert_end_time_second`,
+		 `check_start_time`,`check_end_time`,`process_status`,
+		 `apply_start_date`,`apply_end_date`, `validate_require`,`publish_date`,
+		su.name association_user_name,pt.PROC_INS_ID,pro.chengguo,pro.person,pro.tuandui,pro.advanced_individual,pro.act_run_task_id,
+		file_id,major_team_ids major_ids,
+		(select sd.name from sys_user suser join sys_dept sd on suser.dept_id = sd.dept_id where suser.user_id = su.user_id limit 1) enterprise_name,
+		(SELECT url FROM sys_file where id = file_id) file_url,
+		(SELECT concat(award_name,'#',if(updoc_url is null,'',updoc_url)) FROM ass_award where id = award_id) award_info
+		from ass_award_publish_task pt
+		join sys_user su on pt.association_userid = su.user_id
+		join ass_award_enterprise_project pro on pro.publish_task_id = pt.id
+		 where pro.id = #{value}
+	</select>
+    <select id="getAwardTaskByProcInsId" resultType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		select pt.* from ass_award_publish_task pt where pt.PROC_INS_ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		select `id`, `task_name`, `association_userid`, `apply_start_date`,`apply_end_date`,
+		`expert_start_time`,`expert_end_time`,
+		`expert_start_time_second`, `expert_end_time_second`,
+	    `check_start_time`,`check_end_time`,`process_status`,
+        task_stat,
+		`apply_start_date`,`apply_end_date`,
+		`validate_require`,
+		 publish_date, su.name association_user_name,pt.PROC_INS_ID,
+	 	 file_id,major_team_ids major_ids,
+		 pt.award_id,
+		 (SELECT url FROM sys_file where id = file_id) file_url,
+		 (SELECT concat(award_name,'#',if(updoc_url is null,'',updoc_url)) FROM ass_award where id = award_id) award_info,
+		 (select id from ass_award_flow_info where publish_task_id = pt.id order by create_date desc limit 1) pro_id,
+		 (select count(1) from ACT_RU_TASK where PROC_INST_ID_ = pt.PROC_INS_ID and TASK_DEF_KEY_ = 'sel_sepcialist') sel_specialist
+		  from ass_award_publish_task pt
+		join sys_user su on pt.association_userid = su.user_id
+        <where>
+			and pt.deleted = 0
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="taskName!= null and taskName != ''"> and  task_name = #{taskName} </if>
+		  		  <if test="associationUserId != null and associationUserId != ''"> and association_userid = #{associationUserId} </if>
+		  		  <if test="applyStartDate != null and applyStartDate != ''"> and apply_start_date &lt;= #{applyStartDate} </if>
+			      <if test="applyEndDate != null and applyEndDate != ''"> and apply_end_date >= #{applyEndDate} </if>
+			      <if test="overDate != null and overDate != ''"> and apply_end_date &lt; #{overDate} and pt.PROC_INS_ID = '0' </if>
+			      <if test="publishDate != null and publishDate != ''"> and publish_date = #{publishDate} </if>
+            <if test="taskStat != null and taskStat != ''">and task_stat = #{taskStat}</if>
+            <if test="isNoOver != null and isNoOver == '1'">and task_stat != 'result'</if>
+			<if test="awardTypeId != null and awardTypeId != ''">and award_id =  #{awardTypeId}</if>
+			<if test="name != null and name != ''">and task_name like CONCAT('%',#{name},'%')</if>
+		    <if test="isOutWorker">
+               and now() between pt.check_start_time and pt.check_end_time
+			</if>
+			<if test="isSpecialist">
+                and exists(SELECT * FROM add_special_info where user_id = #{specialUid} and task_id = pt.id and deleted = 0)
+			</if>
+			<if test="proId != null">
+				and exists(
+				   select * from ass_award_enterprise_project pro where pro.publish_task_id = pt.id and pro.id = #{proId}
+				)
+			</if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by publish_date desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_publish_task pt
+		 <where>
+			 and deleted = 0
+			 <if test="id != null and id != ''"> and id = #{id} </if>
+			 <if test="taskName!= null and taskName != ''"> and  task_name = #{taskName} </if>
+			 <if test="associationUserId != null and associationUserId != ''"> and association_userid = #{associationUserId} </if>
+			 <if test="applyStartDate != null and applyStartDate != ''"> and apply_start_date &lt;= #{applyStartDate} </if>
+			 <if test="applyEndDate != null and applyEndDate != ''"> and apply_end_date >= #{applyEndDate} </if>
+			 <if test="publishDate != null and publishDate != ''"> and publish_date = #{publishDate} </if>
+             <if test="isOutWorker">
+                and now() between check_start_time and check_end_time
+			 </if>
+			 <if test="isSpecialist">
+                and exists(SELECT * FROM add_special_info where user_id = #{specialUid} and task_id = pt.id and deleted = 0)
+			 </if>
+		 </where>
+	</select>
+	 <!--添加发布任务-->
+	<insert id="save" parameterType="com.bootdo.activiti.domain.PublishAwardTaskDo"  >
+		insert into ass_award_publish_task
+		(
+		    id,
+		    PROC_INS_ID,
+			`task_name`,
+            `association_userid`,
+            `apply_start_date`,
+            `apply_end_date`,
+			`check_start_time`,
+            `check_end_time`,
+		    <if test="expertStartTime != null and expertStartTime != ''"> `expert_start_time`, </if>
+		    <if test="expertEndTime != null and expertEndTime != ''">  `expert_end_time`, </if>
+		    <if test="expertStartTimeSecond != null and expertStartTimeSecond != ''"> `expert_start_time_second`, </if>
+		    <if test="expertEndTimeSecond != null and expertEndTimeSecond != ''">  `expert_end_time_second`, </if>
+		    `validate_require`,
+            file_id,
+            major_team_ids,
+            process_status,
+		    award_id
+		)
+		values
+		(
+		   #{id},
+		   #{procInsId},
+           #{taskName},
+           #{associationUserId},
+           #{taskStartTime},
+           #{taskEndTime},
+ 		   #{checkStartTime},
+           #{checkEndTime},
+		   <if test="expertStartTime != null and expertStartTime != ''">  #{expertStartTime}, </if>
+		   <if test="expertEndTime != null and expertEndTime != ''">   #{expertEndTime}, </if>
+		   <if test="expertStartTimeSecond != null and expertStartTimeSecond != ''">  #{expertStartTimeSecond}, </if>
+		   <if test="expertEndTimeSecond != null and expertEndTimeSecond != ''">   #{expertEndTimeSecond}, </if>
+		   #{validateRequire},
+           #{fileId},
+           #{majorIds},
+           1,
+		   #{awardId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		update ass_award_publish_task
+		<set>
+
+			<if test="taskName!= null and taskName != ''">  task_name = #{taskName}, </if>
+			<if test="procInsId!= null and procInsId != '' and procInsId != '0' ">  PROC_INS_ID = #{procInsId}, </if>
+			<if test="associationUserId != null and associationUserId != ''"> association_userid = #{associationUserId}, </if>
+
+			<if test="awardId!= null and awardId != ''"> award_id = #{awardId}, </if>
+
+			<if test="taskStartTime != null and taskStartTime != ''"> apply_start_date = #{taskStartTime}, </if>
+
+			<if test="taskEndTime != null and taskEndTime != ''"> apply_end_date = #{taskEndTime}, </if>
+
+			<if test="checkStartTime != null and checkStartTime != ''"> check_start_time = #{checkStartTime}, </if>
+
+			<if test="checkEndTime != null and checkEndTime != ''"> check_end_time = #{checkEndTime}, </if>
+
+
+			<if test="expertStartTime != null and expertStartTime != ''"> expert_start_time = #{expertStartTime}, </if>
+			<if test="expertEndTime != null and expertEndTime != ''"> expert_end_time = #{expertEndTime}, </if>
+
+			<if test="expertStartTimeSecond != null and expertStartTimeSecond != ''"> expert_start_time_second = #{expertStartTimeSecond}, </if>
+			<if test="expertEndTimeSecond != null and expertEndTimeSecond != ''"> expert_end_time_second = #{expertEndTimeSecond}, </if>
+
+			<if test="validateRequire != null and validateRequire != ''"> validate_require = #{validateRequire}, </if>
+
+			<if test="taskStat != null and taskStat != ''">task_stat = #{taskStat},</if>
+
+            update_time = now()
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_award_publish_task where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_award_publish_task where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getAwardTaskMajorInfosById" parameterType="String" resultType="com.bootdo.activiti.domain.MajorInfo">
+		SELECT
+            sd.id major_id, sd.name major_name
+        FROM
+            sys_dict sd
+                JOIN
+            ass_award_publish_task pt ON FIND_IN_SET(sd.id, pt.major_team_ids)
+        WHERE
+            pt.id = #{publishTaskId}
+	</select>
+
+	<select id="getPublishTaskActProcInsId" parameterType="String" resultType="int">
+		SELECT PROC_INS_ID FROM ass_award_publish_task where id = #{publishTaskId}
+	</select>
+
+	<select id="getProIdsByPublishTaskId" parameterType="String" resultType="String">
+		SELECT id FROM ass_award_enterprise_project where publish_task_id = #{publishTaskId}
+	</select>
+	<select id="getLastTaskId" resultType="String">
+		SELECT
+            id
+        FROM
+            boot_do.ass_award_publish_task
+        WHERE
+            NOW() BETWEEN apply_start_date AND apply_end_date
+                AND award_id = 1
+        ORDER BY id DESC
+        LIMIT 1
+	</select>
+
+	<select id="getLastProTaskByAwardType" resultType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		select pt.`id`, `task_name`, `association_userid`,
+			   `apply_start_date`,
+			   `apply_end_date`,
+			   task_stat,
+			   `expert_start_time`,
+			   `expert_end_time`,
+		       `expert_start_time_second`,
+		       `expert_end_time_second`,
+			   `check_start_time`,
+			   `check_end_time`,
+			   `process_status`,
+			   `validate_require`,
+			   publish_date,
+			   su.name association_user_name,pt.PROC_INS_ID,award_id,
+			   file_id,major_team_ids major_ids,
+			   (select sd.name from sys_user su join sys_dept sd on su.dept_id = sd.dept_id where su.user_id = su.user_id limit 1) enterprise_name,
+		(SELECT url FROM sys_file where id = file_id) file_url,
+		(SELECT concat(award_name,'#',if(updoc_url is null,'',updoc_url)) FROM ass_award where id = award_id) award_info
+		from ass_award_publish_task pt
+			join sys_user su on pt.association_userid = su.user_id
+		where pt.award_id = #{awardType}
+		order by pt.record_id desc limit 1
+    </select>
+
+	<select id="getTaskIdByProId" parameterType="int" resultType="String">
+		SELECT
+			publish_task_id
+		FROM
+			boot_do.ass_award_enterprise_project
+		WHERE
+			id = #{value}
+	</select>
+	<select id="isMenuAuth" resultType="java.lang.Integer">
+		SELECT
+			COUNT(1)
+		FROM
+			boot_do.sys_user_role su
+				JOIN
+			sys_role_menu srm ON su.role_id = srm.role_id
+				JOIN
+			sys_menu sm ON sm.menu_id = srm.menu_id
+		WHERE
+			user_id = #{uid} AND sm.menu_id IN
+        <foreach collection="menuIds" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+	</select>
+    <select id="getProTaskByTaskId" resultType="com.bootdo.activiti.domain.PublishAwardTaskDo">
+		select pt.`id`, `task_name`, `association_userid`,
+		`apply_start_date`,
+		`apply_end_date`,
+		task_stat,
+		`expert_start_time`,
+		`expert_end_time`,
+		`expert_start_time_second`,
+		`expert_end_time_second`,
+		`check_start_time`,
+		`check_end_time`,
+		`process_status`,
+		`validate_require`,
+		publish_date,
+		su.name association_user_name,pt.PROC_INS_ID,award_id,
+		file_id,major_team_ids major_ids,
+		(select sd.name from sys_user su join sys_dept sd on su.dept_id = sd.dept_id where su.user_id = su.user_id limit 1) enterprise_name,
+		(SELECT url FROM sys_file where id = file_id) file_url,
+		(SELECT concat(award_name,'#',if(updoc_url is null,'',updoc_url)) FROM ass_award where id = award_id) award_info
+		from ass_award_publish_task pt
+		join sys_user su on pt.association_userid = su.user_id
+		where pt.id = #{taskId}
+		order by pt.record_id desc limit 1
+	</select>
+</mapper>

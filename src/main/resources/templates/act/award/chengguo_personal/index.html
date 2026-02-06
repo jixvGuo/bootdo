@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12" style="height: 80px;">
+                <iframe id="fujianCommit" style="height: auto; width: 100%;"
+                        frameborder='0' scrolling="yes"
+                        th:src="@{/chengguo_info/commit_review_btn?(proId=${proId},procInsId=${procInsId},validateType=personal)}"></iframe>
+
+              <input id="inputUserId" th:value="${personalId}"   type="hidden"  >
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#basic-1" aria-expanded="true"> 申报人基本信息</a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-2" aria-expanded="false">申报人科技创新业绩指标</a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-3" aria-expanded="false">附件上传</a> </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div id="basic-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <iframe id="fujianPersonalIndex" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                th:src="@{/chengguo_personal/base_info?(proId=${proId},taskId=${taskId},readonly=${readonly})}"></iframe>
+                            </div>
+                        </div>
+                        <div id="basic-2" class="tab-pane">
+                            <div class="panel-body">
+                                <iframe id="fujianKpi" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                    th:src="@{/chengguo_personal/personal_ten_years?(proId=${proId},taskId=${taskId},readonly=${readonly})}"></iframe>
+                            </div>
+                        </div>
+
+                        <div id="basic-3" class="tab-pane">
+                            <div class="panel-body">
+                                <iframe id="fujianFile" style="height: 450px; width: 100%;" frameborder='0' scrolling="yes"
+                                        th:src="@{/chengguo_personal/personal_enclosure_list?(proId=${proId},taskId=${taskId},readonly=${readonly})}"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+
+</body>
+
+</html>

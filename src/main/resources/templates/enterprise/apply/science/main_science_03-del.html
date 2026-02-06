@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="width:100%">
+                        <h5 style="width:100%;vertical-align:middle;text-align:center;font-weight:bold;font-size:18px;">三、主要科技创新</h5>
+                        <form method="post" class="form-horizontal" id="signupFormScience">
+                            <input type="hidden" id="isReadonly" th:value="${readonly}">
+                            <input id="id" name="id" th:value="${otherInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="eType" name="eType" th:value="${eType}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td id="scienceText" style="width:100%;height:450px; vertical-align:top;text-align:left"
+                                            contentEditable="plaintext-only" th:text="${otherInfo.mainTechnologicalInnovation}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include::footer"></div>
+    <script type="text/javascript" th:if="${otherInfo.id > 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${otherInfo.id == null || otherInfo.id == 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+    <!--<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/to-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.zh.js"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>-->
+    <script type="text/javascript">
+
+        function addRowByID() {
+            $.each($('table:first tbody tr'), function (i, tr) {
+                currentRow = $('table:first tbody tr:eq(' + i + ')');
+                addRowID = 0;
+                if (currentRow.text().indexOf("主要完成单位") != -1) {
+                    addRowID = i - 1;
+                    currentRow = $('table:first tbody tr:eq(' + addRowID + ')');
+                    return false;
+                }
+            });
+            str = "<tr>" +
+                "		<td style=\"width:70%;height:150px;vertical-align:top;text-align:left\"" +
+                "			colspan=\"7\">" +
+                "				申报单位一(盖章)" +
+                "		 </td>" +
+                "	</tr>";
+            currentRow.after(str);
+            currentRow = $('table:first tbody tr:eq(' + (addRowID + 1 + addRowID) + ')');
+            str = "<tr>" +
+                "		<td style=\"width:70%;vertical-align:middle;text-align:left\" contentEditable=\"true\" colspan=\"7\" name=\"inputtrigger\">申报单位</td>" +
+                "	</tr>";
+            currentRow.after(str);
+            rowspan = $("td[name='CompletionCompany']").attr("rowspan");
+            $("td[name='CompletionCompany']").attr("rowspan", ++rowspan);
+
+            $("td[name='inputtrigger']").hover(function () {
+                $(this).text($(this).text());
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID()\"><i class=\"fa fa-plus\" onclick=\"addRowByID()\"></i></a>");
+            }, function () {
+                $(this).text($(this).text());
+            });
+
+            return false;
+        }
+
+
+        $(document).ready(function () {
+            $("td[name='inputtrigger']").hover(function () {
+                $(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID()\"><i class=\"fa fa-plus\" onclick=\"addRowByID()\"></i></a>");
+            }, function () {
+                $(this).text($(this).text());
+            });
+        });
+
+    </script>
+</body>
+
+</html>

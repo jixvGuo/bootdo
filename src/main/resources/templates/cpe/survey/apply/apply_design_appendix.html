@@ -1,0 +1,798 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/file_manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:44 GMT -->
+
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+<input type="hidden" id="isReadonly" th:value="${readonly}">
+<input type="hidden" id="proId" th:value="${proId}" />
+<input type="hidden" th:value="${projectInfo.proStat}" id="proStat">
+<input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="file-manager">
+
+                            <p style="color: red">上传文件支持压缩包</p>
+                            <label>（二）工程设计项目：</label>
+                            <div class="hr-line-dashed"></div>
+                            <ul class="folder-list" style="padding: 0">
+                                <li><a href="javascript:showUpload('apply_table','b')"><i class="fa fa-folder"></i> 1. 申报表盖章扫描件</a>
+                                </li>
+                                <li> <i class="fa fa-folder"></i> 2．附件材料：应包括必要的工程设计图纸、照片</a>
+
+                                    <ul class="folder-list" style="padding-left: 20px">
+                                        <li><a href="javascript:showUpload('appendix_file_design','b')"><i class="fa fa-folder"></i> （1）应包括必要的工程设计图纸</a>
+                                        </li>
+                                        <li><a href="javascript:showUpload('appendix_file_pic','b')"><i class="fa fa-folder"></i> （2）工程照片；</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+
+<!--                                <li>-->
+<!--                                    <i class="fa fa-folder"></i> 3. 证明材料：-->
+<!--                                    <ul class="folder-list" style="padding-left: 20px">-->
+<!--                                        <li><a href="javascript:showUpload('prove_complete','b')"><i class="fa fa-folder"></i> （1）交（竣）工验收证明（上级主管部门加盖公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_economics','b')"><i class="fa fa-folder"></i> （2）工程项目经济、社会效益证明（可由建设单位或其上级主管部门出具并加盖公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_env','b')"><i class="fa fa-folder"></i> （3）环境、安全证明（须由地方或上级政府主管部门出具并加盖公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_material_use','b')"><i class="fa fa-folder"></i> （4）工业项目主要原料、材料消耗定额与生产实际值对比表（表3-1，须加盖建设单位或生产运行单位公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_quality','b')"><i class="fa fa-folder"></i> （5）产品质量设计值与生产实际值对比表（表3-2，须加盖建设单位或生产运行单位公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_common_pro_use','b')"><i class="fa fa-folder"></i> （6）公用工程消耗定额设计值与生产实际值对比表（表3-3，加盖建设单位或生产运行单位公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_waste_discharge','b')"><i class="fa fa-folder"></i> （7）工业项目废渣、废液、废气排放量及排放指标设计值与生产实际值对比表（表3-4，加盖建设单位或生产运行单位公章）；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_cal_table','b')"><i class="fa fa-folder"></i> （8）项目设计过程中各专业应用计算机软件表；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_bureau_level_award','b')"><i class="fa fa-folder"></i> （9）获局级一、二等奖的奖励证书或文件，复印件加盖单位公章；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_design_book','b')"><i class="fa fa-folder"></i> （10）申报单位相应的工程设计资质证书，复印件加盖单位公章；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_last_accident','b')"><i class="fa fa-folder"></i> （11）最近三年内没有发生过较大勘察质量安全事故的承诺书，加盖单位公章；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_first_prize','b')"><i class="fa fa-folder"></i> （12）申报一等奖的要由有资质单位出具的查新检索报告；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_technical_standard','b')"><i class="fa fa-folder"></i> （13）突破国家技术标准的新技术、新材料要有技术审定文件；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_opinions','b')"><i class="fa fa-folder"></i> （14）国（境）外项目需附项目合同和上级主管部门或建设单位对工程勘察的评价意见；</a>-->
+<!--                                        </li>-->
+<!--                                        <li><a href="javascript:showUpload('prove_other_data','b')"><i class="fa fa-folder"></i> （15）由于申报项目的特殊性所需的其他证明材料（所有证明材料均必须加盖出具单位公章）。</a>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+
+                                <li><a href="javascript:showUpload('design_upload_accessories_catalog','b')"><i class="fa fa-folder"></i> 3. 上传附件目录</a>
+                                </li>
+
+                                <li><a href="javascript:showUpload('design_project_profile_sheet','b')"><i class="fa fa-folder"></i> 4. 表7 项目简介表（word版）</a>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="apply_table" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="apply_table">上传文件(申报表盖章扫描件)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'apply_table'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            <li><a href="javascript:showUpload('appendix_file_design','b')"><i class="fa fa-folder"></i> （1）应包括必要的工程设计图纸</a>-->
+<!--            </li>-->
+<!--            <li><a href="javascript:showUpload('appendix_file_pic','b')"><i class="fa fa-folder"></i> （2）工程照片；</a>-->
+            </li>
+            <div id="appendix_file_design" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="appendix_file_design">上传文件(附件材料：应包括必要的工程设计图纸)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'appendix_file_design'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="appendix_file_pic" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="appendix_file_pic">上传文件(附件材料：工程照片)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'appendix_file_pic'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_complete" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_complete">上传文件(（1）交（竣）工验收证明（上级主管部门加盖公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_complete'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_economics" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_economics">上传文件(（2）工程项目经济、社会效益证明（可由建设单位或其上级主管部门出具并加盖公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_economics'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_env" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_env">上传文件(（3）环境、安全证明（须由地方或上级政府主管部门出具并加盖公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_env'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_material_use" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_material_use">上传文件(（4）工业项目主要原料、材料消耗定额与生产实际值对比表（表3-1，须加盖建设单位或生产运行单位公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_material_use'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_quality" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_quality">上传文件(（5）产品质量设计值与生产实际值对比表（表3-2，须加盖建设单位或生产运行单位公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_quality'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_common_pro_use" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_common_pro_use">上传文件(（6）公用工程消耗定额设计值与生产实际值对比表（表3-3，加盖建设单位或生产运行单位公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_common_pro_use'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_waste_discharge" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_waste_discharge">上传文件(（7）工业项目废渣、废液、废气排放量及排放指标设计值与生产实际值对比表（表3-4，加盖建设单位或生产运行单位公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_waste_discharge'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_cal_table" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_cal_table">上传文件(（8）项目设计过程中各专业应用计算机软件表)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_cal_table'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_bureau_level_award" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_bureau_level_award">上传文件(（9）获局级一、二等奖的奖励证书或文件，复印件加盖单位公章)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_bureau_level_award'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_design_book" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_design_book">上传文件(（10）申报单位相应的工程设计资质证书，复印件加盖单位公章)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_design_book'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_last_accident" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_last_accident">上传文件(（11）最近三年内没有发生过较大勘察质量安全事故的承诺书，加盖单位公章)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_last_accident'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_first_prize" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_first_prize">上传文件(（12）申报一等奖的要由有资质单位出具的查新检索报告)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_first_prize'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_technical_standard" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_technical_standard">上传文件(（13）突破国家技术标准的新技术、新材料要有技术审定文件)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_technical_standard'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_opinions" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_opinions">上传文件(（14）国（境）外项目需附项目合同和上级主管部门或建设单位对工程勘察的评价意见)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_opinions'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="prove_other_data" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="prove_other_data">上传文件(（15）由于申报项目的特殊性所需的其他证明材料（所有证明材料均必须加盖出具单位公章）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'prove_other_data'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="design_project_profile_sheet" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="design_project_profile_sheet">上传文件(表7 项目简介表（word版）)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'design_project_profile_sheet'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="design_upload_accessories_catalog" style="display: none;" class="updocss_b col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <button class="btn btn-primary btn-block" fileType="design_upload_accessories_catalog">上传文件(上传附件目录)</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'design_upload_accessories_catalog'" class="file-box">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <span class="corner"></span>
+
+                                    <div class="icon">
+                                        <i class="fa fa-file"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--            <li><a href="javascript:showUpload('design_upload_accessories_catalog','b')"><i class="fa fa-folder"></i> 4. 上传附件目录</a>-->
+<!--            </li>-->
+
+<!--            <li><a href="javascript:showUpload('design_project_profile_sheet','b')"><i class="fa fa-folder"></i> 5. 表7 项目简介表（word版）</a>-->
+<!--            </li>-->
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script src="/js/layui.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/qc/qc_enclosure_upload.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/pro_stat.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/qc/qc_file_common.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $(".file-box").each(function() {
+                animationHover(this, "pulse")
+            })
+        });
+
+        function showUpload(upId, cssType) {
+            console.log("-----aaaa>showUpload=", upId, $("#" + upId));
+            $(".updocss_" + cssType).attr('style', 'display:none');
+            $("#" + upId).attr('style', 'display:block');
+        }
+
+        function toViewUploadDoc(fileName,url) {
+            parent.layer.open({
+                type : 2,
+                title : fileName,
+                maxmin : true,
+                shadeClose : false, // 点击遮罩关闭层
+                area : [ '800px', '520px' ],
+                content : url  // iframe的url
+            });
+        }
+    </script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/file_manager.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:44 GMT -->
+
+</html>

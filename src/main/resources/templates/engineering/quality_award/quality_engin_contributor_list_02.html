@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityAward/toEnginDescUpload(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">项目概况</a>
+    <a th:href="@{/enterpriseQualityAward/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">石油优质工程奖申报单</a>
+    <a th:href="@{/enterpriseQualityAward/toContributorList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="active item">突出贡献者名单</a>
+    <a th:href="@{/enterpriseQualityAward/toUploadFile(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+</div>
+<div class="ui top attached tabular menu">
+    <a href="#" class="active item">列表 </a>
+    <a th:if="${readonly} eq null or ${readonly} ne 1" th:href="@{/enterpriseQualityAward/toContributorAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">新增 </a>
+    <a th:href="@{/enterpriseQualityAward/toContributorPrint(proId=${proId},taskId=${taskId},readonly=${readonly})}" class="item">打印 </a>
+    <!--<div class="right menu">
+        <div class="item">
+            <div class="ui transparent icon input">
+                <input type="text" placeholder="搜索用户……">
+                <i class="search link icon"></i>
+            </div>
+        </div>
+    </div>-->
+</div>
+<input type="hidden" id="isReadonly" th:value="${readonly}">
+<div class="ui bottom attached segment">
+    <table class="ui table">
+        <thead>
+        <th></th>
+        <th>承建（参建）单位</th>
+        <th>姓名</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="data,dataStat:${pageUtils.rows}">
+            <td th:text="${dataStat.count}"></td>
+            <td th:text="${data.contractorsParticipants}"></td>
+            <td th:text="${data.name}"></td>
+            <td>
+                <a th:href="@{'/enterpriseQualityAward/toEdit?id='+${data.id}+'&proId='+${proId}+'&taskId='+${taskId}+'&applyId='+${applyId} + '&readonly=' + ${readonly}+'&tagName=查看'}" class="ui teal mini basic button">查看</a>
+                <a th:if="${readonly} eq null or ${readonly} ne 1" th:href="@{'/enterpriseQualityAward/toEdit?id='+${data.id}+'&proId='+${proId}+'&taskId='+${taskId}+'&applyId='+${applyId}+'&tagName=修改'}" class="ui teal mini basic button">修改</a>
+                <a th:if="${readonly} eq null or ${readonly} ne 1" class="ui teal mini basic button" href="#" th:onclick="'javascript:delItem(\''+${data.id}+'\')'">删除</a>
+
+            </td>
+        </tr>
+
+
+        </tbody>
+        <tfoot>
+        <th colspan="10 ">
+            <div class="ui pagination mini menu">
+
+
+                <a th:href="@{'/enterpriseQualityAward/toContributorList?pageType=up&pageNum='+${pageNum}+'&proId='+${proId}+'&taskId='+${taskId}}" class="icon item">上一页</a>
+                <a th:href="@{'/enterpriseQualityAward/toContributorList?pageType=down&pageNum='+${pageNum}+'&proId='+${proId}+'&taskId='+${taskId}}" class="icon item">下一页</a>
+
+            </div>
+        </th>
+        </tfoot>
+    </table>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+
+    function delItem(id) {
+
+         parent.layer.confirm('是否删除?', {icon: 3, title: '删除确认提示'}, function (index) {
+            //do something
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/petroleum_engineering_award/oilAwardContributionUsers/remove",
+                data: {
+                    id: id,
+                    proId: "${proId}",
+                    taskId: "${taskId}",
+                    applyId: "${applyId}"
+                },// 你的formid
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+            layer.close(index);
+        });
+
+    }
+
+</script>
+</body>
+</html>

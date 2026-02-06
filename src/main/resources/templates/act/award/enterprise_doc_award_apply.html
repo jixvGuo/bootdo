@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <p><h3>评审要求</h3></p>
+                        <ul>
+                            <li>这部分内容来自于协会工作人员创建任务页面的“评审要求”的录入数据</li>
+                            <li>相当于将评审要求发布在这里，把附件链接也挂上来</li>
+                        </ul>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal m-t" id="signupForm">
+                            <input type="hidden" th:value="${publishTaskId}" name="publishTaskId" id="publishTaskId"/>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报成果名称：</label>
+                                <div class="col-sm-8">
+                                    <input id="chengguo" name="chengguo" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里填写成果名称</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报专业类型：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="majorInput" name="major" aria-invalid="false" class="col-sm-8" style="width:94.5%;position:absolute;height:35px;">
+                                    <select class="form-control m-b" id="majorSel" name="majorId" >
+                                        <option th:value="0">选择专业</option>
+                                        <option th:each="major:${majorList}" th:value="${major.id}" th:text="${major.name}" ></option>
+                                    </select>
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里选择专业</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报团队名称：</label>
+                                <div class="col-sm-8">
+                                    <input id="tuandui" name="tuandui" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 若有申报科技创新团队的需求，请填写团队名称</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报先进个人姓名：</label>
+                                <div class="col-sm-8">
+                                    <input id="advanced_individual" name="advancedIndividual" class="form-control" >
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 若有申报先进个人的需求，请填写相关人员的姓名,多个逗号分隔</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">主要完成人：</label>
+                                <div class="col-sm-8">
+                                    <input id="person" name="person" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="proDesc" name="proDesc" />
+                                <label class="col-sm-3 control-label">项目概况：</label>
+                                <div class="col-sm-8">
+                                    <div class="ibox-content no-padding">
+                                        <div id="content_sn"  class="summernote"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3">
+                                    <button class="btn btn-primary" type="submit">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+        <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+        <!--
+        <script src="js/plugins/cropper/cropper.min.js"></script>
+        <script src="js/demo/form-advanced-demo.min.js"></script>
+        -->
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="/js/demo/form-validate-demo.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/module.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/uploader.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/hotkeys.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/simditor.js"></script>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/act/award/enterprise_doc_award_apply.js"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_validate.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:16 GMT -->
+</html>

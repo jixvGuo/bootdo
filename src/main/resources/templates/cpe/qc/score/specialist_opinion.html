@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header_lu"></head>
+
+<body>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" class="ui basic form">
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>项目编号</label>
+                        <input type="text" name="procode" placeholder="项目编号">
+                    </div>
+                    <div class="ui field">
+                        <label>课题名称</label>
+                        <input type="text" name="topicname" placeholder="课题名称">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>小组名称</label>
+                        <input type="text" name="groupname" placeholder="小组名称">
+                    </div>
+                    <div class="ui field">
+                        <label>单位名称</label>
+                        <input type="text" name="companyname" placeholder="单位名称">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>小组类型</label>
+                        <input type="text" name="grouptype" placeholder="小组类型">
+                    </div>
+                    <div class="ui field">
+                        <label>专业范围</label>
+                        <input type="text" name="majorrange" placeholder="专业范围">
+                    </div>
+                </div>
+
+                <h4 class="ui red horizontal divider header">评审意见 </h4>
+                <div class="ui field">
+                    <textarea id="opinion" name="opinion"></textarea>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:include="include :: footer_lu"></div>
+
+    <script>
+        var opinion = new Simditor({
+            textarea: $("#opinion"),
+            defaultImage: "img/a9.jpg"
+        })
+        $(".simditor-clean-paste-area").hide();
+        $('.ui.dropdown').dropdown();
+
+
+        $("input[type='number']").keyup(function() {
+            var Totalscore = 0;
+            $("input[type='number']").each(function() {
+                var namec = $(this).attr("name");
+                if (namec != "Totalscore") {
+                    Totalscore += Number($(this).val());
+                }
+            });
+            $("input[name='Totalscore']").val(Totalscore);
+        });
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                procode: {
+                    identifier: 'procode',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写项目编号'
+                    }]
+                },
+                topicname: {
+                    identifier: 'topicname',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写课题名称'
+                    }]
+                },
+                groupname: {
+                    identifier: 'groupname',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组名称'
+                    }]
+                },
+                companyname: {
+                    identifier: 'companyname',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写单位名称'
+                    }]
+                },
+                grouptype: {
+                    identifier: 'grouptype',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组类型'
+                    }]
+                },
+                majorrange: {
+                    identifier: 'majorrange',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写专业范围'
+                    }]
+                },
+                advancedtechnique: {
+                    identifier: 'advancedtechnique',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写选题(满分12)'
+                    }]
+                },
+                innovate: {
+                    identifier: 'innovate',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写选题(满分12)'
+                    }]
+                },
+                facilityvalue: {
+                    identifier: 'facilityvalue',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写对策与实施(满分16)'
+                    }]
+                },
+                intellectualproperty: {
+                    identifier: 'intellectualproperty',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写效果(满分11)'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

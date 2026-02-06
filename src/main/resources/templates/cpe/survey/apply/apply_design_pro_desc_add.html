@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header"></head>
+
+
+<body>
+    <div class="ui top attached tabular menu">
+        <a th:href="@{/surverApply/toProDesc(proId=${proId},taskId=${taskId})}" class="item">列表</a>
+        <a th:if="${readonly} eq null or ${readonly} ne 1" href="#" class="active item">新增</a>
+    </div>
+
+    <div class="ui bottom attached segment">
+        <form id="signupForm" action="" class="ui basic form">
+            <table id="proDescTable" class="ui celled  table">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${proDescDO.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                <tr>
+                    <td style="width: 14%;">项目编号</td>
+                    <td style="width: 30%;">申报单位</td>
+                    <td style="width: 14%;">奖项类别</td>
+                    <td style="width: 14%;">项目名称</td>
+                    <td style="width: 14%;">推荐等级</td>
+                    <td style="width: 14%;">初评专业组</td>
+                </tr>
+                <tr>
+                    <td style="width: 14%;" contenteditable="true" id="projectId" name="projectId" th:text="${proDescDO.projectId}"></td>
+                    <td style="width: 14%;" contenteditable="true" id="reportingUnit" name="reportingUnit" th:text="${proDescDO.reportingUnit}"></td>
+                    <td style="width: 14%;" contenteditable="true" id="awardCategory" name="awardCategory" th:text="${proDescDO.awardCategory}"></td>
+                    <td style="width: 14%;" contenteditable="true" id="projectName" name="projectName" th:text="${proDescDO.projectName}"></td>
+                    <td style="width: 14%;" contenteditable="true" id="recommendedGrade" name="recommendedGrade" th:text="${proDescDO.recommendedGrade}"></td>
+                    <td style="width: 30%;" contenteditable="true" id="preliminaryEvaluationGroup" name="preliminaryEvaluationGroup" th:text="${proDescDO.preliminaryEvaluationGroup}"></td>
+                </tr>
+                <tr style="height: 300px;">
+                    <td style="width: 14%;">项目简介</td>
+                    <td style="width: 86%;" contenteditable="true" id="projectDescription" name="projectDescription" th:text="${proDescDO.projectDescription}" colspan="5"></td>
+                </tr>
+            </table>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="save()">保存</div>
+            </div>
+        </form>
+        <p style="color: red;">
+            备注：
+            <br> &emsp;&emsp;1. 项目简介用于专业组初评和大评委终评，向非主审专家介绍项目概况；
+            <br> &emsp;&emsp;2. 项目简介内容主要包括项目概况及规模、概预算完成情况，并能够突出项目难点和先进性；
+            <br> &emsp;&emsp;3. 项目简介要重点突出，力求简洁，字数控制在500在以内。
+            <br> &emsp;&emsp;4. 项目编号、奖项类别、初评专业组栏目由评审组填写，申报单位可不填。
+        </p>
+
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverDesignApplyProjectProfile/add.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+    <script>
+    </script>
+</body>
+
+</html>

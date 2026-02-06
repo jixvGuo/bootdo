@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#basic-1"  aria-expanded="true">基本信息</a> </li>
+                        <!--<li class=""><a data-toggle="tab" href="#basic-2" onclick="againload('basic-2')" aria-expanded="false">石油工程建设优秀质量管理小组报告单（问题解决型课题）</a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-3" onclick="againload('basic-3')" aria-expanded="false">石油工程建设优秀质量管理小组报告单（创新型课题）</a> </li>-->
+                        <!--<li class=""><a data-toggle="tab" href="#basic-4" onclick="againload('basic-4')" aria-expanded="false">质量管理小组活动现场评价表</a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-5" onclick="againload('basic-5')" aria-expanded="false">问题解决型课题成果评价表</a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-6" onclick="againload('basic-6')" aria-expanded="false">创新型课题成果评价表</a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-7" onclick="againload('basic-7')" aria-expanded="false">质量管理小组概况统计表</a> </li>-->
+                        <li class=""><a data-toggle="tab" href="#basic-8" onclick="againload('basic-8')" aria-expanded="false">附件上传页签</a> </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="basic-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <iframe id="groupInfo" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes"  th:src="@{/qcAward/view/applyGroupInfo?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>
+                            </div>
+                        </div>
+<!--                        <div id="basic-2" class="tab-pane">-->
+<!--                            <div class="panel-body">-->
+<!--                                <iframe id="solveReport" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applyReportSolve?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="basic-3" class="tab-pane ">-->
+<!--                            <div class="panel-body">-->
+<!--                                <iframe id="innovateReport" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applyReportInnovate?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="basic-4" class="tab-pane ">-->
+<!--                            <div class="panel-body">-->
+<!--                                <iframe id="scoreActive" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applyScoreActive?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="basic-5" class="tab-pane ">-->
+<!--                            <div class="panel-body">-->
+<!--                                <iframe id="scoreResultSolve" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applyScoreResultSolve?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="basic-6" class="tab-pane ">-->
+<!--                            <div class="panel-body">-->
+<!--                                <iframe id="scoreResultInnovate" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applyScoreResultInnovate?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="basic-7" class="tab-pane ">-->
+<!--                            <div class="panel-body">-->
+<!--                                <iframe id="surveyStatistic" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applySurveyStatistic?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div id="basic-8" class="tab-pane ">
+                            <div class="panel-body">
+                                <iframe id="annexUpload" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/qcAward/view/applyAnnex?eType=introduction(proId=${proId},readonly=${readonly})}"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script>
+        var basic2 = true;
+        var basic3 = true;
+        var basic4 = true;
+        var basic5 = true;
+        var basic6 = true;
+        var basic7 = true;
+        var basic8 = true;
+
+        function againload(e){
+            var Number = e.charAt(e.length - 1);
+
+            if(Number == 2){
+                if(basic2){
+                    var src = $("#"+e+" iframe").attr("src");
+                    $("#"+e+" iframe").attr("src",src);
+                    basic2 = false;
+                }
+            } else if(Number == 3){
+                if(basic3){
+                    var src = $("#"+e+" iframe").attr("src");
+                    $("#"+e+" iframe").attr("src",src);
+                    basic3 = false;
+                }
+            }
+
+
+        }
+    </script>
+
+
+</body>
+
+</html>

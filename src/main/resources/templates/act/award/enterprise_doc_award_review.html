@@ -1,0 +1,386 @@
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<input type="hidden" id="taskId" th:value="${taskId}" />
+<input type="hidden" id="proId" th:value="${proId}" />
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="clients-list">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#technology">科技进步奖材料</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#technology1">科技创新团队材料</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#technology2">先进个人材料</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="technology" class="tab-pane active">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>科技进步奖申报材料上传</h5>
+                                        <div class="ibox-tools">
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                                <i class="fa fa-wrench"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-user">
+                                                <li><a href="table_basic.html#">选项1</a>
+                                                </li>
+                                                <li><a href="table_basic.html#">选项2</a>
+                                                </li>
+                                            </ul>
+                                            <a class="close-link">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content" style="overflow:scroll">
+                                        <div class="wrapper wrapper-content">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="ibox float-e-margins">
+                                                        <div class="ibox-content">
+                                                            <div class="file-manager">
+
+                                                                <div class="hr-line-dashed"></div>
+                                                                <a th:href="@{/award_flow/to_uploadsmall(proId=${proId})}" >
+                                                                    <button class="btn btn-primary btn-block">上传文件</button>
+                                                                </a>
+
+                                                                <div class="hr-line-dashed"></div>
+
+                                                                <h5>申报材料分类</h5>
+                                                                <ul class="folder-list" style="padding: 0">
+                                                                    <li><a href="" ><i class="fa fa-folder"></i> 申报书</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 研究报告</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 成果立项文件</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 成果验收报告</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 科技成果鉴定证书</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 查新报告</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 其它证明</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 成果形成的国标、行标</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 检测报告</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 成果应用证明</a>
+                                                                    </li>
+                                                                    <li><a href=""><i class="fa fa-folder"></i> 完成人名单排序表等</a>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-9 animated fadeInRight">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <div th:each="doc:${docUploadDoList}"  class="file-box">
+                                                                <div class="file">
+                                                                    <a  th:href="@{${doc.url}}">
+                                                                        <span class="corner"></span>
+
+                                                                        <div class="icon">
+                                                                            <i class="fa fa-file"></i>
+                                                                        </div>
+                                                                        <div class="file-name">
+                                                                            <span th:text="${doc.fileName}"/>
+                                                                            <br/>
+                                                                            <small>添加时间：<span th:text="${doc.created}"></span></small>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script src="/js/jquery.min.js?v=2.1.4"></script>
+                                        <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+                                        <script src="/js/content.min.js?v=1.0.0"></script>
+                                        <script>
+                                            $(document).ready(function(){$(".file-box").each(function(){animationHover(this,"pulse")})});
+                                        </script>
+                                        <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="technology1" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>科技创新先进团队申报材料上传</h5>
+                                            <div class="ibox-tools">
+                                                <a class="collapse-link">
+                                                    <i class="fa fa-chevron-up"></i>
+                                                </a>
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                                    <i class="fa fa-wrench"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-user">
+                                                    <li><a href="table_basic.html#">选项1</a>
+                                                    </li>
+                                                    <li><a href="table_basic.html#">选项2</a>
+                                                    </li>
+                                                </ul>
+                                                <a class="close-link">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content" style="overflow:scroll">
+                                            <div class="wrapper wrapper-content">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="ibox float-e-margins">
+                                                            <div class="ibox-content">
+                                                                <div class="file-manager">
+
+                                                                    <div class="hr-line-dashed"></div>
+                                                                    <a href="@{/award_flow/to_uploadsmall(proId=${proId})}">
+                                                                        <button class="btn btn-primary btn-block">上传文件</button>
+                                                                    </a>
+
+                                                                    <div class="hr-line-dashed"></div>
+
+                                                                    <h5>申报材料分类</h5>
+                                                                    <ul class="folder-list" style="padding: 0">
+                                                                        <li><a href="" ><i class="fa fa-folder"></i> 科技奖励</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 知识产权证书</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 论文、论著证明</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 科技成果应用证明</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 营业执照</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 质量、安全环保证明</a>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9 animated fadeInRight">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="file-box">
+                                                                    <div class="file">
+                                                                        <a href="">
+                                                                            <span class="corner"></span>
+
+                                                                            <div class="icon">
+                                                                                <i class="fa fa-file"></i>
+                                                                            </div>
+                                                                            <div class="file-name">
+                                                                                Document_2014.doc
+                                                                                <br/>
+                                                                                <small>添加时间：2014-10-13</small>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-box">
+                                                                    <div class="file">
+                                                                        <a href="">
+                                                                            <span class="corner"></span>
+                                                                            <div class="icon">
+                                                                                <i class="fa fa-file"></i>
+                                                                            </div>
+                                                                            <div class="file-name">
+                                                                                Document_2014.doc
+                                                                                <br/>
+                                                                                <small>添加时间：2014-10-13</small>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script src="/js/jquery.min.js?v=2.1.4"></script>
+                                            <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+                                            <script src="/js/content.min.js?v=1.0.0"></script>
+                                            <script>
+                                                $(document).ready(function(){$(".file-box").each(function(){animationHover(this,"pulse")})});
+                                            </script>
+                                            <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="technology2" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>科技创新先进个人申报材料上传</h5>
+                                            <div class="ibox-tools">
+                                                <a class="collapse-link">
+                                                    <i class="fa fa-chevron-up"></i>
+                                                </a>
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                                    <i class="fa fa-wrench"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-user">
+                                                    <li><a href="table_basic.html#">选项1</a>
+                                                    </li>
+                                                    <li><a href="table_basic.html#">选项2</a>
+                                                    </li>
+                                                </ul>
+                                                <a class="close-link">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content" style="overflow:scroll">
+                                            <div class="wrapper wrapper-content">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="ibox float-e-margins">
+                                                            <div class="ibox-content">
+                                                                <div class="file-manager">
+
+                                                                    <div class="hr-line-dashed"></div>
+                                                                    <a href="@{/award_flow/to_uploadsmall(proId=${proId})}">
+                                                                        <button class="btn btn-primary btn-block">上传文件</button>
+                                                                    </a>
+
+                                                                    <div class="hr-line-dashed"></div>
+
+                                                                    <h5>申报材料分类</h5>
+                                                                    <ul class="folder-list" style="padding: 0">
+                                                                        <li><a href="" ><i class="fa fa-folder"></i> 知识产权证明</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 科技奖证明</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 论著</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 标准（工法）</a>
+                                                                        </li>
+                                                                        <li><a href=""><i class="fa fa-folder"></i> 其它科技荣誉</a>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9 animated fadeInRight">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="file-box">
+                                                                    <div class="file">
+                                                                        <a href="">
+                                                                            <span class="corner"></span>
+
+                                                                            <div class="icon">
+                                                                                <i class="fa fa-file"></i>
+                                                                            </div>
+                                                                            <div class="file-name">
+                                                                                Document_2014.doc
+                                                                                <br/>
+                                                                                <small>添加时间：2014-10-13</small>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-box">
+                                                                    <div class="file">
+                                                                        <a href="">
+                                                                            <span class="corner"></span>
+                                                                            <div class="icon">
+                                                                                <i class="fa fa-file"></i>
+                                                                            </div>
+                                                                            <div class="file-name">
+                                                                                Document_2014.doc
+                                                                                <br/>
+                                                                                <small>添加时间：2014-10-13</small>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script src="/js/jquery.min.js?v=2.1.4"></script>
+                                            <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+                                            <script src="/js/content.min.js?v=1.0.0"></script>
+                                            <script>
+                                                $(document).ready(function(){$(".file-box").each(function(){animationHover(this,"pulse")})});
+                                            </script>
+                                            <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         <form class="form-horizontal m-t" id="signupForm">
+             <input type="hidden" th:value="${proId}" name="proId"/>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-8">
+                    <button class="btn btn-primary" type="submit">同意</button>
+                    <button class="btn btn-primary" type="submit">驳回</button>
+                </div>
+            </div>
+         </form>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/js/demo/peity-demo.min.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+    <div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/act/award/enterprise_doc_award_upload.js"></script>
+<!--
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+-->
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+</html>

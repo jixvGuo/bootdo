@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<!--信息编辑框 Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal" id="signupForm">
+                            <input type="hidden" id="isReadonly" th:value="${readonly}">
+                            <input id="id" name="id" th:value="${otherInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="eType" name="eType" th:value="${eType}"  type="hidden">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <textarea id="specialData" name="specialData" th:text="${otherInfo.specialData}" style="height: 260px;" class="form-control" required="" aria-required="true"></textarea>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div th:if="${isOnlyView == null || !isOnlyView}" class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                </div>
+                            </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" th:if="${otherInfo.id > 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${otherInfo.id == null || otherInfo.id == 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+</html>

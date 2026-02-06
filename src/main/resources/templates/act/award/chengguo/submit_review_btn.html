@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<!--信息编辑框 Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+<body class="gray-bg">
+    <input type="hidden" id="isReadonly" th:value="${readonly}">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row" th:if="${procInsId ne '0' && ass_validate_pro eq 1 && pageSource == 'enterprise_validate_menu'}" shiro:hasPermission="act:award:ass_validate_pro">
+            <div style="text-align:right;margin-right:30px; ">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button class="btn btn-primary" id="assOverValidateBtn" >完成审核</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="text-align: center;font-size: 24px;" th:if="${associationReviewRst != null && associationReviewRst != ''}">
+            <span th:if="${associationReviewRst == 'yes'}" style="color: #00B83F;">审核通过</span>
+            <span th:if="${associationReviewRst == 'no'}" style="color:red;">驳回</span>
+            <span th:if="${associationReviewRst == 'over'}" style="color:red;">不参评</span>
+        </div>
+
+        <div class="row">
+                    <div class="">
+                        <form th:if="${role == 'enterprise_user'}" method="get" class="form-horizontal" id="signupForm">
+                           <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                           <div class="form-group">
+                               <div class="col-sm-4">
+                                   <button th:if="${isSubmitValidateBtn}" class="btn btn-primary" id="commitValidate" >提交审核</button>
+                                   <button th:if="${!isSubmitValidateBtn}" class="btn" th:text="${statShow}"></button>
+                               </div>
+                           </div>
+                        </form>
+                        <!--<form th:if="${ass_validate_pro == null}" method="get" class="form-horizontal" id="signupForm">
+                           <input id="proId" name="proId" th:value="${proId}"  type="hidden">-->
+                           <!--<div class="form-group" th:if="${ass_validate_pro == null && (isCouldStyleValidate || isReview)}">
+                                <div class="col-sm-4">
+                                    <button th:if="${proInfo == null || proInfo.associationReviewRst == null || proInfo.associationReviewRst == ''}" class="btn btn-primary" id="commitValidate" th:onclick="|page('/style_validate/view?type=${validateType}','形式审查打分表','1888')|">形式审查打分表</button>
+                                    <button th:if="${proInfo != null && proInfo.associationReviewRst == 'upload'}" class="btn" >已提交审核</button>
+                                </div>
+                            </div>-->
+                        <!--</form>-->
+                        <!-- 形式审查 -->
+                        <div th:if="${ass_validate_pro != null && ass_validate_pro == 1 && proInfo != null && proInfo.procInsId != null && proInfo.procInsId != '' && proInfo.procInsId != '0'}" method="get" class="form-horizontal" id="signupForm">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input type="hidden" id="procInsId" th:value="${procInsId}" />
+                            <input type="hidden" id="publishTaskId" th:value="${taskId}" />
+                            <input type="hidden" id="actRunTaskId" th:value="${actRunTaskId}" />
+                            <input type="hidden" id="fileSize" th:value="1" />
+                            <div class="form-group">
+                                <div th:if="${isOnlyView == null || !isOnlyView}" class="col-sm-4">
+                                    <button class="btn btn-primary" th:onclick="|toStyleValidate('/style_validate/view?type=${validateType}&proId=${proId}','形式审查打分表')|">形式审查打分表</button>
+                                    <button class="btn btn-primary" onclick="xingshiViewPass()" >通过</button>
+                                    <button class="btn" onclick="xingshiViewNo()">驳回</button>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/act/award/chengguo_index.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+    <script>
+
+function toStyleValidate(url,title) {
+    parent.layer.open({
+        type : 2,
+        title : title,
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '520px' ],
+        content : url
+    });
+ }
+
+
+    </script>
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+</html>

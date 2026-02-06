@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.ImportCheckExcelUpdateDao">
+	<insert id="addSciencePersonValidateResult">
+		INSERT INTO `boot_do`.`ass_award_style_validate_person`
+		(`apply_company`,
+		`apply_name`,
+		`validate_result`,
+		`validate_uid`,
+		`pro_id`,
+		`is_last_validate`,
+		`reject_reason`,
+		`person_id`)
+		SELECT
+		ce.apply_enterprise,
+		ce.result_name,
+		ce.validate_result,
+		ce.opt_uid,
+		pi.pro_id,
+		1,
+		ce.check_opinion,
+		pi.id
+		FROM
+		boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_enterpri_personal_info pi ON ce.task_id = pi.task_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		WHERE
+		ce.pro_id = pi.pro_id and ce.task_id = #{taskId}
+	</insert>
+
+	<insert id="addScienceTeamValidateResult">
+        INSERT INTO `boot_do`.`ass_award_style_validate_team`
+        (`apply_company`,
+        `apply_name`,
+        `validate_result`,
+        `validate_uid`,
+        `pro_id`,
+        `is_last_validate`,
+        `reject_reason`,
+        `team_id`)
+        SELECT
+            ce.apply_enterprise,
+            ce.result_name,
+            ce.validate_result,
+            ce.opt_uid,
+            ti.pro_id,
+            1,
+            ce.check_opinion,
+            ti.id
+        FROM
+            boot_do.ass_import_check_excel_data ce
+                JOIN
+            ass_enterpri_team_info ti ON ce.task_id = ti.task_id
+                JOIN
+            sys_user su ON su.username = ce.apply_account
+        WHERE
+            ce.pro_id = ti.pro_id
+		    and ce.task_id = #{taskId}
+	</insert>
+
+	<insert id="addScienceProceValidateResult">
+		INSERT INTO `boot_do`.`ass_award_style_validate_science`
+		(`apply_company`,
+		`apply_name`,
+		`validate_result`,
+		`validate_uid`,
+		`pro_id`,
+		`is_last_validate`,
+		`reject_reason`)
+		SELECT
+		ce.apply_enterprise,
+		ce.result_name,
+		ce.validate_result,
+		ce.opt_uid,
+		ci.pro_id,
+		1,
+		ce.check_opinion
+		FROM
+		boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_award_enterprise_project pro ON pro.publish_task_id = ce.task_id
+		JOIN
+		ass_enterprise_chengguo_base_info ci ON pro.id = ci.pro_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		WHERE
+		ce.pro_id = ci.pro_id
+		and ce.task_id = #{taskId}
+	</insert>
+
+	<update id="cleanSciencePersonLastValidate">
+		UPDATE boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_enterpri_personal_info pi ON ce.task_id = pi.task_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		JOIN
+		ass_award_style_validate_person sv ON sv.pro_id = pi.pro_id
+		SET
+		is_last_validate = 0
+		WHERE
+		ce.pro_id = pi.pro_id
+		AND sv.id > 0
+		AND ce.task_id = #{taskId}
+	</update>
+
+	<update id="cleanScienceTeamLastValidate">
+		UPDATE boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_enterpri_team_info ti ON ce.task_id = ti.task_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		JOIN
+		ass_award_style_validate_team sv ON sv.pro_id = ti.pro_id
+		SET
+		sv.is_last_validate = 0
+		WHERE
+		ce.pro_id = ti.pro_id
+		AND sv.id > 0
+		AND ce.task_id = #{taskId}
+	</update>
+
+	<update id="cleanScienceProceLastValidate">
+		UPDATE boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_award_enterprise_project pro ON pro.publish_task_id = ce.task_id
+		JOIN
+		ass_enterprise_chengguo_base_info ci ON pro.id = ci.pro_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		JOIN
+		ass_award_style_validate_science sv ON sv.pro_id = ci.pro_id
+		SET
+		sv.is_last_validate = 0
+		WHERE
+		ce.pro_id = ci.pro_id
+		AND sv.id > 0
+		AND ce.task_id = #{taskId}
+	</update>
+	<update id="updateSciencePersonMajor">
+		UPDATE boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_enterpri_personal_info pi ON ce.task_id = pi.task_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		JOIN
+		ass_award_style_validate_person sv ON sv.pro_id = pi.pro_id
+		JOIN
+		ass_award_enterprise_project pro ON pro.id = pi.pro_id
+		SET
+		pi.major = ce.major,pro.pro_group_name = ce.pro_group_name
+		WHERE
+		ce.pro_id = pi.pro_id
+		AND sv.id > 0
+		AND ce.task_id = #{taskId}
+	</update>
+	<update id="updateScienceTeamMajor">
+		UPDATE boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_enterpri_team_info ti ON ce.task_id = ti.task_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		JOIN
+		ass_award_style_validate_team sv ON sv.pro_id = ti.pro_id
+		JOIN
+		ass_award_enterprise_project pro ON pro.id = ti.pro_id
+		SET
+		ti.research_direction = ce.major,pro.pro_group_name = ce.pro_group_name
+		WHERE
+		ce.pro_id = ti.pro_id
+		AND sv.id > 0
+		AND ce.task_id = #{taskId}
+	</update>
+	<update id="updateSciencePorceMajor">
+		UPDATE boot_do.ass_import_check_excel_data ce
+		JOIN
+		ass_award_enterprise_project pro ON pro.publish_task_id = ce.task_id
+		JOIN
+		ass_enterprise_chengguo_base_info ci ON pro.id = ci.pro_id
+		JOIN
+		sys_user su ON su.username = ce.apply_account
+		JOIN
+		ass_award_style_validate_science sv ON sv.pro_id = ci.pro_id
+		SET
+		ci.major = ce.major,pro.pro_group_name = ce.pro_group_name
+		WHERE
+		ce.pro_id = ci.pro_id
+		AND sv.id > 0
+		AND ce.task_id = #{taskId}
+	</update>
+	<update id="updateSciencePersonMajorByExcelData" parameterType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+			UPDATE
+		    	ass_enterpri_personal_info pi
+			SET
+			     pi.major = #{item.major}
+			WHERE
+			     pi.pro_id = #{item.proId}
+	</update>
+	<update id="updateScienceProGroupByExcelData" parameterType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+			UPDATE
+			   ass_award_enterprise_project pro
+			SET
+			   pro.pro_group_name = #{item.proGroupName},
+		       pro.pro_stat = 'to_validate'
+			WHERE
+			   pro.id = #{item.proId}
+	</update>
+	<update id="updateScienceTeamMajorByExcelData" parameterType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+		UPDATE
+		    ass_enterpri_team_info ti
+		SET
+		    ti.research_direction = #{item.major}
+		WHERE
+		    ti.pro_id = #{item.proId}
+	</update>
+	<update id="updateScienceProcessMajorByExcelData" parameterType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+		UPDATE
+		    ass_enterprise_chengguo_base_info ci
+		SET
+		    ci.major = #{item.major}
+		WHERE
+		    ci.pro_id = #{item.proId}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.OilAwardApplyInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardApplyInfoDO">
+		select `id`,`full_name_unit`,`unit_qualification`,`name`,`mobile_phone`,`tel_phone`,`post_address`,`post_code`,`e_mail_adress`,`name1`,`mobile_phone1`,`tel_phone1`,`post_address1`,`email_adress1`, post_code_one,`unit_construction_project`,`construction_unit`,`engineering_general_contractor`,`construction_general_contractor`,`participating_unit`,`other`,`project_name`,`engineering_category`,`sources_funds`,`construction_site`,`construction_nature`,`completion_accounts`,`start_time`,`completion_time`,`design_budget`,`project_establishment_method`,`project_approval_unit`,`project_approval_time`,`nature_land_use`,`land_area`,`engineering_properties`,`construction_scale`,`land_type`,`types_use_right`,`approved_reback`,`user_unite`,`approved_unite`,`approval_time`,`eia_approval_unit`,`eia_approval_time`,`completion_acceptance_unit`,`assessment_unit`,`evaluation_conclusion`,`filing_authority`,`record_time`,`audit_unit`,`audit_time`,`special_acceptance`,`completion_acceptance_unit1`,`completion_acceptance_time`,`workers_wages_settled`,`safety_accident`,`quality_accident`,`other_proof`,`other_matters_specified`,`engineering_quality_supervision`,`engineering_safety_supervision_department`,`opinions_project_users`,`competent_department_declaration_unit`,`opinions_construction_unit`,`recommendation_unit_comments`,`post_code1`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated` from ass_oil_award_apply_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardApplyInfoDO">
+		select `id`,`full_name_unit`,`add_type`,`unit_qualification`,`name`,`mobile_phone`,`tel_phone`,`post_address`,`post_code`,`e_mail_adress`,`name1`,`mobile_phone1`,`tel_phone1`,`post_address1`,`email_adress1`, post_code_one,`unit_construction_project`,`construction_unit`,`engineering_general_contractor`,`construction_general_contractor`,`participating_unit`,`other`,`project_name`,`engineering_category`,`sources_funds`,`construction_site`,`construction_nature`,`completion_accounts`,`start_time`,`completion_time`,`design_budget`,`project_establishment_method`,`project_approval_unit`,`project_approval_time`,`nature_land_use`,`land_area`,`engineering_properties`,`construction_scale`,`land_type`,`types_use_right`,`approved_reback`,`user_unite`,`approved_unite`,`approval_time`,`eia_approval_unit`,`eia_approval_time`,`completion_acceptance_unit`,`assessment_unit`,`evaluation_conclusion`,`filing_authority`,`record_time`,`audit_unit`,`audit_time`,`special_acceptance`,`completion_acceptance_unit1`,`completion_acceptance_time`,`workers_wages_settled`,`safety_accident`,`quality_accident`,`other_proof`,`other_matters_specified`,`engineering_quality_supervision`,`engineering_safety_supervision_department`,`opinions_project_users`,`competent_department_declaration_unit`,`opinions_construction_unit`,`recommendation_unit_comments`,`post_code1`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated`  from ass_oil_award_apply_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="fullNameUnit != null and fullNameUnit != ''"> and full_name_unit = #{fullNameUnit} </if>
+		  		  <if test="unitQualification != null and unitQualification != ''"> and unit_qualification = #{unitQualification} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="mobilePhone != null and mobilePhone != ''"> and mobile_phone = #{mobilePhone} </if>
+		  		  <if test="telPhone != null and telPhone != ''"> and tel_phone = #{telPhone} </if>
+		  		  <if test="postAddress != null and postAddress != ''"> and post_address = #{postAddress} </if>
+		  		  <if test="postCode != null and postCode != ''"> and post_code = #{postCode} </if>
+		  		  <if test="eMailAdress != null and eMailAdress != ''"> and e_mail_adress = #{eMailAdress} </if>
+		  		  <if test="name1 != null and name1 != ''"> and name1 = #{name1} </if>
+		  		  <if test="mobilePhone1 != null and mobilePhone1 != ''"> and mobile_phone1 = #{mobilePhone1} </if>
+		  		  <if test="telPhone1 != null and telPhone1 != ''"> and tel_phone1 = #{telPhone1} </if>
+		  		  <if test="postAddress1 != null and postAddress1 != ''"> and post_address1 = #{postAddress1} </if>
+		  		  <if test="emailAdress1 != null and emailAdress1 != ''"> and email_adress1 = #{emailAdress1} </if>
+		  		  <if test="unitConstructionProject != null and unitConstructionProject != ''"> and unit_construction_project = #{unitConstructionProject} </if>
+		  		  <if test="constructionUnit != null and constructionUnit != ''"> and construction_unit = #{constructionUnit} </if>
+		  		  <if test="engineeringGeneralContractor != null and engineeringGeneralContractor != ''"> and engineering_general_contractor = #{engineeringGeneralContractor} </if>
+		  		  <if test="constructionGeneralContractor != null and constructionGeneralContractor != ''"> and construction_general_contractor = #{constructionGeneralContractor} </if>
+		  		  <if test="participatingUnit != null and participatingUnit != ''"> and participating_unit = #{participatingUnit} </if>
+		  		  <if test="other != null and other != ''"> and other = #{other} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="engineeringCategory != null and engineeringCategory != ''"> and engineering_category = #{engineeringCategory} </if>
+		  		  <if test="sourcesFunds != null and sourcesFunds != ''"> and sources_funds = #{sourcesFunds} </if>
+		  		  <if test="constructionSite != null and constructionSite != ''"> and construction_site = #{constructionSite} </if>
+		  		  <if test="constructionNature != null and constructionNature != ''"> and construction_nature = #{constructionNature} </if>
+		  		  <if test="completionAccounts != null and completionAccounts != ''"> and completion_accounts = #{completionAccounts} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="completionTime != null and completionTime != ''"> and completion_time = #{completionTime} </if>
+		  		  <if test="designBudget != null and designBudget != ''"> and design_budget = #{designBudget} </if>
+		  		  <if test="projectEstablishmentMethod != null and projectEstablishmentMethod != ''"> and project_establishment_method = #{projectEstablishmentMethod} </if>
+		  		  <if test="projectApprovalUnit != null and projectApprovalUnit != ''"> and project_approval_unit = #{projectApprovalUnit} </if>
+		  		  <if test="projectApprovalTime != null and projectApprovalTime != ''"> and project_approval_time = #{projectApprovalTime} </if>
+		  		  <if test="natureLandUse != null and natureLandUse != ''"> and nature_land_use = #{natureLandUse} </if>
+		  		  <if test="landArea != null and landArea != ''"> and land_area = #{landArea} </if>
+		  		  <if test="engineeringProperties != null and engineeringProperties != ''"> and engineering_properties = #{engineeringProperties} </if>
+		  		  <if test="constructionScale != null and constructionScale != ''"> and construction_scale = #{constructionScale} </if>
+		  		  <if test="landType != null and landType != ''"> and land_type = #{landType} </if>
+		  		  <if test="typesUseRight != null and typesUseRight != ''"> and types_use_right = #{typesUseRight} </if>
+		  		  <if test="approvedReback != null and approvedReback != ''"> and approved_reback = #{approvedReback} </if>
+		  		  <if test="userUnite != null and userUnite != ''"> and user_unite = #{userUnite} </if>
+		  		  <if test="approvedUnite != null and approvedUnite != ''"> and approved_unite = #{approvedUnite} </if>
+		  		  <if test="approvalTime != null and approvalTime != ''"> and approval_time = #{approvalTime} </if>
+		  		  <if test="eiaApprovalUnit != null and eiaApprovalUnit != ''"> and eia_approval_unit = #{eiaApprovalUnit} </if>
+		  		  <if test="eiaApprovalTime != null and eiaApprovalTime != ''"> and eia_approval_time = #{eiaApprovalTime} </if>
+		  		  <if test="completionAcceptanceUnit != null and completionAcceptanceUnit != ''"> and completion_acceptance_unit = #{completionAcceptanceUnit} </if>
+		  		  <if test="assessmentUnit != null and assessmentUnit != ''"> and assessment_unit = #{assessmentUnit} </if>
+		  		  <if test="evaluationConclusion != null and evaluationConclusion != ''"> and evaluation_conclusion = #{evaluationConclusion} </if>
+		  		  <if test="filingAuthority != null and filingAuthority != ''"> and filing_authority = #{filingAuthority} </if>
+		  		  <if test="recordTime != null and recordTime != ''"> and record_time = #{recordTime} </if>
+		  		  <if test="auditUnit != null and auditUnit != ''"> and audit_unit = #{auditUnit} </if>
+		  		  <if test="auditTime != null and auditTime != ''"> and audit_time = #{auditTime} </if>
+		  		  <if test="specialAcceptance != null and specialAcceptance != ''"> and special_acceptance = #{specialAcceptance} </if>
+		  		  <if test="completionAcceptanceUnit1 != null and completionAcceptanceUnit1 != ''"> and completion_acceptance_unit1 = #{completionAcceptanceUnit1} </if>
+		  		  <if test="completionAcceptanceTime != null and completionAcceptanceTime != ''"> and completion_acceptance_time = #{completionAcceptanceTime} </if>
+		  		  <if test="workersWagesSettled != null and workersWagesSettled != ''"> and workers_wages_settled = #{workersWagesSettled} </if>
+		  		  <if test="safetyAccident != null and safetyAccident != ''"> and safety_accident = #{safetyAccident} </if>
+		  		  <if test="qualityAccident != null and qualityAccident != ''"> and quality_accident = #{qualityAccident} </if>
+		  		  <if test="otherProof != null and otherProof != ''"> and other_proof = #{otherProof} </if>
+		  		  <if test="otherMattersSpecified != null and otherMattersSpecified != ''"> and other_matters_specified = #{otherMattersSpecified} </if>
+		  		  <if test="engineeringQualitySupervision != null and engineeringQualitySupervision != ''"> and engineering_quality_supervision = #{engineeringQualitySupervision} </if>
+		  		  <if test="engineeringSafetySupervisionDepartment != null and engineeringSafetySupervisionDepartment != ''"> and engineering_safety_supervision_department = #{engineeringSafetySupervisionDepartment} </if>
+		  		  <if test="opinionsProjectUsers != null and opinionsProjectUsers != ''"> and opinions_project_users = #{opinionsProjectUsers} </if>
+		  		  <if test="competentDepartmentDeclarationUnit != null and competentDepartmentDeclarationUnit != ''"> and competent_department_declaration_unit = #{competentDepartmentDeclarationUnit} </if>
+		  		  <if test="opinionsConstructionUnit != null and opinionsConstructionUnit != ''"> and opinions_construction_unit = #{opinionsConstructionUnit} </if>
+		  		  <if test="recommendationUnitComments != null and recommendationUnitComments != ''"> and recommendation_unit_comments = #{recommendationUnitComments} </if>
+		  		  <if test="postCode1 != null and postCode1 != ''"> and post_code1 = #{postCode1} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+
+			        <if test="addType != null and addType != ''"> and add_type = #{addType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_oil_award_apply_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="fullNameUnit != null and fullNameUnit != ''"> and full_name_unit = #{fullNameUnit} </if>
+		  		  <if test="unitQualification != null and unitQualification != ''"> and unit_qualification = #{unitQualification} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="mobilePhone != null and mobilePhone != ''"> and mobile_phone = #{mobilePhone} </if>
+		  		  <if test="telPhone != null and telPhone != ''"> and tel_phone = #{telPhone} </if>
+		  		  <if test="postAddress != null and postAddress != ''"> and post_address = #{postAddress} </if>
+		  		  <if test="postCode != null and postCode != ''"> and post_code = #{postCode} </if>
+		  		  <if test="eMailAdress != null and eMailAdress != ''"> and e_mail_adress = #{eMailAdress} </if>
+		  		  <if test="name1 != null and name1 != ''"> and name1 = #{name1} </if>
+		  		  <if test="mobilePhone1 != null and mobilePhone1 != ''"> and mobile_phone1 = #{mobilePhone1} </if>
+		  		  <if test="telPhone1 != null and telPhone1 != ''"> and tel_phone1 = #{telPhone1} </if>
+		  		  <if test="postAddress1 != null and postAddress1 != ''"> and post_address1 = #{postAddress1} </if>
+ 		  		  <if test="emailAdress1 != null and emailAdress1 != ''"> and email_adress1 = #{emailAdress1} </if>
+  			      <if test="postCodeOne != null">`post_code_one` = #{postCodeOne}, </if>
+			      <if test="unitConstructionProject != null and unitConstructionProject != ''"> and unit_construction_project = #{unitConstructionProject} </if>
+		  		  <if test="constructionUnit != null and constructionUnit != ''"> and construction_unit = #{constructionUnit} </if>
+		  		  <if test="engineeringGeneralContractor != null and engineeringGeneralContractor != ''"> and engineering_general_contractor = #{engineeringGeneralContractor} </if>
+		  		  <if test="constructionGeneralContractor != null and constructionGeneralContractor != ''"> and construction_general_contractor = #{constructionGeneralContractor} </if>
+		  		  <if test="participatingUnit != null and participatingUnit != ''"> and participating_unit = #{participatingUnit} </if>
+		  		  <if test="other != null and other != ''"> and other = #{other} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="engineeringCategory != null and engineeringCategory != ''"> and engineering_category = #{engineeringCategory} </if>
+		  		  <if test="sourcesFunds != null and sourcesFunds != ''"> and sources_funds = #{sourcesFunds} </if>
+		  		  <if test="constructionSite != null and constructionSite != ''"> and construction_site = #{constructionSite} </if>
+		  		  <if test="constructionNature != null and constructionNature != ''"> and construction_nature = #{constructionNature} </if>
+		  		  <if test="completionAccounts != null and completionAccounts != ''"> and completion_accounts = #{completionAccounts} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="completionTime != null and completionTime != ''"> and completion_time = #{completionTime} </if>
+		  		  <if test="designBudget != null and designBudget != ''"> and design_budget = #{designBudget} </if>
+		  		  <if test="projectEstablishmentMethod != null and projectEstablishmentMethod != ''"> and project_establishment_method = #{projectEstablishmentMethod} </if>
+		  		  <if test="projectApprovalUnit != null and projectApprovalUnit != ''"> and project_approval_unit = #{projectApprovalUnit} </if>
+		  		  <if test="projectApprovalTime != null and projectApprovalTime != ''"> and project_approval_time = #{projectApprovalTime} </if>
+		  		  <if test="natureLandUse != null and natureLandUse != ''"> and nature_land_use = #{natureLandUse} </if>
+		  		  <if test="landArea != null and landArea != ''"> and land_area = #{landArea} </if>
+		  		  <if test="engineeringProperties != null and engineeringProperties != ''"> and engineering_properties = #{engineeringProperties} </if>
+		  		  <if test="constructionScale != null and constructionScale != ''"> and construction_scale = #{constructionScale} </if>
+		  		  <if test="landType != null and landType != ''"> and land_type = #{landType} </if>
+		  		  <if test="typesUseRight != null and typesUseRight != ''"> and types_use_right = #{typesUseRight} </if>
+		  		  <if test="approvedReback != null and approvedReback != ''"> and approved_reback = #{approvedReback} </if>
+		  		  <if test="userUnite != null and userUnite != ''"> and user_unite = #{userUnite} </if>
+		  		  <if test="approvedUnite != null and approvedUnite != ''"> and approved_unite = #{approvedUnite} </if>
+		  		  <if test="approvalTime != null and approvalTime != ''"> and approval_time = #{approvalTime} </if>
+		  		  <if test="eiaApprovalUnit != null and eiaApprovalUnit != ''"> and eia_approval_unit = #{eiaApprovalUnit} </if>
+		  		  <if test="eiaApprovalTime != null and eiaApprovalTime != ''"> and eia_approval_time = #{eiaApprovalTime} </if>
+		  		  <if test="completionAcceptanceUnit != null and completionAcceptanceUnit != ''"> and completion_acceptance_unit = #{completionAcceptanceUnit} </if>
+		  		  <if test="assessmentUnit != null and assessmentUnit != ''"> and assessment_unit = #{assessmentUnit} </if>
+		  		  <if test="evaluationConclusion != null and evaluationConclusion != ''"> and evaluation_conclusion = #{evaluationConclusion} </if>
+		  		  <if test="filingAuthority != null and filingAuthority != ''"> and filing_authority = #{filingAuthority} </if>
+		  		  <if test="recordTime != null and recordTime != ''"> and record_time = #{recordTime} </if>
+		  		  <if test="auditUnit != null and auditUnit != ''"> and audit_unit = #{auditUnit} </if>
+		  		  <if test="auditTime != null and auditTime != ''"> and audit_time = #{auditTime} </if>
+		  		  <if test="specialAcceptance != null and specialAcceptance != ''"> and special_acceptance = #{specialAcceptance} </if>
+		  		  <if test="completionAcceptanceUnit1 != null and completionAcceptanceUnit1 != ''"> and completion_acceptance_unit1 = #{completionAcceptanceUnit1} </if>
+		  		  <if test="completionAcceptanceTime != null and completionAcceptanceTime != ''"> and completion_acceptance_time = #{completionAcceptanceTime} </if>
+		  		  <if test="workersWagesSettled != null and workersWagesSettled != ''"> and workers_wages_settled = #{workersWagesSettled} </if>
+		  		  <if test="safetyAccident != null and safetyAccident != ''"> and safety_accident = #{safetyAccident} </if>
+		  		  <if test="qualityAccident != null and qualityAccident != ''"> and quality_accident = #{qualityAccident} </if>
+		  		  <if test="otherProof != null and otherProof != ''"> and other_proof = #{otherProof} </if>
+		  		  <if test="otherMattersSpecified != null and otherMattersSpecified != ''"> and other_matters_specified = #{otherMattersSpecified} </if>
+		  		  <if test="engineeringQualitySupervision != null and engineeringQualitySupervision != ''"> and engineering_quality_supervision = #{engineeringQualitySupervision} </if>
+		  		  <if test="engineeringSafetySupervisionDepartment != null and engineeringSafetySupervisionDepartment != ''"> and engineering_safety_supervision_department = #{engineeringSafetySupervisionDepartment} </if>
+		  		  <if test="opinionsProjectUsers != null and opinionsProjectUsers != ''"> and opinions_project_users = #{opinionsProjectUsers} </if>
+		  		  <if test="competentDepartmentDeclarationUnit != null and competentDepartmentDeclarationUnit != ''"> and competent_department_declaration_unit = #{competentDepartmentDeclarationUnit} </if>
+		  		  <if test="opinionsConstructionUnit != null and opinions constructionUnit != ''"> and opinions_construction_unit = #{opinionsConstructionUnit} </if>
+		  		  <if test="recommendationUnitComments != null and recommendationUnitComments != ''"> and recommendation_unit_comments = #{recommendationUnitComments} </if>
+		  		  <if test="postCode1 != null and postCode1 != ''"> and post_code1 = #{postCode1} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+			      <if test="addType != null and addType != ''"> and add_type = #{addType} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardApplyInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_oil_award_apply_info
+		(
+			`full_name_unit`,
+			`unit_qualification`, 
+			`name`, 
+			`mobile_phone`, 
+			`tel_phone`, 
+			`post_address`, 
+			`post_code`, 
+			`e_mail_adress`, 
+			`name1`, 
+			`mobile_phone1`, 
+			`tel_phone1`, 
+			`post_address1`, 
+			`email_adress1`,
+			 post_code_one,
+			`unit_construction_project`, 
+			`construction_unit`, 
+			`engineering_general_contractor`, 
+			`construction_general_contractor`, 
+			`participating_unit`, 
+			`other`, 
+			`project_name`, 
+			`engineering_category`, 
+			`sources_funds`, 
+			`construction_site`, 
+			`construction_nature`, 
+			`completion_accounts`, 
+			`start_time`, 
+			`completion_time`, 
+			`design_budget`, 
+			`project_establishment_method`, 
+			`project_approval_unit`, 
+			`project_approval_time`, 
+			`nature_land_use`, 
+			`land_area`, 
+			`engineering_properties`, 
+			`construction_scale`, 
+			`land_type`, 
+			`types_use_right`, 
+			`approved_reback`, 
+			`user_unite`, 
+			`approved_unite`, 
+			`approval_time`, 
+			`eia_approval_unit`, 
+			`eia_approval_time`, 
+			`completion_acceptance_unit`, 
+			`assessment_unit`, 
+			`evaluation_conclusion`, 
+			`filing_authority`, 
+			`record_time`, 
+			`audit_unit`, 
+			`audit_time`, 
+			`special_acceptance`, 
+			`completion_acceptance_unit1`, 
+			`completion_acceptance_time`, 
+			`workers_wages_settled`, 
+			`safety_accident`, 
+			`quality_accident`, 
+			`other_proof`, 
+			`other_matters_specified`, 
+			`engineering_quality_supervision`, 
+			`engineering_safety_supervision_department`, 
+			`opinions_project_users`, 
+			`competent_department_declaration_unit`, 
+			`opinions_construction_unit`,
+			`recommendation_unit_comments`, 
+			`post_code1`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`, 
+			`created`, 
+			`updated`,
+			`add_type`
+		)
+		values
+		(
+			#{fullNameUnit},
+			#{unitQualification}, 
+			#{name}, 
+			#{mobilePhone}, 
+			#{telPhone}, 
+			#{postAddress}, 
+			#{postCode}, 
+			#{eMailAdress}, 
+			#{name1}, 
+			#{mobilePhone1}, 
+			#{telPhone1}, 
+			#{postAddress1}, 
+			#{emailAdress1},
+		    #{postCodeOne},
+			#{unitConstructionProjectVal},
+			#{constructionUnit}, 
+			#{engineeringGeneralContractor}, 
+			#{constructionGeneralContractor}, 
+			#{participatingUnit}, 
+			#{other}, 
+			#{projectName}, 
+			#{engineeringCategory}, 
+			#{sourcesFunds}, 
+			#{constructionSite}, 
+			#{constructionNature}, 
+			#{completionAccounts}, 
+			#{startTime}, 
+			#{completionTime}, 
+			#{designBudget}, 
+			#{projectEstablishmentMethod}, 
+			#{projectApprovalUnit}, 
+			#{projectApprovalTime}, 
+			#{natureLandUse}, 
+			#{landArea}, 
+			#{engineeringProperties}, 
+			#{constructionScale}, 
+			#{landType}, 
+			#{typesUseRight}, 
+			#{approvedReback}, 
+			#{userUnite}, 
+			#{approvedUnite}, 
+			#{approvalTime}, 
+			#{eiaApprovalUnit}, 
+			#{eiaApprovalTime}, 
+			#{completionAcceptanceUnit}, 
+			#{assessmentUnit}, 
+			#{evaluationConclusion}, 
+			#{filingAuthority}, 
+			#{recordTime}, 
+			#{auditUnit}, 
+			#{auditTime}, 
+			#{specialAcceptance}, 
+			#{completionAcceptanceUnit1}, 
+			#{completionAcceptanceTime}, 
+			#{workersWagesSettled}, 
+			#{safetyAccident}, 
+			#{qualityAccident}, 
+			#{otherProof}, 
+			#{otherMattersSpecified}, 
+			#{engineeringQualitySupervision}, 
+			#{engineeringSafetySupervisionDepartment}, 
+			#{opinionsProjectUsers}, 
+			#{competentDepartmentDeclarationUnit}, 
+			#{opinionsConstructionUnit},
+			#{recommendationUnitComments}, 
+			#{postCode1}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}, 
+			now(),
+			#{updated},
+			#{addType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardApplyInfoDO">
+		update ass_oil_award_apply_info 
+		<set>
+			<if test="fullNameUnit != null">`full_name_unit` = #{fullNameUnit}, </if>
+			<if test="unitQualification != null">`unit_qualification` = #{unitQualification}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="mobilePhone != null">`mobile_phone` = #{mobilePhone}, </if>
+			<if test="telPhone != null">`tel_phone` = #{telPhone}, </if>
+			<if test="postAddress != null">`post_address` = #{postAddress}, </if>
+			<if test="postCode != null">`post_code` = #{postCode}, </if>
+			<if test="eMailAdress != null">`e_mail_adress` = #{eMailAdress}, </if>
+			<if test="name1 != null">`name1` = #{name1}, </if>
+			<if test="mobilePhone1 != null">`mobile_phone1` = #{mobilePhone1}, </if>
+			<if test="telPhone1 != null">`tel_phone1` = #{telPhone1}, </if>
+			<if test="postAddress1 != null">`post_address1` = #{postAddress1}, </if>
+			<if test="emailAdress1 != null">`email_adress1` = #{emailAdress1}, </if>
+			<if test="postCodeOne != null">`post_code_one` = #{postCodeOne}, </if>
+			<if test="unitConstructionProjectVal != null">`unit_construction_project` = #{unitConstructionProjectVal}, </if>
+			<if test="constructionUnit != null">`construction_unit` = #{constructionUnit}, </if>
+			<if test="engineeringGeneralContractor != null">`engineering_general_contractor` = #{engineeringGeneralContractor}, </if>
+			<if test="constructionGeneralContractor != null">`construction_general_contractor` = #{constructionGeneralContractor}, </if>
+			<if test="participatingUnit != null">`participating_unit` = #{participatingUnit}, </if>
+			<if test="other != null">`other` = #{other}, </if>
+			<if test="projectName != null">`project_name` = #{projectName}, </if>
+			<if test="engineeringCategory != null">`engineering_category` = #{engineeringCategory}, </if>
+			<if test="sourcesFunds != null">`sources_funds` = #{sourcesFunds}, </if>
+			<if test="constructionSite != null">`construction_site` = #{constructionSite}, </if>
+			<if test="constructionNature != null">`construction_nature` = #{constructionNature}, </if>
+			<if test="completionAccounts != null">`completion_accounts` = #{completionAccounts}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="completionTime != null">`completion_time` = #{completionTime}, </if>
+			<if test="designBudget != null">`design_budget` = #{designBudget}, </if>
+			<if test="projectEstablishmentMethod != null">`project_establishment_method` = #{projectEstablishmentMethod}, </if>
+			<if test="projectApprovalUnit != null">`project_approval_unit` = #{projectApprovalUnit}, </if>
+			<if test="projectApprovalTime != null">`project_approval_time` = #{projectApprovalTime}, </if>
+			<if test="natureLandUse != null">`nature_land_use` = #{natureLandUse}, </if>
+			<if test="landArea != null">`land_area` = #{landArea}, </if>
+			<if test="engineeringProperties != null">`engineering_properties` = #{engineeringProperties}, </if>
+			<if test="constructionScale != null">`construction_scale` = #{constructionScale}, </if>
+			<if test="landType != null">`land_type` = #{landType}, </if>
+			<if test="typesUseRight != null">`types_use_right` = #{typesUseRight}, </if>
+			<if test="approvedReback != null">`approved_reback` = #{approvedReback}, </if>
+			<if test="userUnite != null">`user_unite` = #{userUnite}, </if>
+			<if test="approvedUnite != null">`approved_unite` = #{approvedUnite}, </if>
+			<if test="approvalTime != null">`approval_time` = #{approvalTime}, </if>
+			<if test="eiaApprovalUnit != null">`eia_approval_unit` = #{eiaApprovalUnit}, </if>
+			<if test="eiaApprovalTime != null">`eia_approval_time` = #{eiaApprovalTime}, </if>
+			<if test="completionAcceptanceUnit != null">`completion_acceptance_unit` = #{completionAcceptanceUnit}, </if>
+			<if test="assessmentUnit != null">`assessment_unit` = #{assessmentUnit}, </if>
+			<if test="evaluationConclusion != null">`evaluation_conclusion` = #{evaluationConclusion}, </if>
+			<if test="filingAuthority != null">`filing_authority` = #{filingAuthority}, </if>
+			<if test="recordTime != null">`record_time` = #{recordTime}, </if>
+			<if test="auditUnit != null">`audit_unit` = #{auditUnit}, </if>
+			<if test="auditTime != null">`audit_time` = #{auditTime}, </if>
+			<if test="specialAcceptance != null">`special_acceptance` = #{specialAcceptance}, </if>
+			<if test="completionAcceptanceUnit1 != null">`completion_acceptance_unit1` = #{completionAcceptanceUnit1}, </if>
+			<if test="completionAcceptanceTime != null">`completion_acceptance_time` = #{completionAcceptanceTime}, </if>
+			<if test="workersWagesSettled != null">`workers_wages_settled` = #{workersWagesSettled}, </if>
+			<if test="safetyAccident != null">`safety_accident` = #{safetyAccident}, </if>
+			<if test="qualityAccident != null">`quality_accident` = #{qualityAccident}, </if>
+			<if test="otherProof != null">`other_proof` = #{otherProof}, </if>
+			<if test="otherMattersSpecified != null">`other_matters_specified` = #{otherMattersSpecified}, </if>
+			<if test="engineeringQualitySupervision != null">`engineering_quality_supervision` = #{engineeringQualitySupervision}, </if>
+			<if test="engineeringSafetySupervisionDepartment != null">`engineering_safety_supervision_department` = #{engineeringSafetySupervisionDepartment}, </if>
+			<if test="opinionsProjectUsers != null">`opinions_project_users` = #{opinionsProjectUsers}, </if>
+			<if test="competentDepartmentDeclarationUnit != null">`competent_department_declaration_unit` = #{competentDepartmentDeclarationUnit}, </if>
+			<if test="opinionsConstructionUnit != null">`opinions_construction_unit` = #{opinionsConstructionUnit}, </if>
+			<if test="recommendationUnitComments != null">`recommendation_unit_comments` = #{recommendationUnitComments}, </if>
+			<if test="postCode1 != null">`post_code1` = #{postCode1}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id} and add_type = #{addType}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_oil_award_apply_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_oil_award_apply_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getQualityProBaseInfo" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilQualityProBaseInfo">
+		SELECT
+			su.name userName, ai.project_name projectName
+		FROM
+			boot_do.ass_award_enterprise_project pro
+				JOIN
+			sys_user su ON pro.create_uid = su.user_id
+				JOIN
+			ass_oil_award_apply_info ai ON ai.pro_id = pro.id
+		WHERE
+			pro.id = #{value}
+			LIMIT 1
+	</select>
+
+</mapper>

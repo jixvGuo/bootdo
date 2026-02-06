@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header"></head>
+
+<body>
+<div class="ui bottom attached segment">
+    <form id="signupForm" action="" class="ui basic form">
+        <table id="consultingTable" class="ui celled  table">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${table.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+            <tr>
+                <td style="width: 10%;">申报专业</td>
+                <td style="width: 90%;" colspan="3">
+                    <div class="ui field">
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="type" th:value="${table.proName}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">申报专业</div>
+                            <div class="menu">
+                                <div class="item" data-value="勘察">勘察</div>
+                                <div class="item" data-value="测量">测量</div>
+                                <div class="item" data-value="岩土">岩土</div>
+                                <div class="item" data-value="炼油化工">炼油化工</div>
+                                <div class="item" data-value="油气集输">油气集输</div>
+                                <div class="item" data-value="油气储运">油气储运</div>
+                                <div class="item" data-value="油气加工">油气加工</div>
+                                <div class="item" data-value="矿业">矿业</div>
+                                <div class="item" data-value="建筑">建筑</div>
+                                <div class="item" data-value="结构">结构</div>
+                                <div class="item" data-value="桥梁">桥梁</div>
+                                <div class="item" data-value="土壤修复">土壤修复</div>
+                                <div class="item" data-value="环境工程">环境工程</div>
+                                <div class="item" data-value="电气">电气</div>
+                                <div class="item" data-value="电力系统">电力系统</div>
+                                <div class="item" data-value="给排水">给排水</div>
+                                <div class="item" data-value="水处理">水处理</div>
+                                <div class="item" data-value="热力">热力</div>
+                                <div class="item" data-value="仪表、自动化、自控">仪表、自动化、自控</div>
+                                <div class="item" data-value="安全">安全</div>
+                                <div class="item" data-value="包装">包装</div>
+                                <div class="item" data-value="海洋石油开发工程">海洋石油开发工程</div>
+                                <div class="item" data-value="软件">软件</div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 10%;">项目名称</td>
+                <td style="width: 90%;" colspan="3" contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;">工程起止时间</td>
+                <td style="width: 40%;" contenteditable="true" id="proName" name="proName" th:text="${table.proName}"  onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                <td style="width: 10%;">工程建成时间</td>
+                <td style="width: 40%;" contenteditable="true" id="proName" name="proName" th:text="${table.proName}"  onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+            </tr>
+            <tr>
+                <td>验收部门</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+                <td>验收时间</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td>任务来源</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+                <td>计划编号</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td>勘察起止时间</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}"  onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                <td>勘察面积或线路长度</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td>主要勘察单位</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+                <td>协作单位</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td>通讯地址</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+                <td>邮政编码</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td rowspan="2">单位联系人</td>
+                <td rowspan="2" contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+                <td>电话号码</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td>传真号码</td>
+                <td contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+            </tr>
+            <tr>
+                <td colspan="4"> 附件目录</td>
+            </tr>
+            <tr style="height: 300px;">
+                <td colspan="4">
+                    <textarea id="briefintroduction" autofocus name="briefintroduction"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"> 工程勘查项目概况、工程勘察的难点及先进性</td>
+            </tr>
+            <tr style="height: 300px;">
+                <td colspan="4">
+                    <textarea id="survey" autofocus name="survey"></textarea>
+                </td>
+            </tr>
+            <tr style="height: 300px;">
+                <td>曾获哪一级奖励</td>
+                <td colspan="3">
+                    <textarea id="reward" autofocus name="reward"></textarea>
+                </td>
+            </tr>
+            <tr style="height: 300px;">
+                <td>申报单位意见</td>
+                <td colspan="3">
+                    <textarea id="opinion" autofocus name="opinion"></textarea>
+                </td>
+            </tr>
+            <tr style="height: 300px;">
+                <td>上级主管部门 （或建设单位） 推荐意见 </td>
+                <td colspan="3">
+                    <textarea id="leaderopinion" autofocus name="leaderopinion"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <div class="ui submit button" onclick="save()">保存</div>
+        </div>
+    </form>
+</div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverExcellentApplyTableInfo/add.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+    <script>
+        $('.ui.dropdown').dropdown();
+        var briefintroduction = new Simditor({
+            textarea: $("#briefintroduction"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#survey"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#reward"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#opinion"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#leaderopinion"),
+            defaultImage: "img/a9.jpg"
+        })
+    </script>
+</body>
+
+</html>

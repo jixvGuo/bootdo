@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item" href="#">列表 </a>
+    <a class="item" href="#">新增 </a>
+    <a class="active item" href="#">打印 </a>
+</div>
+<div class="ui bottom attached segment">
+    <table class="ui  table">
+        <thead>
+        <th>序号</th>
+        <th>成果名称</th>
+        <th>团队主要成员中的完成人/排名</th>
+        <th>研发开始日期</th>
+        <th>研发结束日期</th>
+        <th>正式应用(公开发表)日期</th>
+        <th>依托计划名称和编号(不超过3项)</th>
+        <th>证明材料编号</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>文学产权</td>
+            <td>自定义授权</td>
+            <td>自定义授权</td>
+            <td>自定义授权</td>
+            <td>自定义授权</td>
+            <td>自定义授权</td>
+            <td>自定义授权</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="ui basic center aligned segment">
+        <button class="ui button" type="submit">在线查看</button>
+        <button class="ui button" type="submit">下载</button>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+</body>
+</html>

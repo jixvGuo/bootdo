@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriTeamUsersDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriTeamUsersDO">
+		select `id`,`total_count`,`man_count`,`woman_count`,`age_beyond_65_count`,`age_50_to_65_count`,`age_35_to_50_count`,`age_under_36_count`,`position_senior`,`position_deputy_senior`,`position_intermediate`,`edu_doctoral_candidate`,`edu_postgraduates`,`edu_undergraduate`,`task_id`,`opt_uid`,`created`,`pro_id`,`age_beyond_65_count_num`,`age_50_to_65_count_num`,`age_35_to_50_count_num`,`age_under_36_count_num`,`position_senior_num`,`position_deputy_senior_num`,`position_intermediate_num`,`edu_doctoral_candidate_num`,`edu_postgraduates_num`,`edu_undergraduate_num` from ass_enterpri_team_users where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriTeamUsersDO">
+		select `id`,`total_count`,`man_count`,`woman_count`,`age_beyond_65_count`,`age_50_to_65_count`,`age_35_to_50_count`,`age_under_36_count`,`position_senior`,`position_deputy_senior`,`position_intermediate`,`edu_doctoral_candidate`,`edu_postgraduates`,`edu_undergraduate`,`task_id`,`opt_uid`,`created`,`pro_id`,`age_beyond_65_count_num`,`age_50_to_65_count_num`,`age_35_to_50_count_num`,`age_under_36_count_num`,`position_senior_num`,`position_deputy_senior_num`,`position_intermediate_num`,`edu_doctoral_candidate_num`,`edu_postgraduates_num`,`edu_undergraduate_num` from ass_enterpri_team_users
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="totalCount != null and totalCount != ''"> and total_count = #{totalCount} </if>
+		  		  <if test="manCount != null and manCount != ''"> and man_count = #{manCount} </if>
+		  		  <if test="womanCount != null and womanCount != ''"> and woman_count = #{womanCount} </if>
+		  		  <if test="ageBeyond65Count != null and ageBeyond65Count != ''"> and age_beyond_65_count = #{ageBeyond65Count} </if>
+		  		  <if test="age50To65Count != null and age50To65Count != ''"> and age_50_to_65_count = #{age50To65Count} </if>
+		  		  <if test="age35To50Count != null and age35To50Count != ''"> and age_35_to_50_count = #{age35To50Count} </if>
+		  		  <if test="ageUnder36Count != null and ageUnder36Count != ''"> and age_under_36_count = #{ageUnder36Count} </if>
+		  		  <if test="positionSenior != null and positionSenior != ''"> and position_senior = #{positionSenior} </if>
+		  		  <if test="positionDeputySenior != null and positionDeputySenior != ''"> and position_deputy_senior = #{positionDeputySenior} </if>
+		  		  <if test="positionIntermediate != null and positionIntermediate != ''"> and position_intermediate = #{positionIntermediate} </if>
+		  		  <if test="eduDoctoralCandidate != null and eduDoctoralCandidate != ''"> and edu_doctoral_candidate = #{eduDoctoralCandidate} </if>
+		  		  <if test="eduPostgraduates != null and eduPostgraduates != ''"> and edu_postgraduates = #{eduPostgraduates} </if>
+		  		  <if test="eduUndergraduate != null and eduUndergraduate != ''"> and edu_undergraduate = #{eduUndergraduate} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="ageBeyond65CountNum != null and ageBeyond65CountNum != ''"> and age_beyond_65_count_num = #{ageBeyond65CountNum} </if>
+		  		  <if test="age50To65CountNum != null and age50To65CountNum != ''"> and age_50_to_65_count_num = #{age50To65CountNum} </if>
+		  		  <if test="age35To50CountNum != null and age35To50CountNum != ''"> and age_35_to_50_count_num = #{age35To50CountNum} </if>
+		  		  <if test="ageUnder36CountNum != null and ageUnder36CountNum != ''"> and age_under_36_count_num = #{ageUnder36CountNum} </if>
+		  		  <if test="positionSeniorNum != null and positionSeniorNum != ''"> and position_senior_num = #{positionSeniorNum} </if>
+		  		  <if test="positionDeputySeniorNum != null and positionDeputySeniorNum != ''"> and position_deputy_senior_num = #{positionDeputySeniorNum} </if>
+		  		  <if test="positionIntermediateNum != null and positionIntermediateNum != ''"> and position_intermediate_num = #{positionIntermediateNum} </if>
+		  		  <if test="eduDoctoralCandidateNum != null and eduDoctoralCandidateNum != ''"> and edu_doctoral_candidate_num = #{eduDoctoralCandidateNum} </if>
+		  		  <if test="eduPostgraduatesNum != null and eduPostgraduatesNum != ''"> and edu_postgraduates_num = #{eduPostgraduatesNum} </if>
+		  		  <if test="eduUndergraduateNum != null and eduUndergraduateNum != ''"> and edu_undergraduate_num = #{eduUndergraduateNum} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_team_users
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="totalCount != null and totalCount != ''"> and total_count = #{totalCount} </if>
+		  		  <if test="manCount != null and manCount != ''"> and man_count = #{manCount} </if>
+		  		  <if test="womanCount != null and womanCount != ''"> and woman_count = #{womanCount} </if>
+		  		  <if test="ageBeyond65Count != null and ageBeyond65Count != ''"> and age_beyond_65_count = #{ageBeyond65Count} </if>
+		  		  <if test="age50To65Count != null and age50To65Count != ''"> and age_50_to_65_count = #{age50To65Count} </if>
+		  		  <if test="age35To50Count != null and age35To50Count != ''"> and age_35_to_50_count = #{age35To50Count} </if>
+		  		  <if test="ageUnder36Count != null and ageUnder36Count != ''"> and age_under_36_count = #{ageUnder36Count} </if>
+		  		  <if test="positionSenior != null and positionSenior != ''"> and position_senior = #{positionSenior} </if>
+		  		  <if test="positionDeputySenior != null and positionDeputySenior != ''"> and position_deputy_senior = #{positionDeputySenior} </if>
+		  		  <if test="positionIntermediate != null and positionIntermediate != ''"> and position_intermediate = #{positionIntermediate} </if>
+		  		  <if test="eduDoctoralCandidate != null and eduDoctoralCandidate != ''"> and edu_doctoral_candidate = #{eduDoctoralCandidate} </if>
+		  		  <if test="eduPostgraduates != null and eduPostgraduates != ''"> and edu_postgraduates = #{eduPostgraduates} </if>
+		  		  <if test="eduUndergraduate != null and eduUndergraduate != ''"> and edu_undergraduate = #{eduUndergraduate} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="ageBeyond65CountNum != null and ageBeyond65CountNum != ''"> and age_beyond_65_count_num = #{ageBeyond65CountNum} </if>
+		  		  <if test="age50To65CountNum != null and age50To65CountNum != ''"> and age_50_to_65_count_num = #{age50To65CountNum} </if>
+		  		  <if test="age35To50CountNum != null and age35To50CountNum != ''"> and age_35_to_50_count_num = #{age35To50CountNum} </if>
+		  		  <if test="ageUnder36CountNum != null and ageUnder36CountNum != ''"> and age_under_36_count_num = #{ageUnder36CountNum} </if>
+		  		  <if test="positionSeniorNum != null and positionSeniorNum != ''"> and position_senior_num = #{positionSeniorNum} </if>
+		  		  <if test="positionDeputySeniorNum != null and positionDeputySeniorNum != ''"> and position_deputy_senior_num = #{positionDeputySeniorNum} </if>
+		  		  <if test="positionIntermediateNum != null and positionIntermediateNum != ''"> and position_intermediate_num = #{positionIntermediateNum} </if>
+		  		  <if test="eduDoctoralCandidateNum != null and eduDoctoralCandidateNum != ''"> and edu_doctoral_candidate_num = #{eduDoctoralCandidateNum} </if>
+		  		  <if test="eduPostgraduatesNum != null and eduPostgraduatesNum != ''"> and edu_postgraduates_num = #{eduPostgraduatesNum} </if>
+		  		  <if test="eduUndergraduateNum != null and eduUndergraduateNum != ''"> and edu_undergraduate_num = #{eduUndergraduateNum} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriTeamUsersDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_enterpri_team_users
+		(
+			`total_count`, 
+			`man_count`, 
+			`woman_count`, 
+			`age_beyond_65_count`, 
+			`age_50_to_65_count`, 
+			`age_35_to_50_count`, 
+			`age_under_36_count`, 
+			`position_senior`, 
+			`position_deputy_senior`, 
+			`position_intermediate`, 
+			`edu_doctoral_candidate`, 
+			`edu_postgraduates`, 
+			`edu_undergraduate`, 
+			`task_id`, 
+			`opt_uid`, 
+			`created`, 
+			`pro_id`, 
+			`age_beyond_65_count_num`, 
+			`age_50_to_65_count_num`, 
+			`age_35_to_50_count_num`, 
+			`age_under_36_count_num`, 
+			`position_senior_num`, 
+			`position_deputy_senior_num`, 
+			`position_intermediate_num`, 
+			`edu_doctoral_candidate_num`, 
+			`edu_postgraduates_num`, 
+			`edu_undergraduate_num`
+		)
+		values
+		(
+			#{totalCount}, 
+			#{manCount}, 
+			#{womanCount}, 
+			#{ageBeyond65Count}, 
+			#{age50To65Count}, 
+			#{age35To50Count}, 
+			#{ageUnder36Count}, 
+			#{positionSenior}, 
+			#{positionDeputySenior}, 
+			#{positionIntermediate}, 
+			#{eduDoctoralCandidate}, 
+			#{eduPostgraduates}, 
+			#{eduUndergraduate}, 
+			#{taskId}, 
+			#{optUid}, 
+			now(),
+			#{proId}, 
+			#{ageBeyond65CountNum}, 
+			#{age50To65CountNum}, 
+			#{age35To50CountNum}, 
+			#{ageUnder36CountNum}, 
+			#{positionSeniorNum}, 
+			#{positionDeputySeniorNum}, 
+			#{positionIntermediateNum}, 
+			#{eduDoctoralCandidateNum}, 
+			#{eduPostgraduatesNum}, 
+			#{eduUndergraduateNum}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriTeamUsersDO">
+		update ass_enterpri_team_users 
+		<set>
+			<if test="totalCount != null">`total_count` = #{totalCount}, </if>
+			<if test="manCount != null">`man_count` = #{manCount}, </if>
+			<if test="womanCount != null">`woman_count` = #{womanCount}, </if>
+			<if test="ageBeyond65Count != null">`age_beyond_65_count` = #{ageBeyond65Count}, </if>
+			<if test="age50To65Count != null">`age_50_to_65_count` = #{age50To65Count}, </if>
+			<if test="age35To50Count != null">`age_35_to_50_count` = #{age35To50Count}, </if>
+			<if test="ageUnder36Count != null">`age_under_36_count` = #{ageUnder36Count}, </if>
+			<if test="positionSenior != null">`position_senior` = #{positionSenior}, </if>
+			<if test="positionDeputySenior != null">`position_deputy_senior` = #{positionDeputySenior}, </if>
+			<if test="positionIntermediate != null">`position_intermediate` = #{positionIntermediate}, </if>
+			<if test="eduDoctoralCandidate != null">`edu_doctoral_candidate` = #{eduDoctoralCandidate}, </if>
+			<if test="eduPostgraduates != null">`edu_postgraduates` = #{eduPostgraduates}, </if>
+			<if test="eduUndergraduate != null">`edu_undergraduate` = #{eduUndergraduate}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="ageBeyond65CountNum != null">`age_beyond_65_count_num` = #{ageBeyond65CountNum}, </if>
+			<if test="age50To65CountNum != null">`age_50_to_65_count_num` = #{age50To65CountNum}, </if>
+			<if test="age35To50CountNum != null">`age_35_to_50_count_num` = #{age35To50CountNum}, </if>
+			<if test="ageUnder36CountNum != null">`age_under_36_count_num` = #{ageUnder36CountNum}, </if>
+			<if test="positionSeniorNum != null">`position_senior_num` = #{positionSeniorNum}, </if>
+			<if test="positionDeputySeniorNum != null">`position_deputy_senior_num` = #{positionDeputySeniorNum}, </if>
+			<if test="positionIntermediateNum != null">`position_intermediate_num` = #{positionIntermediateNum}, </if>
+			<if test="eduDoctoralCandidateNum != null">`edu_doctoral_candidate_num` = #{eduDoctoralCandidateNum}, </if>
+			<if test="eduPostgraduatesNum != null">`edu_postgraduates_num` = #{eduPostgraduatesNum}, </if>
+			<if test="eduUndergraduateNum != null">`edu_undergraduate_num` = #{eduUndergraduateNum}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_team_users where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_team_users where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+
+<body class="gray-bg">
+<input type="hidden" th:value="${projectInfo.proStat}" id="proStat">
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="width:100%">
+                        <h5 style="width:100%;vertical-align:middle;text-align:center;font-weight:bold;font-size:18px;">二、成果简介</h5>
+
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <input type="hidden" id="isReadonly" th:value="${readonly}">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="id" name="id" th:value="${otherInfo.id}"  type="hidden">
+                             <input id="eType" name="eType" th:value="${eType}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td id="chengguoDes"  th:text="${otherInfo.chengguoDes}" style="width:100%;height:450px; vertical-align:top;text-align:left"
+                                            contentEditable="plaintext-only"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" >保存内容</button>
+                                    <!--<button class="btn" onclick="javascript:window.print()">打印</button>-->
+                                    <!--<button class="btn btn-white" type="submit">取消</button>-->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include::footer"></div>
+<script type="text/javascript" th:if="${otherInfo.id > 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/edit.js"></script>
+<script type="text/javascript" th:if="${otherInfo.id == null || otherInfo.id == 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+</body>
+
+</html>

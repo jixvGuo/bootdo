@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverAwardDao">
+
+
+    <select id="listProInfo" resultType="com.bootdo.cpe.domain.SurverProjectInfo">
+        select pro.id pro_id,
+               pro.major,
+               pro.pro_code,
+               pro.pro_sub_type,
+               pro.pro_type,
+               chengguo pro_name,
+               sd.name apply_company,
+               su.username apply_account,
+               pt.apply_start_date,
+               pt.apply_end_date,
+               pt.expert_start_time,
+               pt.expert_end_time,
+               pt.expert_start_time_second,
+               pt.expert_end_time_second,
+               pt.check_start_time,
+               pt.check_end_time,
+               pt.task_stat,
+               pro.pro_stat,
+               pro.pro_result_code proCode
+               from
+                boot_do.ass_award_enterprise_project pro
+                   JOIN
+                sys_user su on pro.create_uid = su.user_id
+                   JOIN
+                sys_dept sd ON su.dept_id = sd.dept_id
+                    JOIN
+                ass_award_publish_task pt on pro.publish_task_id = pt.id
+
+         <if test="associationUserId!=null">
+             and pt.association_userid = #{associationUserId}
+         </if>
+
+        <if test="ass_worker_uid != null and associationUserId == null">
+             and pt.association_userid = #{ass_worker_uid}
+        </if>
+        <if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.major = si.group_name and si.user_id = #{scoreSpecialistUid} and si.deleted = 0
+        </if>
+
+        <if test="ass_assign_uid != null">
+            join ass_award_assign_project asignPro on asignPro.pro_id = pro.id and asignPro.uid = #{ass_assign_uid}
+            <if test="pro_assign_uid != null">
+                and asignPro.assign_uid = #{pro_assign_uid}
+            </if>
+            <if test="pro_assign_uid == null">
+                and asignPro.assign_uid != -100
+            </if>
+        </if>
+
+        <if test="scoreAccount != null and scoreAccount != ''">
+            join ass_award_project_score sr on pro.id = sr.pro_id
+            join add_special_info sai on sr.score_uid = sai.user_id
+            and sai.login_account = #{scoreAccount} and sai.deleted = 0
+        </if>
+
+        <where>
+            pro.pro_type = 'surver_pro'
+            AND pro.major IS NOT NULL
+            <if test="proSubType != null and proSubType != ''"> and pro.pro_sub_type = #{proSubType}</if>
+            <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+            <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+            <if test="taskId != null and taskId != ''"> and publish_task_id = #{taskId} </if>
+            <if test="keyWord != null and keyWord != ''">
+                 and (
+                   pro.pro_result_code like #{keyWord} or
+                   exists(
+                     SELECT sd.name FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id where  su.user_id = qa.opt_uid
+                     and sd.name like #{keyWord}
+                   ) or
+                   exists(
+                      select username from sys_user where user_id = qa.opt_uid and username like #{keyWord}
+                   )
+                   or pro.pro_stat like #{keyWord}
+                )
+            </if>
+            <if test="enterpriseUid != null">
+              and pro.create_uid = #{enterpriseUid}
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by pro.id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="countProInfo" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        from
+        boot_do.ass_award_enterprise_project pro
+        JOIN
+        sys_user su on pro.create_uid = su.user_id
+        JOIN
+        sys_dept sd ON su.dept_id = sd.dept_id
+        JOIN
+        ass_award_publish_task pt on pro.publish_task_id = pt.id
+
+        <if test="associationUserId!=null">
+            and pt.association_userid = #{associationUserId}
+        </if>
+
+        <if test="ass_worker_uid != null and associationUserId == null">
+            and pt.association_userid = #{ass_worker_uid}
+        </if>
+        <if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.major = si.group_name and si.user_id = #{scoreSpecialistUid} and si.deleted = 0
+        </if>
+
+        <if test="ass_assign_uid != null">
+            join ass_award_assign_project asignPro on asignPro.pro_id = pro.id and asignPro.uid = #{ass_assign_uid}
+            <if test="pro_assign_uid != null">
+                and asignPro.assign_uid = #{pro_assign_uid}
+            </if>
+            <if test="pro_assign_uid == null">
+                and asignPro.assign_uid != -100
+            </if>
+        </if>
+
+        <if test="scoreAccount != null and scoreAccount != ''">
+            join ass_award_project_score sr on pro.id = sr.pro_id
+            join add_special_info sai on sr.score_uid = sai.user_id
+            and sai.login_account = #{scoreAccount} and sai.deleted = 0
+        </if>
+
+        <where>
+            pro.pro_type = 'surver_pro'
+            AND pro.major IS NOT NULL
+            <if test="proSubType != null and proSubType != ''"> and pro.pro_sub_type = #{proSubType}</if>
+            <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+            <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+            <if test="taskId != null and taskId != ''"> and publish_task_id = #{taskId} </if>
+            <if test="keyWord != null and keyWord != ''">
+                and (
+                pro.pro_result_code like #{keyWord} or
+                exists(
+                SELECT sd.name FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id where  su.user_id = qa.opt_uid
+                and sd.name like #{keyWord}
+                ) or
+                exists(
+                select username from sys_user where user_id = qa.opt_uid and username like #{keyWord}
+                )
+                or pro.pro_stat like #{keyWord}
+                )
+            </if>
+            <if test="enterpriseUid != null">
+                and pro.create_uid = #{enterpriseUid}
+            </if>
+        </where>
+    </select>
+    <select id="listEnterpriseInfo" resultType="com.bootdo.cpe.domain.ApplyEnterpriseInfo">
+        SELECT distinct sd.dept_id id,sd.name enterprise_name,
+               (select store_path from ass_surver_enterprise_sort_info si where task_id = #{taskId} and department_id = sd.dept_id order by si.id desc limit 1 ) file_url
+               FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id
+               join ass_award_enterprise_project pro on pro.create_uid = su.user_id
+               <if test="isAssocation == true">
+                   join ass_award_assign_project ap on ap.pro_id = pro.id
+               </if>
+        <where>
+            and pro.publish_task_id = #{taskId}
+            <if test="isAssocation == false"> and pro.create_uid = #{enUid}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by sd.dept_id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="countEnterpriseInfo" resultType="java.lang.Integer">
+        SELECT count(distinct sd.dept_id) FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id
+        join ass_award_enterprise_project pro on pro.create_uid = su.user_id
+        <if test="isAssocation == true">
+            join ass_award_assign_project ap on ap.pro_id = pro.id
+        </if>
+        <where>
+            and pro.publish_task_id = #{taskId}
+            <if test="isAssocation == false"> and pro.create_uid = #{enUid}</if>
+        </where>
+
+    </select>
+    <select id="getUploadFileList" resultType="com.bootdo.common.domain.FileDO">
+        SELECT
+            sf.*
+        FROM
+            boot_do.ass_enterprise_docs ed
+                JOIN
+            sys_file sf ON ed.file_id = sf.id
+        WHERE
+            ed.pro_id = #{proId}
+          AND ed.file_type IN
+        <foreach collection="fileTypeList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        ORDER BY id DESC
+    </select>
+</mapper>

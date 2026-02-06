@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.OilProInstallReviewRecordDao">
+
+	<select id="get" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProInstallReviewRecordDO">
+		select `id`,`pro_desc_is`,`apply_tabel_is`,`confirm_file_is`,`technique_desc_is`,`apply_cover_is`,`commitment_is`,`catalog_is`,`busi_license_is`,`approval_file_is`,`build_file_is`,`contract_is`,`certificate_is`,`prove_file_is`,`check_file_id`,`env_prove_is`,`opinion_is`,`stamp_is`,`contributor_is`,`env_pager_is`,`review_result`,`opinion_desc`,`created`,`updated`,`opt_uid`,`pro_id`,`task_id`,`apply_id` from ass_oil_pro_install_review_record where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProInstallReviewRecordDO">
+		select `id`,`pro_desc_is`,`apply_tabel_is`,`confirm_file_is`,`technique_desc_is`,`apply_cover_is`,`commitment_is`,`catalog_is`,`busi_license_is`,`approval_file_is`,`build_file_is`,`contract_is`,`certificate_is`,`prove_file_is`,`check_file_id`,`env_prove_is`,`opinion_is`,`stamp_is`,`contributor_is`,`env_pager_is`,`review_result`,`opinion_desc`,`created`,`updated`,`opt_uid`,`pro_id`,`task_id`,`apply_id` from ass_oil_pro_install_review_record
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proDescIs != null and proDescIs != ''"> and pro_desc_is = #{proDescIs} </if>
+		  		  <if test="applyTabelIs != null and applyTabelIs != ''"> and apply_tabel_is = #{applyTabelIs} </if>
+		  		  <if test="confirmFileIs != null and confirmFileIs != ''"> and confirm_file_is = #{confirmFileIs} </if>
+		  		  <if test="techniqueDescIs != null and techniqueDescIs != ''"> and technique_desc_is = #{techniqueDescIs} </if>
+		  		  <if test="applyCoverIs != null and applyCoverIs != ''"> and apply_cover_is = #{applyCoverIs} </if>
+		  		  <if test="commitmentIs != null and commitmentIs != ''"> and commitment_is = #{commitmentIs} </if>
+		  		  <if test="catalogIs != null and catalogIs != ''"> and catalog_is = #{catalogIs} </if>
+		  		  <if test="busiLicenseIs != null and busiLicenseIs != ''"> and busi_license_is = #{busiLicenseIs} </if>
+		  		  <if test="approvalFileIs != null and approvalFileIs != ''"> and approval_file_is = #{approvalFileIs} </if>
+		  		  <if test="buildFileIs != null and buildFileIs != ''"> and build_file_is = #{buildFileIs} </if>
+		  		  <if test="contractIs != null and contractIs != ''"> and contract_is = #{contractIs} </if>
+		  		  <if test="certificateIs != null and certificateIs != ''"> and certificate_is = #{certificateIs} </if>
+		  		  <if test="proveFileIs != null and proveFileIs != ''"> and prove_file_is = #{proveFileIs} </if>
+		  		  <if test="checkFileId != null and checkFileId != ''"> and check_file_id = #{checkFileId} </if>
+		  		  <if test="envProveIs != null and envProveIs != ''"> and env_prove_is = #{envProveIs} </if>
+		  		  <if test="opinionIs != null and opinionIs != ''"> and opinion_is = #{opinionIs} </if>
+		  		  <if test="stampIs != null and stampIs != ''"> and stamp_is = #{stampIs} </if>
+		  		  <if test="contributorIs != null and contributorIs != ''"> and contributor_is = #{contributorIs} </if>
+		  		  <if test="envPagerIs != null and envPagerIs != ''"> and env_pager_is = #{envPagerIs} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="opinionDesc != null and opinionDesc != ''"> and opinion_desc = #{opinionDesc} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_oil_pro_install_review_record
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proDescIs != null and proDescIs != ''"> and pro_desc_is = #{proDescIs} </if>
+		  		  <if test="applyTabelIs != null and applyTabelIs != ''"> and apply_tabel_is = #{applyTabelIs} </if>
+		  		  <if test="confirmFileIs != null and confirmFileIs != ''"> and confirm_file_is = #{confirmFileIs} </if>
+		  		  <if test="techniqueDescIs != null and techniqueDescIs != ''"> and technique_desc_is = #{techniqueDescIs} </if>
+		  		  <if test="applyCoverIs != null and applyCoverIs != ''"> and apply_cover_is = #{applyCoverIs} </if>
+		  		  <if test="commitmentIs != null and commitmentIs != ''"> and commitment_is = #{commitmentIs} </if>
+		  		  <if test="catalogIs != null and catalogIs != ''"> and catalog_is = #{catalogIs} </if>
+		  		  <if test="busiLicenseIs != null and busiLicenseIs != ''"> and busi_license_is = #{busiLicenseIs} </if>
+		  		  <if test="approvalFileIs != null and approvalFileIs != ''"> and approval_file_is = #{approvalFileIs} </if>
+		  		  <if test="buildFileIs != null and buildFileIs != ''"> and build_file_is = #{buildFileIs} </if>
+		  		  <if test="contractIs != null and contractIs != ''"> and contract_is = #{contractIs} </if>
+		  		  <if test="certificateIs != null and certificateIs != ''"> and certificate_is = #{certificateIs} </if>
+		  		  <if test="proveFileIs != null and proveFileIs != ''"> and prove_file_is = #{proveFileIs} </if>
+		  		  <if test="checkFileId != null and checkFileId != ''"> and check_file_id = #{checkFileId} </if>
+		  		  <if test="envProveIs != null and envProveIs != ''"> and env_prove_is = #{envProveIs} </if>
+		  		  <if test="opinionIs != null and opinionIs != ''"> and opinion_is = #{opinionIs} </if>
+		  		  <if test="stampIs != null and stampIs != ''"> and stamp_is = #{stampIs} </if>
+		  		  <if test="contributorIs != null and contributorIs != ''"> and contributor_is = #{contributorIs} </if>
+		  		  <if test="envPagerIs != null and envPagerIs != ''"> and env_pager_is = #{envPagerIs} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="opinionDesc != null and opinionDesc != ''"> and opinion_desc = #{opinionDesc} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProInstallReviewRecordDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_oil_pro_install_review_record
+		(
+			`pro_desc_is`, 
+			`apply_tabel_is`, 
+			`confirm_file_is`, 
+			`technique_desc_is`, 
+			`apply_cover_is`, 
+			`commitment_is`, 
+			`catalog_is`, 
+			`busi_license_is`, 
+			`approval_file_is`, 
+			`build_file_is`, 
+			`contract_is`, 
+			`certificate_is`, 
+			`prove_file_is`, 
+			`check_file_id`, 
+			`env_prove_is`, 
+			`opinion_is`, 
+			`stamp_is`, 
+			`contributor_is`, 
+			`env_pager_is`, 
+			`review_result`, 
+			`opinion_desc`, 
+			`created`, 
+			`updated`, 
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`
+		)
+		values
+		(
+			#{proDescIs}, 
+			#{applyTabelIs}, 
+			#{confirmFileIs}, 
+			#{techniqueDescIs}, 
+			#{applyCoverIs}, 
+			#{commitmentIs}, 
+			#{catalogIs}, 
+			#{busiLicenseIs}, 
+			#{approvalFileIs}, 
+			#{buildFileIs}, 
+			#{contractIs}, 
+			#{certificateIs}, 
+			#{proveFileIs}, 
+			#{checkFileId}, 
+			#{envProveIs}, 
+			#{opinionIs}, 
+			#{stampIs}, 
+			#{contributorIs}, 
+			#{envPagerIs}, 
+			#{reviewResult}, 
+			#{opinionDesc}, 
+			now(),
+			#{updated}, 
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProInstallReviewRecordDO">
+		update ass_oil_pro_install_review_record 
+		<set>
+			<if test="proDescIs != null">`pro_desc_is` = #{proDescIs}, </if>
+			<if test="applyTabelIs != null">`apply_tabel_is` = #{applyTabelIs}, </if>
+			<if test="confirmFileIs != null">`confirm_file_is` = #{confirmFileIs}, </if>
+			<if test="techniqueDescIs != null">`technique_desc_is` = #{techniqueDescIs}, </if>
+			<if test="applyCoverIs != null">`apply_cover_is` = #{applyCoverIs}, </if>
+			<if test="commitmentIs != null">`commitment_is` = #{commitmentIs}, </if>
+			<if test="catalogIs != null">`catalog_is` = #{catalogIs}, </if>
+			<if test="busiLicenseIs != null">`busi_license_is` = #{busiLicenseIs}, </if>
+			<if test="approvalFileIs != null">`approval_file_is` = #{approvalFileIs}, </if>
+			<if test="buildFileIs != null">`build_file_is` = #{buildFileIs}, </if>
+			<if test="contractIs != null">`contract_is` = #{contractIs}, </if>
+			<if test="certificateIs != null">`certificate_is` = #{certificateIs}, </if>
+			<if test="proveFileIs != null">`prove_file_is` = #{proveFileIs}, </if>
+			<if test="checkFileId != null">`check_file_id` = #{checkFileId}, </if>
+			<if test="envProveIs != null">`env_prove_is` = #{envProveIs}, </if>
+			<if test="opinionIs != null">`opinion_is` = #{opinionIs}, </if>
+			<if test="stampIs != null">`stamp_is` = #{stampIs}, </if>
+			<if test="contributorIs != null">`contributor_is` = #{contributorIs}, </if>
+			<if test="envPagerIs != null">`env_pager_is` = #{envPagerIs}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="opinionDesc != null">`opinion_desc` = #{opinionDesc}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_oil_pro_install_review_record where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_oil_pro_install_review_record where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getReviewProBaseInfoByProId" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.ReviewInstallProBaseInfo">
+		SELECT
+			pa.comany_name unitName, gs.project_name projectName
+		FROM
+			boot_do.ass_oil_pro_apply_info pa
+				JOIN
+			ass_oil_pro_general_situation gs ON pa.pro_id = gs.pro_id
+		WHERE
+			pa.pro_id = #{proId}
+	</select>
+
+</mapper>

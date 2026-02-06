@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+
+<body>
+    <input type="hidden" th:value="${projectInfo.proStat}" id="proStat">
+    <input type="hidden" id="isReadonly" th:value="${readonly}">
+    <div class="ui top attached tabular menu">
+        <a class="item" th:href="@{/chengguo_info/toMainEnterprisePersonList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}">列表 </a>
+        <a class="active item" href="#">新增 </a>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="width:100%">
+						<h5 style="width:100%;vertical-align:middle;text-align:center;font-weight:bold;font-size:18px;">七、成果主要完成单位及主要完成人情况表</h5>
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <input id="id" name="id" th:value="${otherInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">
+                                            单位名称
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="11" pname="mainEnterpriseCompanyName" th:text="${otherInfo.mainEnterpriseCompanyName}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            主要完成人姓名
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="4" contentEditable="plaintext-only"  pname="mainEnterpriseCompleter" th:text="${otherInfo.mainEnterpriseCompleter}"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            性别
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="2">
+                                            <select style="width:100%;height:100%" name="mainEnterpriseCompleterGender">
+                                                  <option th:each="c:${genderList}"  th:selected="${otherInfo.mainEnterpriseCompleterGender} eq ${c.name}" th:value="${c.name}" th:text="${c.name}"></option>
+                                            </select>
+
+
+                                        </td>
+
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            排名
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1" pname="mainEnterpriseCompleterSort" th:text="${otherInfo.mainEnterpriseCompleterSort}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            出生年月
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="2"  pname="mainEnterpriseCompleterBirth" th:text="${#dates.format(otherInfo.mainEnterpriseCompleterBirth,'yyyy-MM-dd')}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            身份证
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="5" pname="mainEnterpriseCompleterId" th:text="${otherInfo.mainEnterpriseCompleterId}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="2">
+                                            民族
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1" pname="mainEnterpriseCompleterNation" th:text="${otherInfo.mainEnterpriseCompleterNation}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            国籍
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1" pname="mainEnterpriseCompleterCountry" th:text="${otherInfo.mainEnterpriseCompleterCountry}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            学历
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1" pname="mainEnterpriseCompleterEducation" th:text="${otherInfo.mainEnterpriseCompleterEducation}"  contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            行政职务
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="4" pname="mainEnterpriseCompleterAdministrativePost" th:text="${otherInfo.mainEnterpriseCompleterAdministrativePost}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="2">
+                                            技术职称
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="2"  pname="mainEnterpriseCompleterTechnicalTitle" th:text="${otherInfo.mainEnterpriseCompleterTechnicalTitle}"  contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            从事专业
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1"  pname="mainEnterpriseCompleterMajorWork" th:text="${otherInfo.mainEnterpriseCompleterMajorWork}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            所学专业
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1"  pname="mainEnterpriseCompleterMajorStudy" th:text="${otherInfo.mainEnterpriseCompleterMajorStudy}" contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            办公电话
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="4" pname="mainEnterpriseCompleterWorkTelphone" th:text="${otherInfo.mainEnterpriseCompleterWorkTelphone}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="2">
+                                            手机电话
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="2"  pname="mainEnterpriseCompleterWorkMobile" th:text="${otherInfo.mainEnterpriseCompleterWorkMobile}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            电子邮箱
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="3" pname="mainEnterpriseCompleterWorkEmail" th:text="${otherInfo.mainEnterpriseCompleterWorkEmail}" contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            通讯地址
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="10" pname="mainEnterpriseCompleterWorkAddress" th:text="${otherInfo.mainEnterpriseCompleterWorkAddress}" contentEditable="plaintext-only"></td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="1">
+                                            邮编
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="1" pname="mainEnterpriseCompleterWorkAddrCode"  th:text="${otherInfo.mainEnterpriseCompleterWorkAddrCode}"  contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="3">
+                                            参加本项目的起止时间
+                                        </td>
+                                        <td style="width:10%;vertical-align:top;text-align:left"
+                                            colspan="10"  pname="mainEnterpriseCompleterPartakeTime" th:text="${otherInfo.mainEnterpriseCompleterPartakeTime}" contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="2">
+                                            主要完成人对本项目的学术贡献
+                                        </td>
+                                        <td style="width:10%;height:150px;vertical-align:top;text-align:left"
+                                            colspan="11" pname="mainEnterpriseCompleterAcademicContribution" th:text="${otherInfo.mainEnterpriseCompleterAcademicContribution}" contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="2">
+                                            主要完成单位对本项目科技创新和推广应用情况的贡献
+                                        </td>
+                                        <td style="width:10%;height:150px;vertical-align:top;text-align:left"
+                                            colspan="11"  pname="mainEnterpriseContribution" th:text="${otherInfo.mainEnterpriseContribution}" contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;height:150px;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="7">
+                                            声明：
+                                            本人遵守《中国石油工程建设协会科学技术奖评选管理办法》及其细则的有关规定和科委办公室对申报工作的具体要求，保证所提交的材料真实有效，且不存在违反《中华人民共和国保守国家秘密法》和《科学技术保密规定》等相关法律法规及侵犯他人知识产权的情形。如有虚假，愿意承担相应责任并接受相应处理。如产生争议，保证积极配合调查处理工作。
+                                        </td>
+                                        <td style="width:50%;height:150px;vertical-align:middle;text-align:center" name="CompletionCompany" colspan="7">
+                                            声明：
+                                            本单位确认该完成人情况真实有效，并严格按照《中国石油工程建设协会科学技术奖评选管理办法》及其细则的有关规定和科委办公室对申报工作的具体要求，如实提供了本申报书及相关材料，且不存在违反《中华人民共和国保守国家秘密法》和《科学技术保密规定》等相关法律法规及侵犯他人知识产权的情形，如申报项目发生争议，将积极配合工作，协助调查处理。如有不符，本单位愿意承担相关后果并接受相应的处理。
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include::footer"></div>
+    <script type="text/javascript" th:if="${otherInfo.id > 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${otherInfo.id == null || otherInfo.id == 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/pro_stat.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+    <!--<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/to-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.zh.js"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>-->
+	<script type="text/javascript">  
+	
+		function addRowByID(){
+			$.each( $('table:first tbody tr'), function(i, tr){  
+				currentRow=$('table:first tbody tr:eq('+i+')');
+				addRowID = 0;
+				if(currentRow.text().indexOf("主要完成单位") != -1){
+					addRowID= i-1;
+					currentRow=$('table:first tbody tr:eq('+addRowID+')');
+					return false;
+				}  
+			});
+			str = "<tr>"+
+				  "		<td style=\"width:70%;height:150px;vertical-align:top;text-align:left\""+
+				  "			colspan=\"7\">"+
+				  "				申报单位一(盖章)"+
+				  "		 </td>"+
+				  "	</tr>";
+			currentRow.after(str);
+			currentRow=$('table:first tbody tr:eq('+ (addRowID + 1 + addRowID) +')');
+			str = "<tr>"+
+				  "		<td style=\"width:70%;vertical-align:middle;text-align:left\" contentEditable=\"true\" colspan=\"7\" name=\"inputtrigger\">申报单位</td>"+
+				  "	</tr>";
+			currentRow.after(str);
+			rowspan = $("td[name='CompletionCompany']").attr("rowspan");
+			$("td[name='CompletionCompany']").attr("rowspan",++rowspan);
+
+			$("td[name='inputtrigger']").hover(function(){
+				$(this).text($(this).text());
+				$(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID()\"><i class=\"fa fa-plus\" onclick=\"addRowByID()\"></i></a>");
+			  }, function() {
+				$(this).text($(this).text());
+			  });
+
+			return false;
+		}
+		
+
+		$(document).ready(function(){
+		  $("td[name='inputtrigger']").hover(function(){
+				$(this).append("<a class=\"btn btn-white btn-bitbucket pull-right\" onclick=\"addRowByID()\"><i class=\"fa fa-plus\" onclick=\"addRowByID()\"></i></a>");
+			  }, function() {
+				$(this).text($(this).text());
+			  });
+			});
+	
+	</script>  
+</body>
+
+</html>

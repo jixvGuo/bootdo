@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.AwardEnterpriseProjectDao">
+    <sql id="pro_fields">
+		pro.`id`,
+        pro.pro_code showNum,
+		pro.`tuandui`,
+		pro.`person`,
+		pro.`pro_desc`,
+		pro.`publish_task_id`,
+		pro.`advanced_individual`,
+		pro.`create_uid`,
+		pro.`created`,
+		pro.`major`,
+		pro.`PROC_INS_ID`,
+		pro.`update_date`,
+		pro.`association_review_rst`,
+		pro.`association_reject_content`,
+		pro.`act_run_task_id`,
+		pro.`rst_science_vali_file`,
+		pro.`rst_personal_vali_file`,
+		pro.`rst_tuandui_vali_file`,
+		pro.`science_level`,
+		pro.`science_knowledge_count`,
+		pro.`science_vli_enterprise`,
+		pro.`science_apply_time`,
+		pro.`science_apply_enterprise_count`,
+		pro.`tuandui_cooperate`,
+		pro.`tuandui_specialist`,
+		pro.`personal_is_employ`,
+		pro.`personal_is_work_ethics`,
+		pro.`science_avg_score`,
+		pro.`team_avg_score`,
+		pro.`personal_avg_score`,
+		pro.`specialist_leader_comment`,
+		pro.pro_stat,
+		pro.pro_type,
+        pro.pro_group_name proGroupName
+	</sql>
+
+    <select id="get" resultType="com.bootdo.activiti.domain.EnterpriseProjectInfoDo">
+        select
+        <include refid="pro_fields"></include>,
+        (select cbi.chengguo_name from ass_enterprise_chengguo_base_info cbi where cbi.pro_id = pro.id limit 1)
+        chengguo,
+        (SELECT team_name FROM boot_do.ass_enterpri_team_info where pro_id = pro.id limit 1) teamName,
+        (SELECT user_name FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id limit 1) personalName,
+        pro.chengguo proChengguo,
+        pro.pro_stat,
+        pro.pro_type proType,
+        pro.create_uid createUid,
+        (select association_userid from ass_award_publish_task where id = pro.publish_task_id) publish_task_user_id,
+        (select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid
+        limit 1) enterprise_name
+        from ass_award_enterprise_project pro
+        left JOIN ass_award_select_specialist ss on ss.publish_award_id = pro.publish_task_id
+        where pro.id = #{value} limit 1
+    </select>
+
+    <select id="getOilNoOverProIdList" resultType="com.bootdo.cpe.domain.EnterpriseOilProInfo">
+        SELECT
+           id,chengguo
+        FROM
+            boot_do.ass_award_enterprise_project pro
+        WHERE
+            pro_type IN ('oil_install' , 'oil_quality_gold', 'oil_quality')
+            and (not exists(SELECT id FROM boot_do.ass_oil_pro_apply_info where pro_id = pro.id)
+            or not exists(SELECT id FROM boot_do.ass_oil_pro_design_award where pro_id = pro.id)
+            or not exists(SELECT id FROM boot_do.ass_oil_pro_enginee_award where pro_id = pro.id)
+            or not exists(SELECT id FROM boot_do.ass_oil_pro_general_situation where pro_id = pro.id)
+            or not exists(SELECT id FROM boot_do.ass_oil_pro_unit_opinion where pro_id = pro.id)
+            ) order by id desc
+    </select>
+
+
+    <select id="getAllProList" resultType="com.bootdo.activiti.domain.EnterpriseProjectInfoDo">
+        select
+        (select task_name from ass_award_publish_task where id = pro.publish_task_id) task_name,
+        <include refid="pro_fields"></include>,
+        (select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid
+        limit 1) enterprise_name
+        from ass_award_enterprise_project pro
+
+        <where>
+            <if test="taskId!= null and taskId != ''">and `publish_task_id` = #{taskId}</if>
+            <if test="roleId == 65">
+                AND pro_stat in('to_validate', 'check')
+            </if>
+        </where>
+
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="getProMajorList" resultType="String">
+        SELECT DISTINCT
+            major
+        FROM
+            ass_award_enterprise_project
+        <where>
+            <if test="proType != null and proType != ''">AND pro_type = #{proType}</if>
+            <if test="proSubType != null and proSubType != ''">AND pro_sub_type = #{proSubType}</if>
+            AND publish_task_id = #{taskId}
+            AND major IS NOT NULL
+        </where>
+    </select>
+
+    <select id="getAssignExtProList" resultType="com.bootdo.cpe.domain.science_process.ScienceAssignExternalProInfo">
+        SELECT
+            pro.id,
+            <if test="awardType == 'science_progress'">
+                proD.chengguo_name task_name,
+            </if>
+            <if test="awardType == 'science_team'">
+                proD.team_name task_name,
+            </if>
+            <if test="awardType == 'science_personal'">
+                proD.user_name task_name,
+            </if>
+            IF(pro.pro_result_code IS NULL OR pro.pro_result_code = '', pro.pro_code, pro.pro_result_code) proCode,
+            pro.major,
+            sd.`name` enterprise_name,
+            (SELECT
+                  uid
+             FROM
+                  ass_award_assign_project
+             WHERE
+                  pro_id = pro.id LIMIT 1) extUserId
+        FROM
+            boot_do.ass_award_enterprise_project pro
+               JOIN
+            sys_user su ON pro.create_uid = su.user_id
+               JOIN
+            sys_dept sd ON su.dept_id = sd.dept_id
+        <if test="awardType == 'science_progress'">
+            JOIN
+            ass_enterprise_chengguo_base_info proD on proD.pro_id = pro.id
+        </if>
+        <if test="awardType == 'science_team'">
+            JOIN
+            ass_enterpri_team_info proD on proD.pro_id = pro.id
+        </if>
+        <if test="awardType == 'science_personal'">
+            JOIN
+            ass_enterpri_personal_info proD on proD.pro_id = pro.id
+        </if>
+        <where>
+             `publish_task_id` = #{taskId}
+              AND pro_stat in('to_validate', 'check')
+            <if test="awardType != null and awardType != ''">
+                AND pro_type = #{awardType}
+            </if>
+            <if test="awardSubType != null and awardSubType != ''">
+                AND pro_sub_type = #{awardSubType}
+            </if>
+            <if test="major != null and major != ''">
+                AND pro.major = #{major}
+            </if>
+        </where>
+    </select>
+
+    <select id="getAssignCountInfo" resultType="com.bootdo.cpe.domain.science_process.ScienceAssignCountInfo">
+        SELECT
+            SUM(IF(ap.pro_id > 0, 1, 0)) assignCount,
+            COUNT(1) validateCount
+        FROM
+            ass_award_enterprise_project pro
+                LEFT JOIN
+            ass_award_assign_project ap ON pro.id = ap.pro_id
+        WHERE
+            `publish_task_id` = #{taskId}
+          AND pro.pro_stat in('to_validate', 'check')
+    </select>
+
+    <select id="getAssignUserProInfo" resultType="com.bootdo.cpe.domain.science_process.ScienceAssignUserInfo">
+        SELECT
+            ap.uid, GROUP_CONCAT(ap.pro_id) proIds
+        FROM
+            ass_award_enterprise_project pro
+                JOIN
+            ass_award_assign_project ap ON pro.id = ap.pro_id
+        WHERE
+            pro.publish_task_id = #{publishTaskId}
+          AND pro.pro_stat in('to_validate', 'check')
+        GROUP BY ap.uid
+    </select>
+
+    <select id="getApplyCompanyByProId" resultType="String">
+		SELECT
+            sd.name
+        FROM
+            boot_do.ass_award_enterprise_project pro
+                JOIN
+            sys_user su ON pro.create_uid = su.user_id
+                JOIN
+            sys_dept sd ON sd.dept_id = su.dept_id
+        WHERE
+            pro.id = #{proId}
+            limit 1
+	</select>
+
+    <select id="isApplyOver" parameterType="String" resultType="int">
+		SELECT
+            COUNT(1)
+        FROM
+            boot_do.ass_award_enterprise_project pro
+                JOIN
+            ass_award_publish_task pt ON pt.id = pro.publish_task_id
+        WHERE
+            pro.id = #{proId}
+                AND NOW() BETWEEN pt.apply_start_date AND pt.apply_end_date
+	</select>
+
+    <select id="getProType" resultType="String" parameterType="String">
+        SELECT
+            pro_type
+        FROM
+            boot_do.ass_award_enterprise_project
+        WHERE
+            id = #{proId}
+    </select>
+
+    <update id="updateProStat">
+        update ass_award_enterprise_project set pro_stat = #{proStat} where id = #{proId}
+    </update>
+
+
+    <select id="list" resultType="com.bootdo.activiti.domain.EnterpriseProjectInfoDo">
+        select
+           <include refid="pro_fields"></include>,
+           (select cbi.chengguo_name from ass_enterprise_chengguo_base_info cbi where cbi.pro_id = pro.id limit 1) chengguoScience,
+           (SELECT user_name FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id  limit 1) personalName,
+           (SELECT team_name FROM ass_enterpri_team_info t WHERE t.pro_id = pro.id LIMIT 1) teamName,
+           (select pi.id from ass_enterpri_personal_info pi where pi.pro_id = pro.id limit 1) person_id,
+          if(pro.pro_result_code is null or pro.pro_result_code = '', pro.pro_code, pro.pro_result_code) proCode,
+        pro.chengguo proChengguo,
+        <if test="applyType == 'science'">
+            proD.chengguo_name pro_name,
+            proD.id itemId,
+        </if>
+        <if test="applyType == 'team'">
+            proD.team_name pro_name,
+            proD.id itemId,
+        </if>
+        <if test="applyType == 'personal'">
+            proD.user_name pro_name,
+            proD.id itemId,
+        </if>
+           (select association_userid from ass_award_publish_task where id = pro.publish_task_id) publish_task_user_id,
+           (select task_name from ass_award_publish_task where id = pro.publish_task_id) task_name,
+           (SELECT su.name FROM sys_user su join ass_award_assign_project ap on su.user_id = ap.uid where ap.pro_id =
+           pro.id limit 1 ) assigned_user_name,
+           (SELECT su.username FROM sys_user su where su.user_id = pro.create_uid limit 1) apply_account,
+           (select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid
+           limit 1) enterprise_name,
+           pt.apply_start_date,
+           pt.apply_end_date,
+           pt.check_start_time,
+           pt.check_end_time,
+           pro.pro_stat
+        from ass_award_enterprise_project pro
+        join
+        ass_award_publish_task pt on pt.id = pro.publish_task_id
+        <if test="associationUserId!=null">
+             and pt.association_userid =
+            #{associationUserId}
+        </if>
+        <if test="ass_worker_uid != null and associationUserId == null">
+             and pt.association_userid = #{ass_worker_uid}
+        </if>
+        <if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.major = si.group_name and si.user_id = #{scoreSpecialistUid} and pro.pro_stat = 'score' and si.deleted = 0
+        </if>
+
+        <if test="applyType == 'science'">
+            join
+            ass_enterprise_chengguo_base_info proD on proD.pro_id = pro.id
+        </if>
+        <if test="applyType == 'team'">
+            join
+            ass_enterpri_team_info proD on proD.pro_id = pro.id
+        </if>
+        <if test="applyType == 'personal'">
+            join
+            ass_enterpri_personal_info proD on proD.pro_id = pro.id
+        </if>
+
+        <if test="ass_assign_uid != null">
+            join ass_award_assign_project asignPro on asignPro.pro_id = pro.id and asignPro.uid = #{ass_assign_uid}
+            <if test="pro_assign_uid != null">
+                and asignPro.assign_uid = #{pro_assign_uid}
+            </if>
+            <if test="pro_assign_uid == null">
+                and asignPro.assign_uid != -100
+            </if>
+        </if>
+
+        <if test="scoreAccount != null and scoreAccount != ''">
+            join ass_award_project_score sr on pro.id = sr.pro_id
+            join add_special_info sai on sr.score_uid = sai.user_id
+            and sai.login_account = #{scoreAccount} and sai.deleted = 0
+        </if>
+
+        <where>
+            <if test="scoreMajor != null and scoreMajor != ''"> and pro.pro_group_name = #{scoreMajor} </if>
+            <if test="groupName!=null and groupName!=''"> and pro.pro_group_name = #{groupName} </if>
+            <if test="proType!=null and proType!=''"> and pro.pro_type = #{proType} </if>
+            <if test="proTypes!=null and proTypes!=''"> and find_in_set(pro.pro_type, #{proTypes}) </if>
+            <if test="enterpriseUid != null and createUid == null">and pro.create_uid = #{enterpriseUid}</if>
+            <if test="id != null and id != ''">and pro.id = #{id}</if>
+            <if test="chengguo!= null">and `chengguo` = #{chengguo}</if>
+            <if test="majorId!= null">and `major_id` = #{majorId}</if>
+            <if test="tuandui!= null">and `tuandui` = #{tuandui}</if>
+            <if test="person!= null">and `person` = #{person}</if>
+            <if test="advanced_individual!= null">and `advanced_individual` = #{advancedIndividual}</if>
+            <if test="proDesc!= null">and `pro_desc` = #{proDesc}</if>
+            <if test="taskId!= null and taskId != ''">and `publish_task_id` = #{taskId}</if>
+            <if test="createUid!= null">and `create_uid` = #{createUid}</if>
+            <if test="pageSource == 'enterprise_validate_menu' and role != 'specialist' and act != 'en_review'">and
+                `association_review_rst` = 'upload'
+            </if>
+            <if test="isValidate">
+                and pro.pro_stat in('to_validate','validate' , 'check')
+            </if>
+            <if test="keyWord != null and keyWord != '' and proStatStr == ''">
+                 and (exists(
+                select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid and sd.name like #{keyWord}
+                ) or pro.major like #{keyWord}
+                  or exists(select cbi.chengguo_name from ass_enterprise_chengguo_base_info cbi where cbi.pro_id = pro.id and cbi.chengguo_name like #{keyWord})
+                  or exists(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid and su.username like #{keyWord})
+                )
+            </if>
+            <if test="proStatStr != null and proStatStr != '' and proStatStr != 'apply'">
+				and find_in_set(pro.pro_stat, #{proStatStr})
+            </if>
+            <if test="proStatStr != null and proStatStr != '' and proStatStr == 'apply'">
+                and (pro.pro_stat is null or pro.pro_stat = '')
+            </if>
+        </where>
+        <if test="applyType != 'surver'">
+            and (
+            <if test="applyType == 'science'">
+                exists(SELECT * FROM boot_do.ass_enterprise_chengguo_base_info where pro_id = pro.id)
+            </if>
+            <if test="applyType == 'personal'">
+                exists(SELECT * FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id)
+            </if>
+            <if test="applyType == 'team'">
+                exists(select * from boot_do.ass_enterpri_team_info where pro_id = pro.id)
+            </if>
+            <if test="applyType == null || applyType == ''">
+                exists(SELECT * FROM boot_do.ass_enterprise_chengguo_base_info where pro_id = pro.id)
+                or exists(SELECT * FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id)
+                or exists(select * from boot_do.ass_enterpri_team_info where pro_id = pro.id)
+            </if>
+            )
+        </if>
+         group by pro.id
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by pro.id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select
+        count(distinct pro.id)
+        from ass_award_enterprise_project pro
+        <if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.major = si.group_name and si.user_id = #{scoreSpecialistUid} and pro.pro_stat = 'score' and si.deleted = 0
+        </if>
+        <if test="associationUserId!=null">
+            join ass_award_publish_task task on pro.publish_task_id = task.id and task.association_userid =
+            #{associationUserId}
+        </if>
+        <if test="ass_assign_uid != null">
+            join ass_award_assign_project asignPro on asignPro.pro_id = pro.id and asignPro.uid = #{ass_assign_uid}
+            <if test="pro_assign_uid != null">
+                and asignPro.assign_uid = #{pro_assign_uid}
+            </if>
+            <if test="pro_assign_uid == null">
+                and asignPro.assign_uid != -100
+            </if>
+        </if>
+        <if test="ass_worker_uid != null and associationUserId == null">
+            join ass_award_publish_task pt on pro.publish_task_id = pt.id and pt.association_userid = #{ass_worker_uid}
+        </if>
+
+        <if test="scoreType != null">
+            join ass_award_project_score_result sr on pro.id = sr.pro_id and pro.pro_type = #{scoreType}
+        </if>
+
+        <if test="scoreAccount != null and scoreAccount != ''">
+            join add_special_info sai on pro.major = sai.group_name and sai.deleted = 0
+            join sys_user su on su.user_id = sai.user_id and su.username = #{scoreAccount}
+        </if>
+
+        <where>
+            <if test="scoreMajor != null and scoreMajor != ''">
+                and pro.pro_group_name = #{scoreMajor}
+            </if>
+            <if test="enterpriseUid != null and createUid == null">and pro.create_uid = #{enterpriseUid}</if>
+            <if test="id != null and id != ''">and pro.id = #{id}</if>
+            <if test="chengguo!= null">and `chengguo` = #{chengguo}</if>
+            <if test="majorId!= null">and `major_id` = #{majorId}</if>
+            <if test="tuandui!= null">and `tuandui` = #{tuandui}</if>
+            <if test="person!= null">and `person` = #{person}</if>
+            <if test="advanced_individual!= null">and `advanced_individual` = #{advancedIndividual}</if>
+            <if test="proDesc!= null">and `pro_desc` = #{proDesc}</if>
+            <if test="taskId!= null and taskId != ''">and `publish_task_id` = #{taskId}</if>
+            <if test="createUid!= null">and `create_uid` = #{createUid}</if>
+            <if test="pageSource == 'enterprise_validate_menu' and role != 'specialist' and act != 'en_review'">and
+                `association_review_rst` = 'upload'
+            </if>
+            <if test="isValidate">
+                and pro.pro_stat in('to_validate','validate' , 'check')
+            </if>
+            <if test="keyWord != null and keyWord != '' and proStatStr == ''">
+                and (exists(
+                select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid and sd.name like #{keyWord}
+                ) or pro.major like #{keyWord}
+                or exists(select cbi.chengguo_name from ass_enterprise_chengguo_base_info cbi where cbi.pro_id = pro.id and cbi.chengguo_name like #{keyWord})
+                or exists(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid and su.username like #{keyWord})
+                )
+            </if>
+            <if test="proStatStr != '' and proStatStr != 'apply'">
+                and find_in_set(pro.pro_stat, #{proStatStr})
+            </if>
+            <if test="proStatStr != '' and proStatStr == 'apply'">
+                and (pro.pro_stat is null or pro.pro_stat = '')
+            </if>
+        </where>
+        <if test="applyType != 'surver'">
+             and (
+
+             <if test="applyType == 'science'">
+                 exists(SELECT * FROM boot_do.ass_enterprise_chengguo_base_info where pro_id = pro.id)
+             </if>
+             <if test="applyType == 'personal'">
+                 exists(SELECT * FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id)
+             </if>
+             <if test="applyType == 'team'">
+                 exists(select * from boot_do.ass_enterpri_team_info where pro_id = pro.id)
+             </if>
+             <if test="applyType == null || applyType == ''">
+                 exists(SELECT * FROM boot_do.ass_enterprise_chengguo_base_info where pro_id = pro.id)
+                 or exists(SELECT * FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id)
+                 or exists(select * from boot_do.ass_enterpri_team_info where pro_id = pro.id)
+             </if>
+             )
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.activiti.domain.EnterpriseProjectInfoDo" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into ass_award_enterprise_project
+		(
+		   `chengguo`,
+           `major_id`,
+           `tuandui`,
+           `person`,
+           `pro_desc`,
+           `publish_task_id`,
+           `advanced_individual`,
+           `create_uid`,
+            major,
+            pro_type,
+            pro_code
+		)
+		values
+		(
+		   #{chengguo},
+           #{majorId},
+           #{tuandui},
+           #{person},
+           #{proDesc},
+           #{publishTaskId},
+           #{advancedIndividual},
+           #{createUid},
+           #{major},
+           #{proType},
+		   #{showNum}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.activiti.domain.EnterpriseProjectInfoDo">
+        update ass_award_enterprise_project
+        <set>
+            <if test="proStat!= null and proStat != ''">`pro_stat` = #{proStat},</if>
+            <if test="proType!= null and proType != ''">`pro_type` = #{proType},</if>
+            <if test="proSubType!= null and proSubType != ''">`pro_sub_type` = #{proSubType},</if>
+            <if test="chengguo!= null">`chengguo` = #{chengguo},</if>
+            <if test="majorId!= null">`major_id` = #{majorId},</if>
+            <if test="major!= null and major != ''">`major` = #{major},</if>
+            <if test="tuandui!= null">`tuandui` = #{tuandui},</if>
+            <if test="person!= null">`person` = #{person},</if>
+            <if test="advancedIndividual!= null">`advanced_individual` = #{advancedIndividual},</if>
+            <if test="proDesc!= null">`pro_desc` = #{proDesc},</if>
+            <if test="publishTaskId!= null">`publish_task_id` = #{publishTaskId},</if>
+            <if test="procInsId!= null">`PROC_INS_ID` = #{procInsId},</if>
+            <if test="actRunTaskId!= null">`act_run_task_id` = #{actRunTaskId},</if>
+            <if test="taskAgree!= null">`association_review_rst` = #{taskAgree},</if>
+            <if test="associationRejectContent!= null">`rst_personal_vali_file` = #{associationRejectContent},</if>
+            <if test="rstScienceValiFile!= null">`rst_science_vali_file` = #{rstScienceValiFile},</if>
+            <if test="rstPersonalValiFile!= null">`rst_personal_vali_file` = #{rstPersonalValiFile},</if>
+            <if test="rstTuanduiValiFile!= null">`rst_tuandui_vali_file` = #{rstTuanduiValiFile},</if>
+
+
+            <if test="scienceLevel!= null">`science_level` = #{scienceLevel},</if>
+            <if test="scienceKnowledgeCount!= null">`science_knowledge_count` = #{scienceKnowledgeCount},</if>
+            <if test="scienceVliEnterprise!= null">`science_vli_enterprise` = #{scienceVliEnterprise},</if>
+            <if test="scienceApplyTime!= null">`science_apply_time` = #{scienceApplyTime},</if>
+            <if test="scienceApplyEnterpriseCount!= null">`science_apply_enterprise_count` =
+                #{scienceApplyEnterpriseCount},
+            </if>
+            <if test="tuanduiCooperate!= null">`tuandui_cooperate` = #{tuanduiCooperate},</if>
+            <if test="tuanduiSpecialist!= null">`tuandui_specialist` = #{tuanduiSpecialist},</if>
+            <if test="personalIsEmploy!= null">`personal_is_employ` = #{personalIsEmploy},</if>
+            <if test="personalIsWorkEthics!= null">`personal_is_work_ethics` = #{personalIsWorkEthics},</if>
+
+            <if test="scienceAvgScore!= null and scienceAvgScore > 0">`science_avg_score` = #{scienceAvgScore},</if>
+            <if test="teamAvgScore!= null and teamAvgScore > 0">`team_avg_score` = #{teamAvgScore},</if>
+            <if test="personalAvgScore!= null and personalAvgScore > 0">`personal_avg_score` = #{personalAvgScore},</if>
+            update_date = now()
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateProcInsIdByTaskId" parameterType="java.util.Map">
+        update ass_award_enterprise_project set `PROC_INS_ID` = #{procInsId}
+        <if test="associationReviewRst != null">
+            ,association_review_rst = #{associationReviewRst}
+        </if>
+        where publish_task_id = #{taskId}
+    </update>
+
+    <update id="updateTeamStat" >
+        update ass_enterpri_team_info set team_stat = #{teamStat} where pro_id = #{proId}
+    </update>
+
+    <update id="updatePersonStat">
+        update ass_enterpri_personal_info set person_stat = #{personStat} where pro_id = #{proId}
+    </update>
+
+    <update id="updateProStatByTaskId" parameterType="java.util.Map">
+		update ass_award_enterprise_project set `pro_stat` = #{proStat}
+		where publish_task_id = #{taskId}
+		 and pro_stat not in('no_score','defer_score')
+	</update>
+
+    <update id="updateActRunTaskIddByTaskId" parameterType="java.util.Map">
+		update ass_award_enterprise_project set `act_run_task_id` = #{actRunTaskId} where publish_task_id = #{taskId}
+	</update>
+
+    <delete id="remove">
+		delete from ass_award_enterprise_project  where id = #{value}
+	</delete>
+
+    <delete id="removeByExtUid">
+        DELETE FROM ass_award_assign_project ap
+        WHERE
+            uid in
+            <foreach item="wuid" collection="workerUidList" open="(" separator=","
+                     close=")">
+                #{wuid}
+            </foreach>
+          AND EXISTS( SELECT
+                          *
+                      FROM
+                          ass_award_enterprise_project pro
+
+                      WHERE
+                          ap.pro_id = pro.id
+                        AND pro.publish_task_id = #{taskId} AND pro.pro_type = #{awardType})
+          AND id > 0
+    </delete>
+
+    <delete id="batchRemove">
+        delete from ass_award_enterprise_project where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="assignPro">
+        INSERT INTO `boot_do`.`ass_award_assign_project`
+        (`assign_uid`,
+        `uid`,
+        `pro_id`)
+        VALUES
+        <foreach collection="list" item="assignData" separator=",">
+            (#{assignData.assignUid},#{assignData.uid},#{assignData.proId})
+        </foreach>
+    </insert>
+
+    <select id="getAssignUserIdByProId" parameterType="String" resultType="Long">
+		SELECT uid FROM ass_award_assign_project where pro_id = #{proId}
+	</select>
+    <select id="getProCurActRunTaskIdByProId" parameterType="String" resultType="String">
+		SELECT act_run_task_id FROM boot_do.ass_award_enterprise_project where id = #{proId}
+	</select>
+    <select id="getMajorLeaderIdByProId" parameterType="Map" resultType="String">
+		SELECT
+            ss.specialist_leader_uid
+        FROM
+            boot_do.ass_award_enterprise_project pro
+                JOIN
+            ass_award_select_specialist ss ON pro.publish_task_id = ss.publish_award_id
+        WHERE
+            pro.id = #{proId} AND ss.major_id = #{majorId}
+	</select>
+
+    <update id="updateTeamStatByTaskId" >
+        update ass_enterpri_team_info set team_stat = #{teamStat} where task_id = #{taskId}
+    </update>
+    <update id="updatePersonStatByTaskId">
+        update ass_enterpri_personal_info set person_stat = #{personStat} where task_id = #{taskId}
+    </update>
+
+    <select id="isAssignOverByTaskId" resultType="int">
+		SELECT
+            COUNT(pro.id)
+        FROM
+            ass_award_assign_project aap
+                RIGHT JOIN
+            ass_award_enterprise_project pro ON aap.pro_id = pro.id
+        WHERE
+            pro.publish_task_id = #{publishTaskId}
+                AND aap.id IS NULL
+                AND EXISTS( SELECT
+                          *
+                 FROM
+                     ass_enterprise_chengguo_base_info cbi
+                 WHERE
+                     pro.id = cbi.pro_id
+                         AND cbi.chengguo_name IS NOT NULL)
+	</select>
+
+    <select id="getAssignedUserIdsByTaskId" resultType="String">
+		SELECT DISTINCT
+            aap.uid
+        FROM
+            ass_award_assign_project aap
+                RIGHT JOIN
+            ass_award_enterprise_project pro ON aap.pro_id = pro.id
+        WHERE
+            pro.publish_task_id = #{publishTaskId}
+                AND aap.id IS NOT NULL
+	</select>
+    <select id="getAssignedProIdsByTaskId" resultType="String">
+		SELECT DISTINCT
+            aap.pro_id
+        FROM
+            ass_award_assign_project aap
+                RIGHT JOIN
+            ass_award_enterprise_project pro ON aap.pro_id = pro.id
+        WHERE
+            pro.publish_task_id = #{publishTaskId}
+                AND aap.id IS NOT NULL
+	</select>
+
+    <select id="userAssignedProList" resultType="com.bootdo.activiti.domain.AssignProjectDataDo">
+        <!-- 团队 -->
+        SELECT 'team' proType,ap.*, tea.team_name proName FROM ass_award_assign_project ap join
+        ass_award_enterprise_project pro on ap.pro_id = pro.id
+        join ass_enterpri_team_info tea on tea.pro_id = pro.id
+        where 1 = 1
+        <if test="uid!= null">and ap.`uid` = #{uid}</if>
+        <if test="proId!= null">and ap.`pro_id` = #{proId}</if>
+        <if test="assignUid!= null">and `assign_uid` = #{assignUid}</if>
+        <if test="publishTaskId!= null">and pro.`publish_task_id` = #{publishTaskId}</if>
+        union all
+        <!--科技-->
+        SELECT 'science' proType,ap.*, cb.chengguo_name proName FROM ass_award_assign_project ap join
+        ass_award_enterprise_project pro on ap.pro_id = pro.id
+        join ass_enterprise_chengguo_base_info cb on cb.pro_id = pro.id
+        where 1 = 1
+        <if test="uid!= null">and ap.`uid` = #{uid}</if>
+        <if test="proId!= null">and ap.`pro_id` = #{proId}</if>
+        <if test="assignUid!= null">and `assign_uid` = #{assignUid}</if>
+        <if test="publishTaskId!= null">and pro.`publish_task_id` = #{publishTaskId}</if>
+        union all
+        <!--个人-->
+        SELECT 'personal' proType,ap.*, per.user_name proName FROM ass_award_assign_project ap join
+        ass_award_enterprise_project pro on ap.pro_id = pro.id join ass_enterpri_personal_info per
+        on per.pro_id = pro.id
+        where 1 = 1
+        <if test="uid!= null">and ap.`uid` = #{uid}</if>
+        <if test="proId!= null">and ap.`pro_id` = #{proId}</if>
+        <if test="assignUid!= null">and `assign_uid` = #{assignUid}</if>
+        <if test="publishTaskId!= null">and pro.`publish_task_id` = #{publishTaskId}</if>
+    </select>
+
+    <select id="getSpecialistTeamProList" resultType="com.bootdo.activiti.domain.AssignProjectDataDo">
+        SELECT 'team' proType,ap.*, tea.team_name proName FROM ass_award_assign_project ap join
+        ass_award_enterprise_project pro on ap.pro_id = pro.id
+        join ass_enterpri_team_info tea on tea.pro_id = pro.id
+        join add_special_info si on si.group_name = pro.major
+        where  si.user_id = #{uid} and si.deleted = 0
+    </select>
+
+    <select id="taskAssignedProIds" resultType="long">
+		SELECT ap.pro_id FROM ass_award_assign_project ap join ass_award_enterprise_project pro on ap.pro_id = pro.id where
+		pro.`publish_task_id` = #{publishTaskId}
+	</select>
+
+
+    <select id="getSpecialistReviewPros" resultType="com.bootdo.activiti.domain.EnterpriseProjectInfoDo">
+		select
+		(SELECT name FROM sys_dict sd where sd.id = pro.major_id) major,
+		pro.*,(select association_userid from ass_award_publish_task where id = pro.publish_task_id) publish_task_user_id,
+		(select task_name from ass_award_publish_task where id = pro.publish_task_id) task_name,
+		(SELECT su.name FROM sys_user su join ass_award_assign_project ap on su.user_id = ap.uid where ap.pro_id = pro.id limit 1 ) assigned_user_name,
+		(select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid limit 1) enterprise_name
+		 from
+		   ass_award_assign_project ap
+             JOIN
+           ass_award_enterprise_project pro ON ap.pro_id = pro.id
+          where
+          ap.uid = #{uid}
+          AND
+            ap.assign_uid = -100
+          AND pro.major_id = #{majorId}
+          AND science_avg_score > 0
+	</select>
+
+    <select id="getNoUseProIdByUid" resultType="int">
+		SELECT pro.id FROM boot_do.ass_award_enterprise_project pro where create_uid = #{uid} and not exists(
+		  SELECT * FROM boot_do.ass_enterprise_chengguo_base_info where pro_id = pro.id
+		) and not exists (
+		  SELECT * FROM boot_do.ass_enterprise_chengguo_other_info where pro_id = pro.id
+		)
+		and not exists (
+		  SELECT * FROM boot_do.ass_enterpri_personal_info where pro_id = pro.id
+		)
+		and not exists (
+		  SELECT * FROM boot_do.ass_enterpri_personal_info_science_kpi where pro_id = pro.id
+		)
+		and pro.chengguo is null and (pro.PROC_INS_ID is null or pro.PROC_INS_ID = 0)
+		and pro.association_review_rst is null
+		order by id desc limit 1
+	</select>
+    <select id="getProGroupList" resultType="java.lang.String">
+        SELECT DISTINCT
+           pro_group_name
+        FROM
+           ass_award_enterprise_project
+        <where>
+            <if test="proType != null and proType != ''">AND pro_type = #{proType}</if>
+            <if test="proSubType != null and proSubType != ''">AND pro_sub_type = #{proSubType}</if>
+            AND publish_task_id = #{taskId}
+            AND pro_group_name IS NOT NULL
+        </where>
+    </select>
+
+</mapper>

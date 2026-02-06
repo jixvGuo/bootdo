@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+   <input type="hidden" id="role" name="role" th:value="${role}"/>
+   <input type="hidden" id="act" name="act" th:value="${act}"/>
+   <div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="ibox ibox-body">
+					<div class="ibox-title">
+						<h5>选择奖项</h5>
+					</div>
+					<div class="ibox-content">
+						<div id="jstree"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<div class="ibox">
+					<div class="ibox-body">
+						<div class="fixed-table-toolbar">
+							<div class="columns pull-left">
+								<button shiro:hasPermission="sys:user:add" type="button"
+									class="btn  btn-primary" onclick="add()">
+									<i class="fa fa-plus hidden" aria-hidden="true"></i>添加
+								</button>
+								<button shiro:hasPermission="sys:user:batchRemove" type="button"
+									class="btn  btn-danger" onclick="batchRemove()">
+									<i class="fa fa-trash hidden" aria-hidden="true"></i>删除
+								</button>
+							</div>
+							<!--<div class="columns pull-right">
+								<button class="btn btn-success" onclick="reLoad()">查询</button>
+							</div>
+
+							<div class="columns pull-right col-md-2 nopadding">
+								<input id="searchName" type="text" class="form-control"
+									placeholder="姓名">
+							</div>-->
+						</div>
+						<table id="exampleTable" data-mobile-responsive="true">
+						</table>
+					</div>
+					<div class="ibox-content" id="recommendTable">
+                        <h4 style="text-align:center;font-size:20px;font-weight:bold">推荐意见表-</h4>
+                        <form method="post" class="form-horizontal">
+                            <table class="table table-bordered">
+                                <tbody style="border:2px solid #000000">
+                                    <tr>
+                                        <td style="text-align:center;width:10%">初评专业组</td>
+                                        <td style="text-align:center;width:90%" colspan="3"></td>
+                                    </tr>
+                                    <tr id="specialistReviewProTitle">
+                                        <td style="text-align:center;width:10%">序号</td>
+                                        <td style="text-align:center;width:55%">项目名称</td>
+                                        <td style="text-align:center;width:15%">专业组评<br />分</td>
+                                        <td style="text-align:center;width:20%">是否<br />推荐</td>
+                                    </tr>
+                                    <!--<tr style="height:38px;">
+                                        <td style="text-align:center;width:10%">1</td>
+                                        <td style="text-align:center;width:50%;font-size:10px;">华北分公司油工艺技术</td>
+                                        <td style="text-align:center;width:20%">81</td>
+                                        <td style="text-align:center;width:20%">是</td>
+                                    </tr>
+-->
+                                    <tr>
+                                        <td style="text-align:center;vertical-align:middle;width:16%">专家小组组长签字</td>
+                                        <td style="" colspan="3">
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <div style="text-align:right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+
+				</div>
+			</div>
+		</div>
+		<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:user:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:user:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="sys:user:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/act/award/specialist_leader_review.js"></script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header"></head>
+
+<body>
+
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form id="signupForm" action="" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${table.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui field">
+                    <label>申报专业</label>
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="applyMajor" th:value="${table.applyMajor}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">申报专业</div>
+                        <div class="menu">
+                            <div class="item" data-value="勘察">勘察</div>
+                            <div class="item" data-value="测量">测量</div>
+                            <div class="item" data-value="岩土">岩土</div>
+                            <div class="item" data-value="炼油化工">炼油化工</div>
+                            <div class="item" data-value="油气集输">油气集输</div>
+                            <div class="item" data-value="油气储运">油气储运</div>
+                            <div class="item" data-value="油气加工">油气加工</div>
+                            <div class="item" data-value="矿业">矿业</div>
+                            <div class="item" data-value="建筑">建筑</div>
+                            <div class="item" data-value="结构">结构</div>
+                            <div class="item" data-value="桥梁">桥梁</div>
+                            <div class="item" data-value="土壤修复">土壤修复</div>
+                            <div class="item" data-value="环境工程">环境工程</div>
+                            <div class="item" data-value="电气">电气</div>
+                            <div class="item" data-value="电力系统">电力系统</div>
+                            <div class="item" data-value="给排水">给排水</div>
+                            <div class="item" data-value="水处理">水处理</div>
+                            <div class="item" data-value="热力">热力</div>
+                            <div class="item" data-value="仪表、自动化、自控">仪表、自动化、自控</div>
+                            <div class="item" data-value="安全">安全</div>
+                            <div class="item" data-value="包装">包装</div>
+                            <div class="item" data-value="海洋石油开发工程">海洋石油开发工程</div>
+                            <div class="item" data-value="软件">软件</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>图集名称</label>
+                        <input type="text" name="galleryName" th:value="${table.galleryName}" placeholder="软件全称">
+                    </div>
+                    <div class="ui field">
+                        <label>图集号</label>
+                        <input type="text" name="atlasNumber" th:value="${table.atlasNumber}" placeholder="图集号">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>设计起止时间</label>
+                        <input type="text" name="designStartEnd" th:value="${table.designStartEnd}" placeholder="设计起止时间">
+                    </div>
+                    <div class="ui field">
+                        <label>批准立项文件号</label>
+                        <input type="text" name="approvalDocumentNumber" th:value="${table.approvalDocumentNumber}" placeholder="批准立项文件号">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>批准实施文件号</label>
+                        <input type="text" name="approvedDocumentNumber" th:value="${table.approvedDocumentNumber}" placeholder="批准实施文件号">
+                    </div>
+                    <div class="ui field">
+                        <label>主编单位</label>
+                        <input type="text" name="dditorChief" th:value="${table.dditorChief}" placeholder="主编单位">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>协作单位</label>
+                        <input type="text" name="cooperationUnit" th:value="${table.cooperationUnit}" placeholder="协作单位">
+                    </div>
+                    <div class="ui field">
+                        <label>申报单位联系人</label>
+                        <input type="text" name="reportingContactPerson" th:value="${table.reportingContactPerson}" placeholder="申报单位联系人">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>电话/手机</label>
+                        <input type="text" name="reportingContactPhone" th:value="${table.reportingContactPhone}" placeholder="电话/手机">
+                    </div>
+                    <div class="ui field">
+                        <label>传真</label>
+                        <input type="text" name="fax" th:value="${table.fax}" placeholder="传真">
+                    </div>
+                </div>
+
+                <h4 class="ui red horizontal divider header">附件目录 </h4>
+                <div class="ui field">
+                    <textarea id="accessoriesCatalog" autofocus name="accessoriesCatalog" th:text="${table.accessoriesCatalog}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">图集主要内容 </h4>
+                <div class="ui field">
+                    <textarea id="mainContentAtlas" autofocus name="mainContentAtlas" th:text="${table.mainContentAtlas}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">图集主要优缺点和效益 </h4>
+                <div class="ui field">
+                    <textarea id="mainAdvantagesDisadvantagesBenefits" autofocus name="mainAdvantagesDisadvantagesBenefits" th:text="${table.mainAdvantagesDisadvantagesBenefits}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">曾获哪一级奖励 </h4>
+                <div class="ui field">
+                    <textarea id="awardReceived" autofocus name="awardReceived" th:text="${table.awardReceived}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">申报单位意见 </h4>
+                <div class="ui field">
+                    <textarea id="reportingUnitOpinion" autofocus name="reportingUnitOpinion" th:text="${table.reportingUnitOpinion}"></textarea>
+                </div>
+
+
+                <h4 class="ui red horizontal divider header">上级主管部门（或建设单位）推荐意见</h4>
+                <div class="ui field">
+                    <textarea id="upRecommendation" autofocus name="upRecommendation" th:text="${table.upRecommendation}"></textarea>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverStandardApplyTableInfo/add.js?v=1.0"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+    <script>
+        let proId = $("#proId").val();
+        let uploadObj =  {
+            url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+            params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+            fileKey: 'file[]', //服务器端获取文件数据的参数名
+            connectionCount: 3,
+            leaveConfirm: '正在上传文件'
+        };
+        var accessoriesCatalog = new Simditor({
+            textarea: $("#accessoriesCatalog"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var mainContentAtlas = new Simditor({
+            textarea: $("#mainContentAtlas"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var mainAdvantagesDisadvantagesBenefits = new Simditor({
+            textarea: $("#mainAdvantagesDisadvantagesBenefits"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var awardReceived = new Simditor({
+            textarea: $("#awardReceived"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var reportingUnitOpinion = new Simditor({
+            textarea: $("#reportingUnitOpinion"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var upRecommendation = new Simditor({
+            textarea: $("#upRecommendation"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        $(".simditor-clean-paste-area").hide();
+        $('.ui.dropdown').dropdown();
+        $('.ui.checkbox').checkbox();
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                galleryName: {
+                    identifier: 'galleryName',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写图集名称'
+                    }]
+                },
+                atlasNumber: {
+                    identifier: 'atlasNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写图集号'
+                    }]
+                },
+                designStartEnd: {
+                    identifier: 'designStartEnd',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写设计起止时间'
+                    }]
+                },
+                approvalDocumentNumber: {
+                    identifier: 'approvalDocumentNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写批准立项文件号'
+                    }]
+                },
+                approvedDocumentNumber: {
+                    identifier: 'approvedDocumentNumber',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写批准实施文件号'
+                    }]
+                },
+                dditorChief: {
+                    identifier: 'dditorChief',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写主编单位'
+                    }]
+                },
+                cooperationUnit: {
+                    identifier: 'cooperationUnit',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写协作单位'
+                    }]
+                },
+                reportingContactPerson: {
+                    identifier: 'reportingContactPerson',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写申报单位联系人'
+                    }]
+                },
+                reportingContactPhone: {
+                    identifier: 'reportingContactPhone',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写电话/手机'
+                    }]
+                },
+                fax: {
+                    identifier: 'fax',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写传真'
+                    }]
+                },
+                accessoriesCatalog: {
+                    identifier: 'accessoriesCatalog',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写附件目录'
+                    }]
+                },
+                mainContentAtlas: {
+                    identifier: 'mainContentAtlas',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写图集主要内容'
+                    }]
+                },
+                mainAdvantagesDisadvantagesBenefits: {
+                    identifier: 'mainAdvantagesDisadvantagesBenefits',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写图集主要优缺点和效益'
+                    }]
+                },
+                awardReceived: {
+                    identifier: 'awardReceived',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写曾获哪一级奖励'
+                    }]
+                },
+                reportingUnitOpinion: {
+                    identifier: 'reportingUnitOpinion',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写申报单位意见'
+                    }]
+                },
+                upRecommendation: {
+                    identifier: 'upRecommendation',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写上级主管部门（或建设单位）推荐意见'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

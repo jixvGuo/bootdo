@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <link href="hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="hplus/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="hplus/css/animate.min.css" rel="stylesheet">
+    <link href="hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+
+        <!-- 企业资质展示板块 (仅 showLicense=true 时显示) -->
+        <div class="col-sm-6" th:if="${showLicense}">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">企业资质</span>
+                    <h5>营业执照</h5>
+                </div>
+                <!-- 1. 修改 min-height 以适应更大的缩略图 -->
+                <div class="ibox-content" style="text-align: center; min-height: 250px;">
+                    <h4 th:text="${companyName}" style="margin-bottom: 15px;">企业名称</h4>
+
+                    <!-- 情况A：已有图片 -->
+                    <div th:if="${companyPhoto != null and companyPhoto != ''}">
+                        <!-- 2. 【修改位置】首页缩略图大小：修改下面的 height 值即可 -->
+                        <img th:src="${companyPhoto}" onclick="openLicenseLayer(this.src)"
+                             style="height: 250px; width: auto; cursor: pointer; border: 1px solid #ddd; padding: 0px; border-radius: 0px;" />
+                        <div style="margin-top:10px;">
+                            <button type="button" class="btn btn-white btn-xs" onclick="forceClickInput()">
+                                <i class="fa fa-refresh"></i> 更换图片
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 情况B：暂无图片 -->
+                    <div th:if="${companyPhoto == null or companyPhoto == ''}" style="padding: 15px 0;">
+                        <i class="fa fa-exclamation-triangle fa-3x text-warning"></i>
+                        <p class="text-warning">暂未上传营业执照</p>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="forceClickInput()">
+                            <i class="fa fa-upload"></i> 立即上传
+                        </button>
+                    </div>
+
+                    <input type="file" id="realFileHandler" accept="image/*" style="display: none;" onchange="startUploadLogic(this)" />
+                </div>
+            </div>
+        </div>
+
+        <!-- 统计板块 -->
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title"><h5>访客</h5></div>
+                <div class="ibox-content"><h1 class="no-margins">106,120</h1></div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title"><h5>活跃用户</h5></div>
+                <div class="ibox-content"><h1 class="no-margins">80,600</h1></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 基础 JS -->
+<script src="hplus/js/jquery.min.js?v=2.1.4"></script>
+<script src="hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+
+<script type="text/javascript">
+    var GLOBAL_AWARD_ID = "";
+
+    $(document).ready(function() {
+        var params = new URLSearchParams(window.location.search);
+        GLOBAL_AWARD_ID = params.get('awardId') || params.get('awardid') || "";
+    });
+
+    function forceClickInput() {
+        document.getElementById('realFileHandler').click();
+    }
+
+    function startUploadLogic(input) {
+        var file = input.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('awardId', GLOBAL_AWARD_ID);
+
+        var loading = layer.load(1, {shade: [0.3, '#000']});
+
+        $.ajax({
+            url: '/system/sysDept/uploadHomeLicense',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                layer.close(loading);
+                if (res.code == 0) {
+                    layer.msg("保存成功！");
+                    setTimeout(function(){ location.reload(); }, 1000);
+                } else {
+                    layer.alert(res.msg || "保存失败");
+                }
+            },
+            error: function(xhr) {
+                layer.close(loading);
+                layer.msg("网络请求失败");
+            }
+        });
+        input.value = "";
+    }
+
+    // 3. 【修改位置】点击放大查看的弹窗大小
+    function openLicenseLayer(src) {
+        layer.open({
+            type: 1,
+            title: '营业执照详情', // 增加了标题，不需要可设为 false
+            closeBtn: 1,
+            // area: ['宽度', '高度']。'auto'表示高度自动，宽度由 600px 改为 800px 或更多
+            area: ['800px', 'auto'],
+            skin: 'layui-layer-nobg',
+            shadeClose: true,
+            // 修改了内部 img 的样式：width: 100% 填满容器，max-height 限制高度防止溢出屏幕
+            content: '<div style="padding:15px; background:#fff; text-align:center;">' +
+                '<img src="' + src + '" style="width: 100%; max-height: 800px; object-fit: contain;">' +
+                '</div>'
+        });
+    }
+</script>
+</body>
+</html>

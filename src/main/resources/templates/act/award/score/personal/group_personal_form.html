@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <h2 class="ui center aligned header">石油工程建设科技创新先进个人评审表</h2>
+        <table class="ui celled table">
+            <tbody>
+            <tr>
+                <td rowspan="2">序号</td>
+                <td rowspan="2">姓名</td>
+                <td colspan="5" class="ui center aligned">打分</td>
+                <td rowspan="2">总分(100)</td>
+            </tr>
+            <tr>
+                <td>科技创新能力</td>
+                <td>获奖成果</td>
+                <td>科技贡献</td>
+                <td>知识产权</td>
+                <td>发表论著</td>
+            </tr>
+            <tr th:each="personal,selStat:${list}">
+                <td th:text="${selStat.count}"></td>
+                <td th:text="${personal.proName}"></td>
+                <td th:text="${personal.scoreDetailMap['technology_create']}"></td>
+                <td th:text="${personal.scoreDetailMap['gain_awards']}"></td>
+                <td th:text="${personal.scoreDetailMap['science_contribution']}"></td>
+                <td th:text="${personal.scoreDetailMap['intelli_right']}"></td>
+                <td th:text="${personal.scoreDetailMap['pub_work']}"></td>
+                <td th:text="${personal.totalScore}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+
+</body>
+</html>

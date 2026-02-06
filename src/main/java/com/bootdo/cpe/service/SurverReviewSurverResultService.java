@@ -1,0 +1,30 @@
+package com.bootdo.cpe.service;
+
+import com.bootdo.cpe.domain.SurverReviewSurverResultDO;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 勘察类审查表格
+ * 
+ * @author chglee
+ * @email mrhouzhibin@163.com
+ * @date 2022-04-13 07:07:29
+ */
+public interface SurverReviewSurverResultService {
+	
+	SurverReviewSurverResultDO get(Integer id);
+	
+	List<SurverReviewSurverResultDO> list(Map<String, Object> map);
+	
+	int count(Map<String, Object> map);
+	
+	int save(SurverReviewSurverResultDO surverReviewSurverResult);
+	
+	int update(SurverReviewSurverResultDO surverReviewSurverResult);
+	
+	int remove(Integer id);
+	
+	int batchRemove(Integer[] ids);
+}

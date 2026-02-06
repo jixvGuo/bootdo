@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">姓名：</label>
+								<div class="col-sm-8">
+									<input id="muUsername" name="muUsername" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">性别：</label>
+								<div class="col-sm-8">
+									<input id="muGender" name="muGender" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">序号：</label>
+								<div class="col-sm-8">
+									<input id="muNum" name="muNum" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">出生年月：</label>
+								<div class="col-sm-8">
+									<input id="muBirthday" name="muBirthday" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">出生地：</label>
+								<div class="col-sm-8">
+									<input id="muBirthAddr" name="muBirthAddr" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">民族：</label>
+								<div class="col-sm-8">
+									<input id="muNation" name="muNation" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">身份证号：</label>
+								<div class="col-sm-8">
+									<input id="muUserIden" name="muUserIden" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否归国人员：</label>
+								<div class="col-sm-8">
+									<input id="muIsReturnee" name="muIsReturnee" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">归国时间：</label>
+								<div class="col-sm-8">
+									<input id="muReturneeTime" name="muReturneeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">技术职称：</label>
+								<div class="col-sm-8">
+									<input id="muTechnicalTitle" name="muTechnicalTitle" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">最高学历：</label>
+								<div class="col-sm-8">
+									<input id="muHighestEducation" name="muHighestEducation" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">最高学位：</label>
+								<div class="col-sm-8">
+									<input id="muHighestDegree" name="muHighestDegree" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">毕业学校：</label>
+								<div class="col-sm-8">
+									<input id="muGraduateSchool" name="muGraduateSchool" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">毕业时间：</label>
+								<div class="col-sm-8">
+									<input id="muGraduateTime" name="muGraduateTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">所学专业：</label>
+								<div class="col-sm-8">
+									<input id="muMajor" name="muMajor" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">电子邮箱：</label>
+								<div class="col-sm-8">
+									<input id="muEmail" name="muEmail" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">办公电话：</label>
+								<div class="col-sm-8">
+									<input id="muWorkPhone" name="muWorkPhone" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">移动电话：</label>
+								<div class="col-sm-8">
+									<input id="muMobilePhone" name="muMobilePhone" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">通讯地址：</label>
+								<div class="col-sm-8">
+									<input id="muConcatAddress" name="muConcatAddress" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">邮政编码：</label>
+								<div class="col-sm-8">
+									<input id="muPostcode" name="muPostcode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">工作单位：</label>
+								<div class="col-sm-8">
+									<input id="muWorkCompany" name="muWorkCompany" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">行政职务：</label>
+								<div class="col-sm-8">
+									<input id="muWorkPosition" name="muWorkPosition" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">二级单位：</label>
+								<div class="col-sm-8">
+									<input id="muWorkSecondCompany" name="muWorkSecondCompany" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">党派：</label>
+								<div class="col-sm-8">
+									<input id="muParties" name="muParties" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">参加本团队的起止时间 ：</label>
+								<div class="col-sm-8">
+									<input id="muParticipatingTime" name="muParticipatingTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要学习经历 ：</label>
+								<div class="col-sm-8">
+									<input id="muStudyHistory" name="muStudyHistory" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">科研工作经历：</label>
+								<div class="col-sm-8">
+									<input id="muScienceWorkHistory" name="muScienceWorkHistory" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="muMajorAcademicPartTime" name="muMajorAcademicPartTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">代表性成果：</label>
+								<div class="col-sm-8">
+									<input id="muRepresentativeAchievements" name="muRepresentativeAchievements" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">代表性论文和著作获奖励情况 ：</label>
+								<div class="col-sm-8">
+									<input id="muAwardsRepresentativePapers" name="muAwardsRepresentativePapers" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">对团队发展的贡献：</label>
+								<div class="col-sm-8">
+									<input id="muContribution" name="muContribution" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建日期：</label>
+								<div class="col-sm-8">
+									<input id="created" name="created" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">操作用户id：</label>
+								<div class="col-sm-8">
+									<input id="optUid" name="optUid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">发布的任务id：</label>
+								<div class="col-sm-8">
+									<input id="taskId" name="taskId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">项目id：</label>
+								<div class="col-sm-8">
+									<input id="proId" name="proId" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/enterpriTeamMainUsers/add.js">
+	</script>
+</body>
+</html>

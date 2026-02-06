@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.ImportCheckExcelDataDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+		select `id`,`excel_tab_name`,`award_type`,`excel_num`,`apply_account`,`result_name`,`apply_enterprise`,`check_stat`,`check_opinion`,`major`,`validate_result`,`memo`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`, pro_group_name from ass_import_check_excel_data where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+		select `id`,`excel_tab_name`,`award_type`,`excel_num`,`apply_account`,`result_name`,`apply_enterprise`,`check_stat`,`check_opinion`,`major`,`validate_result`,`memo`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`, pro_group_name from ass_import_check_excel_data
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="excelTabName != null and excelTabName != ''"> and excel_tab_name = #{excelTabName} </if>
+		  		  <if test="awardType != null and awardType != ''"> and award_type = #{awardType} </if>
+		  		  <if test="excelNum != null and excelNum != ''"> and excel_num = #{excelNum} </if>
+		  		  <if test="applyAccount != null and applyAccount != ''"> and apply_account = #{applyAccount} </if>
+		  		  <if test="resultName != null and resultName != ''"> and result_name = #{resultName} </if>
+		  		  <if test="applyEnterprise != null and applyEnterprise != ''"> and apply_enterprise = #{applyEnterprise} </if>
+		  		  <if test="checkStat != null and checkStat != ''"> and check_stat = #{checkStat} </if>
+		  		  <if test="checkOpinion != null and checkOpinion != ''"> and check_opinion = #{checkOpinion} </if>
+		  		  <if test="major != null and major != ''"> and major = #{major} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="memo != null and memo != ''"> and memo = #{memo} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_import_check_excel_data
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="excelTabName != null and excelTabName != ''"> and excel_tab_name = #{excelTabName} </if>
+		  		  <if test="awardType != null and awardType != ''"> and award_type = #{awardType} </if>
+		  		  <if test="excelNum != null and excelNum != ''"> and excel_num = #{excelNum} </if>
+		  		  <if test="applyAccount != null and applyAccount != ''"> and apply_account = #{applyAccount} </if>
+		  		  <if test="resultName != null and resultName != ''"> and result_name = #{resultName} </if>
+		  		  <if test="applyEnterprise != null and applyEnterprise != ''"> and apply_enterprise = #{applyEnterprise} </if>
+		  		  <if test="checkStat != null and checkStat != ''"> and check_stat = #{checkStat} </if>
+		  		  <if test="checkOpinion != null and checkOpinion != ''"> and check_opinion = #{checkOpinion} </if>
+		  		  <if test="major != null and major != ''"> and major = #{major} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="memo != null and memo != ''"> and memo = #{memo} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.ImportCheckExcelDataDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_import_check_excel_data
+		(
+			`excel_tab_name`, 
+			`award_type`, 
+			`excel_num`, 
+			`apply_account`, 
+			`result_name`, 
+			`apply_enterprise`, 
+			`check_stat`, 
+			`check_opinion`, 
+			`major`, 
+			`validate_result`, 
+			`memo`, 
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`,
+		     pro_group_name
+		)
+		values
+		(
+			#{excelTabName}, 
+			#{awardType}, 
+			#{excelNum}, 
+			#{applyAccount}, 
+			#{resultName}, 
+			#{applyEnterprise}, 
+			#{checkStat}, 
+			#{checkOpinion}, 
+			#{major}, 
+			#{validateResult}, 
+			#{memo}, 
+			#{optUid}, 
+			#{proId}, 
+			#{taskId},
+		    #{proGroupName}
+		)
+	</insert>
+    <insert id="saveBatch">
+		insert into ass_import_check_excel_data
+		(
+			`excel_tab_name`,
+			`award_type`,
+			`excel_num`,
+			`apply_account`,
+			`result_name`,
+			`apply_enterprise`,
+			`check_stat`,
+			`check_opinion`,
+			`major`,
+			`validate_result`,
+			`memo`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`,
+		     pro_group_name
+		)
+		values
+		<foreach collection="list" separator="," item="item">
+		(
+			#{item.excelTabName},
+			#{item.awardType},
+			#{item.excelNum},
+			#{item.applyAccount},
+			#{item.resultName},
+			#{item.applyEnterprise},
+			#{item.checkStat},
+			#{item.checkOpinion},
+			#{item.major},
+			#{item.validateResult},
+			#{item.memo},
+			#{item.optUid},
+			#{item.proId},
+			#{item.taskId},
+		    #{item.proGroupName}
+		)
+		</foreach>
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.cpe.domain.ImportCheckExcelDataDO">
+		update ass_import_check_excel_data 
+		<set>
+			<if test="excelTabName != null">`excel_tab_name` = #{excelTabName}, </if>
+			<if test="awardType != null">`award_type` = #{awardType}, </if>
+			<if test="excelNum != null">`excel_num` = #{excelNum}, </if>
+			<if test="applyAccount != null">`apply_account` = #{applyAccount}, </if>
+			<if test="resultName != null">`result_name` = #{resultName}, </if>
+			<if test="applyEnterprise != null">`apply_enterprise` = #{applyEnterprise}, </if>
+			<if test="checkStat != null">`check_stat` = #{checkStat}, </if>
+			<if test="checkOpinion != null">`check_opinion` = #{checkOpinion}, </if>
+			<if test="major != null">`major` = #{major}, </if>
+			<if test="validateResult != null">`validate_result` = #{validateResult}, </if>
+			<if test="memo != null">`memo` = #{memo}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_import_check_excel_data where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_import_check_excel_data where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

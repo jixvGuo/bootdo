@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body>
+    <div class="ui bottom attached segment">
+
+        <h1 style="text-align: center;">创新型课题成果评价表</h1>
+        <table id="scoreTable" class="ui celled  table">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${score.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+            <tr>
+                <th style="width: 10%;text-align: center;">序号</th>
+                <th style="width: 10%;text-align: center;">评审项目</th>
+                <th style="width: 60%;text-align: center;">评审内容</th>
+                <th style="width: 10%;text-align: center;">配分</th>
+                <th style="width: 10%;text-align: center;">得分</th>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">1</td>
+                <td style="width: 10%;text-align: center;">选题</td>
+                <td style="width: 60%;text-align: left;">
+                    (1)选题来自内、外部顾客及相关方的需求；<br>
+                    (2)广泛借鉴，启发小组创新灵感、思路和方法；<br>
+                    (3)设定目标与课题需求一致,目标可测量、可检查；<br>
+                    (3)依据借鉴的相关数据论证目标可行性
+                </td>
+                <td style="width: 10%;text-align: center;">20分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="selSocre" th:text="${score.selSocre}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">2</td>
+                <td style="width: 10%;text-align: center;">
+                    提出方案并确定最佳方案
+                </td>
+                <td style="width: 60%;text-align: left;">
+                    (1)总体方案具有创新性和相对独立性，分级方案具有可比性；<br>
+                    (2)方案分解已逐层展开到可以实施的具体方案；<br>
+                    (3)用事实和数据对每个方案进行逐一评价和选择；<br>
+                    (4)事实和数据来源于现场测量、试验和调查分析
+                </td>
+                <td style="width: 10%;text-align: center;">30分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="bestPlanScore" th:text="${score.bestPlanScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">3</td>
+                <td style="width: 10%;text-align: center;">
+                    对策与实施
+                </td>
+                <td style="width: 60%;text-align: left;">
+                    (1)方案分解中选定可实施的具体方案，逐项制定对策；<br>
+                    (2)按5W1H要求制定对策表，对策即可实施的具体方案，目标可测量、可检查，措施可操作；<br>
+                    (3)按照制定的对策表逐条实施；<br>
+                    (4)每条对策实施后，确认相应目标的完成情况，未达到目标时有修改措施，并按新措施实施
+                </td>
+                <td style="width: 10%;text-align: center;">20分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"  id="strategyExecuteScore" th:text="${score.strategyExecuteScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">4</td>
+                <td style="width: 10%;text-align: center;">效果</td>
+                <td style="width: 60%;text-align: left;">
+                    (1)检查课题目标的完成情况；<br>
+                    (2)确认小组创新成果的经济效益和社会效益实事求是；<br>
+                    (3)有推广价值的创新成果已形成相应的技术标准和管理制度；对专项或一次性的创新成果，已将创新过程相关资料整理存档；<br>
+                    (4)小组成员的专业技术和创新能力得到提升，并提出下一步打算
+                </td>
+                <td style="width: 10%;text-align: center;">15分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true"  name="score" id="effectScore" th:text="${score.effectScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">5</td>
+                <td style="width: 10%;text-align: center;">成果<br>
+                    报告
+                </td>
+                <td style="width: 60%;text-align: left;">
+                    成果报告真实。有逻辑性；<br>
+                    成果报告通俗易懂，以图表、数据为主
+                </td>
+                <td style="width: 10%;text-align: center;">5分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"  id="reportScore" th:text="${score.reportScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">6</td>
+                <td style="width: 10%;text-align: center;">特点</td>
+                <td style="width: 60%;text-align: left;">
+                    (1)充分考虑小组成员的创造性；<br>
+                    (2)创新成果具有推广应用价值；<br>
+                    (3)统计方法运用适宜、正确
+                </td>
+                <td style="width: 10%;text-align: center;">10分</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score"  id="characteristicScore" th:text="${score.characteristicScore}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">总体评价</td>
+                <td style="width: 10%;text-align: left;" colspan="2" contentEditable="true" id="sumRecommend" th:text="${score.sumRecommend}"></td>
+                <td style="width: 10%;text-align: center;">总分</td>
+                <td style="width: 10%;text-align: center;" name="score"  id="appraiseSum" th:text="${score.appraiseSum}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">评价组长签字</td>
+                <td style="width: 10%;text-align: center;" colspan="4" id="appraiseSign" name="score"  th:text="${score.appraiseSign}"></td>
+            </tr>
+        </table>
+        <form id="signupForm" action="" class="ui basic form">
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="save()">保存</div>
+            </div>
+        </form>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/qcResultInnovateScore/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+    <script>
+    </script>
+</body>
+
+</html>

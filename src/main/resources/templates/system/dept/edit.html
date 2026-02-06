@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="deptId" name="deptId" th:value="${sysDept.deptId}"
+								class="hidden">
+							<input id="parentId" name="parentId" th:value="${pId}"
+								   class="form-control hidden" type="text">
+							<input th:value="${parentDeptName}"
+								   class="form-control hidden" type="text" readonly="true" />
+							<!--<div class="form-group">
+								<label class="col-sm-3 control-label ">上级部门：</label>
+								<div class="col-sm-8">
+								<input th:value="${parentDeptName}"
+										class="form-control" type="text" readonly="true" />
+									<input class="form-control hidden" type="text" id="parentId" name="parentId" th:value="${sysDept.parentId}">
+								</div>
+							</div>-->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">企业名称：</label>
+								<div class="col-sm-8">
+									<input id="name" name="name" th:value="${sysDept.name}"
+										class="form-control" type="text">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">企业注册地址：</label>
+								<div class="col-sm-8">
+									<input id="register_addr" name="registerAddr" th:value="${sysDept.registerAddr}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">企业地址：</label>
+								<div class="col-sm-8">
+									<input id="address" name="address" th:value="${sysDept.address}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">统一社会信用代码：</label>
+								<div class="col-sm-8">
+									<input id="enterpriseCreditCode" name="enterpriseCreditCode" th:value="${sysDept.enterpriseCreditCode}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">联系人：</label>
+								<div class="col-sm-8">
+									<input id="contacts" name="contacts" th:value="${sysDept.contacts}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">联系人手机号：</label>
+								<div class="col-sm-8">
+									<input id="conPhone" name="conPhone" th:value="${sysDept.conPhone}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">座机：</label>
+								<div class="col-sm-8">
+									<input id="telPhone" name="telPhone" th:value="${sysDept.telPhone}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">邮编：</label>
+								<div class="col-sm-8">
+									<input id="zipCode" name="zipCode" th:value="${sysDept.zipCode}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">邮箱：</label>
+								<div class="col-sm-8">
+									<input id="email" name="email" th:value="${sysDept.email}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">传真号：</label>
+								<div class="col-sm-8">
+									<input id="fax_number" name="faxNumber" th:value="${sysDept.faxNumber}" class="form-control" type="text">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">排序：</label>
+								<div class="col-sm-8">
+									<input id="orderNum" name="orderNum" th:value="${sysDept.orderNum}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<!--<input id="delFlag" name="delFlag" th:value="${sysDept.delFlag}"
+										class="form-control" type="text">-->
+                                    <select id="delFlag" th:field="${sysDept.delFlag}" th:value="${sysDept.delFlag}" name="delFlag" class="form-control">
+                                        <option value="1" th:selected="${sysDept.delFlag == 1}" >启用</option>
+                                        <option value="0" th:selected="${sysDept.delFlag == 0}">禁用</option>
+                                    </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/sysDept/edit.js">
+	</script>
+</body>
+</html>

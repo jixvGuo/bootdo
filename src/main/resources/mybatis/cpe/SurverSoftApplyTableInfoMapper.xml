@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverSoftApplyTableInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverSoftApplyTableInfoDO">
+		select `id`,`apply_major`,`soft_name`,`soft_short_name`,`soft_type`,`soft_category`,`soft_national_standard`,`soft_task_source`,`soft_start_end`,`soft_trial_time`,`identification_department`,`identification_time`,`evaluation_company`,`evaluation_time`,`editor_chief`,`cooperation_unit`,`contact_name`,`contact_phone`,`fax`,`security_level`,`os_version`,`support_environment`,`os_lan`,`main_applicable_industy`,`main_purpose`,`software_main_functions`,`comprehensive_similar_software`,`cconomic_social_benefits`,`accessories_catalog`,`awards`,`rporting_opinion`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted`,`up_recommendation` from ass_surver_soft_apply_table_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverSoftApplyTableInfoDO">
+		select `id`,`apply_major`,`soft_name`,`soft_short_name`,`soft_type`,`soft_category`,`soft_national_standard`,`soft_task_source`,`soft_start_end`,`soft_trial_time`,`identification_department`,`identification_time`,`evaluation_company`,`evaluation_time`,`editor_chief`,`cooperation_unit`,`contact_name`,`contact_phone`,`fax`,`security_level`,`os_version`,`support_environment`,`os_lan`,`main_applicable_industy`,`main_purpose`,`software_main_functions`,`comprehensive_similar_software`,`cconomic_social_benefits`,`accessories_catalog`,`awards`,`rporting_opinion`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted`,`up_recommendation` from ass_surver_soft_apply_table_info
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="softName != null and softName != ''"> and soft_name = #{softName} </if>
+		  		  <if test="softShortName != null and softShortName != ''"> and soft_short_name = #{softShortName} </if>
+		  		  <if test="softType != null and softType != ''"> and soft_type = #{softType} </if>
+		  		  <if test="softCategory != null and softCategory != ''"> and soft_category = #{softCategory} </if>
+		  		  <if test="softNationalStandard != null and softNationalStandard != ''"> and soft_national_standard = #{softNationalStandard} </if>
+		  		  <if test="softTaskSource != null and softTaskSource != ''"> and soft_task_source = #{softTaskSource} </if>
+		  		  <if test="softStartEnd != null and softStartEnd != ''"> and soft_start_end = #{softStartEnd} </if>
+		  		  <if test="softTrialTime != null and softTrialTime != ''"> and soft_trial_time = #{softTrialTime} </if>
+		  		  <if test="identificationDepartment != null and identificationDepartment != ''"> and identification_department = #{identificationDepartment} </if>
+		  		  <if test="identificationTime != null and identificationTime != ''"> and identification_time = #{identificationTime} </if>
+		  		  <if test="evaluationCompany != null and evaluationCompany != ''"> and evaluation_company = #{evaluationCompany} </if>
+		  		  <if test="evaluationTime != null and evaluationTime != ''"> and evaluation_time = #{evaluationTime} </if>
+		  		  <if test="editorChief != null and editorChief != ''"> and editor_chief = #{editorChief} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactPhone != null and contactPhone != ''"> and contact_phone = #{contactPhone} </if>
+		  		  <if test="fax != null and fax != ''"> and fax = #{fax} </if>
+		  		  <if test="securityLevel != null and securityLevel != ''"> and security_level = #{securityLevel} </if>
+		  		  <if test="osVersion != null and osVersion != ''"> and os_version = #{osVersion} </if>
+		  		  <if test="supportEnvironment != null and supportEnvironment != ''"> and support_environment = #{supportEnvironment} </if>
+		  		  <if test="osLan != null and osLan != ''"> and os_lan = #{osLan} </if>
+		  		  <if test="mainApplicableIndusty != null and mainApplicableIndusty != ''"> and main_applicable_industy = #{mainApplicableIndusty} </if>
+		  		  <if test="mainPurpose != null and mainPurpose != ''"> and main_purpose = #{mainPurpose} </if>
+		  		  <if test="softwareMainFunctions != null and softwareMainFunctions != ''"> and software_main_functions = #{softwareMainFunctions} </if>
+		  		  <if test="comprehensiveSimilarSoftware != null and comprehensiveSimilarSoftware != ''"> and comprehensive_similar_software = #{comprehensiveSimilarSoftware} </if>
+		  		  <if test="cconomicSocialBenefits != null and cconomicSocialBenefits != ''"> and cconomic_social_benefits = #{cconomicSocialBenefits} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="awards != null and awards != ''"> and awards = #{awards} </if>
+		  		  <if test="rportingOpinion != null and rportingOpinion != ''"> and rporting_opinion = #{rportingOpinion} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_soft_apply_table_info
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="softName != null and softName != ''"> and soft_name = #{softName} </if>
+		  		  <if test="softShortName != null and softShortName != ''"> and soft_short_name = #{softShortName} </if>
+		  		  <if test="softType != null and softType != ''"> and soft_type = #{softType} </if>
+		  		  <if test="softCategory != null and softCategory != ''"> and soft_category = #{softCategory} </if>
+		  		  <if test="softNationalStandard != null and softNationalStandard != ''"> and soft_national_standard = #{softNationalStandard} </if>
+		  		  <if test="softTaskSource != null and softTaskSource != ''"> and soft_task_source = #{softTaskSource} </if>
+		  		  <if test="softStartEnd != null and softStartEnd != ''"> and soft_start_end = #{softStartEnd} </if>
+		  		  <if test="softTrialTime != null and softTrialTime != ''"> and soft_trial_time = #{softTrialTime} </if>
+		  		  <if test="identificationDepartment != null and identificationDepartment != ''"> and identification_department = #{identificationDepartment} </if>
+		  		  <if test="identificationTime != null and identificationTime != ''"> and identification_time = #{identificationTime} </if>
+		  		  <if test="evaluationCompany != null and evaluationCompany != ''"> and evaluation_company = #{evaluationCompany} </if>
+		  		  <if test="evaluationTime != null and evaluationTime != ''"> and evaluation_time = #{evaluationTime} </if>
+		  		  <if test="editorChief != null and editorChief != ''"> and editor_chief = #{editorChief} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactPhone != null and contactPhone != ''"> and contact_phone = #{contactPhone} </if>
+		  		  <if test="fax != null and fax != ''"> and fax = #{fax} </if>
+		  		  <if test="securityLevel != null and securityLevel != ''"> and security_level = #{securityLevel} </if>
+		  		  <if test="osVersion != null and osVersion != ''"> and os_version = #{osVersion} </if>
+		  		  <if test="supportEnvironment != null and supportEnvironment != ''"> and support_environment = #{supportEnvironment} </if>
+		  		  <if test="osLan != null and osLan != ''"> and os_lan = #{osLan} </if>
+		  		  <if test="mainApplicableIndusty != null and mainApplicableIndusty != ''"> and main_applicable_industy = #{mainApplicableIndusty} </if>
+		  		  <if test="mainPurpose != null and mainPurpose != ''"> and main_purpose = #{mainPurpose} </if>
+		  		  <if test="softwareMainFunctions != null and softwareMainFunctions != ''"> and software_main_functions = #{softwareMainFunctions} </if>
+		  		  <if test="comprehensiveSimilarSoftware != null and comprehensiveSimilarSoftware != ''"> and comprehensive_similar_software = #{comprehensiveSimilarSoftware} </if>
+		  		  <if test="cconomicSocialBenefits != null and cconomicSocialBenefits != ''"> and cconomic_social_benefits = #{cconomicSocialBenefits} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="awards != null and awards != ''"> and awards = #{awards} </if>
+		  		  <if test="rportingOpinion != null and rportingOpinion != ''"> and rporting_opinion = #{rportingOpinion} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverSoftApplyTableInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_soft_apply_table_info
+		(
+			`apply_major`,
+			`soft_name`,
+			`soft_short_name`,
+			`soft_type`,
+			`soft_category`,
+			`soft_national_standard`,
+			`soft_task_source`,
+			`soft_start_end`,
+			`soft_trial_time`,
+			`identification_department`,
+			`identification_time`,
+			`evaluation_company`,
+			`evaluation_time`,
+			`editor_chief`,
+			`cooperation_unit`,
+			`contact_name`,
+			`contact_phone`,
+			`fax`,
+			`security_level`,
+			`os_version`,
+			`support_environment`,
+			`os_lan`,
+			`main_applicable_industy`,
+			`main_purpose`,
+			`software_main_functions`,
+			`comprehensive_similar_software`,
+			`cconomic_social_benefits`,
+			`accessories_catalog`,
+			`awards`,
+			`rporting_opinion`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`,
+			`up_recommendation`
+		)
+		values
+		(
+			#{applyMajor},
+			#{softName},
+			#{softShortName},
+			#{softType},
+			#{softCategory},
+			#{softNationalStandard},
+			#{softTaskSource},
+			#{softStartEnd},
+			#{softTrialTime},
+			#{identificationDepartment},
+			#{identificationTime},
+			#{evaluationCompany},
+			#{evaluationTime},
+			#{editorChief},
+			#{cooperationUnit},
+			#{contactName},
+			#{contactPhone},
+			#{fax},
+			#{securityLevel},
+			#{osVersion},
+			#{supportEnvironment},
+			#{osLan},
+			#{mainApplicableIndusty},
+			#{mainPurpose},
+			#{softwareMainFunctions},
+			#{comprehensiveSimilarSoftware},
+			#{cconomicSocialBenefits},
+			#{accessoriesCatalog},
+			#{awards},
+			#{rportingOpinion},
+			#{optUid},
+			#{proId},
+			#{taskId},
+			#{upRecommendation}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverSoftApplyTableInfoDO">
+		update ass_surver_soft_apply_table_info
+		<set>
+			<if test="applyMajor != null">`apply_major` = #{applyMajor}, </if>
+			<if test="softName != null">`soft_name` = #{softName}, </if>
+			<if test="softShortName != null">`soft_short_name` = #{softShortName}, </if>
+			<if test="softType != null">`soft_type` = #{softType}, </if>
+			<if test="softCategory != null">`soft_category` = #{softCategory}, </if>
+			<if test="softNationalStandard != null">`soft_national_standard` = #{softNationalStandard}, </if>
+			<if test="softTaskSource != null">`soft_task_source` = #{softTaskSource}, </if>
+			<if test="softStartEnd != null">`soft_start_end` = #{softStartEnd}, </if>
+			<if test="softTrialTime != null">`soft_trial_time` = #{softTrialTime}, </if>
+			<if test="identificationDepartment != null">`identification_department` = #{identificationDepartment}, </if>
+			<if test="identificationTime != null">`identification_time` = #{identificationTime}, </if>
+			<if test="evaluationCompany != null">`evaluation_company` = #{evaluationCompany}, </if>
+			<if test="evaluationTime != null">`evaluation_time` = #{evaluationTime}, </if>
+			<if test="editorChief != null">`editor_chief` = #{editorChief}, </if>
+			<if test="cooperationUnit != null">`cooperation_unit` = #{cooperationUnit}, </if>
+			<if test="contactName != null">`contact_name` = #{contactName}, </if>
+			<if test="contactPhone != null">`contact_phone` = #{contactPhone}, </if>
+			<if test="fax != null">`fax` = #{fax}, </if>
+			<if test="securityLevel != null">`security_level` = #{securityLevel}, </if>
+			<if test="osVersion != null">`os_version` = #{osVersion}, </if>
+			<if test="supportEnvironment != null">`support_environment` = #{supportEnvironment}, </if>
+			<if test="osLan != null">`os_lan` = #{osLan}, </if>
+			<if test="mainApplicableIndusty != null">`main_applicable_industy` = #{mainApplicableIndusty}, </if>
+			<if test="mainPurpose != null">`main_purpose` = #{mainPurpose}, </if>
+			<if test="softwareMainFunctions != null">`software_main_functions` = #{softwareMainFunctions}, </if>
+			<if test="comprehensiveSimilarSoftware != null">`comprehensive_similar_software` = #{comprehensiveSimilarSoftware}, </if>
+			<if test="cconomicSocialBenefits != null">`cconomic_social_benefits` = #{cconomicSocialBenefits}, </if>
+			<if test="accessoriesCatalog != null">`accessories_catalog` = #{accessoriesCatalog}, </if>
+			<if test="awards != null">`awards` = #{awards}, </if>
+			<if test="rportingOpinion != null">`rporting_opinion` = #{rportingOpinion}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}, </if>
+			<if test="upRecommendation != null">`up_recommendation` = #{upRecommendation}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_soft_apply_table_info where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_soft_apply_table_info where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

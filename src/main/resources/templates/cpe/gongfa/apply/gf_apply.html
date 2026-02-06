@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" id="signupForm" class="ui basic form">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input type="hidden" th:value="${projectInfo.proStat}" id="proStat">
+                <input type="hidden" name="proId" id="proId" th:value="${proId}" />
+                <input type="hidden" name="id" th:value="${data.id}" />
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                <h4 class="ui red horizontal divider header">工法申报表填写说明 </h4>
+                <p>1.“申报单位”栏：必须是申报表中所填写的主要完成单位。</p>
+                <p>2.“通讯地址”及“联系人”：指申报单位的地址和联系人。</p>
+                <p>4.“主要完成人”栏：最多填写5人。</p>
+                <p>5.“重新申报项目”指该工法已批准为石油工程建设工法，但批准年限已超过八年，通过创新其内容仍符合石油工程建设工法申报条件的工法项目。</p>
+                <p>6.“工法应用工程名称及时间”：栏最少填写2项工程，如工程应用少于2项，应填写申报表中“工法成熟、可靠性说明”栏。</p>
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui field">
+                    <label>工法名称</label>
+                    <input type="text" name="gfName" th:value="${data.gfName}" placeholder="工法名称">
+                </div>
+                <div class="ui field">
+                    <label>主要完成单位</label>
+                    <input type="text" name="gfUnit" th:value="${data.gfUnit}" placeholder="主要完成单位">
+                </div>
+                <div class="ui field">
+                    <label>推荐单位</label>
+                    <input type="text" name="gfRecommendUnit" th:value="${data.gfRecommendUnit}" placeholder="推荐单位">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>通讯地址</label>
+                        <input type="text" name="gfAddress" th:value="${data.gfAddress}" placeholder="通讯地址">
+                    </div>
+                    <div class="ui field">
+                        <label>邮编</label>
+                        <input type="text" name="gfCode" th:value="${data.gfCode}" placeholder="邮编">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>联系人</label>
+                        <input type="text" name="gfContact" th:value="${data.gfContact}" placeholder="联系人">
+                    </div>
+                    <div class="ui field">
+                        <label>联系电话</label>
+                        <input type="text" name="gfPhone" th:value="${data.gfPhone}" placeholder="联系电话">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>工法应用工程名称和时间</label>
+                    <textarea id="gfApplyInfo" autofocus th:text="${data.gfApplyInfo}" name="gfApplyInfo"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>工法关键技术名称、组织审定的单位和时间</label>
+                    <textarea id="cruxname" autofocus name="gfKeyInfo" th:text="${data.gfKeyInfo}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>工法关键技术获科技成果奖励的情况</label>
+                    <textarea id="reward" autofocus name="gfKeyAward" th:text="${data.gfKeyAward}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>原工法名称、完成单位、石油工程建设工法批准文号及工法编号(重新申报项目填写此栏)</label>
+                    <textarea id="documentnumber" autofocus name="gfOriginInfo" th:text="${data.gfOriginInfo}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>工法内容简述</label>
+                    <textarea id="placeholder" autofocus name="gfTechnologyLevel" th:text="${data.gfTechnologyLevel}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>关键技术及保密点（如有专利权，请注名专利号）</label>
+                    <textarea id="secrecy" autofocus name="gfKeySecret" th:text="${data.gfKeySecret}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>技术水平和技术难度（与国内外同类技术水平比较）</label>
+                    <textarea id="difficulty" autofocus name="gfTechnologyLevel" th:text="${data.gfTechnologyLevel}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>工法成熟、可靠性说明（当工法工程应用少于2项时填写）</label>
+                    <textarea id="practical" autofocus name="gfReliableDesc" th:text="${data.gfReliableDesc}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>工法应用情况及应用前景</label>
+                    <textarea id="future" autofocus name="gfApplyDesc" th:text="${data.gfApplyDesc}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>经济效益和社会效益（包括节能和环保效益）</label>
+                    <textarea id="benefit" autofocus name="gfBenefit" th:text="${data.gfBenefit}"></textarea>
+                </div>
+                <div class="ui basic center aligned segment" onclick="save()">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+            <h4 class="ui red horizontal divider header">主要完成人 </h4>
+            <div class="ui two horizontal segments">
+                <div class="ui segment">
+                    <form class="ui form" id="work_form">
+                        <input type="hidden" name="comId" id="comUid" />
+                        <div class="ui field">
+                            <label>姓名</label>
+                            <input type="text" name="username" id="username" placeholder="姓名">
+                        </div>
+                        <div class="ui field">
+                            <label>职务</label>
+                            <input type="text" name="duties" id="duties" placeholder="职务" >
+                        </div>
+                        <div class="ui field">
+                            <label>职称</label>
+                            <input type="text" name="technicalTitle" id="technicalTitle" placeholder="职称" >
+                        </div>
+                        <div class="ui field">
+                            <label>工作单位</label>
+                            <input type="text" name="unit" id="unit" placeholder="工作单位" >
+                        </div>
+                        <div id="comBtn" class="ui basic center aligned segment">
+                           <div class="ui button" onclick="addCompleteUserInfo()">保存</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="ui segment">
+                        <table class="ui table">
+                            <thead>
+                            <th></th>
+                            <th>姓名</th>
+                            <th>职务</th>
+                            <th>操作</th>
+                            </thead>
+                            <tbody id="completeUserInfo">
+                                <tr th:each="obj,objStat:${completeUserList}" th:id="'workHistory_'+${obj.id}">
+                                    <td th:text="${objStat.count}"></td>
+                                    <td th:text="${obj.username}"></td>
+                                    <td th:text="${obj.duties}"></td>
+                                    <td>
+                                        <a href="javascript:void(0)" th:onclick = "'javascript:viewUserInfo(\''+${obj.id}+'\')'" class="ui teal mini basic button" >查看</a>
+                                        <a href="javascript:void(0)" th:onclick="'javascript:viewUserInfo(\''+${obj.id}+'\')'" class="ui teal mini basic button" >修改</a>
+                                        <a href="javascript:void(0)" th:onclick="'javascript:deleteWorkInfo(\''+${obj.id}+'\')'" class="ui teal mini basic button" >删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/semantic/semantic.min.js"></script>
+    <script type="text/javascript">
+        console.log("------->",$("#comBtn"))
+        /***
+         * 增加工作经历
+         */
+        function addCompleteUserInfo() {
+            console.log("-------------->>addCompleteUserInfo");
+            var data1 = {
+                "unit": $("#unit").val(),
+                "username": $("#username").val(),
+                "duties": $("#duties").val(),
+                "technicalTitle": $("#technicalTitle").val(),
+                "proId":$("#proId").val(),
+                "taskId": $("#taskId").val(),
+                "id": $("#comUid").val(),
+            };
+
+            console.log("data:" + JSON.stringify(data1));
+
+             $.ajax({
+               cache: true,
+               type: "POST",
+               url: "/cpe/gfMainCompleteInfo/save",
+               data: data1,// 你的formid
+               async: false,
+               error: function (request) {
+                   parent.layer.alert("Connection error");
+               },
+               success: function (data) {
+                   if (data.code == 0) {
+                       var obj = data.workHistory;
+                       if(obj) {
+                          var workHistoryStr = "<tr id='workHistory_"+obj.id+"'> " +
+                                        "<td>" + obj.id + "</td>" +
+                                        "<td>" + obj.username + "</td>" +
+                                        "<td>" + obj.duties + "</td> "+
+                                        "<td> "+
+                                        "  <a href=\"#\" class=\"ui teal mini basic button\" onclick='viewUserInfo(" + obj.id + ")'>查看</a>\n" +
+                                        "  <a href=\"#\" class=\"ui teal mini basic button\" onclick='viewUserInfo(" + obj.id + ")'>修改</a>\n" +
+                                        "  <a href=\"#\" class=\"ui teal mini basic button\" onclick='deleteWorkInfo(" + obj.id + ")'>删除</a>\n" +
+                                        "</td>" +
+                                  " </tr>";
+
+                          $("#completeUserInfo").append(workHistoryStr)
+                          document.getElementById("work_form").reset();
+                          $("#completeUserInfo").find("tr").each(function(index) {
+                              $(this).find("td").each(function(i) {
+                               if(i == 0) {
+                                 $(this).html(index + 1)
+                               }
+                             })
+                          })
+                       }else {
+                          let id = $("#comUid").val();
+                          let username = $("#username").val();
+                          let duties = $("#duties").val();
+                          let telTitle =  $("#technicalTitle").val();
+                          let trId = "workHistory_" + id;
+                          let tdArr = $("#" + trId).find("td");
+                          console.log("td---->", tdArr);
+                          tdArr.each(function(index) {
+                             if(index == 1) {
+                                $(this).html(username)
+                             }else if(index == 2) {
+                                $(this).html(duties)
+                             }
+                          })
+                       }
+                   } else {
+                       parent.layer.alert(data.msg)
+                   }
+
+               }
+           });
+
+        }
+
+
+        $('.ui.dropdown').dropdown();
+
+        var briefintroduction = new Simditor({
+            textarea: $("#secrecy"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#difficulty"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#practical"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#future"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#benefit"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#application"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#cruxname"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#reward"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#documentnumber"),
+            defaultImage: "img/a9.jpg"
+        })
+        var briefintroduction = new Simditor({
+            textarea: $("#placeholder"),
+            defaultImage: "img/a9.jpg"
+        })
+        $(".simditor-clean-paste-area").hide();
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+        function viewUserInfo(id) {
+               $.ajax({
+                    cache : true,
+                    type : "GET",
+                    url : "/cpe/gfMainCompleteInfo/get?id="+id,
+                    dataType:"json",
+                    data : "",// 你的formid
+                    async : false,
+                    error : function(request) {
+                        parent.layer.alert("Connection error");
+                    },
+                    success : function(data) {
+                        if (data.code == 0) {
+                            console.log("测试", data, id);
+                            var userInfo = data.data;
+                            $("#comUid").val(id)
+                            $("#work_form").find("input[name='username']").val(userInfo.username);
+                            $("#work_form").find("input[name='duties']").val(userInfo.duties);
+                            $("#work_form").find("input[name='technicalTitle']").val(userInfo.technicalTitle);
+                            $("#work_form").find("input[name='technicalPosition']").val(userInfo.technicalPosition);
+                            $("#work_form").find("input[name='unit']").val(userInfo.unit);
+                        } else {
+                            parent.layer.alert(data.msg)
+                        }
+
+                    }
+                });
+            }
+
+       /**
+        * 删除working经历
+        * @param index
+        */
+       function deleteWorkInfo(index) {
+           console.log("asdadsf" + index);
+           var fd = {
+               "id": index,
+           };
+           $("#workHistory_"+index).remove();
+           $.ajax({
+               cache: true,
+               url: "/cpe/gfMainCompleteInfo/remove",
+               type: 'POST',
+               data: fd,
+               async: false,
+               error: function (request) {
+                   parent.layer.alert("Connection error");
+               },
+               success: function (data) {
+                   if (data.code == 0) {
+                       parent.layer.msg("操作成功");
+                       $("#completeUserInfo").find("tr").each(function(index) {
+                          $(this).find("td").each(function(i) {
+                            if(i == 0) {
+                              $(this).html(index + 1)
+                            }
+                          })
+                       })
+                   } else {
+                       parent.layer.alert(data.msg)
+                   }
+               }
+           })
+
+
+       }
+
+    </script>
+
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/gfGroupApplyInfo/add.js?v=1.3"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+</body>
+
+</html>

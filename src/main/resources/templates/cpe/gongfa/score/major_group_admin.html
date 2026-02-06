@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<!-- 专业组管理-->
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <!--<div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">奖项选择：</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control m-b" name="account">
+                                        <option>科技奖</option>
+                                        <option>团队</option>
+                                        <option>个人</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>-->
+            <input id="taskId" name="taskId" type="hidden" th:value="${taskId}">
+            <input id="proType" name="proType" type="hidden" th:value="${proType}">
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <ul class="folder-list" style="padding: 0">
+                            <li>
+                                <a href="javascript:showMajorAccount('')" style="display:inline-block"><i class="fa fa-folder"></i>全部 &nbsp;&nbsp;&nbsp;&nbsp;</a></a>
+                            </li>
+                            <li>
+                                <a href="javascript:showMajorAccount('管理')" style="display:inline-block"><i class="fa fa-folder"></i> 管理&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:add('管理');" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:showMajorAccount('管理类')" style="display:inline-block"><i class="fa fa-folder"></i> 管理类&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:add('管理类');" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:showMajorAccount('监理')" style="display:inline-block"><i class="fa fa-folder"></i> 监理&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:add('监理');" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:showMajorAccount('监理、管理')" style="display:inline-block"><i class="fa fa-folder"></i> 监理、管理&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:add('监理、管理');" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:showMajorAccount('勘察设计')" style="display:inline-block"><i class="fa fa-folder"></i> 勘察设计&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:add('勘察设计');" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="javascript:showMajorAccount('施工')" style="display:inline-block"><i class="fa fa-folder"></i> 施工&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:add('施工');" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>已分配：</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="i-checks" name="input[]"></th>
+                                    <th>序号</th>
+                                    <th>专业</th>
+                                    <th>账号</th>
+                                    <th>专家名称</th>
+                                    <th>工作单位</th>
+                                    <th>银行账号</th>
+                                    <th>手机号</th>
+                                    <th>签章</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list">
+                                  <tr th:each="sel,selStat:${selInfoList}" th:id="'tr_' + ${sel.loginAccount}">
+                                      <th><input type="checkbox" class="i-checks" name="input[]"></th>
+                                      <td name='trNum' th:text="${selStat.count}"></td>
+                                      <input type='hidden' th:value ='${sel.groupName}' name="major" th:id="'majorName' + ${sel.loginAccount}" />
+                                      <td th:text="${sel.groupName}"></td>
+                                      <td th:text="${sel.loginAccount}" th:id="${sel.loginAccount}"></td>
+                                      <td ><input th:value="${sel.expertName}" type="text" class="form-control" placeholder="专家名称" th:id="'accountName'+${sel.loginAccount}"></td>
+                                      <td ><input th:value="${sel.company}" th:id="'accountCom' + ${sel.loginAccount}" class="form-control" type="text" placeholder="工作单位"></td>
+                                      <td ><input th:value="${sel.bankAccount}" th:id="'accountBank' + ${sel.loginAccount}" class="form-control" type="text" placeholder="银行账户"></td>
+                                      <td ><input th:value="${sel.phone}" th:id="'accountPhone' + ${sel.loginAccount}" class="form-control" type="text" placeholder="手机号"></td>
+                                      <td th:id="'signImg_'+${sel.loginAccount}"><img th:src="${sel.expertSignUrl}" width='75' height='40'></td>
+                                      <td>
+                                          <!--                                    <button th:id="'saveBtn_'+${sel.loginAccount}" type="button" class="btn btn-primary btn-xs" th:onclick="'javascript:save('+${sel.loginAccount}+')'">更新</button>-->
+                                          <button type="button" class="btn btn-primary btn-xs" th:onclick="'javascript:onAddSign('+${sel.loginAccount}+')'">上传签章</button>
+                                          <button type="button" class="btn btn-primary btn-xs" th:onclick="'javascript:remove('+${sel.loginAccount}+')'">移出</button>
+                                      </td>
+                                  </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript">
+        $(document).ready(function () { $(".i-checks").iCheck({ checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green", }) });
+
+        function getYearMonth() {
+            var date = new Date;
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            month = (month < 10 ? "0" + month : month);
+            return mydate = (year.toString() + month.toString());
+        }
+
+        function showMajorAccount(major) {
+            $("#list tr").each(function(index, ele){
+                let mVal = $(this).find("input[name='major']").val()
+                if(major == mVal || major == '') {
+                    $(this).show();
+                }else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        function add(major) {
+
+            var items = ['1', '2', '4', '5', '6', '7', '8', '9', '10', 'a', 'b', 'c', 'e', 'g', 's', '1', 'q', 'f', 'A'];
+
+            var aindex = ($("#list").children().length + 1);
+
+            console.log("----== " + major);
+
+            var raondom = getYearMonth() + '03' + aindex + items[Math.floor(Math.random() * items.length)];
+
+            let loginAccount = raondom
+
+            console.log("----" + raondom)
+
+            var html = " <tr id='tr_"+loginAccount+"'>" +
+                "             <td style=\"width:50px\">"+
+                "                 <input type=\"checkbox\" class=\"i-checks\" name=\"input[]\">"+
+                "             </td>"+
+                "             <td name='trNum' style=\"width:50px\">" + aindex + "</td>" +
+                "             <td style=\"width:50px\"><input type='hidden' name=\"major\" value='"+major+"' id='majorName"+loginAccount+"' /> " + major + "</td>" +
+                "             <td style=\"width:120px\" id=\"accountId" + loginAccount + "\">" + raondom + " </td>" +
+                "             <td style=\"width:120px\"contentEditable=\"true\"> " +
+                "                 <input type='text' class=\"form-control\" placeholder='专家名称' id='accountName" + loginAccount + "'/> " +
+                "             </td>" +
+                "             <td style=\"width:120px\"contentEditable=\"true\"><input id='accountCom" + loginAccount +
+                "' class=\"form-control\" type='text' placeholder='工作单位'></td>" +
+                "             <td style=\"width:120px\"contentEditable=\"true\"><input id='accountBank" + loginAccount +
+                "'class=\"form-control\" type='text' placeholder='银行账户'></td>" +
+                "             <td style=\"width:120px\"contentEditable=\"true\"><input id='accountPhone" + loginAccount +
+                "'class=\"form-control\" type='text' placeholder='手机号'></td>" +
+                "             <td id='signImg_"+loginAccount+"' style=\"width:120px\"></td>" +
+                "             <td style=\"width:200px\">" +
+                "              <button id='saveBtn_"+loginAccount+"' type=\"button\" class=\"btn btn-primary btn-xs\" onclick='save(" + loginAccount + ")'  >保存</button>" +
+                "              <button type=\"button\" class=\"btn btn-primary btn-xs\" onclick='onAddSign(" + loginAccount + ")'>上传签章</button>" +
+                "              <button type=\"button\" class=\"btn btn-primary btn-xs\" onclick='remove(" + loginAccount + ")' >移出</button>" +
+                "             </td>"
+            "         </tr>";
+            $("#list").append(html);
+
+
+
+            $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",})
+        }
+
+
+        /***
+         * 删除某个条目
+         * @param a
+         */
+        function remove(a) {
+            let loginAccount = $("#accountId" + a).html();
+            $.ajax({
+                cache: true,
+                url: "/scienceProgressScience/expert/remove",
+                type: 'POST',
+                data: {
+                    loginAccount:loginAccount
+                },
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        $("#tr_"+a).remove();
+                        $("td[name = 'trNum']").each(function (index,e) {
+                            $(this).html(index+1);
+                        })
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+
+                }
+            })
+        }
+
+        /***
+         * 删除某个条目
+         * @param a
+         */
+        function onAddSign(a) {
+
+            let taskId = $("#taskId").val();
+            var loginAccount = $("#accountId" + a).html();
+            let saveBtnHtml = $("#saveBtn_" + a).html();
+
+            if(saveBtnHtml != "保存") {
+                toUploadSignImg(taskId, loginAccount, a);
+                return;
+            }
+
+            save(a, function () {
+                toUploadSignImg(taskId, loginAccount, a);
+            });
+
+        }
+        function toUploadSignImg(taskId, loginAccount, a) {
+            layer.open({
+                title: '上传转件签名 ',
+                maxmin: true,
+                type: 2,
+                shadeClose: false, // 点击遮罩关闭层
+                area: ['800px', '520px'],
+                content: '/scienceProgressScience/toUploadExpertSign?taskId='+taskId+'&loginAccount=' + loginAccount+"&trIndex="+a
+            });
+        }
+
+
+        /***
+         * 保存专家名字
+         * @param a
+         */
+        function save(a,callback) {
+            var fd = {
+                "username": $("#accountId" + a).html(),
+                "password": "123456",
+                "name": $("#accountName" + a).val(),
+                "bankCard": $("#accountBank" + a).val(),
+                "mobile": $("#accountPhone" + a).val(),
+                "roleIds": "62",
+                "status": "1",
+                "accountCom":$("#accountCom" + a).val()
+            };
+
+
+            console.log("保存专家数据" + JSON.stringify(fd) + fd);
+
+            $.ajax({
+                cache: true,
+                url: "/sys/user/savepro",
+                type: 'POST',
+                data: fd,
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        // parent.layer.msg("操作成功");
+                        console.log(data.msg + "userid");
+                        var isLeader = a == $("#list").find("tr").get(0).find("td").get(2).html();
+                        var majorName = $("#majorName"+a).val();
+                        saveExpertInfo(data.msg,isLeader,majorName, fd, a, callback);
+
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            })
+        }
+
+        /***
+         * 保存对应的专业信息/专业组
+         * @param uid
+         */
+        function saveExpertInfo(uid,isLeader,majorName, userFd, trIndex, callback) {
+            console.log("== this.selfProfession =" + uid);
+            var proType = $("#proType").val();  //获取选中的项
+            var fd = {
+                "userName": majorName,
+                "taskId": $("#taskId").val(),
+                "userId": uid,
+                "proId": "0",
+                "isGroupLeader": isLeader ? 1 : 0,
+                "groupName": majorName,
+                "company": userFd.accountCom,
+                "bankAccount": userFd.bankCard,
+                "phone": userFd.mobile,
+                "expertName":userFd.name,
+                "loginAccount":userFd.username,
+                "proType":proType
+            };
+            console.log("===" + JSON.stringify(fd));
+
+            $.ajax({
+                cache: true,
+                url: "/scienceProgressScience/expert/add",
+                type: 'POST',
+                data: fd,
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        $("#saveBtn_" + trIndex).html("更新");
+                        $("#saveBtn_" + trIndex).remove();
+                        if(callback) {
+                            callback();
+                        }else {
+                            parent.layer.msg("操作成功");
+                        }
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+
+                }
+            })
+
+
+        }
+
+        function showSpeclist(major) {
+            var proType = $("#proType").val();  //获取选中的项
+            let taskId = $("#taskId").val();
+            window.location.href= "/scienceProgressScience/toAssignExperts?taskId=" + taskId + "&major=" + major + "&proType=" + proType;
+        }
+    </script>
+
+</body>
+</html>

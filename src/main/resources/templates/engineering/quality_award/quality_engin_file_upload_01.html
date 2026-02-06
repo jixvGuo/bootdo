@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityAward/toEnginDescUpload(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">项目概况</a>
+    <a th:href="@{/enterpriseQualityAward/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">石油优质工程奖申报单</a>
+    <a th:href="@{/enterpriseQualityAward/toContributorList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">突出贡献者名单</a>
+    <a th:href="@{/enterpriseQualityAward/toUploadFile(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="active item">证实性文件上传</a>
+</div>
+<div class="ui top attached tabular menu">
+    <a href="#" class="active item">证实性材料 </a>
+</div>
+<input name="proId" th:value="${proId}" type="hidden">
+<input name="taskId" th:value="${taskId}" type="hidden">
+<input name="applyId" th:value="${applyId}" type="hidden">
+<input name="fileType" th:value="${fileType}" type="hidden">
+<input type="hidden" id="isReadonly" th:value="${readonly}">
+
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <h4 class="ui red horizontal divider header">证实性材料</h4>
+        <h4 class="ui violet horizontal divider header">境内工程</h4>
+        <div class="ui column grid">
+            <div class="five wide column">
+                <div class="ui segment">
+                    <div class="ui middle aligned selection list" >
+                        <div class="item">
+                            <div class="content">
+                                <div class="header">
+                                    <a href="javascript:showUpload('proof_material_cover','b')">证实性材料封皮</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('commitment','b')">承诺书</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="注明页码" data-position="top center"><a href="javascript:showUpload('table_contents','b')">目录</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"  > <a href="javascript:showUpload('main_qualification_certificate','b')">主申报单位（非建设单位申报时）资质证书 </a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="批复页" data-position="top center">
+                                    <a href="javascript:showUpload('project_preliminary_design_approval_document','b')">  工程初步设计批复文件 </a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="批复页" data-position="top center">  <a href="javascript:showUpload('project_approval_documents','b')"> 工程立项核准或批复文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="主要包括：环评批复文件（批复页）、安评批复文件（批复页）、职业卫生批复文件（批复页），建设工程规划许可证，建设用地规划许可证，土地使用证，施工许可证或开工报告" data-position="top center">
+                                    <a href="javascript:showUpload('project_construction_approval_document','b')">工程报建批复文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('project_quality_assessment_quality_supervision','b')">工程质量监督单位的工程质量评定文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="包括：规划、节能、环保、水土保持、消防、安全、职业卫生、档案验收文件等" data-position="top center">
+                                    <a href="javascript:showUpload('project_completion_acceptance_documents','b')">工程专项竣工验收文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="竣工验收鉴定书提供全文" data-position="top center">
+                                    <a href="javascript:showUpload('project_completion_acceptance_filing_documents','b')">工程竣工验收及备案文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="审计报告提供全文" data-position="top center">
+                                    <a href="javascript:showUpload('project_completion_final_accounts_audit_report','b')">工程竣工决算书或审计报告</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"> <a href="javascript:showUpload('safety_quality_accidents_wages_owed_migrant_workers','b')">无安全质量事故、无拖欠农民工工资证明文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('bureau_level_quality_engineering_award_certificate','b')">局级优质工程奖证书</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('bureau_level_excellent_design_award_certificate','b')">局级优秀设计奖证书</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="非建设单位申报时" data-position="top center"><a href="javascript:showUpload('contract_signed_application_unit_construction_unit','b')">主申报单位与建设单位签订的承包合同</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="局级级以上QC活动成果、工法等" data-position="top center"><a href="javascript:showUpload('Other_materials_describing_quality_project','b')">其他说明工程质量的材料</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--     证实性材料封皮       -->
+            <div id="proof_material_cover" class="updocss_b eleven wide column">
+                <div class="ui segment">
+
+
+                    <a href="#" class="ui teal mini fluid button btn-block" fileType="proof_material_cover">上传文件</a>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+<!--                            th:if="${doc.fileType eq 'proof_material_cover'}"-->
+                            <div th:each="doc:${docUploadDoListIn}"  class="file-box">
+                                <div class="file">
+                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-file"></i>
+                                        </div>
+                                        <div class="file-name">
+                                            <span th:text="${doc.fileName}"/>
+                                            <br/>
+                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                        </div>
+                                    </a>
+                                    <div class="ui two buttons">
+                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--     承诺书       -->
+
+<!--            <div id="commitment" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="commitment">上传(承诺书)</a>-->
+
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'commitment'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--目录 -->
+<!--            <div id="table_contents" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="table_contents">上传(目录)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'table_contents'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <!--主申报单位（非建设单位申报时）资质证书  -->
+<!--            <div id="main_qualification_certificate" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="main_qualification_certificate">上传(主申报单位（非建设单位申报时）资质证书)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'main_qualification_certificate'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <!--工程初步设计批复文件  -->
+<!--            <div id="project_preliminary_design_approval_document" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_preliminary_design_approval_document">上传(工程初步设计批复文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_preliminary_design_approval_document'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--工程立项核准或批复文件-->
+<!--            <div id="project_approval_documents" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_approval_documents">上传(工程立项核准或批复文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_approval_documents'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--工程报建批复文件-->
+<!--            <div id="project_construction_approval_document" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_construction_approval_document">上传(工程报建批复文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_construction_approval_document'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--工程质量监督单位的工程质量评定文件-->
+<!--            <div id="project_quality_assessment_quality_supervision" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_quality_assessment_quality_supervision">上传(程质量监督单位的工程质量评定文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_quality_assessment_quality_supervision'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--工程专项竣工验收文件-->
+<!--            <div id="project_completion_acceptance_documents" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_completion_acceptance_documents">上传(工程专项竣工验收文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_completion_acceptance_documents'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--工程竣工验收及备案文件-->
+<!--            <div id="project_completion_acceptance_filing_documents" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_completion_acceptance_filing_documents">上传(工程竣工验收及备案文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_completion_acceptance_filing_documents'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--工程竣工决算书或审计报告-->
+<!--            <div id="project_completion_final_accounts_audit_report" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_completion_final_accounts_audit_report">上传(工程竣工决算书或审计报告)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_completion_final_accounts_audit_report'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--无安全质量事故、无拖欠农民工工资证明文件-->
+<!--            <div id="safety_quality_accidents_wages_owed_migrant_workers" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="safety_quality_accidents_wages_owed_migrant_workers">上传(无安全质量事故、无拖欠农民工工资证明文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'safety_quality_accidents_wages_owed_migrant_workers'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--局级优质工程奖证书-->
+<!--            <div id="bureau_level_quality_engineering_award_certificate" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="bureau_level_quality_engineering_award_certificate">上传(局级优质工程奖证书)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'bureau_level_quality_engineering_award_certificate'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--局级优秀设计奖证书-->
+<!--            <div id="bureau_level_excellent_design_award_certificate" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="bureau_level_excellent_design_award_certificate">上传(局级优秀设计奖证书)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'bureau_level_excellent_design_award_certificate'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--主申报单位与建设单位签订的承包合同-->
+<!--            <div id="contract_signed_application_unit_construction_unit" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="contract_signed_application_unit_construction_unit">上传(主申报单位与建设单位签订的承包合同)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'contract_signed_application_unit_construction_unit'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+            <!--其他说明工程质量的材料-->
+<!--            <div id="Other_materials_describing_quality_project" class="updocss_b eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="Other_materials_describing_quality_project">上传(其他说明工程质量的材料)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'Other_materials_describing_quality_project'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+        </div>
+        <h4 class="ui violet horizontal divider header">境外工程</h4>
+        <div class="ui column grid">
+            <div class="five wide column">
+                <div class="ui segment">
+                    <div class="ui middle aligned selection list" >
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('main_applying_qualification_certificate_foreign_contracted_project_management','c')">
+                                    主申报单位（非建设单位申报时）资质证书和对外承包工程经营资格证书</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="由国内投资（含对外援建工程）且执行国内相关标准的，应提供政府批复文件（批复页），完全由国外业主投资的项目，提供业主批复文件（批复页）" data-position="top center">
+                                    <a href="javascript:showUpload('project_approval_documents_sub','c')">工程立项文件</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="主要页及签字盖章页，其中，执行境外工程建设标准的项目需提供与国内标准比较的对标说明" data-position="top center">
+                                    <a href="javascript:showUpload('engineering_construction_contractor_service_contract_technical_agreement','c')">工程施工承包商务合同和技术协议</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="分部工程、单位工程验收报告" data-position="top center">
+                                    <a href="javascript:showUpload('project_completion_acceptance_data','c')">工程竣工验收资料 </a> </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('evaluation_opinions_project_users','c')">工程使用单位的评价意见</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="中方驻外大使馆经济商务参赞处对工程质量和使用情况的书面意见" data-position="top center">
+                                    <a href="javascript:showUpload('main_qualification_opinion','c')">意见</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="局级优质工程奖证书或局级主管部门出具工程质量评价证明。另外，获得工程所在国质量奖的，需提供参赞处对质量奖级别的鉴定说明" data-position="top center">
+                                    <a href="javascript:showUpload('bureau_level_quality_engineering_award_certificate_sub','c')">局级优质工程奖证书或局级主管部门出具工程质量评价证明</a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header"><a href="javascript:showUpload('design_award_certificate_design_quality_evaluation_certificate_competent_authority','c')">局级优秀设计奖证书或局级主管部门出具设计质量评价证明 </a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="工程项目无安全、质量事故证明。此证明由主申报单位上级行政主管部门出具" data-position="top center">
+                                    <a href="javascript:showUpload('safety_quality_accident_certificate_project','c')">工程项目无安全、质量事故证明 </a></div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <div class="header" data-tooltip="其他质量、安全、科技、节能、环保等相关资料" data-position="top center">
+                                    <a href="javascript:showUpload('other_related_information','c')">其他相关资料</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--主申报单位（非建设单位申报时）资质证书和对外承包工程经营资格证书-->
+            <div id="main_applying_qualification_certificate_foreign_contracted_project_management" class="updocss_c eleven wide column">
+                <div class="ui segment">
+                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="main_applying_qualification_certificate_foreign_contracted_project_management">上传文件</a>
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div th:each="doc:${docUploadDoListOut}"   class="file-box">
+                                <div class="file">
+                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-file"></i>
+                                        </div>
+                                        <div class="file-name">
+                                            <span th:text="${doc.fileName}"/>
+                                            <br/>
+                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                        </div>
+                                    </a>
+                                    <div class="ui two buttons">
+                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                    <table class="ui table">-->
+                    <!--                        <thead>-->
+                    <!--                        <th></th>-->
+                    <!--                        <th>附件名称</th>-->
+                    <!--                        <th>附件类型</th>-->
+                    <!--                        <th>操作</th>-->
+                    <!--                        </thead>-->
+                    <!--                        <tbody>-->
+                    <!--                        <tr>-->
+                    <!--                            <td>1</td>-->
+                    <!--                            <td>承诺书</td>-->
+                    <!--                            <td>.pdf</td>-->
+                    <!--                            <td>-->
+                    <!--                                <a href="#" class="ui teal mini basic button">查看</a>-->
+                    <!--                                <a href="#" class="ui teal mini basic button">修改</a>-->
+                    <!--                                <a href="#" class="ui teal mini basic button">删除</a>-->
+                    <!--                            </td>-->
+                    <!--                        </tr>-->
+                    <!--                        </tbody>-->
+                    <!--                    </table>-->
+                </div>
+            </div>
+<!--           工程立项文件-->
+<!--            <div id="project_approval_documents_sub" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_approval_documents_sub">上传(工程立项文件)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_approval_documents_sub'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            工程施工承包商务合同和技术协议-->
+<!--            <div id="engineering_construction_contractor_service_contract_technical_agreement" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="engineering_construction_contractor_service_contract_technical_agreement">上传(主申报单位（工程施工承包商务合同和技术协议)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'engineering_construction_contractor_service_contract_technical_agreement'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            工程竣工验收资料-->
+<!--            <div id="project_completion_acceptance_data" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="project_completion_acceptance_data">上传(工程竣工验收资料)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'project_completion_acceptance_data'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            工程使用单位的评价意见-->
+<!--            <div id="evaluation_opinions_project_users" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid button btn-block" fileType="evaluation_opinions_project_users">上传(工程使用单位的评价意见)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'evaluation_opinions_project_users'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            意见-->
+<!--            <div id="main_qualification_opinion" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="main_qualification_opinion">上传( 意见)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'main_qualification_opinion'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            局级优质工程奖证书或局级主管部门出具工程质量评价证明-->
+<!--            <div id="bureau_level_quality_engineering_award_certificate_sub" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="bureau_level_quality_engineering_award_certificate_sub">上传(局级优质工程奖证书或局级主管部门出具工程质量评价证明)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'bureau_level_quality_engineering_award_certificate_sub'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            局级优秀设计奖证书或局级主管部门出具设计质量评价证明-->
+<!--            <div id="design_award_certificate_design_quality_evaluation_certificate_competent_authority" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="design_award_certificate_design_quality_evaluation_certificate_competent_authority">上传(局级优秀设计奖证书或局级主管部门出具设计质量评价证明)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'design_award_certificate_design_quality_evaluation_certificate_competent_authority'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            工程项目无安全、质量事故证明-->
+<!--            <div id="safety_quality_accident_certificate_project" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="safety_quality_accident_certificate_project">上传(工程项目无安全、质量事故证明)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'safety_quality_accident_certificate_project'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            其他相关资料-->
+<!--            <div id="other_related_information" class="updocss_c eleven wide column">-->
+<!--                <div class="ui segment">-->
+<!--                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="other_related_information">上传(其他相关资料)</a>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-12">-->
+
+<!--                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'other_related_information'}" class="file-box">-->
+<!--                                <div class="file">-->
+<!--                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">-->
+<!--                                        <span class="corner"></span>-->
+
+<!--                                        <div class="icon">-->
+<!--                                            <i class="fa fa-file"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="file-name">-->
+<!--                                            <span th:text="${doc.fileName}"/>-->
+<!--                                            <br/>-->
+<!--                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>-->
+<!--                                        </div>-->
+<!--                                    </a>-->
+<!--                                    <div class="ui two buttons">-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>-->
+<!--                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <table class="ui table">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th></th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件名称</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>附件类型</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <th>操作</th>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </thead>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>1</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>承诺书</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>.pdf</td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">查看</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">修改</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a href="#" class="ui teal mini basic button">删除</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </tbody>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+
+        </div>
+        <h4 class="ui red horizontal divider header">工程创新成果总结</h4>
+
+
+
+            <div id="suummary_engineering_innovation_achievements" class="updocss_d seven wide column">
+                <div class="ui segment">
+                    <a href="#" class="ui teal mini fluid   button btn-block" fileType="suummary_engineering_innovation_achievements">上传(工程创新成果总结)</a>
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType eq 'suummary_engineering_innovation_achievements'}" class="file-box">
+                                <div class="file">
+                                    <a href="javascript:void(0)" th:onclick= "'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-file"></i>
+                                        </div>
+                                        <div class="file-name">
+                                            <span th:text="${doc.fileName}"/>
+                                            <br/>
+                                            <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                        </div>
+                                    </a>
+                                    <div class="ui two buttons">
+                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+<!--            <a href="#" class="ui teal mini fluid basic button">上传</a>-->
+
+
+<!--            <table class="ui table">-->
+<!--                <thead>-->
+<!--                <th></th>-->
+<!--                <th>附件名称</th>-->
+<!--                <th>附件类型</th>-->
+<!--                <th>操作</th>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <td>1</td>-->
+<!--                    <td>承诺书</td>-->
+<!--                    <td>.pdf</td>-->
+<!--                    <td>-->
+<!--                        <a href="#" class="ui teal mini basic button">查看</a>-->
+<!--                        <a href="#" class="ui teal mini basic button">修改</a>-->
+<!--                        <a href="#" class="ui teal mini basic button">删除</a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+
+    </div>
+</div>
+<!-- 详情页面 -->
+
+<div th:include="include::footer"></div>
+<script src="/js/layui.js"></script>
+<script src="../js/jquery.min.js"></script>
+
+<script src="../semantic/semantic.min.js"></script>
+<script src="../js/plugins/layer/laydate/laydate.js"></script>
+
+<script  type="text/javascript"   src="/js/appjs/act/engineering_award/engineering_file_real.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        showUpload("proof_material_cover","b");
+        showUpload("main_applying_qualification_certificate_foreign_contracted_project_management","c");
+
+        showUpload("suummary_engineering_innovation_achievements","d");
+
+
+
+    });
+
+    function showUpload(upId, cssType) {
+        // console.log("-----aaaa>showUpload=", upId, $("#" + upId));
+        // $(".updocss_" + cssType).attr('style', 'display:none');
+        // $("#" + upId).attr('style', 'display:block');
+    }
+
+    function toViewUploadDoc(fileName,url) {
+
+        console.log("-----aaaa>showUpload=", fileName, url );
+        parent.layer.open({
+            type : 2,
+            title : fileName,
+            maxmin : true,
+            shadeClose : false, // 点击遮罩关闭层
+            area : [ '800px', '520px' ],
+            content : url  // iframe的url
+        });
+    }
+
+
+
+</script>
+</body>
+</html>

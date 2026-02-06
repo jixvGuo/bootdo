@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.PetroleumEngineeringDao">
+
+
+    <select id="listInstallPro" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProInstallBaseInfoDO">
+        SELECT
+        gs.project_name proName, op.comany_name proUnitName, gs.created, gs.pro_id proId,op.id companyId,gs.id situationId,
+               (select count(1) from ass_oil_pro_unit_opinion where pro_id = gs.pro_id) unitOptionCount,
+               (SELECT pro_stat FROM ass_award_enterprise_project where id = gs.pro_id) proStat,
+               pt.apply_start_date,
+               pt.apply_end_date,
+               pt.check_start_time,
+               pt.check_end_time
+        FROM
+        ass_oil_pro_general_situation gs
+            LEFT JOIN
+        ass_oil_pro_apply_info op ON gs.pro_id = op.pro_id
+            join
+        ass_award_publish_task pt on pt.id = gs.task_id
+        <where>
+            <if test="taskId != null and taskId != ''">and gs.task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and gs.opt_uid = #{optUid}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by gs.id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="listQualityPro"
+            resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProQualityInfoDO">
+        SELECT
+               oai.id applyInfoId,
+               pro.id proId,
+        full_name_unit proUnitName,
+        project_name proName,
+        pro.pro_stat proStat,
+        pt.apply_start_date,
+        pt.apply_end_date,
+        pt.check_start_time,
+        pt.check_end_time,
+        (SELECT
+        COUNT(1)
+        FROM
+        ass_oil_award_contribution_users
+        WHERE
+        pro_id = oai.pro_id) isContributionUser,
+        oai.created
+        FROM
+        boot_do.ass_oil_award_apply_info oai
+        JOIN
+        ass_award_enterprise_project pro ON oai.pro_id = pro.id
+        join
+        ass_award_publish_task pt on pt.id = oai.task_id
+        <where>
+            <if test="taskId != null and taskId != ''">and oai.task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and oai.opt_uid = #{optUid}</if>
+            <if test="proType != null and proType != ''">and pro.pro_type = #{proType}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by oai.id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="countInstallPro" resultType="int">
+        SELECT
+        count(1)
+        FROM
+        ass_oil_pro_general_situation gs
+        LEFT JOIN
+        ass_oil_pro_apply_info op ON gs.pro_id = op.pro_id
+        <where>
+            <if test="taskId != null and taskId != ''">and gs.task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and gs.opt_uid = #{optUid}</if>
+        </where>
+    </select>
+
+    <select id="qualityProCount" resultType="int">
+        SELECT
+         count(1)
+        FROM
+        boot_do.ass_oil_award_apply_info oai
+        JOIN
+        ass_award_enterprise_project pro ON oai.pro_id = pro.id
+        <where>
+            <if test="taskId != null and taskId != ''">and oai.task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and oai.opt_uid = #{optUid}</if>
+            <if test="proType != null and proType != ''">and pro.pro_type = #{proType}</if>
+        </where>
+    </select>
+
+    <delete id="removeApplyInfoByProId">
+        delete from ass_oil_pro_apply_info where pro_id = #{proId}
+    </delete>
+    <delete id="removeDesignAwardByProId">
+        delete from ass_oil_pro_design_award where pro_id = #{proId}
+    </delete>
+    <delete id="removeEngineeAwardByProId">
+        delete from ass_oil_pro_enginee_award where pro_id = #{proId}
+    </delete>
+    <delete id="removeGeneralSituationByProId">
+        delete from ass_oil_pro_general_situation where pro_id = #{proId}
+    </delete>
+    <delete id="removeUnitOpinionByProId">
+        delete from ass_oil_pro_unit_opinion where pro_id = #{proId}
+    </delete>
+
+    <delete id="removeQualityApplyInfo">
+        delete from ass_oil_award_apply_info where pro_id = #{proId}
+    </delete>
+
+    <delete id="removeQualityContributionUser">
+        delete from ass_oil_award_contribution_users where pro_id = #{proId}
+    </delete>
+
+    <update id="updateProStat">
+        update ass_award_enterprise_project set pro_stat = #{proStat} where id = #{proId}
+    </update>
+
+    <delete id="removeQualityConfirmFile">
+        delete from ass_oil_quality_confirm_file where file_id = #{value}
+    </delete>
+
+    <delete id="removeQualityDescFile">
+        delete  from ass_oil_quality_pro_situation where file_id = #{value}
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <input id="id" name="id" th:value="${enterpriTeamMainUsers.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:left" colspan="15">（一）成员结构
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:center" colspan="3"
+                                            rowspan="4">总人数
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                            rowspan="4">
+                                            <input id="totalCount" name="totalCount" th:value="${enterpriTeamUsers.totalCount}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3"
+                                            rowspan="2">男
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                             colspan="2" rowspan="2">
+                                            <input id="manCount" name="manCount" th:value="${enterpriTeamUsers.manCount}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="4">年龄结构
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">65周岁以上
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="ageBeyond65Count" name="ageBeyond65Count" th:value="${enterpriTeamUsers.ageBeyond65Count}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">
+                                            50-65周岁</td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="age50To65Count" name="age50To65Count" th:value="${enterpriTeamUsers.age50To65Count}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3"
+                                            rowspan="2">女
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                             colspan="2" rowspan="2">
+                                            <input id="womanCount" name="womanCount" th:value="${enterpriTeamUsers.womanCount}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">
+                                            35-50周岁</td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                             colspan="3">
+                                            <input id="age35To50Count" name="age35To50Count" th:value="${enterpriTeamUsers.age35To50Count}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">
+                                            35周岁以下</td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="ageUnder36Count" name="ageUnder36Count" th:value="${enterpriTeamUsers.ageUnder36Count}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:center" colspan="3"
+                                            rowspan="2">专业技术职务
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="6">正高级
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="3">副高级
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3">中级
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="6">
+                                            <input id="positionSenior" name="positionSenior" th:value="${enterpriTeamUsers.positionSenior}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                             colspan="3">
+                                            <input id="positionDeputySenior" name="positionDeputySenior" th:value="${enterpriTeamUsers.positionDeputySenior}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="positionIntermediate" name="positionIntermediate" th:value="${enterpriTeamUsers.positionIntermediate}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:center" colspan="3"
+                                            rowspan="2">学历
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="6">博士研究生
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="3">硕士研究生
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="3">本科
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="6">
+                                            <input id="eduDoctoralCandidate" name="eduDoctoralCandidate" th:value="${enterpriTeamUsers.eduDoctoralCandidate}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="eduPostgraduates" name="eduPostgraduates" th:value="${enterpriTeamUsers.eduPostgraduates}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="eduUndergraduate" name="eduUndergraduate" th:value="${enterpriTeamUsers.eduUndergraduate}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:15%;vertical-align:middle;text-align:left" colspan="15">（二）主要成员
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:center" rowspan="4">
+                                            带<br />头<br />人
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:center" colspan="1">序号
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:center" colspan="2">姓名
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:center" colspan="2">性别
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="2">年龄
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:center" colspan="2">专业技术职务
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:center" colspan="2">所在单位
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">研究领域
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1">
+                                            团队工作时间（年）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:left" colspan="1"><input id="muNum" name="muNum" th:value="${enterpriTeamMainUsers.muNum}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="muUsername" name="muUsername" th:value="${enterpriTeamMainUsers.muUsername}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="muGender" name="muGender" th:value="${enterpriTeamMainUsers.muGender}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+<!--                                            <input id="age" name="age" th:value="${enterpriTeamMainUsers.age}" class="form-control" type="text">-->
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="muTechnicalTitle" name="muTechnicalTitle" th:value="${enterpriTeamMainUsers.muTechnicalTitle}" class="form-control" type="text">                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="muWorkCompany" name="muWorkCompany" th:value="${enterpriTeamMainUsers.muWorkCompany}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="researchField" name="researchField" th:value="${enterpriTeamMainUsers.researchField}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            colspan="1">
+                                            <input id="teamWorkTimeLen" name="teamWorkTimeLen" th:value="${enterpriTeamMainUsers.muParticipatingTime}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:left" colspan="1">2
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:left" colspan="1">3
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:center" rowspan="4">其他主要成员
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left" colspan="1">4
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:left" colspan="1">5
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:5%;vertical-align:middle;text-align:left" colspan="1">6
+                                        </td>
+                                        <td style="width:15%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:5%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:25%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="2">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            contentEditable="plaintext-only" colspan="1">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+
+    <script>
+        $(document).ready(function () { $(".i-checks").iCheck({ checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green", }) });
+    </script>
+
+    <script type="text/javascript">
+
+        $("input").blur(
+            function (e) {
+                if (Number($(this).val()) > 100) {
+                    $(this).val(100);
+                }
+                if (Number($(this).val()) < 0) {
+                    $(this).val(0);
+                }
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

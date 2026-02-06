@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <form class="form-horizontal" id="professFormData">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content">
+                        <input id="publishTaskId" name="taskId" type="hidden" th:value="${taskId}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">奖项选择：</label>
+                            <div class="col-sm-4">
+                                <select id="assAwardType" title="请选则奖项"  name="assAwardType" class="selectpicker"
+                                        data-live-search="true">
+                                    <option value="science_progress" th:selected="${proType == 'science_progress'}">科技进步奖</option>
+                                    <option value="science_personal" th:selected="${proType == 'science_personal'}">先进个人奖</option>
+                                    <option value="science_team" th:selected="${proType == 'science_team'}">先进团队奖</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <ul class="folder-list" style="padding: 0" id="proGroupList">
+                            <li th:each="assPro:${profession}" th:if="${assPro != '' and assPro != null}" >
+                                <h4  th:text="${assPro}" th:onclick="'javascript:showSpeclist(\'' + ${assPro} + '\')'"  style="display:inline-block">
+                                    <i class="fa fa-folder"></i>   </h4>
+                                <a  th:onclick="'javascript:add(\''+${assPro}+'\')'" style="display:inline-block"><i class="fa fa-plus"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>已分配：</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>专业</th>
+                                <th>账号</th>
+                                <th>专家名称</th>
+                                <th>工作单位</th>
+                                <th>银行账号</th>
+                                <th>手机号</th>
+                                <th>专家签名</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="list">
+                            <tr th:each="sel,selStat:${selInfoList}" id="tr_${sel.loginAccount}">
+                                <td name='trNum' th:text="${selStat.count}"></td>
+                                <td th:text="${sel.groupName}" th:id="groupName${sel.loginAccount}"></td>
+                                <td th:text="${sel.loginAccount}" th:id="${sel.loginAccount}"></td>
+                                <td ><input th:value="${sel.expertName}" type="text" class="form-control" placeholder="专家名称" th:id="'accountName'+${sel.loginAccount}"></td>
+                                <td ><input th:value="${sel.company}" th:id="'accountCom' + ${sel.loginAccount}" class="form-control" type="text" placeholder="工作单位"></td>
+                                <td ><input th:value="${sel.bankAccount}" th:id="'accountBank' + ${sel.loginAccount}" class="form-control" type="text" placeholder="银行账户"></td>
+                                <td ><input th:value="${sel.phone}" th:id="'accountPhone' + ${sel.loginAccount}" class="form-control" type="text" placeholder="手机号"></td>
+                                <td th:id="'signImg_'+${sel.loginAccount}"><img th:src="${sel.expertSignUrl}" width='75' height='40'></td>
+                                <td>
+                                    <button th:id="'saveBtn_'+${sel.loginAccount}" type="button" class="btn btn-primary btn-xs" th:onclick="'javascript:update('+${sel.loginAccount}+','+ ${sel.id} +',this)'">更新</button>
+                                    <button type="button" class="btn btn-primary btn-xs" th:onclick="'javascript:onAddSign('+${sel.loginAccount}+')'">上传签章</button>
+                                    <button type="button" class="btn btn-primary btn-xs" th:onclick="'javascript:remove('+${sel.loginAccount}+')'">移出</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/act/award/association_profession_manage.js?v=1.2"></script>
+</body>
+
+</html>

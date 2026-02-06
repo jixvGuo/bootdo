@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriseChengguoOtherInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriseChengguoOtherInfoDO">
+		select `id`,`pro_id`,`main_technological_innovation`,`check_file_info`,`check_report`,`check_opinion`,`check_conclusion`,`check_evidence`,`third_data`,`special_data`,`intellectual_property_type`,`intellectual_property_name`,`intellectual_property_country`,`intellectual_property_auth_num`,`intellectual_property_auth_date`,`intellectual_property_certificate_num`,`intellectual_property_right_user`,`intellectual_property_inventor`,`intellectual_property_effective_stat`,`chengguo_standard`,`third_opinion`,`main_enterprise_company_name`,`main_enterprise_completer`,`main_enterprise_completer_gender`,`main_enterprise_completer_sort`,`main_enterprise_completer_birth`,`main_enterprise_completer_id`,`main_enterprise_completer_nation`,`main_enterprise_completer_country`,`main_enterprise_completer_education`,`main_enterprise_completer_administrative_post`,`main_enterprise_completer_technical_title`,`main_enterprise_completer_major_work`,`main_enterprise_completer_major_study`,`main_enterprise_completer_work_telphone`,`main_enterprise_completer_work_mobile`,`main_enterprise_completer_work_email`,`main_enterprise_completer_work_address`,`main_enterprise_completer_work_addr_code`,`main_enterprise_completer_partake_time`,`main_enterprise_completer_academic_contribution`,`main_enterprise_contribution`,`main_enterprise_completer_awards`,`chengguo_base_declaration`,`created`,`chengguo_des` from ass_enterprise_chengguo_other_info where id = #{value}
+	</select>
+
+
+	<select id="getByProId" resultType="com.bootdo.system.domain.EnterpriseChengguoOtherInfoDO">
+		select `id`,`pro_id`,`main_technological_innovation`,`check_file_info`,`check_report`,`check_opinion`,`check_conclusion`,`check_evidence`,`third_data`,`special_data`,`intellectual_property_type`,`intellectual_property_name`,`intellectual_property_country`,`intellectual_property_auth_num`,`intellectual_property_auth_date`,`intellectual_property_certificate_num`,`intellectual_property_right_user`,`intellectual_property_inventor`,`intellectual_property_effective_stat`,`chengguo_standard`,`third_opinion`,`main_enterprise_company_name`,`main_enterprise_completer`,`main_enterprise_completer_gender`,`main_enterprise_completer_sort`,`main_enterprise_completer_birth`,`main_enterprise_completer_id`,`main_enterprise_completer_nation`,`main_enterprise_completer_country`,`main_enterprise_completer_education`,`main_enterprise_completer_administrative_post`,`main_enterprise_completer_technical_title`,`main_enterprise_completer_major_work`,`main_enterprise_completer_major_study`,`main_enterprise_completer_work_telphone`,`main_enterprise_completer_work_mobile`,`main_enterprise_completer_work_email`,`main_enterprise_completer_work_address`,`main_enterprise_completer_work_addr_code`,`main_enterprise_completer_partake_time`,`main_enterprise_completer_academic_contribution`,`main_enterprise_contribution`,`main_enterprise_completer_awards`,`chengguo_base_declaration`,`created`,`chengguo_des` from ass_enterprise_chengguo_other_info where pro_id = #{value}
+	</select>
+
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriseChengguoOtherInfoDO">
+		select `id`,`pro_id`,`main_technological_innovation`,`check_file_info`,`check_report`,`check_opinion`,`check_conclusion`,`check_evidence`,`third_data`,`special_data`,`intellectual_property_type`,`intellectual_property_name`,`intellectual_property_country`,`intellectual_property_auth_num`,`intellectual_property_auth_date`,`intellectual_property_certificate_num`,`intellectual_property_right_user`,`intellectual_property_inventor`,`intellectual_property_effective_stat`,`chengguo_standard`,`third_opinion`,`main_enterprise_company_name`,`main_enterprise_completer`,`main_enterprise_completer_gender`,`main_enterprise_completer_sort`,`main_enterprise_completer_birth`,`main_enterprise_completer_id`,`main_enterprise_completer_nation`,`main_enterprise_completer_country`,`main_enterprise_completer_education`,`main_enterprise_completer_administrative_post`,`main_enterprise_completer_technical_title`,`main_enterprise_completer_major_work`,`main_enterprise_completer_major_study`,`main_enterprise_completer_work_telphone`,`main_enterprise_completer_work_mobile`,`main_enterprise_completer_work_email`,`main_enterprise_completer_work_address`,`main_enterprise_completer_work_addr_code`,`main_enterprise_completer_partake_time`,`main_enterprise_completer_academic_contribution`,`main_enterprise_contribution`,`main_enterprise_completer_awards`,`chengguo_base_declaration`,`created`,`chengguo_des` from ass_enterprise_chengguo_other_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="mainTechnologicalInnovation != null and mainTechnologicalInnovation != ''"> and main_technological_innovation = #{mainTechnologicalInnovation} </if>
+		  		  <if test="checkFileInfo != null and checkFileInfo != ''"> and check_file_info = #{checkFileInfo} </if>
+		  		  <if test="checkReport != null and checkReport != ''"> and check_report = #{checkReport} </if>
+		  		  <if test="checkOpinion != null and checkOpinion != ''"> and check_opinion = #{checkOpinion} </if>
+		  		  <if test="checkConclusion != null and checkConclusion != ''"> and check_conclusion = #{checkConclusion} </if>
+		  		  <if test="checkEvidence != null and checkEvidence != ''"> and check_evidence = #{checkEvidence} </if>
+		  		  <if test="thirdData != null and thirdData != ''"> and third_data = #{thirdData} </if>
+		  		  <if test="specialData != null and specialData != ''"> and special_data = #{specialData} </if>
+		  		  <if test="intellectualPropertyType != null and intellectualPropertyType != ''"> and intellectual_property_type = #{intellectualPropertyType} </if>
+		  		  <if test="intellectualPropertyName != null and intellectualPropertyName != ''"> and intellectual_property_name = #{intellectualPropertyName} </if>
+		  		  <if test="intellectualPropertyCountry != null and intellectualPropertyCountry != ''"> and intellectual_property_country = #{intellectualPropertyCountry} </if>
+		  		  <if test="intellectualPropertyAuthNum != null and intellectualPropertyAuthNum != ''"> and intellectual_property_auth_num = #{intellectualPropertyAuthNum} </if>
+		  		  <if test="intellectualPropertyAuthDate != null and intellectualPropertyAuthDate != ''"> and intellectual_property_auth_date = #{intellectualPropertyAuthDate} </if>
+		  		  <if test="intellectualPropertyCertificateNum != null and intellectualPropertyCertificateNum != ''"> and intellectual_property_certificate_num = #{intellectualPropertyCertificateNum} </if>
+		  		  <if test="intellectualPropertyRightUser != null and intellectualPropertyRightUser != ''"> and intellectual_property_right_user = #{intellectualPropertyRightUser} </if>
+		  		  <if test="intellectualPropertyInventor != null and intellectualPropertyInventor != ''"> and intellectual_property_inventor = #{intellectualPropertyInventor} </if>
+		  		  <if test="intellectualPropertyEffectiveStat != null and intellectualPropertyEffectiveStat != ''"> and intellectual_property_effective_stat = #{intellectualPropertyEffectiveStat} </if>
+		  		  <if test="chengguoStandard != null and chengguoStandard != ''"> and chengguo_standard = #{chengguoStandard} </if>
+		  		  <if test="thirdOpinion != null and thirdOpinion != ''"> and third_opinion = #{thirdOpinion} </if>
+		  		  <if test="mainEnterpriseCompanyName != null and mainEnterpriseCompanyName != ''"> and main_enterprise_company_name = #{mainEnterpriseCompanyName} </if>
+		  		  <if test="mainEnterpriseCompleter != null and mainEnterpriseCompleter != ''"> and main_enterprise_completer = #{mainEnterpriseCompleter} </if>
+		  		  <if test="mainEnterpriseCompleterGender != null and mainEnterpriseCompleterGender != ''"> and main_enterprise_completer_gender = #{mainEnterpriseCompleterGender} </if>
+		  		  <if test="mainEnterpriseCompleterSort != null and mainEnterpriseCompleterSort != ''"> and main_enterprise_completer_sort = #{mainEnterpriseCompleterSort} </if>
+		  		  <if test="mainEnterpriseCompleterBirth != null and mainEnterpriseCompleterBirth != ''"> and main_enterprise_completer_birth = #{mainEnterpriseCompleterBirth} </if>
+		  		  <if test="mainEnterpriseCompleterId != null and mainEnterpriseCompleterId != ''"> and main_enterprise_completer_id = #{mainEnterpriseCompleterId} </if>
+		  		  <if test="mainEnterpriseCompleterNation != null and mainEnterpriseCompleterNation != ''"> and main_enterprise_completer_nation = #{mainEnterpriseCompleterNation} </if>
+		  		  <if test="mainEnterpriseCompleterCountry != null and mainEnterpriseCompleterCountry != ''"> and main_enterprise_completer_country = #{mainEnterpriseCompleterCountry} </if>
+		  		  <if test="mainEnterpriseCompleterEducation != null and mainEnterpriseCompleterEducation != ''"> and main_enterprise_completer_education = #{mainEnterpriseCompleterEducation} </if>
+		  		  <if test="mainEnterpriseCompleterAdministrativePost != null and mainEnterpriseCompleterAdministrativePost != ''"> and main_enterprise_completer_administrative_post = #{mainEnterpriseCompleterAdministrativePost} </if>
+		  		  <if test="mainEnterpriseCompleterTechnicalTitle != null and mainEnterpriseCompleterTechnicalTitle != ''"> and main_enterprise_completer_technical_title = #{mainEnterpriseCompleterTechnicalTitle} </if>
+		  		  <if test="mainEnterpriseCompleterMajorWork != null and mainEnterpriseCompleterMajorWork != ''"> and main_enterprise_completer_major_work = #{mainEnterpriseCompleterMajorWork} </if>
+		  		  <if test="mainEnterpriseCompleterMajorStudy != null and mainEnterpriseCompleterMajorStudy != ''"> and main_enterprise_completer_major_study = #{mainEnterpriseCompleterMajorStudy} </if>
+		  		  <if test="mainEnterpriseCompleterWorkTelphone != null and mainEnterpriseCompleterWorkTelphone != ''"> and main_enterprise_completer_work_telphone = #{mainEnterpriseCompleterWorkTelphone} </if>
+		  		  <if test="mainEnterpriseCompleterWorkMobile != null and mainEnterpriseCompleterWorkMobile != ''"> and main_enterprise_completer_work_mobile = #{mainEnterpriseCompleterWorkMobile} </if>
+		  		  <if test="mainEnterpriseCompleterWorkEmail != null and mainEnterpriseCompleterWorkEmail != ''"> and main_enterprise_completer_work_email = #{mainEnterpriseCompleterWorkEmail} </if>
+		  		  <if test="mainEnterpriseCompleterWorkAddress != null and mainEnterpriseCompleterWorkAddress != ''"> and main_enterprise_completer_work_address = #{mainEnterpriseCompleterWorkAddress} </if>
+		  		  <if test="mainEnterpriseCompleterWorkAddrCode != null and mainEnterpriseCompleterWorkAddrCode != ''"> and main_enterprise_completer_work_addr_code = #{mainEnterpriseCompleterWorkAddrCode} </if>
+		  		  <if test="mainEnterpriseCompleterPartakeTime != null and mainEnterpriseCompleterPartakeTime != ''"> and main_enterprise_completer_partake_time = #{mainEnterpriseCompleterPartakeTime} </if>
+		  		  <if test="mainEnterpriseCompleterAcademicContribution != null and mainEnterpriseCompleterAcademicContribution != ''"> and main_enterprise_completer_academic_contribution = #{mainEnterpriseCompleterAcademicContribution} </if>
+		  		  <if test="mainEnterpriseContribution != null and mainEnterpriseContribution != ''"> and main_enterprise_contribution = #{mainEnterpriseContribution} </if>
+		  		  <if test="mainEnterpriseCompleterAwards != null and mainEnterpriseCompleterAwards != ''"> and main_enterprise_completer_awards = #{mainEnterpriseCompleterAwards} </if>
+		  		  <if test="chengguoBaseDeclaration != null and chengguoBaseDeclaration != ''"> and chengguo_base_declaration = #{chengguoBaseDeclaration} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+			      <if test="chengguoDes != null and chengguoDes != ''"> and chengguo_des = #{chengguoDes} </if>
+
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterprise_chengguo_other_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="mainTechnologicalInnovation != null and mainTechnologicalInnovation != ''"> and main_technological_innovation = #{mainTechnologicalInnovation} </if>
+		  		  <if test="checkFileInfo != null and checkFileInfo != ''"> and check_file_info = #{checkFileInfo} </if>
+		  		  <if test="checkReport != null and checkReport != ''"> and check_report = #{checkReport} </if>
+		  		  <if test="checkOpinion != null and checkOpinion != ''"> and check_opinion = #{checkOpinion} </if>
+		  		  <if test="checkConclusion != null and checkConclusion != ''"> and check_conclusion = #{checkConclusion} </if>
+		  		  <if test="checkEvidence != null and checkEvidence != ''"> and check_evidence = #{checkEvidence} </if>
+		  		  <if test="thirdData != null and thirdData != ''"> and third_data = #{thirdData} </if>
+		  		  <if test="specialData != null and specialData != ''"> and special_data = #{specialData} </if>
+		  		  <if test="intellectualPropertyType != null and intellectualPropertyType != ''"> and intellectual_property_type = #{intellectualPropertyType} </if>
+		  		  <if test="intellectualPropertyName != null and intellectualPropertyName != ''"> and intellectual_property_name = #{intellectualPropertyName} </if>
+		  		  <if test="intellectualPropertyCountry != null and intellectualPropertyCountry != ''"> and intellectual_property_country = #{intellectualPropertyCountry} </if>
+		  		  <if test="intellectualPropertyAuthNum != null and intellectualPropertyAuthNum != ''"> and intellectual_property_auth_num = #{intellectualPropertyAuthNum} </if>
+		  		  <if test="intellectualPropertyAuthDate != null and intellectualPropertyAuthDate != ''"> and intellectual_property_auth_date = #{intellectualPropertyAuthDate} </if>
+		  		  <if test="intellectualPropertyCertificateNum != null and intellectualPropertyCertificateNum != ''"> and intellectual_property_certificate_num = #{intellectualPropertyCertificateNum} </if>
+		  		  <if test="intellectualPropertyRightUser != null and intellectualPropertyRightUser != ''"> and intellectual_property_right_user = #{intellectualPropertyRightUser} </if>
+		  		  <if test="intellectualPropertyInventor != null and intellectualPropertyInventor != ''"> and intellectual_property_inventor = #{intellectualPropertyInventor} </if>
+		  		  <if test="intellectualPropertyEffectiveStat != null and intellectualPropertyEffectiveStat != ''"> and intellectual_property_effective_stat = #{intellectualPropertyEffectiveStat} </if>
+		  		  <if test="chengguoStandard != null and chengguoStandard != ''"> and chengguo_standard = #{chengguoStandard} </if>
+		  		  <if test="thirdOpinion != null and thirdOpinion != ''"> and third_opinion = #{thirdOpinion} </if>
+		  		  <if test="mainEnterpriseCompanyName != null and mainEnterpriseCompanyName != ''"> and main_enterprise_company_name = #{mainEnterpriseCompanyName} </if>
+		  		  <if test="mainEnterpriseCompleter != null and mainEnterpriseCompleter != ''"> and main_enterprise_completer = #{mainEnterpriseCompleter} </if>
+		  		  <if test="mainEnterpriseCompleterGender != null and mainEnterpriseCompleterGender != ''"> and main_enterprise_completer_gender = #{mainEnterpriseCompleterGender} </if>
+		  		  <if test="mainEnterpriseCompleterSort != null and mainEnterpriseCompleterSort != ''"> and main_enterprise_completer_sort = #{mainEnterpriseCompleterSort} </if>
+		  		  <if test="mainEnterpriseCompleterBirth != null and mainEnterpriseCompleterBirth != ''"> and main_enterprise_completer_birth = #{mainEnterpriseCompleterBirth} </if>
+		  		  <if test="mainEnterpriseCompleterId != null and mainEnterpriseCompleterId != ''"> and main_enterprise_completer_id = #{mainEnterpriseCompleterId} </if>
+		  		  <if test="mainEnterpriseCompleterNation != null and mainEnterpriseCompleterNation != ''"> and main_enterprise_completer_nation = #{mainEnterpriseCompleterNation} </if>
+		  		  <if test="mainEnterpriseCompleterCountry != null and mainEnterpriseCompleterCountry != ''"> and main_enterprise_completer_country = #{mainEnterpriseCompleterCountry} </if>
+		  		  <if test="mainEnterpriseCompleterEducation != null and mainEnterpriseCompleterEducation != ''"> and main_enterprise_completer_education = #{mainEnterpriseCompleterEducation} </if>
+		  		  <if test="mainEnterpriseCompleterAdministrativePost != null and mainEnterpriseCompleterAdministrativePost != ''"> and main_enterprise_completer_administrative_post = #{mainEnterpriseCompleterAdministrativePost} </if>
+		  		  <if test="mainEnterpriseCompleterTechnicalTitle != null and mainEnterpriseCompleterTechnicalTitle != ''"> and main_enterprise_completer_technical_title = #{mainEnterpriseCompleterTechnicalTitle} </if>
+		  		  <if test="mainEnterpriseCompleterMajorWork != null and mainEnterpriseCompleterMajorWork != ''"> and main_enterprise_completer_major_work = #{mainEnterpriseCompleterMajorWork} </if>
+		  		  <if test="mainEnterpriseCompleterMajorStudy != null and mainEnterpriseCompleterMajorStudy != ''"> and main_enterprise_completer_major_study = #{mainEnterpriseCompleterMajorStudy} </if>
+		  		  <if test="mainEnterpriseCompleterWorkTelphone != null and mainEnterpriseCompleterWorkTelphone != ''"> and main_enterprise_completer_work_telphone = #{mainEnterpriseCompleterWorkTelphone} </if>
+		  		  <if test="mainEnterpriseCompleterWorkMobile != null and mainEnterpriseCompleterWorkMobile != ''"> and main_enterprise_completer_work_mobile = #{mainEnterpriseCompleterWorkMobile} </if>
+		  		  <if test="mainEnterpriseCompleterWorkEmail != null and mainEnterpriseCompleterWorkEmail != ''"> and main_enterprise_completer_work_email = #{mainEnterpriseCompleterWorkEmail} </if>
+		  		  <if test="mainEnterpriseCompleterWorkAddress != null and mainEnterpriseCompleterWorkAddress != ''"> and main_enterprise_completer_work_address = #{mainEnterpriseCompleterWorkAddress} </if>
+		  		  <if test="mainEnterpriseCompleterWorkAddrCode != null and mainEnterpriseCompleterWorkAddrCode != ''"> and main_enterprise_completer_work_addr_code = #{mainEnterpriseCompleterWorkAddrCode} </if>
+		  		  <if test="mainEnterpriseCompleterPartakeTime != null and mainEnterpriseCompleterPartakeTime != ''"> and main_enterprise_completer_partake_time = #{mainEnterpriseCompleterPartakeTime} </if>
+		  		  <if test="mainEnterpriseCompleterAcademicContribution != null and mainEnterpriseCompleterAcademicContribution != ''"> and main_enterprise_completer_academic_contribution = #{mainEnterpriseCompleterAcademicContribution} </if>
+		  		  <if test="mainEnterpriseContribution != null and mainEnterpriseContribution != ''"> and main_enterprise_contribution = #{mainEnterpriseContribution} </if>
+		  		  <if test="mainEnterpriseCompleterAwards != null and mainEnterpriseCompleterAwards != ''"> and main_enterprise_completer_awards = #{mainEnterpriseCompleterAwards} </if>
+		  		  <if test="chengguoBaseDeclaration != null and chengguoBaseDeclaration != ''"> and chengguo_base_declaration = #{chengguoBaseDeclaration} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+			      <if test="chengguoDes != null and chengguoDes != ''"> and chengguo_des = #{chengguoDes} </if>
+
+
+
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriseChengguoOtherInfoDO">
+		insert into ass_enterprise_chengguo_other_info
+		(
+			`id`, 
+			`pro_id`, 
+			`main_technological_innovation`, 
+			`check_file_info`, 
+			`check_report`, 
+			`check_opinion`, 
+			`check_conclusion`, 
+			`check_evidence`, 
+			`third_data`, 
+			`special_data`, 
+			`intellectual_property_type`, 
+			`intellectual_property_name`, 
+			`intellectual_property_country`, 
+			`intellectual_property_auth_num`, 
+			`intellectual_property_auth_date`, 
+			`intellectual_property_certificate_num`, 
+			`intellectual_property_right_user`, 
+			`intellectual_property_inventor`, 
+			`intellectual_property_effective_stat`, 
+			`chengguo_standard`, 
+			`third_opinion`, 
+			`main_enterprise_company_name`, 
+			`main_enterprise_completer`, 
+			`main_enterprise_completer_gender`, 
+			`main_enterprise_completer_sort`, 
+			`main_enterprise_completer_birth`, 
+			`main_enterprise_completer_id`, 
+			`main_enterprise_completer_nation`, 
+			`main_enterprise_completer_country`, 
+			`main_enterprise_completer_education`, 
+			`main_enterprise_completer_administrative_post`, 
+			`main_enterprise_completer_technical_title`, 
+			`main_enterprise_completer_major_work`, 
+			`main_enterprise_completer_major_study`, 
+			`main_enterprise_completer_work_telphone`, 
+			`main_enterprise_completer_work_mobile`, 
+			`main_enterprise_completer_work_email`, 
+			`main_enterprise_completer_work_address`, 
+			`main_enterprise_completer_work_addr_code`, 
+			`main_enterprise_completer_partake_time`, 
+			`main_enterprise_completer_academic_contribution`, 
+			`main_enterprise_contribution`, 
+			`main_enterprise_completer_awards`, 
+			`chengguo_base_declaration`,
+			`chengguo_des`
+
+		)
+		values
+		(
+			#{id}, 
+			#{proId}, 
+			#{mainTechnologicalInnovation}, 
+			#{checkFileInfo}, 
+			#{checkReport}, 
+			#{checkOpinion}, 
+			#{checkConclusion}, 
+			#{checkEvidence}, 
+			#{thirdData}, 
+			#{specialData}, 
+			#{intellectualPropertyType}, 
+			#{intellectualPropertyName}, 
+			#{intellectualPropertyCountry}, 
+			#{intellectualPropertyAuthNum}, 
+			#{intellectualPropertyAuthDate}, 
+			#{intellectualPropertyCertificateNum}, 
+			#{intellectualPropertyRightUser}, 
+			#{intellectualPropertyInventor}, 
+			#{intellectualPropertyEffectiveStat}, 
+			#{chengguoStandard}, 
+			#{thirdOpinion}, 
+			#{mainEnterpriseCompanyName}, 
+			#{mainEnterpriseCompleter}, 
+			#{mainEnterpriseCompleterGender}, 
+			#{mainEnterpriseCompleterSort}, 
+			#{mainEnterpriseCompleterBirth}, 
+			#{mainEnterpriseCompleterId}, 
+			#{mainEnterpriseCompleterNation}, 
+			#{mainEnterpriseCompleterCountry}, 
+			#{mainEnterpriseCompleterEducation}, 
+			#{mainEnterpriseCompleterAdministrativePost}, 
+			#{mainEnterpriseCompleterTechnicalTitle}, 
+			#{mainEnterpriseCompleterMajorWork}, 
+			#{mainEnterpriseCompleterMajorStudy}, 
+			#{mainEnterpriseCompleterWorkTelphone}, 
+			#{mainEnterpriseCompleterWorkMobile}, 
+			#{mainEnterpriseCompleterWorkEmail}, 
+			#{mainEnterpriseCompleterWorkAddress}, 
+			#{mainEnterpriseCompleterWorkAddrCode}, 
+			#{mainEnterpriseCompleterPartakeTime}, 
+			#{mainEnterpriseCompleterAcademicContribution}, 
+			#{mainEnterpriseContribution}, 
+			#{mainEnterpriseCompleterAwards}, 
+			#{chengguoBaseDeclaration},
+			#{chengguoDes}
+
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriseChengguoOtherInfoDO">
+		update ass_enterprise_chengguo_other_info 
+		<set>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="mainTechnologicalInnovation != null">`main_technological_innovation` = #{mainTechnologicalInnovation}, </if>
+			<if test="checkFileInfo != null">`check_file_info` = #{checkFileInfo}, </if>
+			<if test="checkReport != null">`check_report` = #{checkReport}, </if>
+			<if test="checkOpinion != null">`check_opinion` = #{checkOpinion}, </if>
+			<if test="checkConclusion != null">`check_conclusion` = #{checkConclusion}, </if>
+			<if test="checkEvidence != null">`check_evidence` = #{checkEvidence}, </if>
+			<if test="thirdData != null">`third_data` = #{thirdData}, </if>
+			<if test="specialData != null">`special_data` = #{specialData}, </if>
+			<if test="intellectualPropertyType != null">`intellectual_property_type` = #{intellectualPropertyType}, </if>
+			<if test="intellectualPropertyName != null">`intellectual_property_name` = #{intellectualPropertyName}, </if>
+			<if test="intellectualPropertyCountry != null">`intellectual_property_country` = #{intellectualPropertyCountry}, </if>
+			<if test="intellectualPropertyAuthNum != null">`intellectual_property_auth_num` = #{intellectualPropertyAuthNum}, </if>
+			<if test="intellectualPropertyAuthDate != null">`intellectual_property_auth_date` = #{intellectualPropertyAuthDate}, </if>
+			<if test="intellectualPropertyCertificateNum != null">`intellectual_property_certificate_num` = #{intellectualPropertyCertificateNum}, </if>
+			<if test="intellectualPropertyRightUser != null">`intellectual_property_right_user` = #{intellectualPropertyRightUser}, </if>
+			<if test="intellectualPropertyInventor != null">`intellectual_property_inventor` = #{intellectualPropertyInventor}, </if>
+			<if test="intellectualPropertyEffectiveStat != null">`intellectual_property_effective_stat` = #{intellectualPropertyEffectiveStat}, </if>
+			<if test="chengguoStandard != null">`chengguo_standard` = #{chengguoStandard}, </if>
+			<if test="thirdOpinion != null">`third_opinion` = #{thirdOpinion}, </if>
+			<if test="mainEnterpriseCompanyName != null">`main_enterprise_company_name` = #{mainEnterpriseCompanyName}, </if>
+			<if test="mainEnterpriseCompleter != null">`main_enterprise_completer` = #{mainEnterpriseCompleter}, </if>
+			<if test="mainEnterpriseCompleterGender != null">`main_enterprise_completer_gender` = #{mainEnterpriseCompleterGender}, </if>
+			<if test="mainEnterpriseCompleterSort != null">`main_enterprise_completer_sort` = #{mainEnterpriseCompleterSort}, </if>
+			<if test="mainEnterpriseCompleterBirth != null">`main_enterprise_completer_birth` = #{mainEnterpriseCompleterBirth}, </if>
+			<if test="mainEnterpriseCompleterId != null">`main_enterprise_completer_id` = #{mainEnterpriseCompleterId}, </if>
+			<if test="mainEnterpriseCompleterNation != null">`main_enterprise_completer_nation` = #{mainEnterpriseCompleterNation}, </if>
+			<if test="mainEnterpriseCompleterCountry != null">`main_enterprise_completer_country` = #{mainEnterpriseCompleterCountry}, </if>
+			<if test="mainEnterpriseCompleterEducation != null">`main_enterprise_completer_education` = #{mainEnterpriseCompleterEducation}, </if>
+			<if test="mainEnterpriseCompleterAdministrativePost != null">`main_enterprise_completer_administrative_post` = #{mainEnterpriseCompleterAdministrativePost}, </if>
+			<if test="mainEnterpriseCompleterTechnicalTitle != null">`main_enterprise_completer_technical_title` = #{mainEnterpriseCompleterTechnicalTitle}, </if>
+			<if test="mainEnterpriseCompleterMajorWork != null">`main_enterprise_completer_major_work` = #{mainEnterpriseCompleterMajorWork}, </if>
+			<if test="mainEnterpriseCompleterMajorStudy != null">`main_enterprise_completer_major_study` = #{mainEnterpriseCompleterMajorStudy}, </if>
+			<if test="mainEnterpriseCompleterWorkTelphone != null">`main_enterprise_completer_work_telphone` = #{mainEnterpriseCompleterWorkTelphone}, </if>
+			<if test="mainEnterpriseCompleterWorkMobile != null">`main_enterprise_completer_work_mobile` = #{mainEnterpriseCompleterWorkMobile}, </if>
+			<if test="mainEnterpriseCompleterWorkEmail != null">`main_enterprise_completer_work_email` = #{mainEnterpriseCompleterWorkEmail}, </if>
+			<if test="mainEnterpriseCompleterWorkAddress != null">`main_enterprise_completer_work_address` = #{mainEnterpriseCompleterWorkAddress}, </if>
+			<if test="mainEnterpriseCompleterWorkAddrCode != null">`main_enterprise_completer_work_addr_code` = #{mainEnterpriseCompleterWorkAddrCode}, </if>
+			<if test="mainEnterpriseCompleterPartakeTime != null">`main_enterprise_completer_partake_time` = #{mainEnterpriseCompleterPartakeTime}, </if>
+			<if test="mainEnterpriseCompleterAcademicContribution != null">`main_enterprise_completer_academic_contribution` = #{mainEnterpriseCompleterAcademicContribution}, </if>
+			<if test="mainEnterpriseContribution != null">`main_enterprise_contribution` = #{mainEnterpriseContribution}, </if>
+			<if test="mainEnterpriseCompleterAwards != null">`main_enterprise_completer_awards` = #{mainEnterpriseCompleterAwards}, </if>
+			<if test="chengguoBaseDeclaration != null">`chengguo_base_declaration` = #{chengguoBaseDeclaration}, </if>
+			<if test="created != null">`created` = #{created}</if>
+			<if test="chengguoDes != null">`chengguo_des` = #{chengguoDes}</if>
+
+
+
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterprise_chengguo_other_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterprise_chengguo_other_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

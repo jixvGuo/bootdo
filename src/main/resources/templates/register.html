@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:52 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>中国石油工程建设协会申报系统 - 注册</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+            </div>
+            <h2>欢迎注册</h2>
+            <p></p>
+            <form  id="regComForm" class="m-t">
+                <div class="form-group">
+                    <input id="company_name" name="company_name" class="form-control" placeholder="请输入公司（单位）名称"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_register_addr" name="company_register_addr" class="form-control" placeholder="请输入注册地址"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_receive_addr" name="company_receive_addr" class="form-control" placeholder="请输入收件地址"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_register_money" name="company_register_money" class="form-control" placeholder="请输入注册资金"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_main_opt" name="company_main_opt" class="form-control" placeholder="请输入主营业务"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_master" name="company_master" class="form-control" placeholder="请输入法人（或法人代理）"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_concat_user" name="company_concat_user" class="form-control" placeholder="请输入联系人"  type="text">
+                </div>
+                <div class="form-group">
+                    <label>请选择要申报的奖项</label>
+                    <div class="checkbox i-checks">
+                        <label><input type="checkbox" name="awardIds" value="79"> 工法奖</label>
+                        <label><input type="checkbox" name="awardIds" value="73"> 勘察设计奖</label>
+                        <label><input type="checkbox" name="awardIds" value="71"> QC奖</label>
+                        <label><input type="checkbox" name="awardIds" value="67"> 优质工程奖</label>
+                        <label><input type="checkbox" name="awardIds" value="61"> 科技奖</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input id="company_concat_phone" name="company_concat_phone" class="form-control" minlength="11" maxlength="11" placeholder="请输入联系人手机"  type="text">
+                </div>
+                <div class="form-group">
+                    <input id="company_concat_email" name="company_concat_email" class="form-control" maxlength="200" placeholder="请输入邮箱"  type="text">
+                </div>
+
+
+                <div class="form-group text-left">
+                    <div class="checkbox i-checks">
+                        <label class="no-padding"><input type="checkbox" id="isReceive" name="isReceive"><i></i>阅读并接受</label>
+                        <a href="#" onclick="openProtocol()">《申报协议》</a>
+                    </div>
+                </div>
+                <button id="registerCompanyBtn" type="button" class="btn btn-primary block full-width m-b">注 册</button>
+
+                <p class="text-muted text-center"><small>已经有账户了？</small><a href="/login">点此登录</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+    <script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/js/ajax-util.js"></script>
+    <script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+    <script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
+
+    <script>
+        $(document).ready(function () {
+            // iCheck 初始化
+            $(".i-checks").iCheck({
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green"
+            });
+
+            // 点击按钮提交表单
+            $("#registerCompanyBtn").on('click', function () {
+                $("#regComForm").submit();
+            });
+
+            // 表单验证规则
+            validateRule();
+        });
+
+        // 表单提交处理
+        $.validator.setDefaults({
+            submitHandler: function () {
+                registerCompany();
+            }
+        });
+
+        // 注册提交方法
+        function registerCompany() {
+            // 序列化表单数据
+            var formData = $('#regComForm').serializeArray();
+
+            // iCheck 选中的奖项单独处理（因为 serialize() 可能不包含 unchecked checkbox）
+            var awardIds = [];
+            $("input[name='awardIds']:checked").each(function () {
+                awardIds.push($(this).val());
+            });
+
+            // 将奖项加入 formData
+            awardIds.forEach(function (id) {
+                formData.push({name: "awardIds", value: id});
+            });
+
+            $.ajax({
+                type: "POST",
+                url: ctx + "register_company",
+                data: $.param(formData),
+                success: function (r) {
+                    console.log("注册成功:", r.msg);
+                    toLogin(r.msg);
+                },
+                error: function () {
+                    layer.msg("注册失败，请重试！");
+                }
+            });
+        }
+
+        // 表单验证规则
+        function validateRule() {
+            var icon = "<i class='fa fa-times-circle'></i> ";
+            $("#regComForm").validate({
+                rules: {
+                    company_name: { required: true },
+                    company_register_addr: { required: true },
+                    company_receive_addr: { required: true },
+                    company_register_money: { required: true },
+                    company_main_opt: { required: true },
+                    company_master: { required: true },
+                    company_concat_user: { required: true },
+                    company_concat_phone: { required: true, minlength: 11, maxlength: 11 },
+                    company_concat_email: { required: true, email: true },
+                    isReceive: { required: true },
+                    "awardIds": { required: true } // 至少选择一个奖项
+                },
+                messages: {
+                    company_name: { required: icon + "请输入公司名称" },
+                    company_register_addr: { required: icon + "请输入注册地址" },
+                    company_receive_addr: { required: icon + "请输入收货地址" },
+                    company_register_money: { required: icon + "请输入注册资金" },
+                    company_main_opt: { required: icon + "请输入主营业务" },
+                    company_master: { required: icon + "请输入法人（或法人代理）" },
+                    company_concat_user: { required: icon + "请输入联系人" },
+                    company_concat_phone: { required: icon + "请输入联系人手机" },
+                    company_concat_email: { required: icon + "请输入邮箱", email: icon + "请输入正确的邮箱" },
+                    isReceive: { required: icon + "请勾选阅读并接受" },
+                    "awardIds": { required: icon + "请选择至少一个奖项" }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("type") === "checkbox") {
+                        // checkbox 提示放在父容器下面
+                        error.insertAfter(element.closest(".checkbox"));
+                    } else {
+                        // 其它输入框提示放在输入框下方
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error');
+                }
+            });
+        }
+
+        // 弹窗提示去登录
+        function toLogin(msg) {
+            layer.open({
+                type: 1,
+                btn: '去登录',
+                btnAlign: 'c',
+                area: '400px;',
+                move: false,
+                title: '注册成功',
+                closeBtn: 0,
+                shade: 0,
+                id: 'toLogin',
+                content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 400;">' + msg + '</div>',
+                yes: function () {
+                    window.location.href = "/login";
+                }
+            });
+        }
+
+    </script>
+
+
+
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:52 GMT -->
+</html>

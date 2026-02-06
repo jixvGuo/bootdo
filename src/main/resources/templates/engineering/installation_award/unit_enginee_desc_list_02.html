@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="active item">申报单位 </a>
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="active item">申报工程概况 </a>
+    <a th:href="@{/enterpriseUnitApply/toUnitOpinionList(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="item">有关单位意见 </a>
+    <a th:href="@{/enterpriseUnitApply/to_upload_real_file(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+</div>
+<div class="ui container segment">
+    <div class="ui top attached tabular menu">
+        <a href="#" class="active item">列表 </a>
+        <a th:href="@{/enterpriseUnitApply/toEngineeDescAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+           class="item">新增 </a>
+        <div class="right menu">
+            <div class="item">
+                <div class="ui transparent icon input">
+                    <input type="text" placeholder="搜索用户……">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <table class="ui table">
+                <thead>
+                <th></th>
+                <th>工程名称</th>
+                <th>工程类别</th>
+                <th>操作</th>
+                </thead>
+                <tbody>
+                <tr th:each="data,dataStat:${pageUtils.rows}">
+                    <td th:text="${dataStat.count}">1</td>
+                    <td th:text="${data.projectName}">CPE大厦修建</td>
+                    <td th:text="${data.projectCategory}">建筑工程</td>
+                    <td>
+                        <a th:href="@{'/enterpriseUnitApply/toEngineeDescEdit?id='+${data.id}+'&proId='+${proId}+'&taskId='+${taskId}+'&applyId='+${applyId}}"
+                           class="ui teal mini basic button">修改</a>
+                        <a href="#" th:onclick="'javascript:delItem(\''+${data.id}+'\')'"
+                           class="ui teal mini basic button">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <th colspan="4">
+                    <div class="ui pagination mini menu">
+                        <a th:href="@{'/enterpriseUnitApply/toEngineeDescList?pageType=up&pageNum='+${pageNum}+'&taskId='+${taskId}}"
+                           class="icon item">上一页</a>
+                        <a th:href="@{'/enterpriseUnitApply/toEngineeDescList?pageType=down&pageNum='+${pageNum}+'&taskId='+${taskId}}"
+                           class="icon item">下一页</a>
+                    </div>
+                </th>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script>
+
+    function delItem(id) {
+
+        parent.layer.confirm('是否删除?', {icon: 3, title: '删除确认提示'}, function (index) {
+            //do something
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/petroleum_engineering_award/oilProGeneralSituation/remove",
+                data: {
+                    id: id,
+                    proId: "${proId}",
+                    taskId: "${taskId}",
+                    applyId: "${applyId}"
+                },// 你的formid
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+            layer.close(index);
+        });
+
+    }
+
+</script>
+</body>
+</html>

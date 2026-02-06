@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item"
+       th:href="@{/cpe/enterpriTeamIntellectualProperty/toList(proId=${proId},taskId=${taskId},applyId=${applyId})}">列表 </a>
+    <a class="active item" href="#">新增 </a>
+    <!--    <a href="#" class="item">打印 </a>-->
+</div>
+<div class="ui bottom attached segment">
+    <form action="" class="ui form" id="signupForm">
+        <input name="id" th:value="${enterpriTeamIntellectualProperty.id}" type="hidden"/>
+        <input name="proId" th:value="${proId}" type="hidden">
+        <input name="taskId" th:value="${taskId}" type="hidden">
+        <input name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>知识产权类别</label>
+                <div class="ui selection dropdown">
+                    <input name="propertytype" th:value="${enterpriTeamIntellectualProperty.propertytype}"
+                           type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">知识产权类别</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${t.name eq enterpriTeamIntellectualProperty.propertytype} ? 'item active selected' : 'item'"
+                             th:data-value="${t.name}"
+                             th:each="t:${intProTypes}" th:text="${t.name}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>授权项目名称</label>
+                <input name="propertyname" placeholder="授权项目名称"
+                       th:value="${enterpriTeamIntellectualProperty.propertyname}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>国(区)别</label>
+                <input name="country" placeholder="国(区)别" th:value="${enterpriTeamIntellectualProperty.country}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>授权号</label>
+                <input name="authorizationnumber" placeholder="授权号"
+                       th:value="${enterpriTeamIntellectualProperty.authorizationnumber}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>授权日期</label>
+                <input name="authorizationtime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                       placeholder="授权日期"
+                       th:value="${enterpriTeamIntellectualProperty.authorizationtime}" type="text">
+            </div>
+            <div class="ui field">
+                <label>证书编号</label>
+                <input name="certificatecode" placeholder="证书编号"
+                       th:value="${enterpriTeamIntellectualProperty.certificatecode}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>权利人</label>
+                <input name="obligee" placeholder="权利人" th:value="${enterpriTeamIntellectualProperty.obligee}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>发明人</label>
+                <input name="inventor" placeholder="发明人" th:value="${enterpriTeamIntellectualProperty.inventor}"
+                       type="text">
+            </div>
+        </div>
+        <div class="ui field">
+            <label>所对应标志性成果</label>
+            <textarea id="keynotegain" autofocus name="keynotegain" placeholder="所对应标志性成果"
+                      th:text="${enterpriTeamIntellectualProperty.keynotegain}"></textarea>
+        </div>
+        <div class="ui field">
+            <label>证明材料编号</label>
+            <textarea id="materialcode" autofocus name="materialcode" placeholder="证明材料编号"
+                      th:text="${enterpriTeamIntellectualProperty.materialcode}"></textarea>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/appjs/cpe/enterpriTeamIntellectualProperty/add.js" type="text/javascript"></script>
+
+<script>
+    let proId = $("#proId").val();
+    let uploadObj =  {
+        url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+    var keynotegain = new Simditor({
+        textarea: $("#keynotegain"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    var materialcode = new Simditor({
+        textarea: $("#materialcode"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    $('.ui.dropdown').dropdown();
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            propertytype: {
+                identifier: 'propertytype',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写知识产权类别'
+                    }
+                ]
+            },
+            propertyname: {
+                identifier: 'propertyname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写授权项目名称'
+                    }
+                ]
+            }, country: {
+                identifier: 'propertyname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写国(区)别'
+                    }
+                ]
+            }, authorizationnumber: {
+                identifier: 'authorizationnumber',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写授权号'
+                    }
+                ]
+            },
+            authorizationtime: {
+                identifier: 'authorizationtime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择授权日期'
+                    }
+                ]
+            },
+            certificatecode: {
+                identifier: 'certificatecode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写证书编号'
+                    }
+                ]
+            },
+            obligee: {
+                identifier: 'obligee',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写权利人'
+                    }
+                ]
+            },
+            inventor: {
+                identifier: 'inventor',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写发明人'
+                    }
+                ]
+            },
+            keynotegain: {
+                identifier: 'keynotegain',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写所对应标志性成果'
+                    }
+                ]
+            },
+            materialcode: {
+                identifier: 'materialcode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写证明材料编号'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

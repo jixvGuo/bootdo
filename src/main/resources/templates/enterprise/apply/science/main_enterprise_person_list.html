@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="active item" href="#">列表 </a>
+    <a th:if="${readonly} eq 0" class="item" th:href="@{/chengguo_info/toMainEnterprisePersonAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}">新增 </a>
+    <!--
+        <a href="#" class="item">打印 </a>
+    -->
+</div>
+<div class="ui bottom attached segment">
+    <table class="ui table">
+        <thead>
+        <th></th>
+        <th>主要完成人姓名</th>
+        <th>办公电话</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="ach,achStat:${otherInfoDOList}">
+            <td th:text="${achStat.count}"></td>
+            <td th:text="${ach.mainEnterpriseCompleter}"></td>
+            <td th:text="${ach.mainEnterpriseCompleterWorkTelphone}"></td>
+            <td>
+                <a th:if="${readonly} eq 0" class="ui teal mini basic button" th:href="@{'/chengguo_info/toMainEnterprisePersonEdit?id='+${ach.id}+'&proId='+${proId}+'&taskId='+${taskId} + '&readonly=' + ${readonly}}">修改</a>
+                <a th:if="${readonly} eq 1" class="ui teal mini basic button" th:href="@{'/chengguo_info/toMainEnterprisePersonEdit?id='+${ach.id}+'&proId='+${proId}+'&taskId='+${taskId} + '&readonly=' + ${readonly}}">查看</a>
+                <a th:if="${readonly} eq 0" class="ui teal mini basic button" href="#" th:onclick="'javascript:delAch(\''+${ach.id}+'\',\''+${proId}+'\',\''+${taskId}+'\')'">删除</a>
+            </td>
+        </tr>
+        </tbody>
+        <!--<tfoot>
+        <th colspan="6">
+            <div class="ui pagination mini menu">
+                <a class="icon item">上一页</a>
+                <a class="icon item">下一页</a>
+            </div>
+        </th>
+        </tfoot>-->
+    </table>
+</div>
+<div th:include="include::footer"></div>
+<!--
+<script type="text/javascript" src="/js/appjs/cpe/enterpriTeamAcheievements/enterpriTeamAcheievements.js"></script>
+-->
+<script>
+    function delAch(id,proId,taskId) {
+
+        parent.layer.confirm('是否删除?', {icon: 3, title: '删除确认提示'}, function (index) {
+            //do something
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/chengguo_info/ainEnterprisePerson/remove",
+                data: {
+                    id: id,
+                    proId: proId,
+                    taskId: taskId,
+                    applyId: ""
+                },// 你的formid
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+            layer.close(index);
+        });
+
+    }
+</script>
+</body>
+</html>

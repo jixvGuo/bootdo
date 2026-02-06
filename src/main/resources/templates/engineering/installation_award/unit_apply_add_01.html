@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="active item">申报单位 </a>
+    <a th:href="@{/enterpriseUnitApply/toEngineeDescAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="item">申报工程概况 </a>
+    <a th:href="@{/enterpriseUnitApply/toUnitOpinionList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="item">有关单位意见 </a>
+    <a th:href="@{/enterpriseUnitApply/to_upload_real_file(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+
+
+</div>
+<div class="ui container segment">
+    <div class="ui top attached tabular menu">
+        <!--<a th:href="@{/enterpriseUnitApply/toUnitList(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+           class="item">列表 </a>
+        <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}" th:classappend="${tagName==null || tagName == ''} ? 'active': ''" class="item">新增 </a>
+        <a href="#" class="active item" th:text="${tagName}" th:if="${tagName != null && tagName != ''}"></a>-->
+    </div>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" class="ui basic form" id="signupForm">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input name="id" th:value="${data.id}" type="hidden"/>
+                <input name="proId" th:value="${proId}" type="hidden">
+                <input name="taskId" th:value="${taskId}" type="hidden">
+                <input name="applyId" th:value="${applyId}" type="hidden">
+
+                <div style="text-align: center;color:red;" th:text="${desc}"></div>
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>单位名称</label>
+                        <input type="text" name="comanyName" th:value="${data.comanyName}" placeholder="单位名称">
+                    </div>
+                    <div class="ui field">
+                        <label>企业性质</label>
+                        <input type="text" name="companyNature" th:value="${data.companyNature}" placeholder="企业性质">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>通信地址</label>
+                    <input type="text" name="mailingAddress" th:value="${data.mailingAddress}" placeholder="通信地址">
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>邮政编码</label>
+                        <input type="text" name="postCode" th:value="${data.postCode}" placeholder="邮政编码">
+                    </div>
+                    <div class="ui field">
+                        <label>电子信箱</label>
+                        <input type="text" name="emailAddress" th:value="${data.emailAddress}" placeholder="电子信箱">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>资质等级和范围</label>
+                    <textarea name="qualificationLevelScop" th:text="${data.qualificationLevelScop}"></textarea>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>法人代表</label>
+                        <input type="text" name="legalRepresentative" th:value="${data.legalRepresentative}"
+                               placeholder="法人代表">
+                    </div>
+                    <div class="ui field">
+                        <label>职务</label>
+                        <input type="text" name="duty" th:value="${data.duty}" placeholder="职务">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>固定电话</label>
+                        <input type="text" name="fixedTelephone" th:value="${data.fixedTelephone}" placeholder="固定电话">
+                    </div>
+                    <div class="ui field">
+                        <label>移动电话</label>
+                        <input type="text" name="mobilePhone" th:value="${data.mobilePhone}" placeholder="移动电话">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>项目经理</label>
+                        <input type="text" name="projectManager" th:value="${data.projectManager}" placeholder="项目经理">
+                    </div>
+                    <div class="ui field">
+                        <label>电子信箱</label>
+                        <input type="text" name="emailManager" th:value="${data.emailManager}" placeholder="电子信箱">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>固定电话</label>
+                        <input type="text" name="fixedTelephoneManager" th:value="${data.fixedTelephoneManager}"
+                               placeholder="固定电话">
+                    </div>
+                    <div class="ui field">
+                        <label>移动电话</label>
+                        <input type="text" name="mobilePhoneManager" th:value="${data.mobilePhoneManager}"
+                               placeholder="移动电话">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>联系人</label>
+                        <input type="text" name="contactName" th:value="${data.contactName}" placeholder="联系人">
+                    </div>
+                    <div class="ui field">
+                        <label>电子信箱</label>
+                        <input type="text" name="contactMail" th:value="${data.contactMail}" placeholder="电子信箱">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>固定电话</label>
+                        <input type="text" name="contactFixPhone" th:value="${data.contactFixPhone}" placeholder="固定电话">
+                    </div>
+                    <div class="ui field">
+                        <label>移动电话</label>
+                        <input type="text" name="contactMobile" th:value="${data.contactMobile}" placeholder="移动电话">
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>申报单位简介</label>
+                    <textarea name="applicantBriefIntroduction" th:text="${data.applicantBriefIntroduction}"></textarea>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 详情页面 -->
+<div th:include="include::footer"></div>
+<script th:if="${data.id != null && data.id > 0}" type="text/javascript"
+        src="/js/appjs/cpe/petroleum_engineering_award/oilProApplyInfo/edit.js"></script>
+<script th:if="${data.id == null || data.id == 0}" type="text/javascript"
+        src="/js/appjs/cpe/petroleum_engineering_award/oilProApplyInfo/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            comanyName: {
+                identifier: 'comanyName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写单位名称'
+                    }
+                ]
+            },
+            companyNature: {
+                identifier: 'companyNature',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写企业性质'
+                    }
+                ]
+            },
+            mailingAddress: {
+                identifier: 'mailingAddress',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写通讯地址'
+                    }
+                ]
+            },
+            postCode: {
+                identifier: 'postCode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写邮政编码'
+                    }
+                ]
+            },
+            emailAddress: {
+                identifier: 'emailAddress',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写电子信箱'
+                    }
+                ]
+            },
+            legalRepresentative: {
+                identifier: 'legalRepresentative',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写法人代表'
+                    }
+                ]
+            },
+            duty: {
+                identifier: 'duty',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写职务'
+                    }
+                ]
+            },
+            fixedTelephone: {
+                identifier: 'fixedTelephone',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写固定电话'
+                    }
+                ]
+            },
+            mobilePhone: {
+                identifier: 'mobilePhone',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写移动电话'
+                    }
+                ]
+            },
+            projectManager: {
+                identifier: 'projectManager',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写项目经理'
+                    }
+                ]
+            },
+            emailManager: {
+                identifier: 'emailManager',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写电子信箱'
+                    }
+                ]
+            },
+            fixedTelephoneManager: {
+                identifier: 'fixedTelephoneManager',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写固定电话'
+                    }
+                ]
+            },
+            mobilePhoneManager: {
+                identifier: 'mobilePhoneManager',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写移动电话'
+                    }
+                ]
+            },
+            contactName: {
+                identifier: 'contactName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写联系人'
+                    }
+                ]
+            },
+            contactMail: {
+                identifier: 'contactMail',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写电子信箱'
+                    }
+                ]
+            },
+            contactFixPhone: {
+                identifier: 'contactFixPhone',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写固定电话'
+                    }
+                ]
+            },
+            contactMobile: {
+                identifier: 'contactMobile',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写移动电话'
+                    }
+                ]
+            },
+            qualificationLevelScop: {
+                identifier: 'qualificationLevelScop',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写资质等级和范围'
+                    }
+                ]
+            },
+            applicantBriefIntroduction: {
+                identifier: 'applicantBriefIntroduction',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写申报单位简介'
+                    }
+                ]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

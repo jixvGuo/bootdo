@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header_lu"></head>
+
+<body class="gray-bg">
+
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form id="signupForm" action="" class="ui basic form">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${qcProData.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${qcProData.proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${qcProData.taskId}"  type="hidden">
+            <h4 class="ui red horizontal divider header">基本信息</h4>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>填报账号</label>
+                    <input type="text" readonly name="optAccount" th:value="${qcProData.optAccount}" placeholder="填报账号">
+                </div>
+                <div class="ui field">
+                    <label>成果编号</label>
+                    <input type="text" readonly name="proCode" th:value="${qcProData.proCode}" placeholder="成果编号">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>单位名称</label>
+                    <input type="text" readonly name="companyName" th:value="${qcProData.companyName}" placeholder="单位名称">
+                </div>
+                <div class="ui field">
+                    <label>课题名称</label>
+                    <input type="text" readonly name="topicName" th:value="${qcProData.topicName}" placeholder="课题名称">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>小组名称</label>
+                    <input type="text" readonly name="groupName" th:value="${qcProData.groupName}" placeholder="小组名称">
+                </div>
+                <div class="ui field">
+                    <label>小组类型</label>
+                    <input type="text" readonly name="groupName" th:value="${qcProData.topicType}" placeholder="小组类型">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>专业范围</label>
+                    <input type="text" readonly name="professionalScope" th:value="${qcProData.professionalScope}" placeholder="专业范围">
+                </div>
+                <!--<div class="ui field">
+                    <label>获奖情况</label>
+                    <input type="text" readonly name="name" placeholder="获奖情况">
+                </div>-->
+            </div>
+            <!--<div class="ui two fields">
+                <div class="ui field">
+                    <label>小组成员名单</label>
+                    <input type="text" readonly name="name" placeholder="小组成员名单">
+                </div>
+                <div class="ui field">
+                    <label>成果负责人</label>
+                    <input type="text" readonly name="name" placeholder="成果负责人">
+                </div>
+            </div>-->
+            <!--<div class="ui two fields">
+                <div class="ui field">
+                    <label>联系电话</label>
+                    <input type="text" readonly name="name" placeholder="联系电话">
+                </div>
+                <div class="ui field">
+                    <label>联络员</label>
+                    <input type="text" readonly name="name" placeholder="联络员">
+                </div>
+            </div>-->
+            <!--<div class="ui two fields">
+                <div class="ui field">
+                    <label>联系方式</label>
+                    <input type="text" readonly name="name" placeholder="联系方式">
+                </div>
+            </div>-->
+            <input type="hidden" name="id" th:value="${reviewResult.id}"/>
+            <div class="ui field">
+                <label>备注</label>
+                <input type="text" name="opinionDesc" th:value="${reviewResult.opinionDesc}" placeholder="备注">
+            </div>
+            <h4 class="ui red horizontal divider header">申报资料</h4>
+            <div class="inline fields">
+                <label>附件1、2和3是否有盖章</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="annexIsStamped" th:checked="${reviewResult.annexIsStamped} eq 是" value="是" tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="annexIsStamped" th:checked="${reviewResult.annexIsStamped} eq 否" value="否" tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>会员单位或其上级主管部门组织的评价，其评价人员中至少有1名获得中国质量协会或相关机构颁发的质量小组活动推进中级以上资格证书</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="userRecommendIsMiddleCredentials" th:checked="${reviewResult.userRecommendIsMiddleCredentials} eq 是" value="是" tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="userRecommendIsMiddleCredentials" th:checked="${reviewResult.userRecommendIsMiddleCredentials} eq 否" value="否" tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>各会员单位，应重视质量管理小组活动推进人员队伍建设，至少培养2名以上具有质量管理小组活动推进中级以上资格的人员。</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="userBuildIsMiddleCredentials" th:checked="${reviewResult.userBuildIsMiddleCredentials} eq 是" value="是" tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="userBuildIsMiddleCredentials" th:checked="${reviewResult.userBuildIsMiddleCredentials} eq 否" value="否" tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>应为会员单位或其上级主管部门组织评价出的优秀QC小组。</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="recommendIsBestGroup" th:checked="${reviewResult.recommendIsBestGroup} eq 是" value="是" tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="recommendIsBestGroup" th:checked="${reviewResult.recommendIsBestGroup} eq 否" value="否" tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>属于近2年的活动成果(封面)</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="actIsCover" th:checked="${reviewResult.actIsCover} eq 是" value="是" tabindex="1" class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="actIsCover" th:checked="${reviewResult.actIsCover} eq 否" value="否" tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">审查结论</h4>
+            <div class="inline fields">
+                <label>审查结论</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 参评" value="参评">
+                        <label>参评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 完善后参评" value="完善后参评">
+                        <label>完善后参评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 不评" value="不评">
+                        <label>不评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 缓评" value="缓评">
+                        <label>缓评</label>
+                    </div>
+                </div>
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button">提交</div>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:include="include :: footer_lu"></div>
+<!-- 详情页面 -->
+<script type="text/javascript" src="/js/appjs/cpe/qcReviewResultRecord/add.js?v=1.3"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.radio.checkbox').checkbox();
+    $('.ui.form').form({});
+</script>
+</body>
+
+</html>

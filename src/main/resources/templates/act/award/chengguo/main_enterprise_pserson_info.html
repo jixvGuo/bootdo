@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<!-- 主要完成单位及完成人情况Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <input type="hidden" id="isReadonly" th:value="${readonly}">
+                            <input id="id" name="id" th:value="${otherInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:22%;vertical-align:middle;text-align:center" colspan="3">单位名称
+                                        </td>
+                                        <td style="width:78%;vertical-align:middle;text-align:left"
+                                            colspan="11">
+                                            <input id="mainEnterpriseCompanyName" name="mainEnterpriseCompanyName" th:value="${otherInfo.mainEnterpriseCompanyName}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">主要完成人姓名
+                                        </td>
+                                        <td style="width:28%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="mainEnterpriseCompleter" name="mainEnterpriseCompleter" th:value="${otherInfo.mainEnterpriseCompleter}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">性别 </td>
+                                        <td style="width:14%;vertical-align:middle;text-align:left" colspan="2">
+                                            <input id="mainEnterpriseCompleterGender" name="mainEnterpriseCompleterGender" th:value="${otherInfo.mainEnterpriseCompleterGender}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center" colspan="2">排名 </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="mainEnterpriseCompleterSort" name="mainEnterpriseCompleterSort" th:value="${otherInfo.mainEnterpriseCompleterSort}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">出生年月
+                                        </td>
+                                        <td style="width:14%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="mainEnterpriseCompleterBirth" name="mainEnterpriseCompleterBirth" th:value="${otherInfo.mainEnterpriseCompleterBirth}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">身份证号
+                                        </td>
+                                        <td style="width:35%;vertical-align:middle;text-align:left"
+                                             colspan="5">
+                                            <input id="mainEnterpriseCompleterId" name="mainEnterpriseCompleterId" th:value="${otherInfo.mainEnterpriseCompleterId}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:14%;vertical-align:middle;text-align:center" colspan="2">民族
+                                        </td>
+                                        <td style="width:14%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="mainEnterpriseCompleterNation" name="mainEnterpriseCompleterNation" th:value="${otherInfo.mainEnterpriseCompleterNation}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">国籍
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="mainEnterpriseCompleterCountry" name="mainEnterpriseCompleterCountry" th:value="${otherInfo.mainEnterpriseCompleterCountry}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">学历
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="mainEnterpriseCompleterEducation" name="mainEnterpriseCompleterEducation" th:value="${otherInfo.mainEnterpriseCompleterEducation}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">行政职务
+                                        </td>
+                                        <td style="width:28%;vertical-align:middle;text-align:left"
+                                             colspan="4">
+                                            <input id="mainEnterpriseCompleterAdministrativePost" name="mainEnterpriseCompleterAdministrativePost" th:value="${otherInfo.mainEnterpriseCompleterAdministrativePost}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:14%;vertical-align:middle;text-align:center" colspan="2">技术<br/>职称
+                                        </td>
+                                        <td style="width:21%;vertical-align:middle;text-align:left"
+                                             colspan="3">
+                                            <input id="mainEnterpriseCompleterTechnicalTitle" name="mainEnterpriseCompleterTechnicalTitle" th:value="${otherInfo.mainEnterpriseCompleterTechnicalTitle}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">从事<br/>专业
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="mainEnterpriseCompleterMajorWork" name="mainEnterpriseCompleterMajorWork" th:value="${otherInfo.mainEnterpriseCompleterMajorWork}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">所学<br/>专业
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="mainEnterpriseCompleterMajorStudy" name="mainEnterpriseCompleterMajorStudy" th:value="${otherInfo.mainEnterpriseCompleterMajorStudy}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">办公电话
+                                        </td>
+                                        <td style="width:28%;vertical-align:middle;text-align:left"
+                                             colspan="4">
+                                            <input id="mainEnterpriseCompleterWorkTelphone" name="mainEnterpriseCompleterWorkTelphone" th:value="${otherInfo.mainEnterpriseCompleterWorkTelphone}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:14%;vertical-align:middle;text-align:center" colspan="2">手机<br/>电话
+                                        </td>
+                                        <td style="width:21%;vertical-align:middle;text-align:left"
+                                             colspan="3">
+                                            <input id="mainEnterpriseCompleterWorkMobile" name="mainEnterpriseCompleterWorkMobile" th:value="${otherInfo.mainEnterpriseCompleterWorkMobile}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">电子<br/>邮箱
+                                        </td>
+                                        <td style="width:21%;vertical-align:middle;text-align:left"
+                                             colspan="3">
+                                            <input id="mainEnterpriseCompleterWorkEmail" name="mainEnterpriseCompleterWorkEmail" th:value="${otherInfo.mainEnterpriseCompleterWorkEmail}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">通讯地址
+                                        </td>
+                                        <td style="width:77%;vertical-align:middle;text-align:left"
+                                             colspan="11">
+                                            <input id="mainEnterpriseCompleterWorkAddress" name="mainEnterpriseCompleterWorkAddress" th:value="${otherInfo.mainEnterpriseCompleterWorkAddress}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:center">邮编
+                                        </td>
+                                        <td style="width:7%;vertical-align:middle;text-align:left">
+                                            <input id="mainEnterpriseCompleterWorkAddrCode" name="mainEnterpriseCompleterWorkAddrCode" th:value="${otherInfo.mainEnterpriseCompleterWorkAddrCode}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:28%;vertical-align:middle;text-align:center" colspan="4">参加本项目<br/>的起止时间
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                             colspan="10">
+                                            <input id="mainEnterpriseCompleterPartakeTime" name="mainEnterpriseCompleterPartakeTime" th:value="${otherInfo.mainEnterpriseCompleterPartakeTime}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:14%;vertical-align:middle;text-align:center" colspan="2">主要完成人对本项<br/>目的学术贡献
+                                        </td>
+                                        <td style="width:86%;vertical-align:middle;text-align:left"
+                                            colspan="12">
+                                            <input id="mainEnterpriseCompleterAcademicContribution" name="mainEnterpriseCompleterAcademicContribution" th:value="${otherInfo.mainEnterpriseCompleterAcademicContribution}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:14%;vertical-align:middle;text-align:center" colspan="2">主要完成单位对本项<br/>目科技创新和推广应<br/>用情况的贡献
+                                        </td>
+                                        <td style="width:86%;vertical-align:middle;text-align:left"
+                                            colspan="12">
+                                            <input id="mainEnterpriseContribution" name="mainEnterpriseContribution" th:value="${otherInfo.mainEnterpriseContribution}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:64%;vertical-align:middle;text-align:center" colspan="9">声明：
+                                        </td>
+                                        <td style="width:36%;vertical-align:middle;text-align:center" colspan="5">声明：
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:63%;" colspan="9">本人遵守《中国石油工程建设协会科学技术奖评选管理办法》及其细则的有关规定和科委办公室对申报<br/>工作的具体要求，保证所提交的材料真实有效，且不存在违反《中华人民共和国保守国家秘密法》和《<br/>科学技术保密规定》等相关法律法规及侵犯他人知识产权的情形。如有虚假，愿意承担相应责任并接受<br/>相应处理。如产生争议，保证积极配合调查处理工作。
+                                        </td>
+                                        <td style="width:37%;" colspan="5">本单位确认该完成人情况真实有效，并严格按照《中国石<br/>油工程建设协会科学技术奖评选管理办法》及其细则的有<br/>关规定和科委办公室对申报工作的具体要求，如实提供了<br/>本申报书及相关材料，且不存在违反《中华人民共和国保<br/>守国家秘密法》和《科学技术保密规定》等相关法律法规<br/>及侵犯他人知识产权的情形，如申报项目发生争议，将积<br/>极配合工作，协助调查处理。如有不符，本单位愿意承担<br/>相关后果并接受相应的处理。
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:63%;vertical-align:middle;" colspan="9">本人签名：
+                                        </td>
+                                        <td style="width:37%;vertical-align:middle;" colspan="5">单位公章
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:63%;vertical-align:middle;" colspan="9">&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日
+                                        </td>
+                                        <td style="width:37%;vertical-align:middle;" colspan="5">&nbsp;&nbsp;&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;日
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div th:if="${isOnlyView == null || !isOnlyView}" class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" th:if="${otherInfo.id > 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${otherInfo.id == null || otherInfo.id == 0}"  src="/js/appjs/system/enterpriseChengguoOtherInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+
+</body>
+
+</html>

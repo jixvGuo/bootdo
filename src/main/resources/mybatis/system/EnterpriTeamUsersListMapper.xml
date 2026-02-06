@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriTeamUsersListDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriTeamUsersListDO">
+		select `id`,`team_users_record_id`,`number`,`user_name`,`age`, gender, `technical_position`,`work_company`,`research_field`,`team_work_time_len`,`user_type`,`opt_uid`,`task_id`,`created` from ass_enterpri_team_users_list where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriTeamUsersListDO">
+		select `id`,`team_users_record_id`,`number`,`user_name`,`age`, gender,`technical_position`,`work_company`,`research_field`,`team_work_time_len`,`user_type`,`opt_uid`,`task_id`,`created` from ass_enterpri_team_users_list
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="teamUsersRecordId != null and teamUsersRecordId != ''"> and team_users_record_id = #{teamUsersRecordId} </if>
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="technicalPosition != null and technicalPosition != ''"> and technical_position = #{technicalPosition} </if>
+		  		  <if test="workCompany != null and workCompany != ''"> and work_company = #{workCompany} </if>
+		  		  <if test="researchField != null and researchField != ''"> and research_field = #{researchField} </if>
+		  		  <if test="teamWorkTimeLen != null and teamWorkTimeLen != ''"> and team_work_time_len = #{teamWorkTimeLen} </if>
+		  		  <if test="userType != null and userType != ''"> and user_type = #{userType} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+			      <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_team_users_list
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="teamUsersRecordId != null and teamUsersRecordId != ''"> and team_users_record_id = #{teamUsersRecordId} </if>
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="technicalPosition != null and technicalPosition != ''"> and technical_position = #{technicalPosition} </if>
+		  		  <if test="workCompany != null and workCompany != ''"> and work_company = #{workCompany} </if>
+		  		  <if test="researchField != null and researchField != ''"> and research_field = #{researchField} </if>
+		  		  <if test="teamWorkTimeLen != null and teamWorkTimeLen != ''"> and team_work_time_len = #{teamWorkTimeLen} </if>
+		  		  <if test="userType != null and userType != ''"> and user_type = #{userType} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriTeamUsersListDO">
+		insert into ass_enterpri_team_users_list
+		(
+			`id`, 
+			`team_users_record_id`, 
+			`number`, 
+			`user_name`, 
+			`age`,
+			 gender,
+			`technical_position`, 
+			`work_company`, 
+			`research_field`, 
+			`team_work_time_len`, 
+			`user_type`, 
+			`opt_uid`, 
+			`task_id`, 
+			`created`,
+			pro_id
+		)
+		values
+		(
+			#{id}, 
+			#{teamUsersRecordId}, 
+			#{number}, 
+			#{userName}, 
+			#{age},
+			#{gender},
+			#{technicalPosition}, 
+			#{workCompany}, 
+			#{researchField}, 
+			#{teamWorkTimeLen}, 
+			#{userType}, 
+			#{optUid}, 
+			#{taskId}, 
+			now(),
+			#{proId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriTeamUsersListDO">
+		update ass_enterpri_team_users_list 
+		<set>
+			<if test="teamUsersRecordId != null">`team_users_record_id` = #{teamUsersRecordId}, </if>
+			<if test="number != null">`number` = #{number}, </if>
+			<if test="userName != null">`user_name` = #{userName}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="technicalPosition != null">`technical_position` = #{technicalPosition}, </if>
+			<if test="workCompany != null">`work_company` = #{workCompany}, </if>
+			<if test="researchField != null">`research_field` = #{researchField}, </if>
+			<if test="teamWorkTimeLen != null">`team_work_time_len` = #{teamWorkTimeLen}, </if>
+			<if test="userType != null">`user_type` = #{userType}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}</if>
+			<if test="proId != null and proId > 0">`pro_id` = #{proId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_team_users_list where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_team_users_list where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

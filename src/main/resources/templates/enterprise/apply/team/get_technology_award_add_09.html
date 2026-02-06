@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item"
+       th:href="@{/cpe/enterpriTeamGetTechAward/toList(proId=${proId},taskId=${taskId},applyId=${applyId})}">列表 </a>
+    <a class="active item" href="#">新增 </a>
+    <!-- <a href="#" class="item">打印 </a>-->
+</div>
+<div class="ui bottom attached segment">
+    <form action="" class="ui form" id="signupForm">
+        <input id="id" name="id" th:value="${enterpriTeamGetTechAward.id}" type="hidden">
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+        <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+        <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>获奖对象</label>
+                <input name="awardspeople" placeholder="获奖对象" th:value="${enterpriTeamGetTechAward.awardspeople}"
+                       type="text">
+            </div>
+            <div class="ui field">
+                <label>获奖时间</label>
+                <input name="awardstime" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="获奖时间"
+                       th:value="${enterpriTeamGetTechAward.awardstime}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>奖项名称</label>
+                <input name="prizename" placeholder="奖项名称" th:value="${enterpriTeamGetTechAward.prizename}" type="text">
+            </div>
+            <div class="ui field">
+                <label>奖项等级</label>
+                <div class="ui selection dropdown">
+                    <input name="prizelevel" th:value="${enterpriTeamGetTechAward.prizelevel}" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">奖项等级</div>
+                    <div class="menu">
+                        <div class=""
+                             th:classappend="${r.name eq enterpriTeamGetTechAward.prizelevel} ? 'item active selected' : 'item'"
+                             th:data-value="${r.name}"
+                             th:each="r:${levelList}" th:text="${r.name}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui field">
+            <label>授权部门(单位)</label>
+            <textarea id="empowerdepa" autofocus name="empowerdepa"placeholder="授权部门(单位)"
+                      th:text="${enterpriTeamGetTechAward.empowerdepa}"></textarea>
+        </div>
+        <div class="ui field">
+            <label>团队主要成员完成人/排名</label>
+            <textarea id="mainfulfilhumname" autofocus name="mainfulfilhumname" placeholder="团队主要成员完成人/排名"
+                      th:text="${enterpriTeamGetTechAward.mainfulfilhumname}"></textarea>
+        </div>
+        <div class="ui field">
+            <label>证明材料编号</label>
+            <textarea id="materialcode" autofocus name="materialcode" placeholder="证明材料编号"
+                      th:text="${enterpriTeamGetTechAward.materialcode}"></textarea>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/appjs/cpe/enterpriTeamGetTechAward/add.js" type="text/javascript"></script>
+<script>
+    let proId = $("#proId").val();
+    let uploadObj =  {
+        url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+
+    var empowerdepa = new Simditor({
+        textarea: $("#empowerdepa"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    var mainfulfilhumname = new Simditor({
+        textarea: $("#mainfulfilhumname"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    var materialcode = new Simditor({
+        textarea: $("#materialcode"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    })
+
+
+    $('.ui.dropdown').dropdown();
+    $("input[name='awardstime']").blur(function(){
+       $(this).parent().attr("class","ui field");
+    });
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            awardspeople: {
+                identifier: 'awardspeople',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写获奖对象'
+                    }
+                ]
+            },
+            awardstime: {
+                identifier: 'awardstime',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择获奖时间'
+                    }
+                ]
+            },
+            prizename: {
+                identifier: 'prizename',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写奖项名称'
+                    }
+                ]
+            },
+            prizelevel: {
+                identifier: 'prizelevel',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择奖项等级'
+                    }
+                ]
+            },
+            empowerdepa: {
+                identifier: 'empowerdepa',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写授权部门(单位)'
+                    }
+                ]
+            },
+            mainfulfilhumname: {
+                identifier: 'mainfulfilhumname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写团队主要成员完成人/排名'
+                    }
+                ]
+            },
+            materialcode: {
+                identifier: 'materialcode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写证明材料编号'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

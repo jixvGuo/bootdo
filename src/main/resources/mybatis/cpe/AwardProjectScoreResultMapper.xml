@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.AwardProjectScoreResultDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.AwardProjectScoreResultDO">
+		select `id`,`pro_id`,`item_id`,`score_result`,`created` from ass_award_project_score_result where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.AwardProjectScoreResultDO">
+		select `id`,`pro_id`,`item_id`,`score_result`,`created` from ass_award_project_score_result
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="itemId != null and itemId != ''"> and item_id = #{itemId} </if>
+		  		  <if test="scoreResult != null and scoreResult != ''"> and score_result = #{scoreResult} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_project_score_result
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="itemId != null and itemId != ''"> and item_id = #{itemId} </if>
+		  		  <if test="scoreResult != null and scoreResult != ''"> and score_result = #{scoreResult} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.AwardProjectScoreResultDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_award_project_score_result
+		(
+			`pro_id`, 
+			`item_id`, 
+			`score_result`, 
+			`created`
+		)
+		values
+		(
+			#{proId}, 
+			#{itemId}, 
+			#{scoreResult},
+		    now()
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.AwardProjectScoreResultDO">
+		update ass_award_project_score_result 
+		<set>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="itemId != null">`item_id` = #{itemId}, </if>
+			<if test="scoreResult != null">`score_result` = #{scoreResult}, </if>
+			<if test="created != null">`created` = #{created}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_award_project_score_result where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_award_project_score_result where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<insert id="batchAdd" parameterType="com.bootdo.cpe.domain.AwardProjectScoreResultDO">
+		insert into ass_award_project_score_result
+		(
+			`pro_id`,
+			`item_id`,
+			`score_result`
+		)
+		values
+		<foreach collection="list" open="(" close=")" separator="," item="rst">
+			#{rst.proId}, #{rst.itemId}, #{rst.scoreResult}
+		</foreach>
+	</insert>
+
+</mapper>

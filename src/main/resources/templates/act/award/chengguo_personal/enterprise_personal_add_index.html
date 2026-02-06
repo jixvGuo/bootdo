@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/css/semantic/semantic.min.css" rel="stylesheet">
+<body>
+<div class="ui container">
+    <input type="hidden" id="isReadonly" th:value="${readonly}">
+    <div class="ui bottom attached segment">
+        <form class="ui basic form" id="base_info_form" target="iframe">
+            <h4 class="ui red horizontal divider header">基本信息 </h4>
+
+            <input id="id" name="id" th:value="${enterpriPersonalInfo.id}" type="hidden">
+            <input id="proId" name="proId" th:value="${proId}" type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+            <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+
+
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>姓名</label>
+                    <input type="text" id="userName" th:value="${enterpriPersonalInfo.userName}" autocomplete="off"
+                           placeholder="姓名">
+                </div>
+                <div class="ui field">
+                    <label>性别</label>
+                    <div class="ui selection dropdown">
+                        <input name="gender" th:value="${enterpriPersonalInfo.gender}" type="hidden">
+
+                        <i class="dropdown icon"></i>
+                        <div class="default text" id="sexType">性别</div>
+                        <div class="menu">
+                            <div class=""
+                                 th:classappend="${r.name eq enterpriPersonalInfo.gender} ? 'item active selected' : 'item'"
+                                 th:data-value="${r.name}"
+                                 th:each="r:${genderList}" th:text="${r.name}"></div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>出生年月</label>
+                    <input type="text" name="birthday" autocomplete="off" id="birthday"
+                           th:value="${enterpriPersonalInfo.birthday}" placeholder="出生年月"
+                           onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="ui field">
+                    <label>民族</label>
+                    <input type="text" autocomplete="off" name="nation" th:value="${enterpriPersonalInfo.nation}"
+                           placeholder="民族" id="nation">
+                </div>
+            </div>
+            <div class="ui field">
+                <label><h4 class="ui red header">点击图片上传头像</h4></label>
+                <input type="hidden" id="fileimage" name="image" >
+                <a href="javascript:addimage()" id="peraonalHeadImg" class="ui medium image" style="width: 150px;height: 200px; !important;">
+                    <img id="personalPhoto" th:src="${enterpriPersonalInfo.photo}">
+                </a>
+
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>从事专业</label>
+                    <div class="ui selection dropdown">
+                        <input id="workMajor" th:value="${enterpriPersonalInfo.workMajor}" type="hidden">
+                        <i class="dropdown icon"></i>
+                        <div class="default text" >从事专业</div>
+                        <div class="menu">
+                            <div class=""
+                                 th:classappend="${r.name eq enterpriPersonalInfo.workMajor} ? 'item active selected' : 'item'"
+                                 th:data-value="${r.name}"
+                                 th:each="r:${professions}" th:text="${r.name}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>技术职称</label>
+                    <input type="text" autocomplete="off" name="technicalTitle" id="technicalTitle"
+                           th:value="${enterpriPersonalInfo.technicalTitle}" placeholder="技术职称">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>身份证号</label>
+                    <input type="text" autocomplete="off" name="IDNumber" th:value="${enterpriPersonalInfo.userIden}"
+                           id="IDNumber" placeholder="身份证号">
+                </div>
+                <div class="ui field">
+                    <label>最高学历</label>
+                    <div class="ui selection dropdown">
+                        <input id="education" name="education" th:value="${enterpriPersonalInfo.highestEducation}" type="hidden">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">最高学历</div>
+                        <div class="menu">
+                            <div class=""
+                                 th:classappend="${r.name eq enterpriPersonalInfo.highestEducation} ? 'item active selected' : 'item'"
+                                 th:data-value="${r.name}"
+                                 th:each="r:${eduList}" th:text="${r.name}"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>毕业学校</label>
+                    <input type="text" autocomplete="off" name="graduation" id="graduation"
+                           th:value="${enterpriPersonalInfo.graduateSchool}" placeholder="毕业学校">
+                </div>
+                <div class="ui field">
+                    <label>所学专业</label>
+                    <input type="text" autocomplete="off" name="major" id="major"
+                           th:value="${enterpriPersonalInfo.major}" placeholder="所学专业">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>毕业时间</label>
+                    <input type="text" autocomplete="off" name="graduationTime" id="graduationTime" placeholder="毕业时间"
+                           th:value="${#dates.format(enterpriPersonalInfo.graduationTime,'yyyy-MM-dd')}"
+
+                           onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                </div>
+                <div class="ui field">
+                    <label>是否享受政府津贴</label>
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="isEnjoyGovernmentSubsidies" id="isEnjoyGovernmentSubsidies"  th:value="${enterpriPersonalInfo.isEnjoyGovernmentSubsidies}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">是否享受政府津贴
+                        </div>
+                        <div class="menu">
+                            <div class="item" data-value="1">是</div>
+                            <div class="item" data-value="2">否</div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">联系人 </h4>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>姓名</label>
+                    <input type="text" autocomplete="off" th:value="${enterpriPersonalInfo.contactsName}"
+                           name="contactname" id="contactname" placeholder="姓名">
+                </div>
+                <div class="ui field">
+                    <label>电话</label>
+                    <input type="text" autocomplete="off" th:value="${enterpriPersonalInfo.contactsPhone}"
+                           name="contacttelephone" id="contacttelephone" placeholder="电话">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>手机</label>
+                    <input type="text" autocomplete="off" th:value="${enterpriPersonalInfo.contactsTelphone}"
+                           name="contactphone" id="contactphone" placeholder="手机">
+                </div>
+                <div class="ui field">
+                    <label>传真</label>
+                    <input type="text" autocomplete="off" th:value="${enterpriPersonalInfo.contactsFax}"
+                           name="contactfax" id="contactfax" placeholder="传真">
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>通讯地址</label>
+                    <input type="text" autocomplete="off" th:value="${enterpriPersonalInfo.contactsAddress}"
+                           name="contactaddress" id="contactaddress" placeholder="通讯地址">
+                </div>
+                <div class="ui field">
+                    <label>邮政编码</label>
+                    <input type="text" autocomplete="off" th:value="${enterpriPersonalInfo.contactsPostcode}"
+                           name="postcode" id="postcode" placeholder="邮政编码">
+                </div>
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="saveBaseInfo()">保存</div>
+            </div>
+        </form>
+        <iframe id="iframe" name="iframe" style="display:none;"></iframe>
+
+        <h4 class="ui red horizontal divider header">主要技术（科技）工作经历 </h4>
+        <div class="ui two horizontal segments">
+            <div class="ui segment">
+                <form class="ui form" id="work_form"  target="iframe1">
+                    <input type="hidden"   id="workId" name="workId" >
+                    <div class="ui field">
+                        <label>开始时间</label>
+                        <input type="text" name="workstarttime" id="workstarttime" autocomplete="off" placeholder="开始时间"
+                               onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+                    <div class="ui field">
+                        <label>结束时间</label>
+                        <input type="text" name="workendtime" id="workendtime" autocomplete="off" placeholder="结束时间"
+                               onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                    </div>
+
+                    <div class="ui field">
+                        <label>单位名称</label>
+                        <input type="text" name="companyname" id="companyname" autocomplete="off" placeholder="单位名称">
+                    </div>
+                    <div class="ui field">
+                        <label>职务</label>
+                        <input type="text" name="duties" id="duties" autocomplete="off" placeholder="职务">
+                    </div>
+                    <div class="ui field">
+                        <label>从事工作</label>
+                        <input type="text" name="work" id="work" autocomplete="off" placeholder="从事工作">
+                    </div>
+                    <div class="ui error message"></div>
+                    <div class="ui basic center aligned segment">
+                        <div id="hisworkid" class="ui submit button" onclick="addWorkInfo()">增加</div>
+                        <div id="hisworkidModify"   class="ui submit button" onclick="modifyWorkInfo()">修改</div>
+
+                    </div>
+                </form>
+                <iframe id="iframe1" name="iframe1" style="display:none;"></iframe>
+
+            </div>
+            <div class="ui segment">
+                <table class="ui table">
+                    <thead>
+                    <th>编号</th>
+                    <th>单位名称</th>
+                    <th>职务</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody id="workinfo">
+                        <tr th:each="obj,objStat:${workHistory}" th:id="'workHistory_'+${obj.id}">
+                            <td th:text="${objStat.count}"></td>
+                            <td th:text="${obj.workCompany}"></td>
+                            <td th:text="${obj.workPosition}"></td>
+                            <td>
+                              <a href="javascript:void(0)" th:onclick = "'javascript:viewUserInfo(\''+${obj.id}+'\')'" class="ui teal mini basic button" >查看</a>
+                              <a href="javascript:void(0)" th:onclick="'javascript:viewFixUserInfo(\''+${obj.id}+'\')'" class="ui teal mini basic button" >修改</a>
+                              <a href="javascript:void(0)" th:onclick="'javascript:deleteWorkInfo(\''+${obj.id}+'\')'" class="ui teal mini basic button" >删除</a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+
+                </table>
+            </div>
+        </div>
+
+        <div class="ui form" id="personDesc"  >
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="2">个人综述
+                </td>
+                <td  colspan="7">
+                    <textarea id="personalSummary" name="personalSummary" th:text="${enterpriPersonalInfo.personalSummary}"
+                              style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:70%;vertical-align:bottom;text-align:right" colspan="7">
+                    <span>公章&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br> &nbsp;&nbsp;&nbsp;&nbsp;年  &nbsp;&nbsp;&nbsp;&nbsp;月  &nbsp;&nbsp;&nbsp;&nbsp;日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:30%;vertical-align:middle;text-align:center" colspan="2" rowspan="2">申报人所在单位意见
+                </td>
+                <td colspan="7">
+                    <textarea id="companyOpinion" name="companyOpinion" th:text="${enterpriPersonalInfo.companyOpinion}"
+                      style="height: 130px;" class="form-control" required="" aria-required="true"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:70%;vertical-align:bottom;text-align:right" colspan="7">
+                    <span>公章&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <br> &nbsp;&nbsp;&nbsp;&nbsp;年  &nbsp;&nbsp;&nbsp;&nbsp;月  &nbsp;&nbsp;&nbsp;&nbsp;日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div class="hr-line-dashed"></div>
+        <div class="form-group">
+
+                <button class="btn btn-primary" onclick="savePersonalExtDesc()">保存内容</button>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/act/award/publish_commit_personal.js?v=1.2"></script>
+<script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+<script type="text/javascript">
+
+    let proId = $("#proId").val();
+    let uploadObj =  {
+        url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+
+    var personalSummary = new Simditor({
+        textarea: $("#personalSummary"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    var companyOpinion = new Simditor({
+        textarea: $("#companyOpinion"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+    $('.ui.dropdown').dropdown();
+    $("input[name='graduationTime']").blur(function(){
+        $(this).parent().attr("class","ui field");
+    });
+    function addimage(){
+        let taskId = $("#taskId").val();
+        let proId = $("#proId").val();
+        layer.open({
+                   title: '上传头像 ',
+                   maxmin: true,
+                   type: 2,
+                   shadeClose: false, // 点击遮罩关闭层
+                   area: ['500px', '320px'],
+                   content: '/scienceProgressScience/toUploadHeadImg?taskId='+taskId+'&proId=' + proId
+        });
+    }
+</script>
+
+</body>
+</html>

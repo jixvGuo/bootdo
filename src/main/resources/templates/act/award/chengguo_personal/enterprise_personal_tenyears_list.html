@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui container">
+    <input type="hidden" id="proId" name="proId" th:value="${proId}"/>
+    <input type="hidden" id="taskId" name="taskId" th:value="${taskId}"/>
+    <input type="hidden" id="isReadonly" th:value="${readonly}">
+    <div class="ui top attached tabular menu">
+        <a href="#" class="active item">列表 </a>
+        <a th:if="${readonly} ne 1" th:href="@{/chengguo_personal/performance_add(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">新增 </a>
+    </div>
+
+
+    <div class="ui bottom attached segment">
+        <table id="exampleTable" data-mobile-responsive="true">
+        </table>
+    </div>
+    <div>
+             <p style="color:red;">
+                 注：<br>
+                 1.以上各项必须提供相关奖状、证书及能说明申报者所起作用的证明材料，否则视为无效；<br/>
+                 2.论文（专著）项需提供著作权证明材料，否则视为无效；<br/>
+                 3.成果鉴定证书只需提供封面、主要完成人页、科技成果登记表页；<br/>
+                 4.表格行数可自行增加。<br/>
+             </p>
+        </div>
+</div>
+
+<div th:include="include::footer"></div>
+<script   type="text/javascript" src="/js/appjs/system/enterpriPersonalInfoTenYearsPatent/work_list.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+</body>
+<script>
+    function deleteTeamInfo(id,teamName) {
+        parent.layer.confirm('是否删除"'+teamName +'"?', {
+            btn: ['确定', '取消'] //可以无限个按钮
+        }, function(index, layero){
+            //按钮【按钮一】的回调
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : "/chengguo_team/base_info_del",
+                data : {id:id},// 你的formid
+                async : false,
+                error : function(request) {
+                    parent.layer.alert("Connection error");
+                },
+                success : function(data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+        }, function(index){
+            //按钮【按钮二】的回调
+
+        });
+    }
+</script>
+</html>

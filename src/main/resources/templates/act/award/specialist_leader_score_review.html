@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content">
+                    <h4 style="text-align:center;font-size:20px;font-weight:bold"><span th:text="${proInfo.major}"></span>(<span th:text="${sType}"></span>)</h4>
+                    <form method="post" class="form-horizontal">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="text-align:center;vertical-align:middle;width:15%" rowspan="2">项目名称</th>
+                                <th style="text-align:center;vertical-align:middle;width:15%" rowspan="2">承担单位</th>
+                                <th style="text-align:center;width:10%">专家组成员</th>
+                                <th style="text-align:center;width:8%">打分值</th>
+                                <th style="text-align:center;vertical-align:middle;width:5%" rowspan="2">排序</th>
+                                <th style="text-align:center;vertical-align:middle;width:22%" rowspan="2">意见</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+
+                                <td style="text-align:center;" th:rowspan="${scoreSize}" th:text="${proInfo.chengguo}"></td>
+                                <td style="text-align:center;" th:rowspan="${scoreSize}" th:text="${proInfo.enterpriseName}"></td>
+                                <td style="text-align:center;" th:text="${scoreInfo.scoreUserName}"></td>
+                                <td style="text-align:center;" th:if="${sType=='科技'}" th:text="${scoreInfo.scienceScore}"></td>
+                                <td style="text-align:center;" th:if="${sType=='团队'}" th:text="${scoreInfo.teamScore}"></td>
+                                <td style="text-align:center;" th:if="${sType=='个人'}" th:text="${scoreInfo.personalScore}"></td>
+                                <td style="text-align:center;" th:rowspan="${scoreSize}">1</td>
+                                <td style="text-align:center;" th:rowspan="${scoreSize}">
+                                    <select class="chosen-select" style="width:100%">
+                                        <option value="110000" hassubinfo="true">一等</option>
+                                        <option value="120000" hassubinfo="true">二等</option>
+                                        <option value="120000" hassubinfo="true">三等</option>
+                                        <option value="120000" hassubinfo="true">缓评</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:each="score:${scoreInfoList}">
+                                <td style="text-align:center;" th:text="${score.scoreUserName}"></td>
+                                <td style="text-align:center;" th:if="${sType=='科技'}" th:text="${score.scienceScore}"></td>
+                                <td style="text-align:center;" th:if="${sType=='团队'}" th:text="${score.teamScore}"></td>
+                                <td style="text-align:center;" th:if="${sType=='个人'}" th:text="${score.personalScore}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit">保存内容</button>
+                                <button class="btn btn-white" type="submit">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!--
+<script src="js/plugins/cropper/cropper.min.js"></script>
+<script src="js/demo/form-advanced-demo.min.js"></script>
+-->
+<script src="/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+<script src="/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/js/plugins/validate/messages_zh.min.js"></script>
+<script src="/js/demo/form-validate-demo.min.js"></script>
+<script type="text/javascript" src="/js/plugins/simditor/module.js"></script>
+<script type="text/javascript" src="/js/plugins/simditor/uploader.js"></script>
+<script type="text/javascript" src="/js/plugins/simditor/hotkeys.js"></script>
+<script type="text/javascript" src="/js/plugins/simditor/simditor.js"></script>
+<!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/act/award/enterprise_doc_award_apply.js"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_validate.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:16 GMT -->
+</html>

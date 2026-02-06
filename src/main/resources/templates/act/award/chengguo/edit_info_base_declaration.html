@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<!--信息编辑框 Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+                    <div class="ibox-content">
+                        <form class="form-horizontal" id="signupForm" enctype="multipart/form-data">
+                            <input type="hidden" id="isReadonly" th:value="${readonly}">
+                            <input id="id" name="id" th:value="${enterpriseChengguoBaseInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="eType" name="eType" th:value="${eType}"  type="hidden">
+                            <div class="form-group">
+<!--                                <div class="col-sm-12">-->
+<!--                                    <textarea id="applyBookContent" name="applyBookContent" th:text="${enterpriseChengguoBaseInfo.applyBookContent}" style="height: 260px;" class="form-control" required="" aria-required="true"></textarea>-->
+<!--                                </div>-->
+                                <div class="col-sm-11">
+                                    <div class="file-manager">
+                                        <button type="button" class="btn-primary" id="test1" onclick="document.getElementById('upload').click()">
+                                            <i class="fa fa-cloud"></i>上传文件
+                                        </button>
+                                        <input type="file" style="display: none;" id="upload">
+                                        <div id="upFileInfo"><a th:href="${enterpriseChengguoBaseInfo.applyBookContent}" target='_blank'><p th:text="${enterpriseChengguoBaseInfo.applyBookContent}"></p></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div th:if="${isOnlyView == null || !isOnlyView}" class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存</button>
+                                </div>
+                            </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" th:if="${enterpriseChengguoBaseInfo.id > 0}" src="/js/appjs/system/enterpriseChengguoBaseInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${enterpriseChengguoBaseInfo.id == null || enterpriseChengguoBaseInfo.id == 0}" src="/js/appjs/system/enterpriseChengguoBaseInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+</html>

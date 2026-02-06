@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverDesiginMajorMaterialsUseInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverDesiginMajorMaterialsUseInfoDO">
+		select `id`,`materials_name`,`cal_unit`,`set_val`,`real_val`,`inner_advanced_level`,`outer_advanced_level`,`memo`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_desigin_major_materials_use_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverDesiginMajorMaterialsUseInfoDO">
+		select `id`,`materials_name`,`cal_unit`,`set_val`,`real_val`,`inner_advanced_level`,`outer_advanced_level`,`memo`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_desigin_major_materials_use_info
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="materialsName != null and materialsName != ''"> and materials_name = #{materialsName} </if>
+		  		  <if test="calUnit != null and calUnit != ''"> and cal_unit = #{calUnit} </if>
+		  		  <if test="setVal != null and setVal != ''"> and set_val = #{setVal} </if>
+		  		  <if test="realVal != null and realVal != ''"> and real_val = #{realVal} </if>
+		  		  <if test="innerAdvancedLevel != null and innerAdvancedLevel != ''"> and inner_advanced_level = #{innerAdvancedLevel} </if>
+		  		  <if test="outerAdvancedLevel != null and outerAdvancedLevel != ''"> and outer_advanced_level = #{outerAdvancedLevel} </if>
+		  		  <if test="memo != null and memo != ''"> and memo = #{memo} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_desigin_major_materials_use_info
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="materialsName != null and materialsName != ''"> and materials_name = #{materialsName} </if>
+		  		  <if test="calUnit != null and calUnit != ''"> and cal_unit = #{calUnit} </if>
+		  		  <if test="setVal != null and setVal != ''"> and set_val = #{setVal} </if>
+		  		  <if test="realVal != null and realVal != ''"> and real_val = #{realVal} </if>
+		  		  <if test="innerAdvancedLevel != null and innerAdvancedLevel != ''"> and inner_advanced_level = #{innerAdvancedLevel} </if>
+		  		  <if test="outerAdvancedLevel != null and outerAdvancedLevel != ''"> and outer_advanced_level = #{outerAdvancedLevel} </if>
+		  		  <if test="memo != null and memo != ''"> and memo = #{memo} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverDesiginMajorMaterialsUseInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_desigin_major_materials_use_info
+		(
+			`materials_name`,
+			`cal_unit`,
+			`set_val`,
+			`real_val`,
+			`inner_advanced_level`,
+			`outer_advanced_level`,
+			`memo`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`
+		)
+		values
+		(
+			#{materialsName},
+			#{calUnit},
+			#{setVal},
+			#{realVal},
+			#{innerAdvancedLevel},
+			#{outerAdvancedLevel},
+			#{memo},
+			#{optUid},
+			#{proId},
+			#{taskId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverDesiginMajorMaterialsUseInfoDO">
+		update ass_surver_desigin_major_materials_use_info
+		<set>
+			<if test="materialsName != null">`materials_name` = #{materialsName}, </if>
+			<if test="calUnit != null">`cal_unit` = #{calUnit}, </if>
+			<if test="setVal != null">`set_val` = #{setVal}, </if>
+			<if test="realVal != null">`real_val` = #{realVal}, </if>
+			<if test="innerAdvancedLevel != null">`inner_advanced_level` = #{innerAdvancedLevel}, </if>
+			<if test="outerAdvancedLevel != null">`outer_advanced_level` = #{outerAdvancedLevel}, </if>
+			<if test="memo != null">`memo` = #{memo}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_desigin_major_materials_use_info where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_desigin_major_materials_use_info where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

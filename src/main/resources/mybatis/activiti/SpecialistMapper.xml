@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.activiti.dao.SpecialistDao">
+
+	<select id="list" resultType="com.bootdo.activiti.domain.SpecialistSelInfo">
+		SELECT ass.* FROM ass_award_select_specialist ass
+		<if test="proId != null">
+            join ass_award_enterprise_project pro on pro.major_id = ass.major_id and pro.id = #{proId}
+        </if>
+		<where>
+		  	<if test="id != null and id != ''"> and id = #{id} </if>
+		  	<if test="selUid != null and selUid != ''"> and sel_uid = #{selUid} </if>
+		  	<if test="publishAwardId != null and publishAwardId != ''"> and publish_award_id = #{publishAwardId} </if>
+		  	<if test="majorId != null and majorId != ''"> and major_id = #{majorId} </if>
+		  	<if test="specialistLeaderUid != null and specialistLeaderUid != ''"> and specialist_leader_uid = #{specialistLeaderUid} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+    <select id="listAwardGroupInfo" resultType="com.bootdo.activiti.domain.AwardGroupInfo">
+        SELECT
+            sd.id,
+            sd.name major_name,
+            aa.id award_id,
+            CONCAT(DATE_FORMAT(task.publish_date, '%Y'),
+                    aa.award_name) award_name
+        FROM
+            ass_award_assign_project asg
+                JOIN
+            ass_award_enterprise_project pro ON asg.pro_id = pro.id
+                JOIN
+            sys_dict sd ON pro.major_id = sd.id
+                JOIN
+            ass_award_publish_task task ON task.id = pro.publish_task_id
+                JOIN
+            ass_award aa ON aa.id = task.award_id
+        WHERE
+            asg.assign_uid = - 100 AND uid = #{userId}
+    </select>
+	
+
+	<insert id="save" parameterType="com.bootdo.activiti.domain.SpecialistSelInfo">
+		INSERT INTO `boot_do`.`ass_award_select_specialist`
+        (`sel_uid`,
+        `uids`,
+        `publish_award_id`,
+        `major_id`,
+         major,
+        `specialist_leader_uid`)
+        VALUES
+        (
+          #{selUid},
+          #{uids},
+          #{publishAwardId},
+          #{majorId},
+          #{major},
+          #{specialistLeaderUid}
+        )
+         ON DUPLICATE KEY UPDATE uids = #{uids},specialist_leader_uid = #{specialistLeaderUid}
+	</insert>
+
+    <insert id="scorePro" parameterType="com.bootdo.activiti.domain.ProjectScoreInfo">
+        INSERT INTO `ass_award_project_score`
+        (`pro_id`,
+        `science_score`,
+        `team_score`,
+        `personal_score`,
+        `score_uid`,
+        item_id,
+        score,
+        score_type,
+        opinion_text,
+        opinion_level)
+        VALUES
+        (
+         #{proId},
+         #{scienceScore},
+         #{teamScore},
+         #{personalScore},
+         #{scoreUid},
+         #{itemId},
+         #{score},
+         #{scoreType},
+         #{opinionText},
+         #{opinionLevel}
+        )
+        ON DUPLICATE KEY UPDATE
+        <if test="scienceScore > 0">science_score = #{scienceScore},</if>
+        <if test="teamScore > 0">team_score = #{teamScore},</if>
+        <if test="personalScore > 0">personal_score=#{personalScore},</if>
+        <if test="score > 0">score=#{score},</if>
+        <if test="scoreType != null">score_type=#{scoreType},</if>
+        <if test="opinionText != null">opinion_text=#{opinionText},</if>
+        <if test="opinionLevel != null">opinion_level=#{opinionLevel},</if>
+        updated_date = now()
+    </insert>
+    <delete id="removeMineDetailScore" parameterType="com.bootdo.activiti.domain.ProjectScoreInfo">
+        delete from ass_award_score_detail where pro_id = #{proId} and item_id = #{itemId} and score_uid = #{scoreUid} and score_type = #{scoreType}
+    </delete>
+    <insert id="scoreDetailPro" parameterType="com.bootdo.activiti.domain.ProjectScoreInfo">
+        INSERT INTO `boot_do`.`ass_award_score_detail`
+        (`pro_id`,
+        `score_type`,
+        `score_uid`,
+        `score_key`,
+        `score_val`,
+        major,
+        item_id,
+        score_txt)
+        VALUES
+        <foreach collection="scoreDetailMap" item="value" index="key" separator=",">
+            (#{proId},#{scoreType},#{scoreUid},#{key},#{value},#{major},#{itemId},'')
+        </foreach>
+        ,(#{proId},#{scoreType},#{scoreUid},'opinion_level',0,#{major},#{itemId},#{opinionLevel})
+        ,(#{proId},#{scoreType},#{scoreUid},'opinion_text',0,#{major},#{itemId},#{opinionText})
+    </insert>
+
+    <select id="getProScoreDetails" parameterType="Map" resultType="com.bootdo.activiti.domain.AwardScoreDetailInfo">
+         SELECT * FROM boot_do.ass_award_score_detail sd where
+                pro_id = #{proId}
+                <if test="uid != null"> and score_uid = #{uid} </if>
+                <if test="account != null and account != ''">
+                    and exists( select * from add_special_info where login_account = #{account} and user_id = sd.score_uid and deleted = 0)
+                </if>
+                <if test="isAllKey == null or !isAllKey">
+                    AND score_key NOT IN ('itemId' , 'total')
+                </if>
+    </select>
+
+    <select id="listProScore" parameterType="Map" resultType="com.bootdo.activiti.domain.ProjectScoreInfo">
+        SELECT
+        if(pro.pro_result_code is null or pro.pro_result_code = '', pro.pro_code, pro.pro_result_code) proCode,
+        ps.*,
+             si.expert_name score_user_name,
+             pro.pro_group_name,
+             pro.pro_type,
+             pro.pro_stat as validate_result,
+
+             (SELECT cbi.chengguo_name FROM ass_enterprise_chengguo_base_info cbi WHERE cbi.pro_id = pro.id LIMIT 1) chengguo,
+             (SELECT pi.user_name FROM ass_enterpri_personal_info pi WHERE pi.pro_id = pro.id LIMIT 1) person_name,
+             (SELECT team_name FROM ass_enterpri_team_info t WHERE t.pro_id = pro.id LIMIT 1) team_name,
+             (SELECT sd.name FROM sys_dept sd JOIN sys_user su ON sd.dept_id = su.dept_id WHERE su.user_id = pro.create_uid LIMIT 1) enterprise_name,
+             (SELECT score_txt FROM boot_do.ass_award_score_detail WHERE pro_id = ps.pro_id AND score_uid = ps.score_uid AND score_key = 'opinion_level' LIMIT 1) opinionLevel,
+             (SELECT score_txt FROM boot_do.ass_award_score_detail WHERE pro_id = ps.pro_id AND score_uid = ps.score_uid AND score_key = 'opinion_text' LIMIT 1) opinionText,
+             (SELECT score_val FROM boot_do.ass_award_score_detail WHERE pro_id = ps.pro_id AND score_uid = ps.score_uid AND score_key = 'total' LIMIT 1) total_score,
+             (SELECT sf.url FROM sys_file sf WHERE si.signature_id = sf.id LIMIT 1) signUrl
+        FROM
+             boot_do.ass_award_project_score ps
+                JOIN
+             ass_award_enterprise_project pro ON ps.pro_id = pro.id
+                JOIN
+             add_special_info si ON si.user_id = ps.score_uid
+        <where>
+            <if test="groupName != null"> pro.pro_group_name = #{groupName} </if>
+            <if test="proType != null" > and pro.pro_type = #{proType} </if>
+            <if test="proTypes != null" > and find_in_set(pro.pro_type,  #{proTypes}) </if>
+            <if test="proId != null"> and ps.pro_id = #{proId} </if>
+            <if test="scoreUid != null"> and ps.score_uid = #{scoreUid} </if>
+            <if test="taskId != null"> and pro.publish_task_id = #{taskId} </if>
+            <if test="scoreAccount != null and scoreAccount != ''"> AND si.login_account = #{scoreAccount} </if>
+            AND si.deleted = 0
+        </where>
+        order by ps.id desc
+    </select>
+    <select id="getSubmitScoreOverFlg" parameterType="Map" resultType="int">
+        SELECT count(1) FROM boot_do.ass_award_project_score where
+        pro_id = #{proId} and score_uid = #{uid} and score_over = 1
+    </select>
+    <select id="getMineScoreProInfo" parameterType="Map" resultType="com.bootdo.activiti.domain.ProjectScoreInfo">
+        SELECT * FROM boot_do.ass_award_project_score where pro_id = #{proId} and score_uid = #{uid} order by id desc limit 1
+    </select>
+
+    <select id="isScoreOverPro" parameterType="String" resultType="int">
+        select count(1) from ass_award_assign_project where pro_id = #{proId} and uid not in(
+        select score_uid from ass_award_score_detail where pro_id = #{proId} and score_type=#{scoreType})
+    </select>
+
+    <select id="getSpecialistMajorAccountsList" parameterType="java.util.Map" resultType="com.bootdo.cpe.domain.SpecialistMajorAccountInfo">
+        SELECT
+            group_name,
+            (SELECT
+                    GROUP_CONCAT(su.username)
+                FROM
+                    sys_user su
+                        JOIN
+                    add_special_info si ON su.user_id = si.user_id
+                WHERE
+                    si.group_name = s.group_name and si.deleted = 0) specialist_accounts
+        FROM
+            boot_do.add_special_info s
+        WHERE
+            s.user_id = #{uid} and s.deleted = 0
+        GROUP BY group_name
+    </select>
+    
+    <select id="getSpecialistScoreProDetailList" parameterType="Map" resultType="com.bootdo.cpe.domain.SpecialistScoreDetailInfo">
+        SELECT
+            pro.id pro_id,
+            sd.item_id,
+            sd.created,
+            <if test="scoreType == 'science_personal'">
+                (select pi.user_name from ass_enterpri_personal_info pi where pro.id = pi.pro_id limit 1) pro_name,
+            </if>
+            <if test="scoreType == 'science_progress'">
+                (select chengguo_name from ass_enterprise_chengguo_base_info where pro_id = pro.id limit 1) pro_name,
+            </if>
+            <if test="scoreType == 'science_team'">
+                (select team_name from ass_enterpri_team_info where pro_id = pro.id limit 1) pro_name,
+            </if>
+            sd.score_key,
+            sd.score_val,
+            (SELECT
+               sf.url
+             FROM
+               sys_file sf join add_special_info asi on sf.id = asi.signature_id
+             WHERE
+              asi.user_id = sd.score_uid and asi.deleted = 0 limit 1) signature
+        FROM
+            ass_award_enterprise_project pro
+              LEFT JOIN
+            ass_award_score_detail sd on pro.id = sd.pro_id
+        WHERE
+            pro.id = #{proId}
+    </select>
+
+    <select id="getSpecialistScoreProList" resultType="com.bootdo.cpe.domain.SpecialistScoreProInfo">
+        SELECT
+              pro.id proId,
+              pro.publish_task_id taskId,
+              IF(pro.pro_result_code IS NULL
+              OR pro.pro_result_code = '',
+              pro.pro_code,
+              pro.pro_result_code) proResultCode,
+              (SELECT
+              sd.name
+              FROM
+              sys_dept sd
+              JOIN
+              sys_user su ON sd.dept_id = su.dept_id
+              WHERE
+              su.user_id = pro.create_uid
+              LIMIT 1) enterprise_name,
+              if(pro_type = 'science_personal', (SELECT `user_name` FROM ass_enterpri_personal_info WHERE pro_id = pro.id LIMIT 1), (select team_name from ass_enterpri_team_info where pro_id = pro.id limit 1)) proName,
+              pro.pro_type,
+              if(pro_type = 'science_personal', (select id from ass_enterpri_personal_info where pro_id = pro.id limit 1), (select id from ass_enterpri_team_info where pro_id = pro.id limit 1)) itemId
+        FROM
+            ass_award_enterprise_project pro
+               JOIN
+            ass_award_publish_task task ON pro.publish_task_id = task.id
+
+        WHERE
+            EXISTS( SELECT
+                        *
+                    FROM
+                         add_special_info smi
+                         <if test="scoreAccount != null and scoreAccount != ''">
+                            join sys_user su on su.user_id = smi.user_id and su.username = #{scoreAccount}
+                         </if>
+                    WHERE
+                          smi.group_name = #{groupName}
+                          AND smi.deleted = 0
+                          AND pro.pro_group_name = smi.group_name)
+            and pro.publish_task_id = #{taskId}
+        ORDER BY pro.id ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+
+<body class="gray-bg">
+    <input type="hidden" th:value="${projectInfo.proStat}" id="proStat">
+    <input type="hidden" id="isReadonly" th:value="${readonly}">
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="width:100%">
+                        <!-- <h5 style="width:100%;vertical-align:middle;text-align:center;font-weight:bold;font-size:18px;">六、成果主要知识产权证明目录</h5> -->
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>知识产权类别</th>
+                                        <th>知识产权名称</th>
+                                        <th>国家（地区）</th>
+                                        <th>授权号</th>
+                                        <th>授权日期</th>
+                                        <th>证书编号</th>
+                                        <th>权利人</th>
+                                        <th>发明人</th>
+                                        <th>专利有效状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contentId">
+                                    <tr th:each="knowledge : ${knowledgeList}">
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kType}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kName}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kArea}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kAuthCode}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${#dates.format(knowledge.kAuthDate, 'yyyy-MM-dd')}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kBookCode}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kRightUser}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kCreateUser}"></td>
+                                        <td contentEditable="plaintext-only" th:text="${knowledge.kEffectiveStat}"></td>
+                                        <td>
+                                            <a th:if="${readonly} eq 0" class="ui teal mini basic button" href="#" th:onclick="'javascript:delRight(\''+${knowledge.id}+'\',\''+${proId}+'\')'">删除</a>
+                                        </td>
+                                        <input type='hidden' name='id' th:value='${knowledge.id}'/>
+                                    </tr>
+                                </tbody>
+                            </table>
+							 <a class="btn btn-white btn-bitbucket" onclick="addRowByID()">
+								<i class="fa fa-plus"></i>
+							</a>
+							<br/>
+							<b>承诺：上述知识产权用于报奖情况，已征得未列入项目主要完成人的权利人（发明专利指发明人）的同意</b>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-12 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <!--<button class="btn" onclick="javascript:window.print()">打印</button>-->
+                                    <!--<button class="btn btn-white" type="submit">取消</button>-->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include::footer"></div>
+    <script type="text/javascript" src="/js/appjs/system/enterpriseScienceAwardKnowledgeInfo/edit.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/pro_stat.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+    <!--<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/to-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.js"></script>
+    <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.zh.js"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>-->
+    <script type="text/javascript">
+        function delRight(kId, proId, that) {
+
+            parent.layer.confirm('是否删除?', {icon: 3, title: '删除确认提示'}, function (index) {
+                if(kId == 0) {
+                    $(that).parent().parent().remove();
+                    parent.layer.msg("操作成功");
+                }else {
+                    $.ajax({
+                        cache: true,
+                        type: "POST",
+                        url: "/chengguo_info/knowledge_right/remove",
+                        data: {
+                            id: kId,
+                            proId: proId
+                        },// 你的formid
+                        async: false,
+                        error: function (request) {
+                            parent.layer.alert("Connection error");
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                parent.layer.msg("操作成功");
+                                window.location.reload();
+                            } else {
+                                parent.layer.alert(data.msg)
+                            }
+                        }
+                    });
+                }
+                layer.close(index);
+            });
+        }
+        function addRowByID() {
+			var html = "<tr>"+
+					   "	<td contentEditable=\"plaintext-only\">"+$("tr").length+"</td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+						"	<td contentEditable=\"plaintext-only\" onclick=\"laydate({istime: true, format: 'YYYY-MM-DD'})\"></td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+						"	<td contentEditable=\"plaintext-only\"></td>"+
+                        "<td>" +
+                        "    <a class=\"ui teal mini basic button\" href=\"#\" onclick=\"javascript:delRight(0,0,this)\">删除</a>\n" +
+                        "</td>"
+                        "	<input type='hidden' name='id' value='0'/> "+
+						"</tr>";
+           $("#contentId").append(html);
+        }
+
+    </script>
+</body>
+
+</html>

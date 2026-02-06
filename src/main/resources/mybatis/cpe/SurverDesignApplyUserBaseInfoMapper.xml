@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverDesignApplyUserBaseInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverDesignApplyUserBaseInfoDO">
+		select `id`,`user_type`,`sort_num`,`pro_name`,`contribute_user_names`,`recommend_level`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_design_apply_user_base_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverDesignApplyUserBaseInfoDO">
+		select `id`,`user_type`,`sort_num`,`pro_name`,`contribute_user_names`,`recommend_level`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_design_apply_user_base_info
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userType != null and userType != ''"> and user_type = #{userType} </if>
+		  		  <if test="sortNum != null and sortNum != ''"> and sort_num = #{sortNum} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="contributeUserNames != null and contributeUserNames != ''"> and contribute_user_names = #{contributeUserNames} </if>
+		  		  <if test="recommendLevel != null and recommendLevel != ''"> and recommend_level = #{recommendLevel} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_design_apply_user_base_info
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userType != null and userType != ''"> and user_type = #{userType} </if>
+		  		  <if test="sortNum != null and sortNum != ''"> and sort_num = #{sortNum} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="contributeUserNames != null and contributeUserNames != ''"> and contribute_user_names = #{contributeUserNames} </if>
+		  		  <if test="recommendLevel != null and recommendLevel != ''"> and recommend_level = #{recommendLevel} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverDesignApplyUserBaseInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_design_apply_user_base_info
+		(
+			`user_type`,
+			`sort_num`,
+			`pro_name`,
+			`contribute_user_names`,
+			`recommend_level`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`
+		)
+		values
+		(
+			#{userType},
+			#{sortNum},
+			#{proName},
+			#{contributeUserNames},
+			#{recommendLevel},
+			#{optUid},
+			#{proId},
+			#{taskId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverDesignApplyUserBaseInfoDO">
+		update ass_surver_design_apply_user_base_info
+		<set>
+			<if test="userType != null">`user_type` = #{userType}, </if>
+			<if test="sortNum != null">`sort_num` = #{sortNum}, </if>
+			<if test="proName != null">`pro_name` = #{proName}, </if>
+			<if test="contributeUserNames != null">`contribute_user_names` = #{contributeUserNames}, </if>
+			<if test="recommendLevel != null">`recommend_level` = #{recommendLevel}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_design_apply_user_base_info where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_design_apply_user_base_info where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

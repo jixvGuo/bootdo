@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverExcellentApplyTableInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.SurverExcellentApplyTableInfoDO">
+		select `id`,`apply_major`,`pro_name`,`pro_build_time`,`pro_start_end`,`acceptance_time`,`acceptance_department`,`plan_number`,`survey_start_end`,`survey_area_length`,`main_survey_unit`,`cooperation_unit`,`mailing_address`,`post_code`,`contact_phone`,`contact_name`,`contact_fox`,`accessories_catalog`,`general_advanced_exploration`,`award_received_level`,`reporting_unit_opinion`,`up_recommendation`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted`, build_scope from ass_surver_excellent_apply_table_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.SurverExcellentApplyTableInfoDO">
+		select `id`,`apply_major`,`pro_name`,`pro_build_time`,`pro_start_end`,`acceptance_time`,`acceptance_department`,`plan_number`,`survey_start_end`,`survey_area_length`,`main_survey_unit`,`cooperation_unit`,`mailing_address`,`post_code`,`contact_phone`,`contact_name`,`contact_fox`,`accessories_catalog`,`general_advanced_exploration`,`award_received_level`,`reporting_unit_opinion`,`up_recommendation`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted`, build_scope from ass_surver_excellent_apply_table_info
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="proBuildTime != null and proBuildTime != ''"> and pro_build_time = #{proBuildTime} </if>
+		  		  <if test="proStartEnd != null and proStartEnd != ''"> and pro_start_end = #{proStartEnd} </if>
+		  		  <if test="acceptanceTime != null and acceptanceTime != ''"> and acceptance_time = #{acceptanceTime} </if>
+		  		  <if test="acceptanceDepartment != null and acceptanceDepartment != ''"> and acceptance_department = #{acceptanceDepartment} </if>
+		  		  <if test="planNumber != null and planNumber != ''"> and plan_number = #{planNumber} </if>
+		  		  <if test="surveyStartEnd != null and surveyStartEnd != ''"> and survey_start_end = #{surveyStartEnd} </if>
+		  		  <if test="surveyAreaLength != null and surveyAreaLength != ''"> and survey_area_length = #{surveyAreaLength} </if>
+		  		  <if test="mainSurveyUnit != null and mainSurveyUnit != ''"> and main_survey_unit = #{mainSurveyUnit} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="mailingAddress != null and mailingAddress != ''"> and mailing_address = #{mailingAddress} </if>
+		  		  <if test="postCode != null and postCode != ''"> and post_code = #{postCode} </if>
+		  		  <if test="contactPhone != null and contactPhone != ''"> and contact_phone = #{contactPhone} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactFox != null and contactFox != ''"> and contact_fox = #{contactFox} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="generalAdvancedExploration != null and generalAdvancedExploration != ''"> and general_advanced_exploration = #{generalAdvancedExploration} </if>
+		  		  <if test="awardReceivedLevel != null and awardReceivedLevel != ''"> and award_received_level = #{awardReceivedLevel} </if>
+		  		  <if test="reportingUnitOpinion != null and reportingUnitOpinion != ''"> and reporting_unit_opinion = #{reportingUnitOpinion} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_excellent_apply_table_info
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="proName != null and proName != ''"> and pro_name = #{proName} </if>
+		  		  <if test="proBuildTime != null and proBuildTime != ''"> and pro_build_time = #{proBuildTime} </if>
+		  		  <if test="proStartEnd != null and proStartEnd != ''"> and pro_start_end = #{proStartEnd} </if>
+		  		  <if test="acceptanceTime != null and acceptanceTime != ''"> and acceptance_time = #{acceptanceTime} </if>
+		  		  <if test="acceptanceDepartment != null and acceptanceDepartment != ''"> and acceptance_department = #{acceptanceDepartment} </if>
+		  		  <if test="planNumber != null and planNumber != ''"> and plan_number = #{planNumber} </if>
+		  		  <if test="surveyStartEnd != null and surveyStartEnd != ''"> and survey_start_end = #{surveyStartEnd} </if>
+		  		  <if test="surveyAreaLength != null and surveyAreaLength != ''"> and survey_area_length = #{surveyAreaLength} </if>
+		  		  <if test="mainSurveyUnit != null and mainSurveyUnit != ''"> and main_survey_unit = #{mainSurveyUnit} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="mailingAddress != null and mailingAddress != ''"> and mailing_address = #{mailingAddress} </if>
+		  		  <if test="postCode != null and postCode != ''"> and post_code = #{postCode} </if>
+		  		  <if test="contactPhone != null and contactPhone != ''"> and contact_phone = #{contactPhone} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactFox != null and contactFox != ''"> and contact_fox = #{contactFox} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="generalAdvancedExploration != null and generalAdvancedExploration != ''"> and general_advanced_exploration = #{generalAdvancedExploration} </if>
+		  		  <if test="awardReceivedLevel != null and awardReceivedLevel != ''"> and award_received_level = #{awardReceivedLevel} </if>
+		  		  <if test="reportingUnitOpinion != null and reportingUnitOpinion != ''"> and reporting_unit_opinion = #{reportingUnitOpinion} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.system.domain.SurverExcellentApplyTableInfoDO">
+		insert into ass_surver_excellent_apply_table_info
+		(
+			`id`,
+			`apply_major`,
+			`pro_name`,
+			`pro_build_time`,
+			`pro_start_end`,
+			`acceptance_time`,
+			`acceptance_department`,
+			`plan_number`,
+			`survey_start_end`,
+			`survey_area_length`,
+			`main_survey_unit`,
+			`cooperation_unit`,
+			`mailing_address`,
+			`post_code`,
+			`contact_phone`,
+			`contact_name`,
+			`contact_fox`,
+			`accessories_catalog`,
+			`general_advanced_exploration`,
+			`award_received_level`,
+			`reporting_unit_opinion`,
+			`up_recommendation`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`,
+		     build_scope
+		)
+		values
+		(
+			#{id},
+			#{applyMajor},
+			#{proName},
+			#{proBuildTime},
+			#{proStartEnd},
+			#{acceptanceTime},
+			#{acceptanceDepartment},
+			#{planNumber},
+			#{surveyStartEnd},
+			#{surveyAreaLength},
+			#{mainSurveyUnit},
+			#{cooperationUnit},
+			#{mailingAddress},
+			#{postCode},
+			#{contactPhone},
+			#{contactName},
+			#{contactFox},
+			#{accessoriesCatalog},
+			#{generalAdvancedExploration},
+			#{awardReceivedLevel},
+			#{reportingUnitOpinion},
+			#{upRecommendation},
+			#{optUid},
+			#{proId},
+			#{taskId},
+		    #{buildScope}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.system.domain.SurverExcellentApplyTableInfoDO">
+		update ass_surver_excellent_apply_table_info
+		<set>
+			<if test="applyMajor != null">`apply_major` = #{applyMajor}, </if>
+			<if test="proName != null">`pro_name` = #{proName}, </if>
+			<if test="proBuildTime != null">`pro_build_time` = #{proBuildTime}, </if>
+			<if test="proStartEnd != null">`pro_start_end` = #{proStartEnd}, </if>
+			<if test="acceptanceTime != null">`acceptance_time` = #{acceptanceTime}, </if>
+			<if test="acceptanceDepartment != null">`acceptance_department` = #{acceptanceDepartment}, </if>
+			<if test="planNumber != null">`plan_number` = #{planNumber}, </if>
+			<if test="surveyStartEnd != null">`survey_start_end` = #{surveyStartEnd}, </if>
+			<if test="surveyAreaLength != null">`survey_area_length` = #{surveyAreaLength}, </if>
+			<if test="mainSurveyUnit != null">`main_survey_unit` = #{mainSurveyUnit}, </if>
+			<if test="cooperationUnit != null">`cooperation_unit` = #{cooperationUnit}, </if>
+			<if test="mailingAddress != null">`mailing_address` = #{mailingAddress}, </if>
+			<if test="postCode != null">`post_code` = #{postCode}, </if>
+			<if test="contactPhone != null">`contact_phone` = #{contactPhone}, </if>
+			<if test="contactName != null">`contact_name` = #{contactName}, </if>
+			<if test="contactFox != null">`contact_fox` = #{contactFox}, </if>
+			<if test="accessoriesCatalog != null">`accessories_catalog` = #{accessoriesCatalog}, </if>
+			<if test="generalAdvancedExploration != null">`general_advanced_exploration` = #{generalAdvancedExploration}, </if>
+			<if test="awardReceivedLevel != null">`award_received_level` = #{awardReceivedLevel}, </if>
+			<if test="reportingUnitOpinion != null">`reporting_unit_opinion` = #{reportingUnitOpinion}, </if>
+			<if test="upRecommendation != null">`up_recommendation` = #{upRecommendation}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_excellent_apply_table_info where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_excellent_apply_table_info where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

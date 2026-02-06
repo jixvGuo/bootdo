@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header_lu"></head>
+
+<body>
+
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form id="signupForm" action="" class="ui basic form">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${reviewResult.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+            <h4 class="ui red horizontal divider header">基本信息</h4>
+            <div class="ui two fields">
+                <div class="ui field disabled">
+                    <label>编码</label>
+                    <input type="text" name="proCode" th:value="${reviewResult.proCode}" placeholder="编码">
+                </div>
+                <div class="ui field disabled">
+                    <label>申报单位</label>
+                    <input type="text" name="applyCompany" th:value="${reviewResult.applyCompany}" placeholder="申报单位">
+                </div>
+            </div>
+            <div class="ui field disabled">
+                <label>申报项目名称</label>
+                <input type="text" name="proName" th:value="${reviewResult.proName}" placeholder="申报项目名称">
+            </div>
+            <div class="ui field disabled">
+                <label>类别编号</label>
+                <input type="text" name="name" placeholder="申报项目专业">
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>册数</label>
+                    <input type="text" name="numCopies" th:value="${reviewResult.numCopies}" placeholder="册数">
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">申报资料</h4>
+            <div class="inline fields">
+                <label>是否申报单位承担</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="applyUnitIsBear" th:checked="${reviewResult.applyUnitIsBear} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="applyUnitIsBear" th:checked="${reviewResult.applyUnitIsBear} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>经国家和省部级主管部门批准出版</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="approveIsPublish" th:checked="${reviewResult.approveIsPublish} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="approveIsPublish" th:checked="${reviewResult.approveIsPublish} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>设计、施工中使用满一年</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designIsYear" th:checked="${reviewResult.designIsYear} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designIsYear" th:checked="${reviewResult.designIsYear} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>设计资质</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designIsCert" th:checked="${reviewResult.designIsCert} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="designIsCert" th:checked="${reviewResult.designIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>单位三年无事故安全证明</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="unitIsThreeSafe" th:checked="${reviewResult.unitIsThreeSafe} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="unitIsThreeSafe" th:checked="${reviewResult.unitIsThreeSafe} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>是否局级 一二等奖</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="bureauIsFirstAward" th:checked="${reviewResult.bureauIsFirstAward} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="bureauIsFirstAward" th:checked="${reviewResult.bureauIsFirstAward} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>上级意见及盖章</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="superiorIsOpionion" th:checked="${reviewResult.superiorIsOpionion} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="superiorIsOpionion" th:checked="${reviewResult.superiorIsOpionion} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>申报材料存在问题</label>
+                <input type="text" name="applySourceQuestion" th:value="${reviewResult.applySourceQuestion}" placeholder="申报材料存在问题">
+            </div>
+            <div class="ui field">
+                <label>问题回馈情况</label>
+                <input type="text" name="feedbackInfo" th:value="${reviewResult.feedbackInfo}" placeholder="问题回馈情况">
+            </div>
+            <div class="ui field">
+                <label>项目联系人及电话</label>
+                <input type="text" name="proContact" th:value="${reviewResult.proContact}" placeholder="项目联系人及电话">
+            </div>
+            <div class="ui field">
+                <label>主要完成人</label>
+                <input type="text" name="mainUser" th:value="${reviewResult.mainUser}" placeholder="主要完成人">
+            </div>
+            <h4 class="ui red horizontal divider header">附件</h4>
+            <div class="inline fields">
+                <label>标准设计图集和文字说明总结</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="standardIsDesc" th:checked="${reviewResult.standardIsDesc} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="standardIsDesc" th:checked="${reviewResult.standardIsDesc} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>主管部门批准立项及出版的批文</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="departmentIsApprove" th:checked="${reviewResult.departmentIsApprove} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="departmentIsApprove" th:checked="${reviewResult.departmentIsApprove} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>两个以上用户使用证明（加盖证明单位公章）</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="twoUserIsUse" th:checked="${reviewResult.twoUserIsUse} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>是</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="twoUserIsUse" th:checked="${reviewResult.twoUserIsUse} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>否</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>经济效益证明（加盖证明单位公章）</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="economicIsCert" th:checked="${reviewResult.economicIsCert} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>有</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="economicIsCert" th:checked="${reviewResult.economicIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>无</label>
+                    </div>
+                </div>
+            </div>
+            <div class="inline fields">
+                <label>局级一、二等奖证书或文件</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="bureauAwardIsCert" th:checked="${reviewResult.bureauAwardIsCert} eq 是" value="是" tabindex="1"   class="hidden">
+                        <label>有</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="bureauAwardIsCert" th:checked="${reviewResult.bureauAwardIsCert} eq 否" value="否"  tabindex="0" class="hidden">
+                        <label>无</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">形式审查意见</h4>
+            <div class="inline fields">
+                <label>形式审查意见</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 参评" value="参评">
+                        <label>参评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 完善后参评" value="完善后参评">
+                        <label>完善后参评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 不评" value="不评">
+                        <label>不评</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="reviewResult" th:checked="${reviewResult.reviewResult} eq 缓评" value="缓评">
+                        <label>缓评</label>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>备注</label>
+                <input type="text" name="remarks" th:value="${reviewResult.remarks}" placeholder="备注">
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button">提交</div>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/cpe/surverReviewStandardResult/add.js?v=1.1"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.radio.checkbox').checkbox();
+    $('.ui.form').form({});
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.OilProApplyInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProApplyInfoDO">
+		select `id`,`comany_name`,`company_nature`,`mailing_address`,`post_code`,`email_address`,`qualification_level_scop`,`legal_representative`,`duty`,`fixed_telephone`,`mobile_phone`,`project_manager`,`email_manager`,`fixed_telephone_manager`,`mobile_phone_manager`,`contact_name`,`contact_mail`,`contact_fix_phone`,`contact_mobile`,`applicant_brief_introduction`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated` from ass_oil_pro_apply_info where id = #{value}
+	</select>
+
+	<select id="getByProId" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProApplyInfoDO">
+		select `id`,`comany_name`,`company_nature`,`mailing_address`,`post_code`,`email_address`,`qualification_level_scop`,
+		       `legal_representative`,`duty`,`fixed_telephone`,`mobile_phone`,`project_manager`,`email_manager`,`fixed_telephone_manager`,
+		       `mobile_phone_manager`,`contact_name`,`contact_mail`,`contact_fix_phone`,`contact_mobile`,`applicant_brief_introduction`,
+		       `pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated`,
+		       (SELECT project_name FROM ass_oil_pro_general_situation where pro_id = ao.pro_id  limit 1) project_name
+		       from ass_oil_pro_apply_info ao
+		 where pro_id = #{value} order by id desc limit 1
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProApplyInfoDO">
+		select `id`,`comany_name`,`company_nature`,`mailing_address`,`post_code`,`email_address`,`qualification_level_scop`,`legal_representative`,`duty`,`fixed_telephone`,`mobile_phone`,`project_manager`,`email_manager`,`fixed_telephone_manager`,`mobile_phone_manager`,`contact_name`,`contact_mail`,`contact_fix_phone`,`contact_mobile`,`applicant_brief_introduction`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated` from ass_oil_pro_apply_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="comanyName != null and comanyName != ''"> and comany_name = #{comanyName} </if>
+		  		  <if test="companyNature != null and companyNature != ''"> and company_nature = #{companyNature} </if>
+		  		  <if test="mailingAddress != null and mailingAddress != ''"> and mailing_address = #{mailingAddress} </if>
+		  		  <if test="postCode != null and postCode != ''"> and post_code = #{postCode} </if>
+		  		  <if test="emailAddress != null and emailAddress != ''"> and email_address = #{emailAddress} </if>
+		  		  <if test="qualificationLevelScop != null and qualificationLevelScop != ''"> and qualification_level_scop = #{qualificationLevelScop} </if>
+		  		  <if test="legalRepresentative != null and legalRepresentative != ''"> and legal_representative = #{legalRepresentative} </if>
+		  		  <if test="duty != null and duty != ''"> and duty = #{duty} </if>
+		  		  <if test="fixedTelephone != null and fixedTelephone != ''"> and fixed_telephone = #{fixedTelephone} </if>
+		  		  <if test="mobilePhone != null and mobilePhone != ''"> and mobile_phone = #{mobilePhone} </if>
+		  		  <if test="projectManager != null and projectManager != ''"> and project_manager = #{projectManager} </if>
+		  		  <if test="emailManager != null and emailManager != ''"> and email_manager = #{emailManager} </if>
+		  		  <if test="fixedTelephoneManager != null and fixedTelephoneManager != ''"> and fixed_telephone_manager = #{fixedTelephoneManager} </if>
+		  		  <if test="mobilePhoneManager != null and mobilePhoneManager != ''"> and mobile_phone_manager = #{mobilePhoneManager} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactMail != null and contactMail != ''"> and contact_mail = #{contactMail} </if>
+		  		  <if test="contactFixPhone != null and contactFixPhone != ''"> and contact_fix_phone = #{contactFixPhone} </if>
+		  		  <if test="contactMobile != null and contactMobile != ''"> and contact_mobile = #{contactMobile} </if>
+		  		  <if test="applicantBriefIntroduction != null and applicantBriefIntroduction != ''"> and applicant_brief_introduction = #{applicantBriefIntroduction} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_oil_pro_apply_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="comanyName != null and comanyName != ''"> and comany_name = #{comanyName} </if>
+		  		  <if test="companyNature != null and companyNature != ''"> and company_nature = #{companyNature} </if>
+		  		  <if test="mailingAddress != null and mailingAddress != ''"> and mailing_address = #{mailingAddress} </if>
+		  		  <if test="postCode != null and postCode != ''"> and post_code = #{postCode} </if>
+		  		  <if test="emailAddress != null and emailAddress != ''"> and email_address = #{emailAddress} </if>
+		  		  <if test="qualificationLevelScop != null and qualificationLevelScop != ''"> and qualification_level_scop = #{qualificationLevelScop} </if>
+		  		  <if test="legalRepresentative != null and legalRepresentative != ''"> and legal_representative = #{legalRepresentative} </if>
+		  		  <if test="duty != null and duty != ''"> and duty = #{duty} </if>
+		  		  <if test="fixedTelephone != null and fixedTelephone != ''"> and fixed_telephone = #{fixedTelephone} </if>
+		  		  <if test="mobilePhone != null and mobilePhone != ''"> and mobile_phone = #{mobilePhone} </if>
+		  		  <if test="projectManager != null and projectManager != ''"> and project_manager = #{projectManager} </if>
+		  		  <if test="emailManager != null and emailManager != ''"> and email_manager = #{emailManager} </if>
+		  		  <if test="fixedTelephoneManager != null and fixedTelephoneManager != ''"> and fixed_telephone_manager = #{fixedTelephoneManager} </if>
+		  		  <if test="mobilePhoneManager != null and mobilePhoneManager != ''"> and mobile_phone_manager = #{mobilePhoneManager} </if>
+		  		  <if test="contactName != null and contactName != ''"> and contact_name = #{contactName} </if>
+		  		  <if test="contactMail != null and contactMail != ''"> and contact_mail = #{contactMail} </if>
+		  		  <if test="contactFixPhone != null and contactFixPhone != ''"> and contact_fix_phone = #{contactFixPhone} </if>
+		  		  <if test="contactMobile != null and contactMobile != ''"> and contact_mobile = #{contactMobile} </if>
+		  		  <if test="applicantBriefIntroduction != null and applicantBriefIntroduction != ''"> and applicant_brief_introduction = #{applicantBriefIntroduction} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProApplyInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_oil_pro_apply_info
+		(
+			`comany_name`,
+			`company_nature`, 
+			`mailing_address`, 
+			`post_code`, 
+			`email_address`, 
+			`qualification_level_scop`, 
+			`legal_representative`, 
+			`duty`, 
+			`fixed_telephone`, 
+			`mobile_phone`, 
+			`project_manager`, 
+			`email_manager`, 
+			`fixed_telephone_manager`, 
+			`mobile_phone_manager`, 
+			`contact_name`, 
+			`contact_mail`, 
+			`contact_fix_phone`, 
+			`contact_mobile`, 
+			`applicant_brief_introduction`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`, 
+			`created`, 
+			`updated`
+		)
+		values
+		(
+			#{comanyName},
+			#{companyNature}, 
+			#{mailingAddress}, 
+			#{postCode}, 
+			#{emailAddress}, 
+			#{qualificationLevelScop}, 
+			#{legalRepresentative}, 
+			#{duty}, 
+			#{fixedTelephone}, 
+			#{mobilePhone}, 
+			#{projectManager}, 
+			#{emailManager}, 
+			#{fixedTelephoneManager}, 
+			#{mobilePhoneManager}, 
+			#{contactName}, 
+			#{contactMail}, 
+			#{contactFixPhone}, 
+			#{contactMobile}, 
+			#{applicantBriefIntroduction}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}, 
+			now(),
+			#{updated}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilProApplyInfoDO">
+		update ass_oil_pro_apply_info 
+		<set>
+			<if test="comanyName != null">`comany_name` = #{comanyName}, </if>
+			<if test="companyNature != null">`company_nature` = #{companyNature}, </if>
+			<if test="mailingAddress != null">`mailing_address` = #{mailingAddress}, </if>
+			<if test="postCode != null">`post_code` = #{postCode}, </if>
+			<if test="emailAddress != null">`email_address` = #{emailAddress}, </if>
+			<if test="qualificationLevelScop != null">`qualification_level_scop` = #{qualificationLevelScop}, </if>
+			<if test="legalRepresentative != null">`legal_representative` = #{legalRepresentative}, </if>
+			<if test="duty != null">`duty` = #{duty}, </if>
+			<if test="fixedTelephone != null">`fixed_telephone` = #{fixedTelephone}, </if>
+			<if test="mobilePhone != null">`mobile_phone` = #{mobilePhone}, </if>
+			<if test="projectManager != null">`project_manager` = #{projectManager}, </if>
+			<if test="emailManager != null">`email_manager` = #{emailManager}, </if>
+			<if test="fixedTelephoneManager != null">`fixed_telephone_manager` = #{fixedTelephoneManager}, </if>
+			<if test="mobilePhoneManager != null">`mobile_phone_manager` = #{mobilePhoneManager}, </if>
+			<if test="contactName != null">`contact_name` = #{contactName}, </if>
+			<if test="contactMail != null">`contact_mail` = #{contactMail}, </if>
+			<if test="contactFixPhone != null">`contact_fix_phone` = #{contactFixPhone}, </if>
+			<if test="contactMobile != null">`contact_mobile` = #{contactMobile}, </if>
+			<if test="applicantBriefIntroduction != null">`applicant_brief_introduction` = #{applicantBriefIntroduction}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_oil_pro_apply_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_oil_pro_apply_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

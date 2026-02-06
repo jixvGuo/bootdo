@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.w3.org/1999/xhtml" >
+<meta charset="utf-8">
+<!--<link href="/css/semantic/semantic.min.css" rel="stylesheet">-->
+
+<head th:include="include :: header"></head>
+
+<body>
+
+
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form method="get" class="ui basic form" action="" >
+            <h4 class="ui red horizontal divider header">基本信息 </h4>
+            <input id="teamId" name="teamId" th:value="${teamId}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proInfo.proId}"  type="hidden">
+            <input id="major" name="major" th:value="${proInfo.researchDirection}"  type="hidden">
+
+            <div class="ui field">
+                <label>团队名称</label>
+                <input type="text" name="teamname" placeholder="" th:value="${proInfo.teamName}" >
+            </div>
+
+            <h4 class="ui red horizontal divider header">打分详情 </h4>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>科研项目中稳定合作时间</label>
+                    <input type="number"  min="0" max="100" id="cooperation_time" name="cooperation_time" th:value="${cooperation_time}"   placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>学术领头人的资历及权威性</label>
+                    <input type="number"  min="0" max="100" id="academic_authority" name="academic_authority" th:value="${academic_authority}"  placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>科技创新成果</label>
+                    <input type="number" min="0" max="100" id="scientific_achievements" name="scientific_achievements" th:value="${scientific_achievements}"  placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>国家发明专利</label>
+                    <input type="number"  min="0" max="100" id="national_patent" name="national_patent" th:value="${national_patent}"  placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>实用新型专利</label>
+                    <input type="number"  min="0" max="100" id="utility_model_patents" name="utility_model_patents" th:value="${utility_model_patents}"  placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>科技成果转化率</label>
+                    <input type="number"  min="0" max="100" id="conversion_rate" name="conversion_rate" th:value="${conversion_rate}"   placeholder="" >
+                </div>
+            </div>
+            <div class="ui field disabled">
+                <label>总分</label>
+                <input type="number" name="totalScore" id="totalScore" th:value="${totalScore}" placeholder="" >
+            </div>
+            <h4 class="ui red horizontal divider header">意见备注 </h4>
+            <div class="ui field">
+                <label>推荐意见等级</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="opinion_level" th:value="${opinion_level}" id="opinion_level">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">推荐意见等级</div>
+                    <div class="menu">
+                        <div class="item" data-value="特等">特等</div>
+                        <div class="item" data-value="一等">一等</div>
+                        <div class="item" data-value="二等">二等</div>
+                        <div class="item" data-value="三等">三等</div>
+                        <div class="item" data-value="缓评">缓评</div>
+                        <div class="item" data-value="不推荐">不推荐</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>评审意见</label>
+                <textarea name="opinionText" id="opinion_text" th:text="${opinion_text}"></textarea>
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="saveData()">保存</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div th:include="include :: footer"></div>
+
+<script type="text/javascript" src="/js/appjs/act/score/team/team_score.js?v=1.0"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+
+
+    $("input[type='number']").keyup(function(){
+        var totalScore = 0;
+        $("input[type='number']").each(function () {
+            var namec = $(this).attr("name");
+            if(namec != "totalScore"){
+                totalScore += Number($(this).val());
+            }
+        });
+        $("input[name='totalScore']").val(totalScore);
+    });
+    $("input[type='number']").change(function(){
+        var totalScore = 0;
+        $("input[type='number']").each(function () {
+            var namec = $(this).attr("name");
+            if(namec != "totalScore"){
+                totalScore += Number($(this).val());
+            }
+        });
+        $("input[name='totalScore']").val(totalScore);
+    });
+
+
+    function addimage(){
+        $("#fileimage").trigger("click");
+    }
+
+    $('.ui.form').form({
+        on:'blur',
+        fields :{
+            teamname: {
+                identifier  : 'teamname',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写团队名称'
+                    }
+                ]
+            },
+            stablecooperation: {
+                identifier  : 'stablecooperation',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写科研项目中稳定合作时间分数'
+                    }
+                ]
+            },
+            authority: {
+                identifier  : 'authority',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写学术领头人的资历及权威性分数'
+                    }
+                ]
+            },
+            achievements: {
+                identifier  : 'achievements',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写科技创新成果分数'
+                    }
+                ]
+            },
+            patent: {
+                identifier  : 'patent',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写国家发明专利分数'
+                    }
+                ]
+            },
+            newtypepatent: {
+                identifier  : 'newtypepatent',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写实用新型专利分数'
+                    }
+                ]
+            },
+            conversion: {
+                identifier  : 'conversion',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写科技成果转化率分数'
+                    }
+                ]
+            },
+            opinionLevel: {
+                identifier  : 'opinionLevel',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请选择推荐意见等级'
+                    }
+                ]
+            },
+            opinion: {
+                identifier  : 'opinion',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写评审意见'
+                    }
+                ]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
+
+
+
+
+
+

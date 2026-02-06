@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h2>创建申报任务</h2>
+                        <div class="ibox-tools">
+                            <a class="close-link">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <form class="form-horizontal m-t" id="signupForm">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报任务名称：</label>
+                                <div class="col-sm-8">
+                                    <input id="taskName" name="taskName" th:value="${awardTask.taskName}" class="form-control" type="text">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里填写任务名称</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">协会负责人：</label>
+                                <div class="col-sm-8">
+                                    <select id="associationUserId" name="associationUserId" class="selectpicker" data-live-search="true">
+                                        <option value="0" >请选择协会负责人</option>
+                                        <option th:each="association:${associationUsers}"  th:value="${association.userId}" th:text="${association.name}" ></option>
+                                    </select>
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里从协会人员库里选择负责人</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报开始时间：</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group" id="data_start">
+                                        <div class="input-group date">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" name="applyStartDate" class="form-control" value="2020-1-1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">申报截止时间：</label>
+                                <div class="col-sm-8">
+                                    <div class="form-group" id="data_end">
+                                        <div class="input-group date">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" name="applyEndDate"  class="form-control" value="2020-1-1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">评审要求：</label>
+                                <div class="col-sm-8">
+                                    <textarea id="editor" name="validateRequire" placeholder="这里输入评审要求" autofocus>
+                                        ${awardTask,validateRequire}
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3">
+                                    <button class="btn btn-primary" type="submit" onclick="updatePro()">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+ </div>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+    <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+        <!--
+        <script src="js/plugins/cropper/cropper.min.js"></script>
+        <script src="js/demo/form-advanced-demo.min.js"></script>
+        -->
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="/js/demo/form-validate-demo.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/module.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/uploader.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/hotkeys.js"></script>
+    <script type="text/javascript" src="/js/plugins/simditor/simditor.js"></script>
+    <script>
+        $(document).ready(function(){var editor=new Simditor({textarea:$("#editor"),defaultImage:"img/a9.jpg"})});
+    </script>
+    <div th:include="include::footer"></div>
+
+    <script type="text/javascript" src="/js/appjs/act/award/publish_award_task_edit.js"></script>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_validate.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:16 GMT -->
+</html>

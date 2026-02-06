@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.EnterpriTeamEvaluateOtherDao">
+
+    <select id="get" resultType="com.bootdo.cpe.domain.EnterpriTeamEvaluateOtherDO">
+		select `id`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`activeevaluate`,`passiveevaluate`,`evaluatemainpoints`,`materialcode`,`created` from ass_enterpri_team_evaluate_other where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.bootdo.cpe.domain.EnterpriTeamEvaluateOtherDO">
+        select
+        `id`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`activeevaluate`,`passiveevaluate`,`evaluatemainpoints`,`materialcode`,`created`
+        from ass_enterpri_team_evaluate_other
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and opt_uid = #{optUid}</if>
+            <if test="activeevaluate != null and activeevaluate != ''">and activeevaluate = #{activeevaluate}</if>
+            <if test="passiveevaluate != null and passiveevaluate != ''">and passiveevaluate = #{passiveevaluate}</if>
+            <if test="evaluatemainpoints != null and evaluatemainpoints != ''">and evaluatemainpoints =
+                #{evaluatemainpoints}
+            </if>
+            <if test="materialcode != null and materialcode != ''">and materialcode = #{materialcode}</if>
+            <if test="created != null and created != ''">and created = #{created}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from ass_enterpri_team_evaluate_other
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and opt_uid = #{optUid}</if>
+            <if test="activeevaluate != null and activeevaluate != ''">and activeevaluate = #{activeevaluate}</if>
+            <if test="passiveevaluate != null and passiveevaluate != ''">and passiveevaluate = #{passiveevaluate}</if>
+            <if test="evaluatemainpoints != null and evaluatemainpoints != ''">and evaluatemainpoints =
+                #{evaluatemainpoints}
+            </if>
+            <if test="materialcode != null and materialcode != ''">and materialcode = #{materialcode}</if>
+            <if test="created != null and created != ''">and created = #{created}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.cpe.domain.EnterpriTeamEvaluateOtherDO" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into ass_enterpri_team_evaluate_other
+		(
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`, 
+			`activeevaluate`, 
+			`passiveevaluate`, 
+			`evaluatemainpoints`, 
+			`materialcode`, 
+			`created`
+		)
+		values
+		(
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}, 
+			#{activeevaluate}, 
+			#{passiveevaluate}, 
+			#{evaluatemainpoints}, 
+			#{materialcode},
+            now()
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.cpe.domain.EnterpriTeamEvaluateOtherDO">
+        update ass_enterpri_team_evaluate_other
+        <set>
+            <if test="proId != null">`pro_id` = #{proId},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="applyId != null">`apply_id` = #{applyId},</if>
+            <if test="optUid != null">`opt_uid` = #{optUid},</if>
+            <if test="activeevaluate != null">`activeevaluate` = #{activeevaluate},</if>
+            <if test="passiveevaluate != null">`passiveevaluate` = #{passiveevaluate},</if>
+            <if test="evaluatemainpoints != null">`evaluatemainpoints` = #{evaluatemainpoints},</if>
+            <if test="materialcode != null">`materialcode` = #{materialcode},</if>
+            <if test="created != null">`created` = #{created}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from ass_enterpri_team_evaluate_other where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from ass_enterpri_team_evaluate_other where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

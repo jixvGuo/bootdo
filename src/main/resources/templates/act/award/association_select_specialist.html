@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="publishTaskId" name="publishTaskId" type="hidden" th:value="${publishTaskId}">
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">专业：</label>
+								<div class="col-sm-8">
+									<select id="major" title="请选则专业" name="major" class="selectpicker" data-live-search="true">
+										<option th:each="major:${majorInfoList}" th:value="${major.majorId}" th:text="${major.majorName}" ></option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">专家：</label>
+								<div class="col-sm-8">
+									<select id="specialist" title="请选则专家" name="specialist" class="selectpicker" multiple data-live-search="true">
+										<option th:each="specialist:${specialistList}" th:value="${specialist.userId}" th:text="${specialist.name}" ></option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">专家组长：</label>
+								<div class="col-sm-8">
+									<select id="specialistLeader" title="请选则组长" name="specialistLeader" class="selectpicker" data-live-search="true">
+										<option th:each="specialist:${specialistList}" th:value="${specialist.userId}" th:text="${specialist.name}" ></option>
+									</select>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+									<button type="button" id="completeSelBtn" class="btn btn-primary">完成专家选择</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script src="/js/appjs/act/award/association_select_specialist.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityGoldAward/toEnginDescUpload(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="active item">项目概况</a>
+    <a th:href="@{/enterpriseQualityGoldAward/toAddGold(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">石油优质工程奖申报单</a>
+    <a th:href="@{/enterpriseQualityGoldAward/toContributorList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">突出贡献者名单</a>
+    <a th:href="@{/enterpriseQualityGoldAward/toUploadGoldFile(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+</div>
+<div class="ui top attached tabular menu">
+    <a href="01、工程简介.html" class="item">工程简介 </a>
+</div>
+<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <h4 class="ui violet horizontal divider header">工程简介</h4>
+        <h4 class="ui red horizontal divider header">附 件 说 明 </h4>
+        <p>1、工程简介1份（Word文档），由工程概述和工程照片组成。</p>
+        <p>2、工程概述限800字以内。</p>
+
+        <input type="hidden" id="isReadonly" th:value="${readonly}">
+        <input name="proId" th:value="${proId}" type="hidden">
+        <input name="taskId" th:value="${taskId}" type="hidden">
+        <input name="applyId" th:value="${applyId}" type="hidden">
+        <input name="fileType" th:value="${fileType}" type="hidden">
+        <input name="oilProType" value="gold" type="hidden">
+
+        <div class="ui segment">
+                <div id="task_file" style="display:block; margin-top: 20px" class="updocss_b col-sm-9">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <button type="button"    style="width: 100%" class="btn btn-primary btn-block" fileType="task_file">
+                                上传功能简介
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" id="upload_div">
+                            <div th:each="doc:${docList}"  class="file-box card" th:id="'file_'+${doc.fileId}">
+                                <div class="file">
+                                    <input type="hidden" name="upDocId" th:value="${doc.id}"/>
+                                    <a href="javascript:void(0)"
+                                       th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-file"></i>
+                                        </div>
+                                        <div class="file-name">
+                                            <span th:text="${doc.fileName}"/>
+                                            <br/>
+                                            <small>添加时间：<span
+                                                    th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span>
+                                            </small>
+                                        </div>
+                                    </a>
+                                    <div class="ui two buttons">
+                                        <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'"><i class="eye icon"></i> 查看 </div>
+                                        <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'"><i class="trash alternate outline icon"></i> 删除 </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</form>
+<!-- 详情页面 -->
+<div th:include="include::footer"></div>
+
+<script  type="text/javascript"   src="/js/appjs/act/engineering_award/engineering_file.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.radio.checkbox').checkbox();
+
+
+    $('.ui.form').form({
+        on:'blur',
+        fields :{
+            name: {
+                identifier  : 'name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写基本信息的姓名'
+                    }
+                ]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

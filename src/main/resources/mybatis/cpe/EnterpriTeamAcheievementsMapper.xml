@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.EnterpriTeamAcheievementsDao">
+
+    <select id="get" resultType="com.bootdo.cpe.domain.EnterpriTeamAcheievementsDO">
+		select `id`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`ach_name`,`ach_users`,`ach_date_start`,`ach_date_end`,`ach_use_date`,`ach_plan`,`ach_evidence_code`,`created` from ass_enterpri_team_acheievements where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.bootdo.cpe.domain.EnterpriTeamAcheievementsDO">
+        select
+        `id`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`ach_name`,`ach_users`,`ach_date_start`,`ach_date_end`,`ach_use_date`,`ach_plan`,`ach_evidence_code`,`created`
+        from ass_enterpri_team_acheievements
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and opt_uid = #{optUid}</if>
+            <if test="achName != null and achName != ''">and ach_name = #{achName}</if>
+            <if test="achUsers != null and achUsers != ''">and ach_users = #{achUsers}</if>
+            <if test="achDateStart != null and achDateStart != ''">and ach_date_start = #{achDateStart}</if>
+            <if test="achDateEnd != null and achDateEnd != ''">and ach_date_end = #{achDateEnd}</if>
+            <if test="achUseDate != null and achUseDate != ''">and ach_use_date = #{achUseDate}</if>
+            <if test="achPlan != null and achPlan != ''">and ach_plan = #{achPlan}</if>
+            <if test="achEvidenceCode != null and achEvidenceCode != ''">and ach_evidence_code = #{achEvidenceCode}</if>
+            <if test="created != null and created != ''">and created = #{created}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from ass_enterpri_team_acheievements
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and opt_uid = #{optUid}</if>
+            <if test="achName != null and achName != ''">and ach_name = #{achName}</if>
+            <if test="achUsers != null and achUsers != ''">and ach_users = #{achUsers}</if>
+            <if test="achDateStart != null and achDateStart != ''">and ach_date_start = #{achDateStart}</if>
+            <if test="achDateEnd != null and achDateEnd != ''">and ach_date_end = #{achDateEnd}</if>
+            <if test="achUseDate != null and achUseDate != ''">and ach_use_date = #{achUseDate}</if>
+            <if test="achPlan != null and achPlan != ''">and ach_plan = #{achPlan}</if>
+            <if test="achEvidenceCode != null and achEvidenceCode != ''">and ach_evidence_code = #{achEvidenceCode}</if>
+            <if test="created != null and created != ''">and created = #{created}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.cpe.domain.EnterpriTeamAcheievementsDO" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into ass_enterpri_team_acheievements
+		(
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`, 
+			`ach_name`, 
+			`ach_users`, 
+			`ach_date_start`, 
+			`ach_date_end`, 
+			`ach_use_date`, 
+			`ach_plan`, 
+			`ach_evidence_code`, 
+			`created`
+		)
+		values
+		(
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}, 
+			#{achName}, 
+			#{achUsers}, 
+			#{achDateStart}, 
+			#{achDateEnd}, 
+			#{achUseDate}, 
+			#{achPlan}, 
+			#{achEvidenceCode}, 
+			now()
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.cpe.domain.EnterpriTeamAcheievementsDO">
+        update ass_enterpri_team_acheievements
+        <set>
+            <if test="proId != null">`pro_id` = #{proId},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="applyId != null">`apply_id` = #{applyId},</if>
+            <if test="optUid != null">`opt_uid` = #{optUid},</if>
+            <if test="achName != null">`ach_name` = #{achName},</if>
+            <if test="achUsers != null">`ach_users` = #{achUsers},</if>
+            <if test="achDateStart != null">`ach_date_start` = #{achDateStart},</if>
+            <if test="achDateEnd != null">`ach_date_end` = #{achDateEnd},</if>
+            <if test="achUseDate != null">`ach_use_date` = #{achUseDate},</if>
+            <if test="achPlan != null">`ach_plan` = #{achPlan},</if>
+            <if test="achEvidenceCode != null">`ach_evidence_code` = #{achEvidenceCode},</if>
+            <if test="created != null">`created` = #{created}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from ass_enterpri_team_acheievements where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from ass_enterpri_team_acheievements where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

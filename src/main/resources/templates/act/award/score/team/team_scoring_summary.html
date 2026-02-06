@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="ui bottom attached segment">
+    <h2 class="ui center aligned header">团队</h2>
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th rowspan="2">序号</th>
+            <th rowspan="2">名称/姓名</th>
+            <th rowspan="2">所属单位</th>
+            <th th:colspan="${specialistCount}">专家成员打分情况</th>
+            <th rowspan="2">排序</th>
+            <th rowspan="2">是否推荐</th>
+        </tr>
+        <tr>
+            <th th:each="s,sStat:${specialistList}" th:text="${s}"></th>
+            <th>平均值</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t,tStat:${toatlInfoList}">
+            <td th:text="${tStat.count}"></td>
+            <td th:text="${t.name}"></td>
+            <td th:text="${t.enterpriseName}"></td>
+            <td th:each="score,scoreStat:${t.scoreList}" th:text="${score}"></td>
+            <td th:text="${t.avgScore}"></td>
+            <td>1</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:include="include :: footer"></div>
+
+
+<script>
+    $(function(){$(".full-height-scroll").slimScroll({height:"100%"})});
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+</body>
+</html>

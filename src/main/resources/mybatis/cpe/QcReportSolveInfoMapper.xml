@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.QcReportSolveInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.QcReportSolveInfoDO">
+		select `id`,`opt_uid`,`pro_id`,`task_id`,`apply_id`,`group_name`,`topic_name`,`topic_type`,`group_desc`,`sel_reason`,`investigation`,`feasibility_demonstrate`,`reason_analyze`,`master_reason`,`countermeasure`,`countermeasure_deploy`,`recommend`,`effect_check`,`consolidation_measures`,`sum_plan`,`created`,`updated`,`deleted` from ass_qc_report_solve_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.QcReportSolveInfoDO">
+		select `id`,`opt_uid`,`pro_id`,`task_id`,`apply_id`,`group_name`,`topic_name`,`topic_type`,`group_desc`,`sel_reason`,`investigation`,`feasibility_demonstrate`,`reason_analyze`,`master_reason`,`countermeasure`,`countermeasure_deploy`,`recommend`,`effect_check`,`consolidation_measures`,`sum_plan`,`created`,`updated`,`deleted` from ass_qc_report_solve_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="groupName != null and groupName != ''"> and group_name = #{groupName} </if>
+		  		  <if test="topicName != null and topicName != ''"> and topic_name = #{topicName} </if>
+		  		  <if test="topicType != null and topicType != ''"> and topic_type = #{topicType} </if>
+		  		  <if test="groupDesc != null and groupDesc != ''"> and group_desc = #{groupDesc} </if>
+		  		  <if test="selReason != null and selReason != ''"> and sel_reason = #{selReason} </if>
+		  		  <if test="investigation != null and investigation != ''"> and investigation = #{investigation} </if>
+		  		  <if test="feasibilityDemonstrate != null and feasibilityDemonstrate != ''"> and feasibility_demonstrate = #{feasibilityDemonstrate} </if>
+		  		  <if test="reasonAnalyze != null and reasonAnalyze != ''"> and reason_analyze = #{reasonAnalyze} </if>
+		  		  <if test="masterReason != null and masterReason != ''"> and master_reason = #{masterReason} </if>
+		  		  <if test="countermeasure != null and countermeasure != ''"> and countermeasure = #{countermeasure} </if>
+		  		  <if test="countermeasureDeploy != null and countermeasureDeploy != ''"> and countermeasure_deploy = #{countermeasureDeploy} </if>
+		  		  <if test="recommend != null and recommend != ''"> and recommend = #{recommend} </if>
+		  		  <if test="effectCheck != null and effectCheck != ''"> and effect_check = #{effectCheck} </if>
+		  		  <if test="consolidationMeasures != null and consolidationMeasures != ''"> and consolidation_measures = #{consolidationMeasures} </if>
+		  		  <if test="sumPlan != null and sumPlan != ''"> and sum_plan = #{sumPlan} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_qc_report_solve_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="groupName != null and groupName != ''"> and group_name = #{groupName} </if>
+		  		  <if test="topicName != null and topicName != ''"> and topic_name = #{topicName} </if>
+		  		  <if test="topicType != null and topicType != ''"> and topic_type = #{topicType} </if>
+		  		  <if test="groupDesc != null and groupDesc != ''"> and group_desc = #{groupDesc} </if>
+		  		  <if test="selReason != null and selReason != ''"> and sel_reason = #{selReason} </if>
+		  		  <if test="investigation != null and investigation != ''"> and investigation = #{investigation} </if>
+		  		  <if test="feasibilityDemonstrate != null and feasibilityDemonstrate != ''"> and feasibility_demonstrate = #{feasibilityDemonstrate} </if>
+		  		  <if test="reasonAnalyze != null and reasonAnalyze != ''"> and reason_analyze = #{reasonAnalyze} </if>
+		  		  <if test="masterReason != null and masterReason != ''"> and master_reason = #{masterReason} </if>
+		  		  <if test="countermeasure != null and countermeasure != ''"> and countermeasure = #{countermeasure} </if>
+		  		  <if test="countermeasureDeploy != null and countermeasureDeploy != ''"> and countermeasure_deploy = #{countermeasureDeploy} </if>
+		  		  <if test="recommend != null and recommend != ''"> and recommend = #{recommend} </if>
+		  		  <if test="effectCheck != null and effectCheck != ''"> and effect_check = #{effectCheck} </if>
+		  		  <if test="consolidationMeasures != null and consolidationMeasures != ''"> and consolidation_measures = #{consolidationMeasures} </if>
+		  		  <if test="sumPlan != null and sumPlan != ''"> and sum_plan = #{sumPlan} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.QcReportSolveInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_qc_report_solve_info
+		(
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`group_name`, 
+			`topic_name`, 
+			`topic_type`, 
+			`group_desc`, 
+			`sel_reason`, 
+			`investigation`, 
+			`feasibility_demonstrate`, 
+			`reason_analyze`, 
+			`master_reason`, 
+			`countermeasure`, 
+			`countermeasure_deploy`, 
+			`recommend`, 
+			`effect_check`, 
+			`consolidation_measures`, 
+			`sum_plan`, 
+			`created`, 
+			`updated`, 
+			`deleted`
+		)
+		values
+		(
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{groupName}, 
+			#{topicName}, 
+			#{topicType}, 
+			#{groupDesc}, 
+			#{selReason}, 
+			#{investigation}, 
+			#{feasibilityDemonstrate}, 
+			#{reasonAnalyze}, 
+			#{masterReason}, 
+			#{countermeasure}, 
+			#{countermeasureDeploy}, 
+			#{recommend}, 
+			#{effectCheck}, 
+			#{consolidationMeasures}, 
+			#{sumPlan},
+		    now(),
+			#{updated}, 
+			#{deleted}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.QcReportSolveInfoDO">
+		update ass_qc_report_solve_info 
+		<set>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="groupName != null">`group_name` = #{groupName}, </if>
+			<if test="topicName != null">`topic_name` = #{topicName}, </if>
+			<if test="topicType != null">`topic_type` = #{topicType}, </if>
+			<if test="groupDesc != null">`group_desc` = #{groupDesc}, </if>
+			<if test="selReason != null">`sel_reason` = #{selReason}, </if>
+			<if test="investigation != null">`investigation` = #{investigation}, </if>
+			<if test="feasibilityDemonstrate != null">`feasibility_demonstrate` = #{feasibilityDemonstrate}, </if>
+			<if test="reasonAnalyze != null">`reason_analyze` = #{reasonAnalyze}, </if>
+			<if test="masterReason != null">`master_reason` = #{masterReason}, </if>
+			<if test="countermeasure != null">`countermeasure` = #{countermeasure}, </if>
+			<if test="countermeasureDeploy != null">`countermeasure_deploy` = #{countermeasureDeploy}, </if>
+			<if test="recommend != null">`recommend` = #{recommend}, </if>
+			<if test="effectCheck != null">`effect_check` = #{effectCheck}, </if>
+			<if test="consolidationMeasures != null">`consolidation_measures` = #{consolidationMeasures}, </if>
+			<if test="sumPlan != null">`sum_plan` = #{sumPlan}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_qc_report_solve_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_qc_report_solve_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

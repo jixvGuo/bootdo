@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="overflow:scroll">
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <input id="id" name="id" th:value="${awardStyleValidateScience.id}"  type="hidden">
+                            <table class="table table-bordered" style="width:2000px;overflow:scroll">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;vertical-align:middle;width:20px" rowspan="2">序号</th>
+                                        <th style="text-align:center;vertical-align:middle;width:100px" rowspan="2">申报单位</th>
+                                        <th style="text-align:center;vertical-align:middle;width:100px" rowspan="2">申报成果名称</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">申报书</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">研究报告</th>
+                                        <th style="text-align:center;vertical-align:middle;width:560px" colspan="14">附件</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px" rowspan="2">审查存在问题</th>
+                                        <th style="text-align:center;vertical-align:middle;width:80px" colspan="4">审查结论</th>
+                                        <th style="text-align:center;vertical-align:middle;width:60px" rowspan="2">主要完成人</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">成果立项文件</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">成果验收报告</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">科技成果鉴定证书</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">成果鉴定等级</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">知识产权证明数量</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">查新报告</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">其他证明</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">成果形成的国标、行标</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">检测报告</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">检测报告出具单位</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">成果应用证明</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">成果应用时间</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">应用单位数量</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px">完成人名单排序表等</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">参评</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">完善后参评</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">不评</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">缓评</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;">1</td>
+                                        <td th:text="${awardStyleValidateScience.applyCompany}"></td>
+                                        <td th:text="${awardStyleValidateScience.applyChengguoName}"></td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isShenbaoshu == '是'}" th:checked="checked" type="checkbox" name="isShenbaoshu"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isShenbaoshu != '是'}" type="checkbox" name="isShenbaoshu"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isYanjiubaogao == '是'}" th:checked="checked" type="checkbox" name="isYanjiubaogao"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isYanjiubaogao != '是'}" type="checkbox" name="isYanjiubaogao"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isChengguolixiang == '是'}" th:checked="checked" type="checkbox" name="isChengguolixiang"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isChengguolixiang != '是'}" type="checkbox" name="isChengguolixiang"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isChengguoyanshou == '是'}" th:checked="checked" type="checkbox" name="isChengguoyanshou"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isChengguoyanshou != '是'}" type="checkbox" name="isChengguoyanshou"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input id="scienceJiandingshu" name="scienceJiandingshu" th:value="${awardStyleValidateScience.scienceJiandingshu}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <input id="chengguoLevel" name="chengguoLevel" th:value="${awardStyleValidateScience.chengguoLevel}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <input id="zhishichanquanCount" name="zhishichanquanCount" th:value="${awardStyleValidateScience.zhishichanquanCount}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isChaxinbaogao == '是'}" th:checked="checked" type="checkbox" name="isChaxinbaogao"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isChaxinbaogao != '是'}" type="checkbox" name="isChaxinbaogao"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isOtherZhengming == '是'}" th:checked="checked" type="checkbox" name="isOtherZhengming"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isOtherZhengming != '是'}" type="checkbox" name="isOtherZhengming"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isChengguobiaozhun == '是'}" th:checked="checked" type="checkbox" name="isChengguobiaozhun"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isChengguobiaozhun != '是'}" type="checkbox" name="isChengguobiaozhun"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input id="reviewReport" name="reviewReport" th:value="${awardStyleValidateScience.reviewReport}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <input id="reviewPortCompany" name="reviewPortCompany" th:value="${awardStyleValidateScience.reviewPortCompany}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isCheengguoZhengming == '是'}" th:checked="checked" type="checkbox" name="isCheengguoZhengming"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isCheengguoZhengming != '是'}" type="checkbox" name="isCheengguoZhengming"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input id="chengguoApplyTime" name="chengguoApplyTime" th:value="${awardStyleValidateScience.chengguoApplyTime}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <input id="applyComapnyCount" name="applyComapnyCount" th:value="${awardStyleValidateScience.applyComapnyCount}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isSort == '是'}" th:checked="checked" type="checkbox" name="isSort"  value="是">
+                                                    <input th:if="${awardStyleValidateScience.isSort != '是'}" type="checkbox" name="isSort"  value="是">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input id="validateQuestion" name="validateQuestion" th:value="${awardStyleValidateScience.validateQuestion}" class="form-control" type="text">
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isCanping == '是'}" th:checked="true" type="radio" value="是" name="isCanping">
+                                                    <input th:if="${awardStyleValidateScience.isCanping != '是'}" type="radio" value="是" name="isCanping">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.isCompleteCanping == '是'}" th:checked="true" type="radio" value="是" name="isCompleteCanping">
+                                                    <input th:if="${awardStyleValidateScience.isCompleteCanping != '是'}" type="radio" value="是" name="isCompleteCanping">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.noCanping == '是'}" th:checked="true" type="radio" value="是" name="noCanping">
+                                                    <input th:if="${awardStyleValidateScience.noCanping != '是'}" type="radio" value="是" name="noCanping">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input th:if="${awardStyleValidateScience.huanCanping == '是'}" th:checked="true" type="radio" value="是" name="huanCanping">
+                                                    <input th:if="${awardStyleValidateScience.huanCanping != '是'}" type="radio" value="是" name="huanCanping">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input id="mainCompleteUser" name="mainCompleteUser" th:value="${awardStyleValidateScience.mainCompleteUser}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script th:if="${awardStyleValidateScience==null || awardStyleValidateScience.id == 0}" type="text/javascript" src="/js/appjs/system/awardStyleValidateScience/add.js"></script>
+    <script th:if="${awardStyleValidateScience!=null && awardStyleValidateScience.id > 0}"  type="text/javascript" src="/js/appjs/system/awardStyleValidateScience/edit.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(" .i-checks").iCheck({
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green"
+            })
+        });
+    </script>
+</body>
+
+</html>

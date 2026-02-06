@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.AwardStyleValidateScienceDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.AwardStyleValidateScienceDO">
+		select `id`,`apply_company`,`apply_name`,`is_apply_book`,`is_study_report`,`enclosure_is_approval`,`enclosure_is_check`,`enclosure_appraisal_book`,`enclosure_appraisal_level`,`enclosure_knowledge_count`,`enclosure_is_new`,`enclosure_is_other`,`enclosure_is_standard`,`enclosure_check_book`,`enclosure_check_company`,`enclosure_is_apply`,`enclosure_apply_time`,`enclosure_apply_company_count`,`enclosure_is_table`,`validate_questions`,`main_complete_users`,`validate_result`,`validate_uid`,`pro_id`,`is_last_validate`,`created`,`reject_reason`,
+		(SELECT pro_group_name FROM boot_do.ass_award_enterprise_project where id = vp.pro_id limit 1) proGroupName
+		from ass_award_style_validate_science vp where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.AwardStyleValidateScienceDO">
+		select `id`,`apply_company`,`is_apply_book`,`is_study_report`,`enclosure_is_approval`,`enclosure_is_check`,`enclosure_appraisal_book`,`enclosure_appraisal_level`,`enclosure_knowledge_count`,`enclosure_is_new`,`enclosure_is_other`,`enclosure_is_standard`,`enclosure_check_book`,`enclosure_check_company`,`enclosure_is_apply`,`enclosure_apply_time`,`enclosure_apply_company_count`,`enclosure_is_table`,`validate_questions`,`main_complete_users`,`validate_result`,`validate_uid`,`pro_id`,`is_last_validate`,`created`,`reject_reason`,
+		(SELECT pro_group_name FROM boot_do.ass_award_enterprise_project where id = vp.pro_id limit 1) proGroupName,
+		(SELECT chengguo_name FROM boot_do.ass_enterprise_chengguo_base_info where pro_id = vp.pro_id limit 1) applyName
+		from ass_award_style_validate_science vp
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyName != null and applyName != ''"> and apply_name = #{applyName} </if>
+		  		  <if test="isApplyBook != null and isApplyBook != ''"> and is_apply_book = #{isApplyBook} </if>
+		  		  <if test="isStudyReport != null and isStudyReport != ''"> and is_study_report = #{isStudyReport} </if>
+		  		  <if test="enclosureIsApproval != null and enclosureIsApproval != ''"> and enclosure_is_approval = #{enclosureIsApproval} </if>
+		  		  <if test="enclosureIsCheck != null and enclosureIsCheck != ''"> and enclosure_is_check = #{enclosureIsCheck} </if>
+		  		  <if test="enclosureAppraisalBook != null and enclosureAppraisalBook != ''"> and enclosure_appraisal_book = #{enclosureAppraisalBook} </if>
+		  		  <if test="enclosureAppraisalLevel != null and enclosureAppraisalLevel != ''"> and enclosure_appraisal_level = #{enclosureAppraisalLevel} </if>
+		  		  <if test="enclosureKnowledgeCount != null and enclosureKnowledgeCount != ''"> and enclosure_knowledge_count = #{enclosureKnowledgeCount} </if>
+		  		  <if test="enclosureIsNew != null and enclosureIsNew != ''"> and enclosure_is_new = #{enclosureIsNew} </if>
+		  		  <if test="enclosureIsOther != null and enclosureIsOther != ''"> and enclosure_is_other = #{enclosureIsOther} </if>
+		  		  <if test="enclosureIsStandard != null and enclosureIsStandard != ''"> and enclosure_is_standard = #{enclosureIsStandard} </if>
+		  		  <if test="enclosureCheckBook != null and enclosureCheckBook != ''"> and enclosure_check_book = #{enclosureCheckBook} </if>
+		  		  <if test="enclosureCheckCompany != null and enclosureCheckCompany != ''"> and enclosure_check_company = #{enclosureCheckCompany} </if>
+		  		  <if test="enclosureIsApply != null and enclosureIsApply != ''"> and enclosure_is_apply = #{enclosureIsApply} </if>
+		  		  <if test="enclosureApplyTime != null and enclosureApplyTime != ''"> and enclosure_apply_time = #{enclosureApplyTime} </if>
+		  		  <if test="enclosureApplyCompanyCount != null and enclosureApplyCompanyCount != ''"> and enclosure_apply_company_count = #{enclosureApplyCompanyCount} </if>
+		  		  <if test="enclosureIsTable != null and enclosureIsTable != ''"> and enclosure_is_table = #{enclosureIsTable} </if>
+		  		  <if test="validateQuestions != null and validateQuestions != ''"> and validate_questions = #{validateQuestions} </if>
+		  		  <if test="mainCompleteUsers != null and mainCompleteUsers != ''"> and main_complete_users = #{mainCompleteUsers} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="validateUid != null and validateUid != ''"> and validate_uid = #{validateUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="isLastValidate != null and isLastValidate != ''"> and is_last_validate = #{isLastValidate} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+			      <if test="rejectReason != null and rejectReason != ''"> and reject_reason = #{rejectReason} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_style_validate_science
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyName != null and applyName != ''"> and apply_name = #{applyName} </if>
+		  		  <if test="isApplyBook != null and isApplyBook != ''"> and is_apply_book = #{isApplyBook} </if>
+		  		  <if test="isStudyReport != null and isStudyReport != ''"> and is_study_report = #{isStudyReport} </if>
+		  		  <if test="enclosureIsApproval != null and enclosureIsApproval != ''"> and enclosure_is_approval = #{enclosureIsApproval} </if>
+		  		  <if test="enclosureIsCheck != null and enclosureIsCheck != ''"> and enclosure_is_check = #{enclosureIsCheck} </if>
+		  		  <if test="enclosureAppraisalBook != null and enclosureAppraisalBook != ''"> and enclosure_appraisal_book = #{enclosureAppraisalBook} </if>
+		  		  <if test="enclosureAppraisalLevel != null and enclosureAppraisalLevel != ''"> and enclosure_appraisal_level = #{enclosureAppraisalLevel} </if>
+		  		  <if test="enclosureKnowledgeCount != null and enclosureKnowledgeCount != ''"> and enclosure_knowledge_count = #{enclosureKnowledgeCount} </if>
+		  		  <if test="enclosureIsNew != null and enclosureIsNew != ''"> and enclosure_is_new = #{enclosureIsNew} </if>
+		  		  <if test="enclosureIsOther != null and enclosureIsOther != ''"> and enclosure_is_other = #{enclosureIsOther} </if>
+		  		  <if test="enclosureIsStandard != null and enclosureIsStandard != ''"> and enclosure_is_standard = #{enclosureIsStandard} </if>
+		  		  <if test="enclosureCheckBook != null and enclosureCheckBook != ''"> and enclosure_check_book = #{enclosureCheckBook} </if>
+		  		  <if test="enclosureCheckCompany != null and enclosureCheckCompany != ''"> and enclosure_check_company = #{enclosureCheckCompany} </if>
+		  		  <if test="enclosureIsApply != null and enclosureIsApply != ''"> and enclosure_is_apply = #{enclosureIsApply} </if>
+		  		  <if test="enclosureApplyTime != null and enclosureApplyTime != ''"> and enclosure_apply_time = #{enclosureApplyTime} </if>
+		  		  <if test="enclosureApplyCompanyCount != null and enclosureApplyCompanyCount != ''"> and enclosure_apply_company_count = #{enclosureApplyCompanyCount} </if>
+		  		  <if test="enclosureIsTable != null and enclosureIsTable != ''"> and enclosure_is_table = #{enclosureIsTable} </if>
+		  		  <if test="validateQuestions != null and validateQuestions != ''"> and validate_questions = #{validateQuestions} </if>
+		  		  <if test="mainCompleteUsers != null and mainCompleteUsers != ''"> and main_complete_users = #{mainCompleteUsers} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="validateUid != null and validateUid != ''"> and validate_uid = #{validateUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="isLastValidate != null and isLastValidate != ''"> and is_last_validate = #{isLastValidate} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.AwardStyleValidateScienceDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_award_style_validate_science
+		(
+			`apply_company`, 
+			`apply_name`, 
+			`is_apply_book`, 
+			`is_study_report`, 
+			`enclosure_is_approval`, 
+			`enclosure_is_check`, 
+			`enclosure_appraisal_book`, 
+			`enclosure_appraisal_level`, 
+			`enclosure_knowledge_count`, 
+			`enclosure_is_new`, 
+			`enclosure_is_other`, 
+			`enclosure_is_standard`, 
+			`enclosure_check_book`, 
+			`enclosure_check_company`, 
+			`enclosure_is_apply`, 
+			`enclosure_apply_time`, 
+			`enclosure_apply_company_count`, 
+			`enclosure_is_table`, 
+			`validate_questions`, 
+			`main_complete_users`, 
+			`validate_result`, 
+			`validate_uid`, 
+			`pro_id`, 
+			`is_last_validate`, 
+			`created`,
+			`reject_reason`
+		)
+		values
+		(
+			#{applyCompany}, 
+			#{applyName}, 
+			#{isApplyBook}, 
+			#{isStudyReport}, 
+			#{enclosureIsApproval}, 
+			#{enclosureIsCheck}, 
+			#{enclosureAppraisalBook}, 
+			#{enclosureAppraisalLevel}, 
+			#{enclosureKnowledgeCount}, 
+			#{enclosureIsNew}, 
+			#{enclosureIsOther}, 
+			#{enclosureIsStandard}, 
+			#{enclosureCheckBook}, 
+			#{enclosureCheckCompany}, 
+			#{enclosureIsApply}, 
+			#{enclosureApplyTime}, 
+			#{enclosureApplyCompanyCount}, 
+			#{enclosureIsTable}, 
+			#{validateQuestions}, 
+			#{mainCompleteUsers}, 
+			#{validateResult}, 
+			#{validateUid}, 
+			#{proId}, 
+			#{isLastValidate}, 
+			now(),
+			#{rejectReason}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.AwardStyleValidateScienceDO">
+		update ass_award_style_validate_science 
+		<set>
+			<if test="applyCompany != null">`apply_company` = #{applyCompany}, </if>
+			<if test="applyName != null">`apply_name` = #{applyName}, </if>
+			<if test="isApplyBook != null">`is_apply_book` = #{isApplyBook}, </if>
+			<if test="isStudyReport != null">`is_study_report` = #{isStudyReport}, </if>
+			<if test="enclosureIsApproval != null">`enclosure_is_approval` = #{enclosureIsApproval}, </if>
+			<if test="enclosureIsCheck != null">`enclosure_is_check` = #{enclosureIsCheck}, </if>
+			<if test="enclosureAppraisalBook != null">`enclosure_appraisal_book` = #{enclosureAppraisalBook}, </if>
+			<if test="enclosureAppraisalLevel != null">`enclosure_appraisal_level` = #{enclosureAppraisalLevel}, </if>
+			<if test="enclosureKnowledgeCount != null">`enclosure_knowledge_count` = #{enclosureKnowledgeCount}, </if>
+			<if test="enclosureIsNew != null">`enclosure_is_new` = #{enclosureIsNew}, </if>
+			<if test="enclosureIsOther != null">`enclosure_is_other` = #{enclosureIsOther}, </if>
+			<if test="enclosureIsStandard != null">`enclosure_is_standard` = #{enclosureIsStandard}, </if>
+			<if test="enclosureCheckBook != null">`enclosure_check_book` = #{enclosureCheckBook}, </if>
+			<if test="enclosureCheckCompany != null">`enclosure_check_company` = #{enclosureCheckCompany}, </if>
+			<if test="enclosureIsApply != null">`enclosure_is_apply` = #{enclosureIsApply}, </if>
+			<if test="enclosureApplyTime != null">`enclosure_apply_time` = #{enclosureApplyTime}, </if>
+			<if test="enclosureApplyCompanyCount != null">`enclosure_apply_company_count` = #{enclosureApplyCompanyCount}, </if>
+			<if test="enclosureIsTable != null">`enclosure_is_table` = #{enclosureIsTable}, </if>
+			<if test="validateQuestions != null">`validate_questions` = #{validateQuestions}, </if>
+			<if test="mainCompleteUsers != null">`main_complete_users` = #{mainCompleteUsers}, </if>
+			<if test="validateResult != null">`validate_result` = #{validateResult}, </if>
+			<if test="validateUid != null">`validate_uid` = #{validateUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="isLastValidate != null">`is_last_validate` = #{isLastValidate}, </if>
+			<if test="created != null">`created` = #{created}</if>
+			<if test="rejectReason != null and rejectReason != ''">`reject_reason` = #{rejectReason}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="cleanLastValidate" parameterType="int">
+		update ass_award_style_validate_science set is_last_validate = 0 where pro_id = #{proId} and is_last_validate = 1
+	</update>
+	
+	<delete id="remove">
+		delete from ass_award_style_validate_science where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_award_style_validate_science where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

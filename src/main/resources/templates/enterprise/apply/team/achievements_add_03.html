@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item" th:href="@{/enterpriseTeam/toAchievementsList(proId=${proId},taskId=${taskId},applyId=${applyId})}">列表 </a>
+    <a class="active item" href="#">新增 </a>
+    <!--
+        <a th:href="@{/enterpriseTeam/toAchievementsAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">打印 </a>
+    -->
+</div>
+<div class="ui bottom attached segment">
+    <form action="" class="ui form" id="signupForm">
+        <input id="id" name="id" th:value="${enterpriTeamAcheievements.id}" type="hidden">
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+        <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+        <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>成果名称</label>
+                <input name="achName" placeholder="成果名称" th:value="${enterpriTeamAcheievements.achName}" type="text">
+            </div>
+            <div class="ui field">
+                <label>正式应用(公开发表)日期</label>
+                <input name="achUseDate" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"
+                       placeholder="正式应用(公开发表)日期"
+                       th:value="${#dates.format(enterpriTeamAcheievements.achUseDate,'yyyy-MM-dd')}" type="text">
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>研发开始日期</label>
+                <input name="achDateStart" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="研发开始日期"
+                       th:value="${#dates.format(enterpriTeamAcheievements.achDateStart,'yyyy-MM-dd')}" type="text">
+            </div>
+            <div class="ui field">
+                <label>研发结束日期</label>
+                <input name="achDateEnd" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="研发结束日期"
+                       th:value="${#dates.format(enterpriTeamAcheievements.achDateEnd,'yyyy-MM-dd')}" type="text">
+            </div>
+        </div>
+        <div class="ui field">
+            <label>证明材料编号</label>
+            <input name="achEvidenceCode" placeholder="证明材料编号" th:value="${enterpriTeamAcheievements.achEvidenceCode}"
+                   type="text">
+        </div>
+        <div class="ui field">
+            <label>团队主要成员中的完成人/排名</label>
+            <textarea id="achUsers" autofocus name="achUsers"
+                      th:text="${enterpriTeamAcheievements.achUsers}" placeholder="团队主要成员中的完成人/排名"></textarea>
+        </div>
+        <div class="ui field">
+            <label>依托计划名称和编号(不超过3项)</label>
+            <textarea id="achPlan" autofocus name="achPlan"
+                      th:text="${enterpriTeamAcheievements.achPlan}" placeholder="依托计划名称和编号(不超过3项)"></textarea>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/appjs/cpe/enterpriTeamAcheievements/add.js" type="text/javascript"></script>
+<script>
+
+    let proId = $("#proId").val();
+    let uploadObj =  {
+        url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+
+    var achPlan = new Simditor({
+        textarea: $("#achPlan"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    var achUsers = new Simditor({
+        textarea: $("#achUsers"),
+        defaultImage: "/img/p3.jpg",
+        upload : uploadObj,
+        pasteImage: true
+    });
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            achName: {
+                identifier: 'achName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写成果名称'
+                    }
+                ]
+            },
+            achUsers: {
+                identifier: 'achUsers',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写团队主要成员中的完成人/排名'
+                    }
+                ]
+            },
+            achDateStart: {
+                identifier: 'achDateStart',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择研发开始日期'
+                    }
+                ]
+            }
+            , achDateEnd: {
+                identifier: 'achDateEnd',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择研发结束日期'
+                    }
+                ]
+            },
+            achUseDate: {
+                identifier: 'achUseDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请选择正式应用(公开发表)日期'
+                    }
+                ]
+            },
+            achPlan: {
+                identifier: 'achPlan',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写依托计划名称和编号(不超过3项)'
+                    }
+                ]
+            },
+            achEvidenceCode: {
+                identifier: 'achEvidenceCode',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写证明材料编号'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

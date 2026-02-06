@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverDesignApplyProjectProfileDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverDesignApplyProjectProfileDO">
+		select `id`,`project_id`,`reporting_unit`,`award_category`,`project_name`,`recommended_grade`,`preliminary_evaluation_group`,`project_description`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_design_apply_project_profile where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverDesignApplyProjectProfileDO">
+		select `id`,`project_id`,`reporting_unit`,`award_category`,`project_name`,`recommended_grade`,`preliminary_evaluation_group`,`project_description`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted` from ass_surver_design_apply_project_profile
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="reportingUnit != null and reportingUnit != ''"> and reporting_unit = #{reportingUnit} </if>
+		  		  <if test="awardCategory != null and awardCategory != ''"> and award_category = #{awardCategory} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="recommendedGrade != null and recommendedGrade != ''"> and recommended_grade = #{recommendedGrade} </if>
+		  		  <if test="preliminaryEvaluationGroup != null and preliminaryEvaluationGroup != ''"> and preliminary_evaluation_group = #{preliminaryEvaluationGroup} </if>
+		  		  <if test="projectDescription != null and projectDescription != ''"> and project_description = #{projectDescription} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_design_apply_project_profile
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="projectId != null and projectId != ''"> and project_id = #{projectId} </if>
+		  		  <if test="reportingUnit != null and reportingUnit != ''"> and reporting_unit = #{reportingUnit} </if>
+		  		  <if test="awardCategory != null and awardCategory != ''"> and award_category = #{awardCategory} </if>
+		  		  <if test="projectName != null and projectName != ''"> and project_name = #{projectName} </if>
+		  		  <if test="recommendedGrade != null and recommendedGrade != ''"> and recommended_grade = #{recommendedGrade} </if>
+		  		  <if test="preliminaryEvaluationGroup != null and preliminaryEvaluationGroup != ''"> and preliminary_evaluation_group = #{preliminaryEvaluationGroup} </if>
+		  		  <if test="projectDescription != null and projectDescription != ''"> and project_description = #{projectDescription} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverDesignApplyProjectProfileDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_design_apply_project_profile
+		(
+			`project_id`, 
+			`reporting_unit`, 
+			`award_category`, 
+			`project_name`, 
+			`recommended_grade`, 
+			`preliminary_evaluation_group`, 
+			`project_description`, 
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`created`, 
+			`updated`, 
+			`deleted`
+		)
+		values
+		(
+			#{projectId}, 
+			#{reportingUnit}, 
+			#{awardCategory}, 
+			#{projectName}, 
+			#{recommendedGrade}, 
+			#{preliminaryEvaluationGroup}, 
+			#{projectDescription}, 
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			now(),
+			#{updated}, 
+			#{deleted}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverDesignApplyProjectProfileDO">
+		update ass_surver_design_apply_project_profile 
+		<set>
+			<if test="projectId != null">`project_id` = #{projectId}, </if>
+			<if test="reportingUnit != null">`reporting_unit` = #{reportingUnit}, </if>
+			<if test="awardCategory != null">`award_category` = #{awardCategory}, </if>
+			<if test="projectName != null">`project_name` = #{projectName}, </if>
+			<if test="recommendedGrade != null">`recommended_grade` = #{recommendedGrade}, </if>
+			<if test="preliminaryEvaluationGroup != null">`preliminary_evaluation_group` = #{preliminaryEvaluationGroup}, </if>
+			<if test="projectDescription != null">`project_description` = #{projectDescription}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_surver_design_apply_project_profile where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_surver_design_apply_project_profile where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

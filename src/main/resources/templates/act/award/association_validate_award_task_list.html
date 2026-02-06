@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button shiro:hasPermission="act:award:publish_award_task" type="button"
+								class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>创建
+							</button>
+							<button shiro:hasPermission="award_flow:publish_award_task:publish_award_task" type="button"
+								class="btn  btn-danger" onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="searchName" type="text" class="form-control"
+								placeholder="">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+	<div>
+		<script type="text/javascript">
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+			var s_task_assign_h = 'hidden';
+			var s_selSpecialist_h = 'hidden';
+			var s_assciation_prolist = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:specialist:select">
+		<script type="text/javascript">
+			s_selSpecialist_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:award:publish_award_task_edit">
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:award:publish_award_task_remove">
+		<script type="text/javascript">
+			s_remove_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="asso:task:assign">
+		<script type="text/javascript">
+			s_task_assign_h = '';
+		</script>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/act/award/award_task_list.js?v=1.3"></script>
+</body>
+</html>

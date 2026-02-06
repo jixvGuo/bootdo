@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.AwardEnterpriseProjectCommonDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.AwardEnterpriseProjectDO">
+		select `id`,`chengguo`,`major_id`,`tuandui`,`person`,`pro_desc`,`publish_task_id`,`advanced_individual`,`create_uid`,`created`,`major`,`PROC_INS_ID`,`update_date`,`association_review_rst`,`association_reject_content`,`act_run_task_id`,`rst_science_vali_file`,`rst_personal_vali_file`,`rst_tuandui_vali_file`,`science_level`,`science_knowledge_count`,`science_vli_enterprise`,`science_apply_time`,`science_apply_enterprise_count`,`tuandui_cooperate`,`tuandui_specialist`,`personal_is_employ`,`personal_is_work_ethics`,`science_avg_score`,`team_avg_score`,`personal_avg_score`,`specialist_leader_comment`,`pro_stat`,`pro_type`,`team_group_id`,`pro_code`,`pro_result_code`,`pro_sub_type` from ass_award_enterprise_project where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.AwardEnterpriseProjectDO">
+		select `id`,`chengguo`,`major_id`,`tuandui`,`person`,`pro_desc`,`publish_task_id`,`advanced_individual`,`create_uid`,`created`,`major`,`PROC_INS_ID`,`update_date`,`association_review_rst`,`association_reject_content`,`act_run_task_id`,`rst_science_vali_file`,`rst_personal_vali_file`,`rst_tuandui_vali_file`,`science_level`,`science_knowledge_count`,`science_vli_enterprise`,`science_apply_time`,`science_apply_enterprise_count`,`tuandui_cooperate`,`tuandui_specialist`,`personal_is_employ`,`personal_is_work_ethics`,`science_avg_score`,`team_avg_score`,`personal_avg_score`,`specialist_leader_comment`,`pro_stat`,`pro_type`,`team_group_id`,`pro_code`,`pro_result_code`,`pro_sub_type` from ass_award_enterprise_project
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="chengguo != null and chengguo != ''"> and chengguo = #{chengguo} </if>
+		  		  <if test="majorId != null and majorId != ''"> and major_id = #{majorId} </if>
+		  		  <if test="tuandui != null and tuandui != ''"> and tuandui = #{tuandui} </if>
+		  		  <if test="person != null and person != ''"> and person = #{person} </if>
+		  		  <if test="proDesc != null and proDesc != ''"> and pro_desc = #{proDesc} </if>
+		  		  <if test="publishTaskId != null and publishTaskId != ''"> and publish_task_id = #{publishTaskId} </if>
+		  		  <if test="advancedIndividual != null and advancedIndividual != ''"> and advanced_individual = #{advancedIndividual} </if>
+		  		  <if test="createUid != null and createUid != ''"> and create_uid = #{createUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="major != null and major != ''"> and major = #{major} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="associationReviewRst != null and associationReviewRst != ''"> and association_review_rst = #{associationReviewRst} </if>
+		  		  <if test="associationRejectContent != null and associationRejectContent != ''"> and association_reject_content = #{associationRejectContent} </if>
+		  		  <if test="actRunTaskId != null and actRunTaskId != ''"> and act_run_task_id = #{actRunTaskId} </if>
+		  		  <if test="rstScienceValiFile != null and rstScienceValiFile != ''"> and rst_science_vali_file = #{rstScienceValiFile} </if>
+		  		  <if test="rstPersonalValiFile != null and rstPersonalValiFile != ''"> and rst_personal_vali_file = #{rstPersonalValiFile} </if>
+		  		  <if test="rstTuanduiValiFile != null and rstTuanduiValiFile != ''"> and rst_tuandui_vali_file = #{rstTuanduiValiFile} </if>
+		  		  <if test="scienceLevel != null and scienceLevel != ''"> and science_level = #{scienceLevel} </if>
+		  		  <if test="scienceKnowledgeCount != null and scienceKnowledgeCount != ''"> and science_knowledge_count = #{scienceKnowledgeCount} </if>
+		  		  <if test="scienceVliEnterprise != null and scienceVliEnterprise != ''"> and science_vli_enterprise = #{scienceVliEnterprise} </if>
+		  		  <if test="scienceApplyTime != null and scienceApplyTime != ''"> and science_apply_time = #{scienceApplyTime} </if>
+		  		  <if test="scienceApplyEnterpriseCount != null and scienceApplyEnterpriseCount != ''"> and science_apply_enterprise_count = #{scienceApplyEnterpriseCount} </if>
+		  		  <if test="tuanduiCooperate != null and tuanduiCooperate != ''"> and tuandui_cooperate = #{tuanduiCooperate} </if>
+		  		  <if test="tuanduiSpecialist != null and tuanduiSpecialist != ''"> and tuandui_specialist = #{tuanduiSpecialist} </if>
+		  		  <if test="personalIsEmploy != null and personalIsEmploy != ''"> and personal_is_employ = #{personalIsEmploy} </if>
+		  		  <if test="personalIsWorkEthics != null and personalIsWorkEthics != ''"> and personal_is_work_ethics = #{personalIsWorkEthics} </if>
+		  		  <if test="scienceAvgScore != null and scienceAvgScore != ''"> and science_avg_score = #{scienceAvgScore} </if>
+		  		  <if test="teamAvgScore != null and teamAvgScore != ''"> and team_avg_score = #{teamAvgScore} </if>
+		  		  <if test="personalAvgScore != null and personalAvgScore != ''"> and personal_avg_score = #{personalAvgScore} </if>
+		  		  <if test="specialistLeaderComment != null and specialistLeaderComment != ''"> and specialist_leader_comment = #{specialistLeaderComment} </if>
+		  		  <if test="proStat != null and proStat != ''"> and pro_stat = #{proStat} </if>
+		  		  <if test="proType != null and proType != ''"> and pro_type = #{proType} </if>
+		  		  <if test="teamGroupId != null and teamGroupId != ''"> and team_group_id = #{teamGroupId} </if>
+		  		  <if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
+		  		  <if test="proResultCode != null and proResultCode != ''"> and pro_result_code = #{proResultCode} </if>
+		  		  <if test="proSubType != null and proSubType != ''"> and pro_sub_type = #{proSubType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_enterprise_project
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="chengguo != null and chengguo != ''"> and chengguo = #{chengguo} </if>
+		  		  <if test="majorId != null and majorId != ''"> and major_id = #{majorId} </if>
+		  		  <if test="tuandui != null and tuandui != ''"> and tuandui = #{tuandui} </if>
+		  		  <if test="person != null and person != ''"> and person = #{person} </if>
+		  		  <if test="proDesc != null and proDesc != ''"> and pro_desc = #{proDesc} </if>
+		  		  <if test="publishTaskId != null and publishTaskId != ''"> and publish_task_id = #{publishTaskId} </if>
+		  		  <if test="advancedIndividual != null and advancedIndividual != ''"> and advanced_individual = #{advancedIndividual} </if>
+		  		  <if test="createUid != null and createUid != ''"> and create_uid = #{createUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="major != null and major != ''"> and major = #{major} </if>
+		  		  <if test="procInsId != null and procInsId != ''"> and PROC_INS_ID = #{procInsId} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="associationReviewRst != null and associationReviewRst != ''"> and association_review_rst = #{associationReviewRst} </if>
+		  		  <if test="associationRejectContent != null and associationRejectContent != ''"> and association_reject_content = #{associationRejectContent} </if>
+		  		  <if test="actRunTaskId != null and actRunTaskId != ''"> and act_run_task_id = #{actRunTaskId} </if>
+		  		  <if test="rstScienceValiFile != null and rstScienceValiFile != ''"> and rst_science_vali_file = #{rstScienceValiFile} </if>
+		  		  <if test="rstPersonalValiFile != null and rstPersonalValiFile != ''"> and rst_personal_vali_file = #{rstPersonalValiFile} </if>
+		  		  <if test="rstTuanduiValiFile != null and rstTuanduiValiFile != ''"> and rst_tuandui_vali_file = #{rstTuanduiValiFile} </if>
+		  		  <if test="scienceLevel != null and scienceLevel != ''"> and science_level = #{scienceLevel} </if>
+		  		  <if test="scienceKnowledgeCount != null and scienceKnowledgeCount != ''"> and science_knowledge_count = #{scienceKnowledgeCount} </if>
+		  		  <if test="scienceVliEnterprise != null and scienceVliEnterprise != ''"> and science_vli_enterprise = #{scienceVliEnterprise} </if>
+		  		  <if test="scienceApplyTime != null and scienceApplyTime != ''"> and science_apply_time = #{scienceApplyTime} </if>
+		  		  <if test="scienceApplyEnterpriseCount != null and scienceApplyEnterpriseCount != ''"> and science_apply_enterprise_count = #{scienceApplyEnterpriseCount} </if>
+		  		  <if test="tuanduiCooperate != null and tuanduiCooperate != ''"> and tuandui_cooperate = #{tuanduiCooperate} </if>
+		  		  <if test="tuanduiSpecialist != null and tuanduiSpecialist != ''"> and tuandui_specialist = #{tuanduiSpecialist} </if>
+		  		  <if test="personalIsEmploy != null and personalIsEmploy != ''"> and personal_is_employ = #{personalIsEmploy} </if>
+		  		  <if test="personalIsWorkEthics != null and personalIsWorkEthics != ''"> and personal_is_work_ethics = #{personalIsWorkEthics} </if>
+		  		  <if test="scienceAvgScore != null and scienceAvgScore != ''"> and science_avg_score = #{scienceAvgScore} </if>
+		  		  <if test="teamAvgScore != null and teamAvgScore != ''"> and team_avg_score = #{teamAvgScore} </if>
+		  		  <if test="personalAvgScore != null and personalAvgScore != ''"> and personal_avg_score = #{personalAvgScore} </if>
+		  		  <if test="specialistLeaderComment != null and specialistLeaderComment != ''"> and specialist_leader_comment = #{specialistLeaderComment} </if>
+		  		  <if test="proStat != null and proStat != ''"> and pro_stat = #{proStat} </if>
+		  		  <if test="proType != null and proType != ''"> and pro_type = #{proType} </if>
+		  		  <if test="teamGroupId != null and teamGroupId != ''"> and team_group_id = #{teamGroupId} </if>
+		  		  <if test="proCode != null and proCode != ''"> and pro_code = #{proCode} </if>
+		  		  <if test="proResultCode != null and proResultCode != ''"> and pro_result_code = #{proResultCode} </if>
+		  		  <if test="proSubType != null and proSubType != ''"> and pro_sub_type = #{proSubType} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.AwardEnterpriseProjectDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_award_enterprise_project
+		(
+			`chengguo`,
+			`major_id`,
+			`tuandui`,
+			`person`,
+			`pro_desc`,
+			`publish_task_id`,
+			`advanced_individual`,
+			`create_uid`,
+			`created`,
+			`major`,
+			`PROC_INS_ID`,
+			`update_date`,
+			`association_review_rst`,
+			`association_reject_content`,
+			`act_run_task_id`,
+			`rst_science_vali_file`,
+			`rst_personal_vali_file`,
+			`rst_tuandui_vali_file`,
+			`science_level`,
+			`science_knowledge_count`,
+			`science_vli_enterprise`,
+			`science_apply_time`,
+			`science_apply_enterprise_count`,
+			`tuandui_cooperate`,
+			`tuandui_specialist`,
+			`personal_is_employ`,
+			`personal_is_work_ethics`,
+			`science_avg_score`,
+			`team_avg_score`,
+			`personal_avg_score`,
+			`specialist_leader_comment`,
+			`pro_stat`,
+			`pro_type`,
+			`team_group_id`,
+			`pro_code`,
+			`pro_result_code`,
+			`pro_sub_type`
+		)
+		values
+		(
+			#{chengguo},
+			#{majorId},
+			#{tuandui},
+			#{person},
+			#{proDesc},
+			#{publishTaskId},
+			#{advancedIndividual},
+			#{createUid},
+		    now(),
+			#{major},
+			#{procInsId},
+			#{updateDate},
+			#{associationReviewRst},
+			#{associationRejectContent},
+			#{actRunTaskId},
+			#{rstScienceValiFile},
+			#{rstPersonalValiFile},
+			#{rstTuanduiValiFile},
+			#{scienceLevel},
+			#{scienceKnowledgeCount},
+			#{scienceVliEnterprise},
+			#{scienceApplyTime},
+			#{scienceApplyEnterpriseCount},
+			#{tuanduiCooperate},
+			#{tuanduiSpecialist},
+			#{personalIsEmploy},
+			#{personalIsWorkEthics},
+			#{scienceAvgScore},
+			#{teamAvgScore},
+			#{personalAvgScore},
+			#{specialistLeaderComment},
+			#{proStat},
+			#{proType},
+			#{teamGroupId},
+			#{proCode},
+			#{proResultCode},
+			#{proSubType}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.AwardEnterpriseProjectDO">
+		update ass_award_enterprise_project
+		<set>
+			<if test="chengguo != null">`chengguo` = #{chengguo}, </if>
+			<if test="majorId != null">`major_id` = #{majorId}, </if>
+			<if test="tuandui != null">`tuandui` = #{tuandui}, </if>
+			<if test="person != null">`person` = #{person}, </if>
+			<if test="proDesc != null">`pro_desc` = #{proDesc}, </if>
+			<if test="publishTaskId != null">`publish_task_id` = #{publishTaskId}, </if>
+			<if test="advancedIndividual != null">`advanced_individual` = #{advancedIndividual}, </if>
+			<if test="createUid != null">`create_uid` = #{createUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="major != null">`major` = #{major}, </if>
+			<if test="procInsId != null">`PROC_INS_ID` = #{procInsId}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="associationReviewRst != null">`association_review_rst` = #{associationReviewRst}, </if>
+			<if test="associationRejectContent != null">`association_reject_content` = #{associationRejectContent}, </if>
+			<if test="actRunTaskId != null">`act_run_task_id` = #{actRunTaskId}, </if>
+			<if test="rstScienceValiFile != null">`rst_science_vali_file` = #{rstScienceValiFile}, </if>
+			<if test="rstPersonalValiFile != null">`rst_personal_vali_file` = #{rstPersonalValiFile}, </if>
+			<if test="rstTuanduiValiFile != null">`rst_tuandui_vali_file` = #{rstTuanduiValiFile}, </if>
+			<if test="scienceLevel != null">`science_level` = #{scienceLevel}, </if>
+			<if test="scienceKnowledgeCount != null">`science_knowledge_count` = #{scienceKnowledgeCount}, </if>
+			<if test="scienceVliEnterprise != null">`science_vli_enterprise` = #{scienceVliEnterprise}, </if>
+			<if test="scienceApplyTime != null">`science_apply_time` = #{scienceApplyTime}, </if>
+			<if test="scienceApplyEnterpriseCount != null">`science_apply_enterprise_count` = #{scienceApplyEnterpriseCount}, </if>
+			<if test="tuanduiCooperate != null">`tuandui_cooperate` = #{tuanduiCooperate}, </if>
+			<if test="tuanduiSpecialist != null">`tuandui_specialist` = #{tuanduiSpecialist}, </if>
+			<if test="personalIsEmploy != null">`personal_is_employ` = #{personalIsEmploy}, </if>
+			<if test="personalIsWorkEthics != null">`personal_is_work_ethics` = #{personalIsWorkEthics}, </if>
+			<if test="scienceAvgScore != null">`science_avg_score` = #{scienceAvgScore}, </if>
+			<if test="teamAvgScore != null">`team_avg_score` = #{teamAvgScore}, </if>
+			<if test="personalAvgScore != null">`personal_avg_score` = #{personalAvgScore}, </if>
+			<if test="specialistLeaderComment != null">`specialist_leader_comment` = #{specialistLeaderComment}, </if>
+			<if test="proStat != null">`pro_stat` = #{proStat}, </if>
+			<if test="proType != null">`pro_type` = #{proType}, </if>
+			<if test="teamGroupId != null">`team_group_id` = #{teamGroupId}, </if>
+			<if test="proCode != null">`pro_code` = #{proCode}, </if>
+			<if test="proResultCode != null">`pro_result_code` = #{proResultCode}, </if>
+			<if test="proSubType != null">`pro_sub_type` = #{proSubType}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_award_enterprise_project where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_award_enterprise_project where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

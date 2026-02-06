@@ -1,0 +1,140 @@
+﻿
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>所有表单元素 <small>包括自定义样式的复选和单选按钮</small></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a href="form_basic.html#">选项1</a>
+                                </li>
+                                <li>
+                                    <a href="form_basic.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">初评专业组</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="wrapper wrapper-content  animated fadeInRight">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="ibox ">
+                                        <div class="ibox-content">
+                                            <div class="jqGrid_wrapper">
+                                                <table id="table_list_2"></table>
+                                                <div id="pager_list_2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script>
+        $(document).ready(function () { $(".i-checks").iCheck({ checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green", }) });
+        $(document).ready(function () {
+            $.jgrid.defaults.styleUI = "Bootstrap";
+
+            var mydata = [
+                { id: "1", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "2", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "3", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "4", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "5", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "6", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "7", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "8", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "9", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "11", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "12", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "13", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "14", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "15", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "16", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "17", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "18", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "19", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "21", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "22", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "23", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "24", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "25", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "26", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "27", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "28", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" },
+                { id: "29", ProjectName: "高海拔", amount: "100.00", Grade: "一级", Opinion: "不通过" }
+            ];
+
+            $("#table_list_2").jqGrid({
+                data: mydata, datatype: "local", height: 450, autowidth: true, shrinkToFit: true, rowNum: 20, rowList: [10, 20, 30],
+                colNames: ["序号", "项目名称", "专业组评分", "建议推荐等级", "意见"],
+                colModel: [{ name: "id", index: "id", editable: true, width: 60, sorttype: "int", search: true },
+                    { name: "ProjectName", index: "ProjectName", editable: true, width: 100 },
+                    { name: "amount", index: "amount", editable: true, width: 80, align: "right", sorttype: "float", formatter: "number" },
+                    {
+                        name: "Grade", index: "Grade", editable: true, width: 100, edittype: "select", editoptions: {
+                            value: "一级:一级;二级:二级;三级:三级;特级:特级"
+                        }
+                    },
+                    { name: "Opinion", index: "Opinion", editable: true, width: 100 }
+                ],
+
+                pager: "#pager_list_2", viewrecords: true, caption: "石油工程建设科技进步奖专业评审推荐意见表2", add: true, edit: true, addtext: "Add", edittext: "Edit", hidegrid: false
+            });
+            $("#table_list_2").setSelection(4, true); $("#table_list_2").jqGrid("navGrid", "#pager_list_2", { edit: true, add: true, del: true, search: true }, { height: 200, reloadAfterSubmit: true }); $(window).bind("resize", function () {
+                var width = $(".jqGrid_wrapper").width();
+                $("#table_list_2").setGridWidth(width)
+            })
+        });
+    </script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+</html>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriTeamSupportCompanyDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriTeamSupportCompanyDO">
+		select `id`,`com_name`,`com_num`,`com_address`,`com_is_main_support`,`com_nature`,`com_email`,`com_fox`,`com_legal_person`,`com_telphone`,`com_mobile_phone`,`com_concat`,`com_concat_telphone`,`com_concat_mobile_phone`,`com_concat_address`,`com_postcode`,`com_contribution`,`created`,`opt_uid`,`task_id`,`pro_id` from ass_enterpri_team_support_company where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriTeamSupportCompanyDO">
+		select `id`,`com_name`,`com_num`,`com_address`,`com_is_main_support`,`com_nature`,`com_email`,`com_fox`,`com_legal_person`,`com_telphone`,`com_mobile_phone`,`com_concat`,`com_concat_telphone`,`com_concat_mobile_phone`,`com_concat_address`,`com_postcode`,`com_contribution`,`created`,`opt_uid`,`task_id`,`pro_id` from ass_enterpri_team_support_company
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="comName != null and comName != ''"> and com_name = #{comName} </if>
+		  		  <if test="comNum != null and comNum != ''"> and com_num = #{comNum} </if>
+		  		  <if test="comAddress != null and comAddress != ''"> and com_address = #{comAddress} </if>
+		  		  <if test="comIsMainSupport != null and comIsMainSupport != ''"> and com_is_main_support = #{comIsMainSupport} </if>
+		  		  <if test="comNature != null and comNature != ''"> and com_nature = #{comNature} </if>
+		  		  <if test="comEmail != null and comEmail != ''"> and com_email = #{comEmail} </if>
+		  		  <if test="comFox != null and comFox != ''"> and com_fox = #{comFox} </if>
+		  		  <if test="comLegalPerson != null and comLegalPerson != ''"> and com_legal_person = #{comLegalPerson} </if>
+		  		  <if test="comTelphone != null and comTelphone != ''"> and com_telphone = #{comTelphone} </if>
+		  		  <if test="comMobilePhone != null and comMobilePhone != ''"> and com_mobile_phone = #{comMobilePhone} </if>
+		  		  <if test="comConcat != null and comConcat != ''"> and com_concat = #{comConcat} </if>
+		  		  <if test="comConcatTelphone != null and comConcatTelphone != ''"> and com_concat_telphone = #{comConcatTelphone} </if>
+		  		  <if test="comConcatMobilePhone != null and comConcatMobilePhone != ''"> and com_concat_mobile_phone = #{comConcatMobilePhone} </if>
+		  		  <if test="comConcatAddress != null and comConcatAddress != ''"> and com_concat_address = #{comConcatAddress} </if>
+		  		  <if test="comPostcode != null and comPostcode != ''"> and com_postcode = #{comPostcode} </if>
+		  		  <if test="comContribution != null and comContribution != ''"> and com_contribution = #{comContribution} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset},#{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_team_support_company
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="comName != null and comName != ''"> and com_name = #{comName} </if>
+		  		  <if test="comNum != null and comNum != ''"> and com_num = #{comNum} </if>
+		  		  <if test="comAddress != null and comAddress != ''"> and com_address = #{comAddress} </if>
+		  		  <if test="comIsMainSupport != null and comIsMainSupport != ''"> and com_is_main_support = #{comIsMainSupport} </if>
+		  		  <if test="comNature != null and comNature != ''"> and com_nature = #{comNature} </if>
+		  		  <if test="comEmail != null and comEmail != ''"> and com_email = #{comEmail} </if>
+		  		  <if test="comFox != null and comFox != ''"> and com_fox = #{comFox} </if>
+		  		  <if test="comLegalPerson != null and comLegalPerson != ''"> and com_legal_person = #{comLegalPerson} </if>
+		  		  <if test="comTelphone != null and comTelphone != ''"> and com_telphone = #{comTelphone} </if>
+		  		  <if test="comMobilePhone != null and comMobilePhone != ''"> and com_mobile_phone = #{comMobilePhone} </if>
+		  		  <if test="comConcat != null and comConcat != ''"> and com_concat = #{comConcat} </if>
+		  		  <if test="comConcatTelphone != null and comConcatTelphone != ''"> and com_concat_telphone = #{comConcatTelphone} </if>
+		  		  <if test="comConcatMobilePhone != null and comConcatMobilePhone != ''"> and com_concat_mobile_phone = #{comConcatMobilePhone} </if>
+		  		  <if test="comConcatAddress != null and comConcatAddress != ''"> and com_concat_address = #{comConcatAddress} </if>
+		  		  <if test="comPostcode != null and comPostcode != ''"> and com_postcode = #{comPostcode} </if>
+		  		  <if test="comContribution != null and comContribution != ''"> and com_contribution = #{comContribution} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriTeamSupportCompanyDO">
+		insert into ass_enterpri_team_support_company
+		(
+			`id`, 
+			`com_name`, 
+			`com_num`, 
+			`com_address`, 
+			`com_is_main_support`, 
+			`com_nature`, 
+			`com_email`, 
+			`com_fox`, 
+			`com_legal_person`, 
+			`com_telphone`, 
+			`com_mobile_phone`, 
+			`com_concat`, 
+			`com_concat_telphone`, 
+			`com_concat_mobile_phone`, 
+			`com_concat_address`, 
+			`com_postcode`, 
+			`com_contribution`,
+			`opt_uid`, 
+			`task_id`, 
+			`pro_id`
+		)
+		values
+		(
+			#{id}, 
+			#{comName}, 
+			#{comNum}, 
+			#{comAddress}, 
+			#{comIsMainSupport}, 
+			#{comNature}, 
+			#{comEmail}, 
+			#{comFox}, 
+			#{comLegalPerson}, 
+			#{comTelphone}, 
+			#{comMobilePhone}, 
+			#{comConcat}, 
+			#{comConcatTelphone}, 
+			#{comConcatMobilePhone}, 
+			#{comConcatAddress}, 
+			#{comPostcode}, 
+			#{comContribution},
+			#{optUid}, 
+			#{taskId}, 
+			#{proId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriTeamSupportCompanyDO">
+		update ass_enterpri_team_support_company 
+		<set>
+			<if test="comName != null">`com_name` = #{comName}, </if>
+			<if test="comNum != null">`com_num` = #{comNum}, </if>
+			<if test="comAddress != null">`com_address` = #{comAddress}, </if>
+			<if test="comIsMainSupport != null">`com_is_main_support` = #{comIsMainSupport}, </if>
+			<if test="comNature != null">`com_nature` = #{comNature}, </if>
+			<if test="comEmail != null">`com_email` = #{comEmail}, </if>
+			<if test="comFox != null">`com_fox` = #{comFox}, </if>
+			<if test="comLegalPerson != null">`com_legal_person` = #{comLegalPerson}, </if>
+			<if test="comTelphone != null">`com_telphone` = #{comTelphone}, </if>
+			<if test="comMobilePhone != null">`com_mobile_phone` = #{comMobilePhone}, </if>
+			<if test="comConcat != null">`com_concat` = #{comConcat}, </if>
+			<if test="comConcatTelphone != null">`com_concat_telphone` = #{comConcatTelphone}, </if>
+			<if test="comConcatMobilePhone != null">`com_concat_mobile_phone` = #{comConcatMobilePhone}, </if>
+			<if test="comConcatAddress != null">`com_concat_address` = #{comConcatAddress}, </if>
+			<if test="comPostcode != null">`com_postcode` = #{comPostcode}, </if>
+			<if test="comContribution != null">`com_contribution` = #{comContribution}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="proId != null">`pro_id` = #{proId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_team_support_company where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_team_support_company where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

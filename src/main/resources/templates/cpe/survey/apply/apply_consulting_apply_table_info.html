@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+
+<body>
+    <div class="ui bottom attached segment">
+        <form id="signupForm" action="" class="ui basic form">
+            <table id="consultingTable" class="ui celled  table">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input id="id" name="id" th:value="${table.id}"  type="hidden">
+                <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                <tr>
+                    <td style="width: 10%;">申报专业</td>
+                    <td style="width: 90%;" colspan="3">
+                        <div class="ui field">
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="applyMajor" th:value="${table.applyMajor}" >
+                                <i class="dropdown icon"></i>
+                                <div class="default text">申报专业</div>
+                                <div class="menu">
+                                    <div class="item" data-value="勘察">勘察</div>
+                                    <div class="item" data-value="测量">测量</div>
+                                    <div class="item" data-value="岩土">岩土</div>
+                                    <div class="item" data-value="炼油化工">炼油化工</div>
+                                    <div class="item" data-value="油气集输">油气集输</div>
+                                    <div class="item" data-value="油气储运">油气储运</div>
+                                    <div class="item" data-value="油气加工">油气加工</div>
+                                    <div class="item" data-value="矿业">矿业</div>
+                                    <div class="item" data-value="建筑">建筑</div>
+                                    <div class="item" data-value="结构">结构</div>
+                                    <div class="item" data-value="桥梁">桥梁</div>
+                                    <div class="item" data-value="土壤修复">土壤修复</div>
+                                    <div class="item" data-value="环境工程">环境工程</div>
+                                    <div class="item" data-value="电气">电气</div>
+                                    <div class="item" data-value="电力系统">电力系统</div>
+                                    <div class="item" data-value="给排水">给排水</div>
+                                    <div class="item" data-value="水处理">水处理</div>
+                                    <div class="item" data-value="热力">热力</div>
+                                    <div class="item" data-value="仪表、自动化、自控">仪表、自动化、自控</div>
+                                    <div class="item" data-value="安全">安全</div>
+                                    <div class="item" data-value="包装">包装</div>
+                                    <div class="item" data-value="海洋石油开发工程">海洋石油开发工程</div>
+                                    <div class="item" data-value="软件">软件</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 10%;">项目名称</td>
+                    <td style="width: 90%;" colspan="3" contenteditable="true" id="proName" name="proName" th:text="${table.proName}" ></td>
+                </tr>
+                <tr>
+                    <td style="width: 10%;">项目起止时间</td>
+                    <td style="width: 40%;" contenteditable="true" id="proStartEnd" name="proStartEnd" th:text="${table.proStartEnd}"></td>
+                    <td style="width: 10%;">审查及批复</td>
+                    <td style="width: 40%;" contenteditable="true" id="reviewApproval" name="reviewApproval" th:text="${table.reviewApproval}"></td>
+                </tr>
+                <tr>
+                    <td>应用时间</td>
+                    <td contenteditable="true" id="applyTime" name="applyTime" th:text="${table.applyTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                    <td>投产时间</td>
+                    <td contenteditable="true" id="productionTime" name="productionTime" th:text="${table.productionTime}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                </tr>
+                <tr>
+                    <td>验收部门</td>
+                    <td contenteditable="true" id="acceptanceDepartment" name="acceptanceDepartment" th:text="${table.id}"></td>
+                    <td>验收时间</td>
+                    <td contenteditable="true" id="acceptanceTime" name="acceptanceTime" th:text="${table.id}" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})"></td>
+                </tr>
+                <tr>
+                    <td>估（预）算</td>
+                    <td contenteditable="true" id="estimate" name="estimate" th:text="${table.estimate}"></td>
+                    <td>设计概(预)</td>
+                    <td contenteditable="true" id="designOverview" name="designOverview" th:text="${table.designOverview}"></td>
+                </tr>
+                <tr>
+                    <td>超估（预）算的</td>
+                    <td contenteditable="true" id="overestimated" name="overestimated" th:text="${table.overestimated}" colspan="3"></td>
+                </tr>
+                <tr>
+                    <td>主要完成单位</td>
+                    <td contenteditable="true" id="majorCompletionUnits" name="majorCompletionUnits" th:text="${table.majorCompletionUnits}"></td>
+                    <td>协作单位</td>
+                    <td contenteditable="true" id="cooperationUnit" name="cooperationUnit" th:text="${table.cooperationUnit}"></td>
+                </tr>
+                <tr>
+                    <td rowspan="2">申报单位联系人</td>
+                    <td rowspan="2" contenteditable="true" id="contactName" name="contactName" th:text="${table.contactName}"></td>
+                    <td>电话/手机</td>
+                    <td contenteditable="true" id="contactPhone" name="contactPhone" th:text="${table.contactPhone}"></td>
+                </tr>
+                <tr>
+                    <td>传真</td>
+                    <td contenteditable="true" id="contactFox" name="contactFox" th:text="${table.contactFox}"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"> 附件目录</td>
+                </tr>
+                <tr style="height: 300px;">
+                    <td colspan="4" contenteditable="true" id="accessoriesCatalog" name="accessoriesCatalog" th:text="${table.accessoriesCatalog}"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"> 项目概况、难点及先进性</td>
+                </tr>
+                <tr style="height: 300px;">
+                    <td colspan="4" contenteditable="true" id="projectOverview" name="projectOverview" th:text="${table.projectOverview}"></td>
+                </tr>
+                <tr style="height: 300px;">
+                    <td>曾获奖励级别</td>
+                    <td colspan="3" contenteditable="true" id="rewardLevel" name="rewardLevel" th:text="${table.rewardLevel}"></td>
+                </tr>
+                <tr style="height: 300px;">
+                    <td>申报单位意见</td>
+                    <td colspan="3" contenteditable="true" id="reportingUnitOpinion" name="reportingUnitOpinion" th:text="${table.reportingUnitOpinion}"></td>
+                </tr>
+                <tr style="height: 300px;">
+                    <td>上级主管部门 （或建设单位） 推荐意见 </td>
+                    <td colspan="3" contenteditable="true" id="upRecommendation" name="upRecommendation" th:text="${table.upRecommendation}"></td>
+                </tr>
+            </table>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="save()">保存</div>
+            </div>
+        </form>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/surverConsultApplyTableInfo/add.js?v=1.1"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+</body>
+
+</html>

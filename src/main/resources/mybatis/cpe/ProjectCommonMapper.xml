@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.ProjectCommonDao">
+    <update id="removeTask">
+        update ass_award_publish_task set deleted = 1 where id = #{taskId}
+    </update>
+
+    <update id="removePros">
+        update boot_do.ass_award_enterprise_project
+        set publish_task_id = concat('DEL-', publish_task_id), id = 0-id
+        where publish_task_id = #{taskId}
+    </update>
+
+    <select id="getProjectStat" resultType="String">
+         SELECT
+             pro_stat
+         FROM
+             boot_do.ass_award_enterprise_project
+         WHERE
+             id = #{proId}
+     </select>
+
+     <select id="getProCreateUid" resultType="long">
+         SELECT
+             create_uid
+         FROM
+             boot_do.ass_award_enterprise_project
+         WHERE
+             id = #{proId} limit 1
+     </select>
+
+     <update id="updateProResultCode">
+         UPDATE ass_award_enterprise_project
+         SET
+             pro_result_code = #{resultCode}
+         WHERE
+             id = #{proId}
+     </update>
+    <update id="updateProGroupName">
+        UPDATE ass_award_enterprise_project
+        SET
+        pro_group_name = #{groupName}
+        WHERE
+        id = #{proId}
+    </update>
+
+
+</mapper>

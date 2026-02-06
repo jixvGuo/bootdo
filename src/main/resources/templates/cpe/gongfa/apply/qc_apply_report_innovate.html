@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body onload="checkData()">
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form id="signupForm" action="" class="ui basic form">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${report.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                <h2 class="ui red horizontal divider header">创新型课题 </h2>
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>小组名称</label>
+                        <input type="text" name="groupName" th:value="${report.groupName}" placeholder="小组名称">
+                    </div>
+                    <div class="ui field">
+                        <label>课题名称</label>
+                        <input type="text" name="topicName" th:value="${report.topicName}" placeholder="课题名称">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>课题类型</label>
+                        <input type="text" th:if="${readonly} eq 1" th:value="${report.topicType}" name="" placeholder="">
+                        <div th:if="${readonly} ne 1" class="ui selection dropdown">
+                            <input type="hidden" name="topicType" th:value="${report.topicType}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">课题类型</div>
+                            <div class="menu">
+                                <div class="item" data-value="自定目标">自定目标</div>
+                                <div class="item" data-value="指令性目标">指令性目标</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="ui red horizontal divider header">小组简介 </h4>
+                <div class="ui field">
+                    <textarea id="briefintroduction2" autofocus name="groupDesc" th:text="${report.groupDesc}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">一、选择课题 </h4>
+                <div class="ui field">
+                    <textarea id="reason2" autofocus name="selTopic" th:text="${report.selTopic}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">二、 设定目标及目标可行性论证 </h4>
+                <div class="ui field">
+                    <textarea id="investigation2" autofocus name="targetProve" th:text="${report.targetProve}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">三、提出方案并确定最佳方案 </h4>
+                <div class="ui field">
+                    <textarea id="reason22" autofocus name="planDesc" th:text="${report.planDesc}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">四、制定对策 </h4>
+                <div class="ui field">
+                    <textarea id="maincause2" autofocus name="strategyDesc" th:text="${report.strategyDesc}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">五、对策实施 </h4>
+                <div class="ui field">
+                    <textarea id="countermove2" autofocus name="strategyImplement" th:text="${report.strategyImplement}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">六、效果检查 </h4>
+                <div class="ui field">
+                    <textarea id="implementation2" autofocus name="effectCheck" th:text="${report.effectCheck}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">七、标准化 </h4>
+                <div class="ui field">
+                    <textarea id="contrast2" autofocus name="standardDesc" th:text="${report.standardDesc}"></textarea>
+                </div>
+
+                <h4 class="ui red horizontal divider header">八、总结和下一步打算 </h4>
+                <div class="ui field">
+                    <textarea id="prevention2" autofocus name="sumPlan" th:text="${report.sumPlan}"></textarea>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+             </form >
+        </div>
+    </div>
+    <!-- 详情页面 -->
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/qcReportInnovateInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+    <script>
+
+        function checkData(){
+            let readonly = $("#isReadonly").val();
+            console.log("AA" + readonly);
+            if (readonly == 1){
+                $(".simditor-body").attr("contenteditable",false);
+                $('.ui.dropdown').addClass("disabled");
+            }else  {
+                $('.ui.dropdown').dropdown();
+            }
+        }
+
+
+    </script>
+    <script>
+         let proId = $("#proId").val();
+         let uploadObj =  {
+             url : '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+             params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+             fileKey: 'file[]', //服务器端获取文件数据的参数名
+             connectionCount: 3,
+             leaveConfirm: '正在上传文件'
+         };
+        var briefintroduction2 = new Simditor({
+            textarea: $("#briefintroduction2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var reason = new Simditor({
+            textarea: $("#reason2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true        })
+        var investigation = new Simditor({
+            textarea: $("#investigation2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var reason = new Simditor({
+            textarea: $("#reason22"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var maincause = new Simditor({
+            textarea: $("#maincause2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var countermove = new Simditor({
+            textarea: $("#countermove2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var implementation = new Simditor({
+            textarea: $("#implementation2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var contrast = new Simditor({
+            textarea: $("#contrast2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        var prevention = new Simditor({
+            textarea: $("#prevention2"),
+            defaultImage: "/img/p3.jpg",
+            upload : uploadObj,
+            pasteImage: true
+        })
+        $('.ui.dropdown').dropdown();
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                groupname2: {
+                    identifier: 'groupname2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组名称'
+                    }]
+                },
+                topicname2: {
+                    identifier: 'topicname2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写课题名称'
+                    }]
+                },
+                grouptype2: {
+                    identifier: 'grouptype2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组类型'
+                    }]
+                },
+                briefintroduction2: {
+                    identifier: 'briefintroduction2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写小组简介'
+                    }]
+                },
+                reason2: {
+                    identifier: 'reason2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写一、选题理由'
+                    }]
+                },
+                investigation2: {
+                    identifier: 'investigation2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写二、 现状调查/设定目标'
+                    }]
+                },
+                reason22: {
+                    identifier: 'reason22',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写三、设定目标/目标可行性论证'
+                    }]
+                },
+                maincause2: {
+                    identifier: 'maincause2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写四、原因分析'
+                    }]
+                },
+                countermove2: {
+                    identifier: 'countermove2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写五、确定主要原因'
+                    }]
+                },
+                countermove2: {
+                    identifier: 'countermove2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写六、制定对策'
+                    }]
+                },
+                contrast2: {
+                    identifier: 'contrast2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写七、对策实施'
+                    }]
+                },
+                prevention2: {
+                    identifier: 'prevention2',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写八、效果检查'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

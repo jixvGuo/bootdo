@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.ExpertGroupDao">
+
+
+    <!--// 得到专业信息-->
+
+
+
+    <!--int save(ExpertGroupDO expertGroupDO);-->
+
+    <!--int update(ExpertGroupDO expertGroupDO);-->
+
+    <!--int remove(Integer id);-->
+
+
+    <select id="get" resultType="com.bootdo.cpe.domain.ExpertGroupDO">
+		select `id`,
+               `task_id`,
+               `pro_id`,
+               `user_id`,
+               `is_group_leader`,
+               `group_name`,
+               `created`,
+               `signature_id`,
+               `company`,
+               `bank_account`,
+               `phone`,`login_account`,`expert_name` from add_special_info where id = #{value} and deleted = 0
+	</select>
+
+
+    <select id="list" resultType="com.bootdo.cpe.domain.ExpertGroupDO">
+
+        select `id`,
+        `task_id`,
+        `pro_id`,
+        `user_id`,
+        `is_group_leader`,
+        `group_name`,
+        `created`,
+        `signature_id`,
+        `company`,
+        `bank_account`,
+        `phone`,`login_account`,`expert_name`,
+         (SELECT url FROM sys_file where id = asi.signature_id limit 1) expertSignUrl,
+         pro_type
+               from add_special_info asi
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+            <if test="isGroupLeader != null and isGroupLeader != ''">and is_group_leader = #{isGroupLeader}</if>
+            <if test="groupName != null and groupName != ''">and group_name = #{groupName}</if>
+            <if test="company != null">and `company` = #{company} </if>
+            <if test="bankAccount != null">and `bank_account` = #{bankAccount} </if>
+            <if test="phone != null">and `phone` = #{phone} </if>
+            <if test="loginAccount != null">and `login_account` = #{loginAccount} </if>
+            <if test="expertName != null">and `expert_name` = #{expertName} </if>
+            <if test="proType != null">
+                and pro_type = #{proType}
+            </if>
+            and deleted = 0
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset},#{limit}
+        </if>
+    </select>
+
+    <select id="getSignUrl" resultType="String">
+        SELECT
+            sf.url
+        FROM
+            add_special_info si
+                JOIN
+            sys_file sf ON si.signature_id = sf.id
+        WHERE
+            si.login_account = #{account}
+            and si.deleted = 0
+    </select>
+
+
+    <select id="count" resultType="int">
+        select count(*) from add_special_info
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+
+            <if test="isGroupLeader != null and isGroupLeader != ''">and is_group_leader = #{isGroupLeader}</if>
+
+            <if test="groupName != null and groupName != ''">and group_name = #{groupName}</if>
+
+            <if test="company != null">and `company` = #{company} </if>
+            <if test="bankAccount != null">and `bank_account` = #{bankAccount} </if>
+            <if test="phone != null">and `phone` = #{phone} </if>
+            <if test="loginAccount != null">and `login_account` = #{loginAccount} </if>
+            <if test="expertName != null">and `expert_name` = #{expertName} </if>
+            and deleted = 0
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.cpe.domain.ExpertGroupDO" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into add_special_info
+		(
+			`pro_id`,
+			`task_id`,
+			`user_id`,
+			`is_group_leader`,
+			`group_name`,
+             company,
+             bank_account,
+             phone,`login_account`,`expert_name`,
+             pro_type
+		)
+		values
+		(
+			#{proId},
+			#{taskId},
+			#{userId},
+			#{isGroupLeader},
+			#{groupName},
+		    #{company},
+		    #{bankAccount},
+		    #{phone},
+		    #{loginAccount},
+		    #{expertName},
+		    #{proType}
+		)
+	</insert>
+
+
+
+    <update id="update" parameterType="com.bootdo.cpe.domain.ExpertGroupDO">
+        update add_special_info
+        <set>
+            <if test="proId != null">`pro_id` = #{proId},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="userId != null">`user_id` = #{userId},</if>
+            <if test="isGroupLeader != null">`is_group_leader` = #{isGroupLeader},</if>
+            <if test="groupName != null">`group_name` = #{groupName},</if>
+            <if test="company != null">`company` = #{company},</if>
+            <if test="bankAccount != null">`bank_account` = #{bankAccount},</if>
+            <if test="phone != null">`phone` = #{phone},</if>
+            <if test="loginAccount != null">`login_account` = #{loginAccount},</if>
+            <if test="expertName != null">`expert_name` = #{expertName},</if>
+
+        </set>
+        where id = #{id}
+
+    </update>
+
+    <update id="updateByLoginAccount">
+        update add_special_info
+        <set>
+            <if test="proId != null">`pro_id` = #{proId},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="userId != null">`user_id` = #{userId},</if>
+            <if test="isGroupLeader != null">`is_group_leader` = #{isGroupLeader},</if>
+            <if test="groupName != null">`group_name` = #{groupName},</if>
+            <if test="company != null">`company` = #{company},</if>
+            <if test="bankAccount != null">`bank_account` = #{bankAccount},</if>
+            <if test="phone != null">`phone` = #{phone},</if>
+            <if test="loginAccount != null">`login_account` = #{loginAccount},</if>
+            <if test="expertName != null">`expert_name` = #{expertName},</if>
+        </set>
+        where login_account = #{loginAccount}
+    </update>
+
+    <update id="updateExpertSignId">
+        update add_special_info
+        set  signature_id = #{signId} where task_id = #{taskId} and user_id = #{expertUid}
+    </update>
+
+    <delete id="remove">
+		delete from add_special_info where id = #{value}
+	</delete>
+    <delete id="removeByLoginAccount" >
+        delete from add_special_info where login_account = #{loginAccount}
+    </delete>
+    <update id="delByLoginAccount">
+        update add_special_info set deleted = 1 where login_account = #{loginAccount}
+    </update>
+
+
+</mapper>

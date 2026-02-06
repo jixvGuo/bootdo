@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="shortcut icon" href="favicon.ico">
+<link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+<link href="/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/4.4.0/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../css/plugins/markdown/bootstrap-markdown.min.css" />
+<link href="/css/plugins/chosen/chosen.css" rel="stylesheet">
+<link href="/css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+<link href="/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+<link href="/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+<link href="/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+<link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<link href="/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+<link href="/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+<link href="/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/plugins/simditor/simditor.css" />
+</head>
+<body class="gray-bg">
+<input type="hidden" id="isReadonly" th:value="${readonly}"/>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" style="overflow:scroll">
+                    <form method="post" id="signupForm" class="form-horizontal" style="width:3000px;">
+                        <input type="hidden" name="proId" th:value="${projectInfo.id}"/>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="text-align:center;vertical-align:middle;width:10%" rowspan="2">申报单位</th>
+                                <th style="text-align:center;vertical-align:middle;width:10%" rowspan="2">申报成果名称</th>
+                                <th style="text-align:center;vertical-align:middle;width:10%" rowspan="2">分组</th>
+                                <th style="text-align:center;vertical-align:middle;width:3%" rowspan="2">申报书</th>
+                                <th style="text-align:center;vertical-align:middle;width:4%" rowspan="2">研究报告</th>
+                                <th style="text-align:center;vertical-align:middle;width:45%" colspan="14">附件</th>
+                                <th style="text-align:center;vertical-align:middle;width:10%" rowspan="2">审查存在问题</th>
+                                <th style="text-align:center;vertical-align:middle;width:8%" rowspan="2">审查结论</th>
+                                <th style="text-align:center;vertical-align:middle;width:10%" rowspan="2">主要完成人</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center;vertical-align:middle;width:40px">成果立项文件</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">成果验收报告</th>
+                                <th style="text-align:center;vertical-align:middle;width:60px">科技成果鉴定证书</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">成果鉴定等级</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">知识产权证明数量</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">查新报告</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">其他证明</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">成果形成的国标、行标</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">检测报告</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">检测报告出具单位</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">成果应用证明</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">成果应用时间</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">应用单位数量</th>
+                                <th style="text-align:center;vertical-align:middle;width:40px">完成人名单排序表等</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td contentEditable="false" th:text="${projectInfo.enterpriseName}"></td>
+                                <td contentEditable="false" th:text="${awardStyleValidateScience.applyName}"></td>
+                                <td contentEditable="true" id="tdProGroupName" th:text="${projectInfo.proGroupName}"></td>
+                                <input type="hidden" id="proGroupName" name="proGroupName" th:value="${projectInfo.proGroupName}" />
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="isApplyBook" name="isApplyBook" th:checked="${awardStyleValidateScience.isApplyBook == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="isStudyReport" name="isStudyReport" th:checked="${awardStyleValidateScience.isStudyReport == 1}"  value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsApproval" name="enclosureIsApproval" th:checked="${awardStyleValidateScience.enclosureIsApproval == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsCheck" name="enclosureIsCheck" th:checked="${awardStyleValidateScience.enclosureIsCheck == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td contentEditable="plaintext-only" id="enclosureAppraisalBook" th:text="${awardStyleValidateScience.enclosureAppraisalBook}"></td>
+                                <input type="hidden" name="enclosureAppraisalBook" value=""/>
+                                <td contentEditable="plaintext-only" id="enclosureAppraisalLevel" name="enclosureAppraisalLevel" th:text="${awardStyleValidateScience.enclosureAppraisalLevel}"></td>
+                                <input type="hidden" name="enclosureAppraisalLevel" value=""/>
+                                <td contentEditable="plaintext-only" id="enclosureKnowledgeCount" name="enclosureKnowledgeCount" th:text="${awardStyleValidateScience.enclosureKnowledgeCount}"></td>
+                                <input type="hidden" name="enclosureKnowledgeCount" value=""/>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsNew" name="enclosureIsNew" th:checked="${awardStyleValidateScience.enclosureIsNew == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsOther" name="enclosureIsOther" th:checked="${awardStyleValidateScience.enclosureIsOther == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsStandard" name="enclosureIsStandard" th:checked="${awardStyleValidateScience.enclosureIsStandard == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td contentEditable="plaintext-only" id="enclosureCheckBook" name="enclosureCheckBook" th:text="${awardStyleValidateScience.enclosureCheckBook}"></td>
+                                <input type="hidden" name="enclosureCheckBook" value=""/>
+                                <td contentEditable="plaintext-only" id="enclosureCheckCompany" name="enclosureCheckCompany" th:text="${awardStyleValidateScience.enclosureCheckCompany}"></td>
+                                <input type="hidden" name="enclosureCheckCompany" value=""/>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsApply" name="enclosureIsApply" th:checked="${awardStyleValidateScience.enclosureIsApply == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td contentEditable="plaintext-only" id="enclosureApplyTime" name="enclosureApplyTime" th:text="${awardStyleValidateScience.enclosureApplyTime}"></td>
+                                <input type="hidden" name="enclosureApplyTime" value=""/>
+                                <td contentEditable="plaintext-only" id="enclosureApplyCompanyCount" name="enclosureApplyCompanyCount" th:text="${awardStyleValidateScience.enclosureApplyCompanyCount}"></td>
+                                <input type="hidden" name="enclosureApplyCompanyCount" value=""/>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" id="enclosureIsTable" name="enclosureIsTable" th:checked="${awardStyleValidateScience.enclosureIsTable == 1}" value="1">
+                                        </label>
+                                    </div>
+                                </td>
+                                <td contentEditable="plaintext-only" id="validateQuestions" name="validateQuestions" th:text="${awardStyleValidateScience.validateQuestions}" ></td>
+                                <input type="hidden" name="validateQuestions" value=""/>
+                                <td style="text-align:center;vertical-align:middle;">
+                                    <div>
+                                        <label>
+                                            <select class="" name="validateResult">
+                                                <option th:selected="${awardStyleValidateScience.validateResult == 'to_assign_experts' || awardStyleValidateScience.validateResult == 'score'}" value="to_assign_experts">参评</option>
+                                                <option th:selected="${awardStyleValidateScience.validateResult == 'reject'}" value="reject">完善后参评</option>
+                                                <option th:selected="${awardStyleValidateScience.validateResult == 'no_award' || awardStyleValidateScience.validateResult == 'no_score'}" value="no_award">不评</option>
+                                                <option th:selected="${awardStyleValidateScience.validateResult == 'delayed_award' || awardStyleValidateScience.validateResult == 'defer_score'}" value="delayed_award">缓评</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td contentEditable="plaintext-only" id="mainCompleteUsers" name="mainCompleteUsers" th:text="${awardStyleValidateScience.mainCompleteUsers}"></td>
+                                <input type="hidden" name="mainCompleteUsers" value=""/>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group" id="data_5">
+                            <div class="col-sm-12">
+                                <textarea id="rejectReason" name="rejectReason" cols="120" th:text="${awardStyleValidateScience.rejectReason}" placeholder="请输入驳回意见" autofocus></textarea>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/system/awardStyleValidateScience/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+<script type="text/javascript">
+    $(".i-checks").iCheck({checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green",});
+
+    $(document).ready(function () {
+        $(" .i-checks").iCheck({
+            checkboxClass: "icheckbox_square-green",
+            radioClass: "iradio_square-green"
+        })
+    });
+
+
+    $('tbody').click(function (e) {
+        var a = $(this).find("select").val();
+        if (a == "to_assign_experts")
+            $("#data_5").hide();
+        else
+            $("#data_5").show();
+    });
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style>
+    input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
+        -webkit-appearance:none;
+    }
+    input[type="number"]{
+        -moz-appearance: textfield;
+    }
+</style>
+<body>
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form  id="scoreForm" class="ui basic form">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input type="hidden" name="score_type" value="science_score" />
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="itemId" name="itemId" th:value="${itemId}"  type="hidden">
+            <input id="major" name="major" th:value="${proInfo.major}"  type="hidden">
+            <h4 class="ui red horizontal divider header">基本信息 </h4>
+            <div class="ui field">
+                <label>项目名称</label>
+                <input type="text" disabled name="proname" placeholder="项目名称" th:value="${proInfo.chengguoName}">
+            </div>
+            <h4 class="ui red horizontal divider header">打分详情 </h4>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>技术先进程度</label>
+                    <input type="number" min="0" max="100" id="technology_advancement" name="technology_advancement" th:value="${technology_advancement}"    placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>创新程度</label>
+                    <input type="number" min="0" max="100"   id="degree_innovation" name="degree_innovation" th:value="${degree_innovation}"  placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>难易与复杂程度</label>
+                    <input type="number" min="0" max="100"  id="difficulty_complex" name="difficulty_complex" th:value="${difficulty_complex}"  placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>知识产权</label>
+                    <input type="number" min="0" max="100"   id="lore_property" name="lore_property" th:value="${lore_property}" placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>经济效益</label>
+                    <input type="number" min="0" max="100"  id="economic_benefit" name="economic_benefit" th:value="${economic_benefit}"  placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>社会效益</label>
+                    <input type="number" min="0" max="100"  id="social_benefit" name="social_benefit" th:value="${social_benefit}" placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>推广应用前景</label>
+                    <input type="number" min="0" max="100"  id="promotion_prospect" name="promotion_prospect" th:value="${promotion_prospect}" placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>材料准备情况、表达能力</label>
+                    <input type="number" min="0" max="100"  id="preparation_expression" name="preparation_expression" th:value="${preparation_expression}"  placeholder="" >
+                </div>
+            </div>
+            <div class="ui field disabled">
+                <label>总分</label>
+                <input type="number" name="totalScore" id="totalScore" th:value="${totalScore}" placeholder="" >
+            </div>
+            <h4 class="ui red horizontal divider header">意见备注 </h4>
+            <div class="ui field">
+                <label>推荐意见等级</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="opinionLevel" th:value="${opinion_level}" id="opinion_level">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">推荐意见等级</div>
+                    <div class="menu">
+                        <div class="item" data-value="特等">特等</div>
+                        <div class="item" data-value="一等">一等</div>
+                        <div class="item" data-value="二等">二等</div>
+                        <div class="item" data-value="三等">三等</div>
+                        <div class="item" data-value="缓评">缓评</div>
+                        <div class="item" data-value="不推荐">不推荐</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>评审意见</label>
+                <textarea name="opinionText" id="opinion_text" th:text="${opinion_text}"></textarea>
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="saveData()">保存</div>
+            </div>
+        </form>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/act/score/science/science_score.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+    $('.ui.dropdown').dropdown();
+
+    $("input[type='number']").keyup(function(){
+        var totalScore = 0;
+        $("input[type='number']").each(function () {
+            var namec = $(this).attr("name");
+            if(namec != "totalScore"){
+                totalScore += Number($(this).val());
+            }
+        });
+        $("input[name='totalScore']").val(totalScore);
+    });
+    $("input[type='number']").change(function(){
+        var totalScore = 0;
+        $("input[type='number']").each(function () {
+            var namec = $(this).attr("name");
+            if(namec != "totalScore"){
+                totalScore += Number($(this).val());
+            }
+        });
+        $("input[name='totalScore']").val(totalScore);
+    });
+
+    function addimage(){
+        $("#fileimage").trigger("click");
+    }
+
+    $('.ui.form').form({
+        on:'blur',
+        fields :{
+            proname: {
+                identifier  : 'proname',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写项目名称'
+                    }
+                ]
+            },
+            advancedtechnique: {
+                identifier  : 'advancedtechnique',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写技术先进程度分数'
+                    }
+                ]
+            },
+            innovate: {
+                identifier  : 'innovate',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写创新程度分数'
+                    }
+                ]
+            },
+            facilityvalue: {
+                identifier  : 'facilityvalue',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写难易与复杂程度分数'
+                    }
+                ]
+            },
+            intellectualproperty: {
+                identifier  : 'intellectualproperty',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写知识产权分数'
+                    }
+                ]
+            },
+            economics: {
+                identifier  : 'economics',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写经济效益分数'
+                    }
+                ]
+            },
+            sociology: {
+                identifier  : 'sociology',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写社会效益分数'
+                    }
+                ]
+            },
+            prospect: {
+                identifier  : 'prospect',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写推广应用前景分数'
+                    }
+                ]
+            },
+            expression: {
+                identifier  : 'expression',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写材料准备情况、表达能力分数'
+                    }
+                ]
+            },
+            opinionLevel: {
+                identifier  : 'opinionLevel',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请选择推荐意见等级'
+                    }
+                ]
+            },
+            opinion: {
+                identifier  : 'opinion',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写评审意见'
+                    }
+                ]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

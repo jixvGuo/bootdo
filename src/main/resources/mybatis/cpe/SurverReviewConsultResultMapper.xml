@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverReviewConsultResultDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverReviewConsultResultDO">
+		select `id`,`num_copies`,`type`,`pro_is_complete`,`check_is_ok`,`run_is_one_year`,`unit_is_consult_cert`,`unit_is_first_complete`,`bureau_is_first_award`,`superior_is_opionion`,`apply_rst_is_accept`,`result_is_report`,`evaluate_is_cert`,`complete_is_cert`,`bureau_is_award_cert`,`unit_is_three_year_safe`,`view_new_is_report`,`contract_is_ok`,`superior_unit_is_evaluate`,`review_is_evaluate`,`superior_review_is_evaluate`,`build_unit_is_evaluate`,`result_is_accept_cert`,`result_is_quality_eval`,`specilist_is_evaluate`,`publish_is_cert`,`high_evaluate_is_cert`,`pro_is_desc`,`apply_is_reason`,`economic_is_contrast`,`technology_is_contrast`,`new_method_is_ok`,`plan_is_drawing`,`photo_is_ok`,`need_is_vcd`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`review_result`,`remarks`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,
+		       use_effect_is_cert,specilist_is_expert_opinion from ass_surver_review_consult_result where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverReviewConsultResultDO">
+		select cr.`id`,`num_copies`,`type`,`pro_is_complete`,`check_is_ok`,`run_is_one_year`,`unit_is_consult_cert`,`unit_is_first_complete`,`bureau_is_first_award`,`superior_is_opionion`,`apply_rst_is_accept`,`result_is_report`,`evaluate_is_cert`,`complete_is_cert`,`bureau_is_award_cert`,`unit_is_three_year_safe`,`view_new_is_report`,`contract_is_ok`,`superior_unit_is_evaluate`,`review_is_evaluate`,`superior_review_is_evaluate`,`build_unit_is_evaluate`,`result_is_accept_cert`,`result_is_quality_eval`,`specilist_is_evaluate`,`publish_is_cert`,`high_evaluate_is_cert`,`pro_is_desc`,`apply_is_reason`,`economic_is_contrast`,`technology_is_contrast`,`new_method_is_ok`,`plan_is_drawing`,`photo_is_ok`,`need_is_vcd`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`review_result`,cr.`remarks`
+		     ,cr.`opt_uid`,cr.`task_id`,cr.`created`,cr.`updated`,
+		      use_effect_is_cert,specilist_is_expert_opinion,
+		      pro.id pro_id,
+              pro.major,
+              pro.pro_code,
+              pro.pro_sub_type,
+              pro.pro_type,
+              pro.chengguo pro_name,
+		      sd.name apply_company
+		from
+		     boot_do.ass_award_enterprise_project pro
+                   JOIN
+             sys_user su on pro.create_uid = su.user_id
+                   JOIN
+             sys_dept sd ON su.dept_id = sd.dept_id
+		           LEFT JOIN
+		     ass_surver_review_consult_result cr on cr.pro_id = pro.id
+        <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="proIsComplete != null and proIsComplete != ''"> and pro_is_complete = #{proIsComplete} </if>
+		  		  <if test="checkIsOk != null and checkIsOk != ''"> and check_is_ok = #{checkIsOk} </if>
+		  		  <if test="runIsOneYear != null and runIsOneYear != ''"> and run_is_one_year = #{runIsOneYear} </if>
+		  		  <if test="unitIsConsultCert != null and unitIsConsultCert != ''"> and unit_is_consult_cert = #{unitIsConsultCert} </if>
+		  		  <if test="unitIsFirstComplete != null and unitIsFirstComplete != ''"> and unit_is_first_complete = #{unitIsFirstComplete} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="applyRstIsAccept != null and applyRstIsAccept != ''"> and apply_rst_is_accept = #{applyRstIsAccept} </if>
+		  		  <if test="resultIsReport != null and resultIsReport != ''"> and result_is_report = #{resultIsReport} </if>
+		  		  <if test="evaluateIsCert != null and evaluateIsCert != ''"> and evaluate_is_cert = #{evaluateIsCert} </if>
+		  		  <if test="completeIsCert != null and completeIsCert != ''"> and complete_is_cert = #{completeIsCert} </if>
+		  		  <if test="bureauIsAwardCert != null and bureauIsAwardCert != ''"> and bureau_is_award_cert = #{bureauIsAwardCert} </if>
+		  		  <if test="unitIsThreeYearSafe != null and unitIsThreeYearSafe != ''"> and unit_is_three_year_safe = #{unitIsThreeYearSafe} </if>
+		  		  <if test="viewNewIsReport != null and viewNewIsReport != ''"> and view_new_is_report = #{viewNewIsReport} </if>
+		  		  <if test="contractIsOk != null and contractIsOk != ''"> and contract_is_ok = #{contractIsOk} </if>
+		  		  <if test="superiorUnitIsEvaluate != null and superiorUnitIsEvaluate != ''"> and superior_unit_is_evaluate = #{superiorUnitIsEvaluate} </if>
+		  		  <if test="reviewIsEvaluate != null and reviewIsEvaluate != ''"> and review_is_evaluate = #{reviewIsEvaluate} </if>
+		  		  <if test="superiorReviewIsEvaluate != null and superiorReviewIsEvaluate != ''"> and superior_review_is_evaluate = #{superiorReviewIsEvaluate} </if>
+		  		  <if test="buildUnitIsEvaluate != null and buildUnitIsEvaluate != ''"> and build_unit_is_evaluate = #{buildUnitIsEvaluate} </if>
+		  		  <if test="resultIsAcceptCert != null and resultIsAcceptCert != ''"> and result_is_accept_cert = #{resultIsAcceptCert} </if>
+		  		  <if test="resultIsQualityEval != null and resultIsQualityEval != ''"> and result_is_quality_eval = #{resultIsQualityEval} </if>
+		  		  <if test="specilistIsEvaluate != null and specilistIsEvaluate != ''"> and specilist_is_evaluate = #{specilistIsEvaluate} </if>
+		  		  <if test="publishIsCert != null and publishIsCert != ''"> and publish_is_cert = #{publishIsCert} </if>
+		  		  <if test="highEvaluateIsCert != null and highEvaluateIsCert != ''"> and high_evaluate_is_cert = #{highEvaluateIsCert} </if>
+		  		  <if test="proIsDesc != null and proIsDesc != ''"> and pro_is_desc = #{proIsDesc} </if>
+		  		  <if test="applyIsReason != null and applyIsReason != ''"> and apply_is_reason = #{applyIsReason} </if>
+		  		  <if test="economicIsContrast != null and economicIsContrast != ''"> and economic_is_contrast = #{economicIsContrast} </if>
+		  		  <if test="technologyIsContrast != null and technologyIsContrast != ''"> and technology_is_contrast = #{technologyIsContrast} </if>
+		  		  <if test="newMethodIsOk != null and newMethodIsOk != ''"> and new_method_is_ok = #{newMethodIsOk} </if>
+		  		  <if test="planIsDrawing != null and planIsDrawing != ''"> and plan_is_drawing = #{planIsDrawing} </if>
+		  		  <if test="photoIsOk != null and photoIsOk != ''"> and photo_is_ok = #{photoIsOk} </if>
+		  		  <if test="needIsVcd != null and needIsVcd != ''"> and need_is_vcd = #{needIsVcd} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by cr.id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from boot_do.ass_award_enterprise_project pro
+		     JOIN
+		 sys_user su on pro.create_uid = su.user_id
+		     JOIN
+		 sys_dept sd ON su.dept_id = sd.dept_id
+		     LEFT JOIN
+		 ass_surver_review_consult_result cr on cr.pro_id = pro.id
+		 <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="proIsComplete != null and proIsComplete != ''"> and pro_is_complete = #{proIsComplete} </if>
+		  		  <if test="checkIsOk != null and checkIsOk != ''"> and check_is_ok = #{checkIsOk} </if>
+		  		  <if test="runIsOneYear != null and runIsOneYear != ''"> and run_is_one_year = #{runIsOneYear} </if>
+		  		  <if test="unitIsConsultCert != null and unitIsConsultCert != ''"> and unit_is_consult_cert = #{unitIsConsultCert} </if>
+		  		  <if test="unitIsFirstComplete != null and unitIsFirstComplete != ''"> and unit_is_first_complete = #{unitIsFirstComplete} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="applyRstIsAccept != null and applyRstIsAccept != ''"> and apply_rst_is_accept = #{applyRstIsAccept} </if>
+		  		  <if test="resultIsReport != null and resultIsReport != ''"> and result_is_report = #{resultIsReport} </if>
+		  		  <if test="evaluateIsCert != null and evaluateIsCert != ''"> and evaluate_is_cert = #{evaluateIsCert} </if>
+		  		  <if test="completeIsCert != null and completeIsCert != ''"> and complete_is_cert = #{completeIsCert} </if>
+		  		  <if test="bureauIsAwardCert != null and bureauIsAwardCert != ''"> and bureau_is_award_cert = #{bureauIsAwardCert} </if>
+		  		  <if test="unitIsThreeYearSafe != null and unitIsThreeYearSafe != ''"> and unit_is_three_year_safe = #{unitIsThreeYearSafe} </if>
+		  		  <if test="viewNewIsReport != null and viewNewIsReport != ''"> and view_new_is_report = #{viewNewIsReport} </if>
+		  		  <if test="contractIsOk != null and contractIsOk != ''"> and contract_is_ok = #{contractIsOk} </if>
+		  		  <if test="superiorUnitIsEvaluate != null and superiorUnitIsEvaluate != ''"> and superior_unit_is_evaluate = #{superiorUnitIsEvaluate} </if>
+		  		  <if test="reviewIsEvaluate != null and reviewIsEvaluate != ''"> and review_is_evaluate = #{reviewIsEvaluate} </if>
+		  		  <if test="superiorReviewIsEvaluate != null and superiorReviewIsEvaluate != ''"> and superior_review_is_evaluate = #{superiorReviewIsEvaluate} </if>
+		  		  <if test="buildUnitIsEvaluate != null and buildUnitIsEvaluate != ''"> and build_unit_is_evaluate = #{buildUnitIsEvaluate} </if>
+		  		  <if test="resultIsAcceptCert != null and resultIsAcceptCert != ''"> and result_is_accept_cert = #{resultIsAcceptCert} </if>
+		  		  <if test="resultIsQualityEval != null and resultIsQualityEval != ''"> and result_is_quality_eval = #{resultIsQualityEval} </if>
+		  		  <if test="specilistIsEvaluate != null and specilistIsEvaluate != ''"> and specilist_is_evaluate = #{specilistIsEvaluate} </if>
+		  		  <if test="publishIsCert != null and publishIsCert != ''"> and publish_is_cert = #{publishIsCert} </if>
+		  		  <if test="highEvaluateIsCert != null and highEvaluateIsCert != ''"> and high_evaluate_is_cert = #{highEvaluateIsCert} </if>
+		  		  <if test="proIsDesc != null and proIsDesc != ''"> and pro_is_desc = #{proIsDesc} </if>
+		  		  <if test="applyIsReason != null and applyIsReason != ''"> and apply_is_reason = #{applyIsReason} </if>
+		  		  <if test="economicIsContrast != null and economicIsContrast != ''"> and economic_is_contrast = #{economicIsContrast} </if>
+		  		  <if test="technologyIsContrast != null and technologyIsContrast != ''"> and technology_is_contrast = #{technologyIsContrast} </if>
+		  		  <if test="newMethodIsOk != null and newMethodIsOk != ''"> and new_method_is_ok = #{newMethodIsOk} </if>
+		  		  <if test="planIsDrawing != null and planIsDrawing != ''"> and plan_is_drawing = #{planIsDrawing} </if>
+		  		  <if test="photoIsOk != null and photoIsOk != ''"> and photo_is_ok = #{photoIsOk} </if>
+		  		  <if test="needIsVcd != null and needIsVcd != ''"> and need_is_vcd = #{needIsVcd} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverReviewConsultResultDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_review_consult_result
+		(
+			`num_copies`,
+			`type`,
+			`pro_is_complete`,
+			`check_is_ok`,
+			`run_is_one_year`,
+			`unit_is_consult_cert`,
+			`unit_is_first_complete`,
+			`bureau_is_first_award`,
+			`superior_is_opionion`,
+			`apply_rst_is_accept`,
+			`result_is_report`,
+			`evaluate_is_cert`,
+			`complete_is_cert`,
+			`bureau_is_award_cert`,
+			`unit_is_three_year_safe`,
+			`view_new_is_report`,
+			`contract_is_ok`,
+			`superior_unit_is_evaluate`,
+			`review_is_evaluate`,
+			`superior_review_is_evaluate`,
+			`build_unit_is_evaluate`,
+			`result_is_accept_cert`,
+			`result_is_quality_eval`,
+			`specilist_is_evaluate`,
+			`publish_is_cert`,
+			`high_evaluate_is_cert`,
+			`pro_is_desc`,
+			`apply_is_reason`,
+			`economic_is_contrast`,
+			`technology_is_contrast`,
+			`new_method_is_ok`,
+			`plan_is_drawing`,
+			`photo_is_ok`,
+			`need_is_vcd`,
+			`apply_source_question`,
+			`feedback_info`,
+			`pro_contact`,
+			`main_user`,
+			`review_result`,
+			`remarks`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`,
+		     use_effect_is_cert,
+		     specilist_is_expert_opinion
+		)
+		values
+		(
+			#{numCopies},
+			#{type},
+			#{proIsComplete},
+			#{checkIsOk},
+			#{runIsOneYear},
+			#{unitIsConsultCert},
+			#{unitIsFirstComplete},
+			#{bureauIsFirstAward},
+			#{superiorIsOpionion},
+			#{applyRstIsAccept},
+			#{resultIsReport},
+			#{evaluateIsCert},
+			#{completeIsCert},
+			#{bureauIsAwardCert},
+			#{unitIsThreeYearSafe},
+			#{viewNewIsReport},
+			#{contractIsOk},
+			#{superiorUnitIsEvaluate},
+			#{reviewIsEvaluate},
+			#{superiorReviewIsEvaluate},
+			#{buildUnitIsEvaluate},
+			#{resultIsAcceptCert},
+			#{resultIsQualityEval},
+			#{specilistIsEvaluate},
+			#{publishIsCert},
+			#{highEvaluateIsCert},
+			#{proIsDesc},
+			#{applyIsReason},
+			#{economicIsContrast},
+			#{technologyIsContrast},
+			#{newMethodIsOk},
+			#{planIsDrawing},
+			#{photoIsOk},
+			#{needIsVcd},
+			#{applySourceQuestion},
+			#{feedbackInfo},
+			#{proContact},
+			#{mainUser},
+			#{reviewResult},
+			#{remarks},
+			#{optUid},
+			#{proId},
+			#{taskId},
+		    #{useEffectIsCert},
+		    #{specilistIsExpertOpinion}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverReviewConsultResultDO">
+		update ass_surver_review_consult_result
+		<set>
+			<if test="numCopies != null">`num_copies` = #{numCopies}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="proIsComplete != null">`pro_is_complete` = #{proIsComplete}, </if>
+			<if test="checkIsOk != null">`check_is_ok` = #{checkIsOk}, </if>
+			<if test="runIsOneYear != null">`run_is_one_year` = #{runIsOneYear}, </if>
+			<if test="unitIsConsultCert != null">`unit_is_consult_cert` = #{unitIsConsultCert}, </if>
+			<if test="unitIsFirstComplete != null">`unit_is_first_complete` = #{unitIsFirstComplete}, </if>
+			<if test="bureauIsFirstAward != null">`bureau_is_first_award` = #{bureauIsFirstAward}, </if>
+			<if test="superiorIsOpionion != null">`superior_is_opionion` = #{superiorIsOpionion}, </if>
+			<if test="applyRstIsAccept != null">`apply_rst_is_accept` = #{applyRstIsAccept}, </if>
+			<if test="resultIsReport != null">`result_is_report` = #{resultIsReport}, </if>
+			<if test="evaluateIsCert != null">`evaluate_is_cert` = #{evaluateIsCert}, </if>
+			<if test="completeIsCert != null">`complete_is_cert` = #{completeIsCert}, </if>
+			<if test="bureauIsAwardCert != null">`bureau_is_award_cert` = #{bureauIsAwardCert}, </if>
+			<if test="unitIsThreeYearSafe != null">`unit_is_three_year_safe` = #{unitIsThreeYearSafe}, </if>
+			<if test="viewNewIsReport != null">`view_new_is_report` = #{viewNewIsReport}, </if>
+			<if test="contractIsOk != null">`contract_is_ok` = #{contractIsOk}, </if>
+			<if test="superiorUnitIsEvaluate != null">`superior_unit_is_evaluate` = #{superiorUnitIsEvaluate}, </if>
+			<if test="reviewIsEvaluate != null">`review_is_evaluate` = #{reviewIsEvaluate}, </if>
+			<if test="superiorReviewIsEvaluate != null">`superior_review_is_evaluate` = #{superiorReviewIsEvaluate}, </if>
+			<if test="buildUnitIsEvaluate != null">`build_unit_is_evaluate` = #{buildUnitIsEvaluate}, </if>
+			<if test="resultIsAcceptCert != null">`result_is_accept_cert` = #{resultIsAcceptCert}, </if>
+			<if test="resultIsQualityEval != null">`result_is_quality_eval` = #{resultIsQualityEval}, </if>
+			<if test="specilistIsEvaluate != null">`specilist_is_evaluate` = #{specilistIsEvaluate}, </if>
+			<if test="publishIsCert != null">`publish_is_cert` = #{publishIsCert}, </if>
+			<if test="highEvaluateIsCert != null">`high_evaluate_is_cert` = #{highEvaluateIsCert}, </if>
+			<if test="proIsDesc != null">`pro_is_desc` = #{proIsDesc}, </if>
+			<if test="applyIsReason != null">`apply_is_reason` = #{applyIsReason}, </if>
+			<if test="economicIsContrast != null">`economic_is_contrast` = #{economicIsContrast}, </if>
+			<if test="technologyIsContrast != null">`technology_is_contrast` = #{technologyIsContrast}, </if>
+			<if test="newMethodIsOk != null">`new_method_is_ok` = #{newMethodIsOk}, </if>
+			<if test="planIsDrawing != null">`plan_is_drawing` = #{planIsDrawing}, </if>
+			<if test="photoIsOk != null">`photo_is_ok` = #{photoIsOk}, </if>
+			<if test="needIsVcd != null">`need_is_vcd` = #{needIsVcd}, </if>
+			<if test="applySourceQuestion != null">`apply_source_question` = #{applySourceQuestion}, </if>
+			<if test="feedbackInfo != null">`feedback_info` = #{feedbackInfo}, </if>
+			<if test="proContact != null">`pro_contact` = #{proContact}, </if>
+			<if test="mainUser != null">`main_user` = #{mainUser}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+			<if test="useEffectIsCert != null">`use_effect_is_cert` = #{useEffectIsCert}</if>
+			<if test="specilistIsExpertOpinion != null">`specilist_is_expert_opinion` = #{specilistIsExpertOpinion}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_review_consult_result where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_review_consult_result where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

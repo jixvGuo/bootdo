@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriTeamMainUsersDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriTeamMainUsersDO">
+		select `id`,`mu_username`,`mu_gender`,`mu_num`,`mu_birthday`,`mu_birth_addr`,`mu_nation`,`mu_user_iden`,`mu_is_returnee`,`mu_returnee_time`,`mu_technical_title`,`mu_highest_education`,`mu_highest_degree`,`mu_graduate_school`,`mu_graduate_time`,`mu_major`,`mu_email`,`mu_work_phone`,`mu_mobile_phone`,`mu_concat_address`,`mu_postcode`,`mu_work_company`,`mu_work_position`,`mu_work_second_company`,`mu_parties`,`mu_participating_time`,`mu_study_history`,`mu_science_work_history`,`mu_major_academic_part_time`,`mu_representative_achievements`,`mu_awards_representative_papers`,`mu_contribution`,`created`,`opt_uid`,`task_id`,`pro_id` from ass_enterpri_team_main_users where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriTeamMainUsersDO">
+		select `id`,`mu_username`,`mu_gender`,`mu_num`,`mu_birthday`,`mu_birth_addr`,`mu_nation`,`mu_user_iden`,`mu_is_returnee`,`mu_returnee_time`,`mu_technical_title`,`mu_highest_education`,`mu_highest_degree`,`mu_graduate_school`,`mu_graduate_time`,`mu_major`,`mu_email`,`mu_work_phone`,`mu_mobile_phone`,`mu_concat_address`,`mu_postcode`,`mu_work_company`,`mu_work_position`,`mu_work_second_company`,`mu_parties`,`mu_participating_time`,`mu_study_history`,`mu_science_work_history`,`mu_major_academic_part_time`,`mu_representative_achievements`,`mu_awards_representative_papers`,`mu_contribution`,`created`,`opt_uid`,`task_id`,`pro_id` from ass_enterpri_team_main_users
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="muUsername != null and muUsername != ''"> and mu_username = #{muUsername} </if>
+		  		  <if test="muGender != null and muGender != ''"> and mu_gender = #{muGender} </if>
+		  		  <if test="muNum != null and muNum != ''"> and mu_num = #{muNum} </if>
+		  		  <if test="muBirthday != null and muBirthday != ''"> and mu_birthday = #{muBirthday} </if>
+		  		  <if test="muBirthAddr != null and muBirthAddr != ''"> and mu_birth_addr = #{muBirthAddr} </if>
+		  		  <if test="muNation != null and muNation != ''"> and mu_nation = #{muNation} </if>
+		  		  <if test="muUserIden != null and muUserIden != ''"> and mu_user_iden = #{muUserIden} </if>
+		  		  <if test="muIsReturnee != null and muIsReturnee != ''"> and mu_is_returnee = #{muIsReturnee} </if>
+		  		  <if test="muReturneeTime != null and muReturneeTime != ''"> and mu_returnee_time = #{muReturneeTime} </if>
+		  		  <if test="muTechnicalTitle != null and muTechnicalTitle != ''"> and mu_technical_title = #{muTechnicalTitle} </if>
+		  		  <if test="muHighestEducation != null and muHighestEducation != ''"> and mu_highest_education = #{muHighestEducation} </if>
+		  		  <if test="muHighestDegree != null and muHighestDegree != ''"> and mu_highest_degree = #{muHighestDegree} </if>
+		  		  <if test="muGraduateSchool != null and muGraduateSchool != ''"> and mu_graduate_school = #{muGraduateSchool} </if>
+		  		  <if test="muGraduateTime != null and muGraduateTime != ''"> and mu_graduate_time = #{muGraduateTime} </if>
+		  		  <if test="muMajor != null and muMajor != ''"> and mu_major = #{muMajor} </if>
+		  		  <if test="muEmail != null and muEmail != ''"> and mu_email = #{muEmail} </if>
+		  		  <if test="muWorkPhone != null and muWorkPhone != ''"> and mu_work_phone = #{muWorkPhone} </if>
+		  		  <if test="muMobilePhone != null and muMobilePhone != ''"> and mu_mobile_phone = #{muMobilePhone} </if>
+		  		  <if test="muConcatAddress != null and muConcatAddress != ''"> and mu_concat_address = #{muConcatAddress} </if>
+		  		  <if test="muPostcode != null and muPostcode != ''"> and mu_postcode = #{muPostcode} </if>
+		  		  <if test="muWorkCompany != null and muWorkCompany != ''"> and mu_work_company = #{muWorkCompany} </if>
+		  		  <if test="muWorkPosition != null and muWorkPosition != ''"> and mu_work_position = #{muWorkPosition} </if>
+		  		  <if test="muWorkSecondCompany != null and muWorkSecondCompany != ''"> and mu_work_second_company = #{muWorkSecondCompany} </if>
+		  		  <if test="muParties != null and muParties != ''"> and mu_parties = #{muParties} </if>
+		  		  <if test="muParticipatingTime != null and muParticipatingTime != ''"> and mu_participating_time = #{muParticipatingTime} </if>
+		  		  <if test="muStudyHistory != null and muStudyHistory != ''"> and mu_study_history = #{muStudyHistory} </if>
+		  		  <if test="muScienceWorkHistory != null and muScienceWorkHistory != ''"> and mu_science_work_history = #{muScienceWorkHistory} </if>
+		  		  <if test="muMajorAcademicPartTime != null and muMajorAcademicPartTime != ''"> and mu_major_academic_part_time = #{muMajorAcademicPartTime} </if>
+		  		  <if test="muRepresentativeAchievements != null and muRepresentativeAchievements != ''"> and mu_representative_achievements = #{muRepresentativeAchievements} </if>
+		  		  <if test="muAwardsRepresentativePapers != null and muAwardsRepresentativePapers != ''"> and mu_awards_representative_papers = #{muAwardsRepresentativePapers} </if>
+		  		  <if test="muContribution != null and muContribution != ''"> and mu_contribution = #{muContribution} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_team_main_users
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="muUsername != null and muUsername != ''"> and mu_username = #{muUsername} </if>
+		  		  <if test="muGender != null and muGender != ''"> and mu_gender = #{muGender} </if>
+		  		  <if test="muNum != null and muNum != ''"> and mu_num = #{muNum} </if>
+		  		  <if test="muBirthday != null and muBirthday != ''"> and mu_birthday = #{muBirthday} </if>
+		  		  <if test="muBirthAddr != null and muBirthAddr != ''"> and mu_birth_addr = #{muBirthAddr} </if>
+		  		  <if test="muNation != null and muNation != ''"> and mu_nation = #{muNation} </if>
+		  		  <if test="muUserIden != null and muUserIden != ''"> and mu_user_iden = #{muUserIden} </if>
+		  		  <if test="muIsReturnee != null and muIsReturnee != ''"> and mu_is_returnee = #{muIsReturnee} </if>
+		  		  <if test="muReturneeTime != null and muReturneeTime != ''"> and mu_returnee_time = #{muReturneeTime} </if>
+		  		  <if test="muTechnicalTitle != null and muTechnicalTitle != ''"> and mu_technical_title = #{muTechnicalTitle} </if>
+		  		  <if test="muHighestEducation != null and muHighestEducation != ''"> and mu_highest_education = #{muHighestEducation} </if>
+		  		  <if test="muHighestDegree != null and muHighestDegree != ''"> and mu_highest_degree = #{muHighestDegree} </if>
+		  		  <if test="muGraduateSchool != null and muGraduateSchool != ''"> and mu_graduate_school = #{muGraduateSchool} </if>
+		  		  <if test="muGraduateTime != null and muGraduateTime != ''"> and mu_graduate_time = #{muGraduateTime} </if>
+		  		  <if test="muMajor != null and muMajor != ''"> and mu_major = #{muMajor} </if>
+		  		  <if test="muEmail != null and muEmail != ''"> and mu_email = #{muEmail} </if>
+		  		  <if test="muWorkPhone != null and muWorkPhone != ''"> and mu_work_phone = #{muWorkPhone} </if>
+		  		  <if test="muMobilePhone != null and muMobilePhone != ''"> and mu_mobile_phone = #{muMobilePhone} </if>
+		  		  <if test="muConcatAddress != null and muConcatAddress != ''"> and mu_concat_address = #{muConcatAddress} </if>
+		  		  <if test="muPostcode != null and muPostcode != ''"> and mu_postcode = #{muPostcode} </if>
+		  		  <if test="muWorkCompany != null and muWorkCompany != ''"> and mu_work_company = #{muWorkCompany} </if>
+		  		  <if test="muWorkPosition != null and muWorkPosition != ''"> and mu_work_position = #{muWorkPosition} </if>
+		  		  <if test="muWorkSecondCompany != null and muWorkSecondCompany != ''"> and mu_work_second_company = #{muWorkSecondCompany} </if>
+		  		  <if test="muParties != null and muParties != ''"> and mu_parties = #{muParties} </if>
+		  		  <if test="muParticipatingTime != null and muParticipatingTime != ''"> and mu_participating_time = #{muParticipatingTime} </if>
+		  		  <if test="muStudyHistory != null and muStudyHistory != ''"> and mu_study_history = #{muStudyHistory} </if>
+		  		  <if test="muScienceWorkHistory != null and muScienceWorkHistory != ''"> and mu_science_work_history = #{muScienceWorkHistory} </if>
+		  		  <if test="muMajorAcademicPartTime != null and muMajorAcademicPartTime != ''"> and mu_major_academic_part_time = #{muMajorAcademicPartTime} </if>
+		  		  <if test="muRepresentativeAchievements != null and muRepresentativeAchievements != ''"> and mu_representative_achievements = #{muRepresentativeAchievements} </if>
+		  		  <if test="muAwardsRepresentativePapers != null and muAwardsRepresentativePapers != ''"> and mu_awards_representative_papers = #{muAwardsRepresentativePapers} </if>
+		  		  <if test="muContribution != null and muContribution != ''"> and mu_contribution = #{muContribution} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriTeamMainUsersDO">
+		insert into ass_enterpri_team_main_users
+		(
+			`id`, 
+			`mu_username`, 
+			`mu_gender`, 
+			`mu_num`, 
+			`mu_birthday`, 
+			`mu_birth_addr`, 
+			`mu_nation`, 
+			`mu_user_iden`, 
+			`mu_is_returnee`, 
+			`mu_returnee_time`, 
+			`mu_technical_title`, 
+			`mu_highest_education`, 
+			`mu_highest_degree`, 
+			`mu_graduate_school`, 
+			`mu_graduate_time`, 
+			`mu_major`, 
+			`mu_email`, 
+			`mu_work_phone`, 
+			`mu_mobile_phone`, 
+			`mu_concat_address`, 
+			`mu_postcode`, 
+			`mu_work_company`, 
+			`mu_work_position`, 
+			`mu_work_second_company`, 
+			`mu_parties`, 
+			`mu_participating_time`, 
+			`mu_study_history`, 
+			`mu_science_work_history`, 
+			`mu_major_academic_part_time`, 
+			`mu_representative_achievements`, 
+			`mu_awards_representative_papers`, 
+			`mu_contribution`,
+			`opt_uid`, 
+			`task_id`, 
+			`pro_id`
+		)
+		values
+		(
+			#{id}, 
+			#{muUsername}, 
+			#{muGender}, 
+			#{muNum}, 
+			#{muBirthday}, 
+			#{muBirthAddr}, 
+			#{muNation}, 
+			#{muUserIden}, 
+			#{muIsReturnee}, 
+			#{muReturneeTime}, 
+			#{muTechnicalTitle}, 
+			#{muHighestEducation}, 
+			#{muHighestDegree}, 
+			#{muGraduateSchool}, 
+			#{muGraduateTime}, 
+			#{muMajor}, 
+			#{muEmail}, 
+			#{muWorkPhone}, 
+			#{muMobilePhone}, 
+			#{muConcatAddress}, 
+			#{muPostcode}, 
+			#{muWorkCompany}, 
+			#{muWorkPosition}, 
+			#{muWorkSecondCompany}, 
+			#{muParties}, 
+			#{muParticipatingTime}, 
+			#{muStudyHistory}, 
+			#{muScienceWorkHistory}, 
+			#{muMajorAcademicPartTime}, 
+			#{muRepresentativeAchievements}, 
+			#{muAwardsRepresentativePapers}, 
+			#{muContribution},
+			#{optUid}, 
+			#{taskId}, 
+			#{proId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriTeamMainUsersDO">
+		update ass_enterpri_team_main_users 
+		<set>
+			<if test="muUsername != null">`mu_username` = #{muUsername}, </if>
+			<if test="muGender != null">`mu_gender` = #{muGender}, </if>
+			<if test="muNum != null">`mu_num` = #{muNum}, </if>
+			<if test="muBirthday != null">`mu_birthday` = #{muBirthday}, </if>
+			<if test="muBirthAddr != null">`mu_birth_addr` = #{muBirthAddr}, </if>
+			<if test="muNation != null">`mu_nation` = #{muNation}, </if>
+			<if test="muUserIden != null">`mu_user_iden` = #{muUserIden}, </if>
+			<if test="muIsReturnee != null">`mu_is_returnee` = #{muIsReturnee}, </if>
+			<if test="muReturneeTime != null">`mu_returnee_time` = #{muReturneeTime}, </if>
+			<if test="muTechnicalTitle != null">`mu_technical_title` = #{muTechnicalTitle}, </if>
+			<if test="muHighestEducation != null">`mu_highest_education` = #{muHighestEducation}, </if>
+			<if test="muHighestDegree != null">`mu_highest_degree` = #{muHighestDegree}, </if>
+			<if test="muGraduateSchool != null">`mu_graduate_school` = #{muGraduateSchool}, </if>
+			<if test="muGraduateTime != null">`mu_graduate_time` = #{muGraduateTime}, </if>
+			<if test="muMajor != null">`mu_major` = #{muMajor}, </if>
+			<if test="muEmail != null">`mu_email` = #{muEmail}, </if>
+			<if test="muWorkPhone != null">`mu_work_phone` = #{muWorkPhone}, </if>
+			<if test="muMobilePhone != null">`mu_mobile_phone` = #{muMobilePhone}, </if>
+			<if test="muConcatAddress != null">`mu_concat_address` = #{muConcatAddress}, </if>
+			<if test="muPostcode != null">`mu_postcode` = #{muPostcode}, </if>
+			<if test="muWorkCompany != null">`mu_work_company` = #{muWorkCompany}, </if>
+			<if test="muWorkPosition != null">`mu_work_position` = #{muWorkPosition}, </if>
+			<if test="muWorkSecondCompany != null">`mu_work_second_company` = #{muWorkSecondCompany}, </if>
+			<if test="muParties != null">`mu_parties` = #{muParties}, </if>
+			<if test="muParticipatingTime != null">`mu_participating_time` = #{muParticipatingTime}, </if>
+			<if test="muStudyHistory != null">`mu_study_history` = #{muStudyHistory}, </if>
+			<if test="muScienceWorkHistory != null">`mu_science_work_history` = #{muScienceWorkHistory}, </if>
+			<if test="muMajorAcademicPartTime != null">`mu_major_academic_part_time` = #{muMajorAcademicPartTime}, </if>
+			<if test="muRepresentativeAchievements != null">`mu_representative_achievements` = #{muRepresentativeAchievements}, </if>
+			<if test="muAwardsRepresentativePapers != null">`mu_awards_representative_papers` = #{muAwardsRepresentativePapers}, </if>
+			<if test="muContribution != null">`mu_contribution` = #{muContribution}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="proId != null">`pro_id` = #{proId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_team_main_users where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_team_main_users where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

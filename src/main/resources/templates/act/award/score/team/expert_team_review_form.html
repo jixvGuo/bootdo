@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="ui bottom attached segment">
+    <h2 class="ui center aligned header">专家评审意见表</h2>
+    <table class="ui celled table">
+        <tbody>
+        <tr>
+            <td style="text-align:center;width:16%">团队名称</td>
+            <td style="text-align:center;width:48%" colspan="3" th:text="${teamInfo.teamName}"></td>
+            <td style="text-align:center;width:16%">申报单位</td>
+            <td style="text-align:center;width:16%" th:text="${teamInfo.enterpriseName}"></td>
+        </tr>
+        <tr style="height:53px">
+            <td style="text-align:center;vertical-align:middle;width:16%">申报类型</td>
+            <td style="text-align:center;vertical-align:middle;width:16%">先进团队</td>
+            <td style="text-align:center;vertical-align:middle;width:16%">初评专业组</td>
+            <td style="text-align:center;vertical-align:middle;width:16%" th:text="${teamInfo.researchDirection}"></td>
+            <td style="text-align:center;vertical-align:middle;width:16%">是否推荐</td>
+            <td style="text-align:center;vertical-align:middle;width:16%" th:text="${proScoreInfo.opinionLevel}"></td>
+        </tr>
+        <tr>
+            <td style="width:16%;height:722px" colspan="6">专家评审意见：
+                 <p th:text="${proScoreInfo.opinionText}"></p>
+                <div style="text-align:right;padding-bottom:10px;"><img src="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${#dates.format(proScoreInfo.created,'yyyy年MM月dd日')}"></span></div>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
+
+<div th:include="include :: footer"></div>
+
+<script>
+    $(function(){$(".full-height-scroll").slimScroll({height:"100%"})});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+    <a href="#" class="active item">列表 </a>
+    <a th:if="${isEdit}" th:href="@{/chengguo_team/base_info_add(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">新增 </a>
+<!--
+    <a th:href="@{/chengguo_team/base_info_print(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">打印 </a>
+-->
+</div>
+<div class="ui bottom attached segment">
+    <table class="ui table">
+        <thead>
+        <th></th>
+        <th>团队名称</th>
+        <th>研究方向</th>
+        <th>团队带头人</th>
+        <th>主要支持单位</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="t:$团队主要的完成人/排名{teamInfoList}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.teamName}"></td>
+            <td th:text="${t.researchDirection}"></td>
+            <td th:text="${t.leader}"></td>
+            <td th:text="${t.mainSupportCompany}"></td>
+            <td>
+                <a th:href="@{/chengguo_team/base_info_add(id=${t.id},isUpdate='yes',title=${btnUpdateStr},proId=${proId},taskId=${taskId},applyId=${applyId})}" class="ui teal mini basic button" th:text="${btnUpdateStr}"></a>
+                <a th:if="${isEdit}" href="#" th:onclick= "'javascript:deleteTeamInfo(\''+${t.id}+'\',\''+${t.teamName}+'\')'" class="ui teal mini basic button">删除</a>
+<!--
+                <a th:href="@{/chengguo_team/base_info_print(id=${t.id},proId=${proId},taskId=${taskId},applyId=${applyId})}" class="ui teal mini basic button">打印</a>
+-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:include="include::footer"></div>
+</body>
+<script>
+    function deleteTeamInfo(id,teamName) {
+        parent.layer.confirm('是否删除"'+teamName +'"?', {
+            btn: ['确定', '取消'] //可以无限个按钮
+        }, function(index, layero){
+            //按钮【按钮一】的回调
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : "/chengguo_team/base_info_del",
+                data : {id:id},// 你的formid
+                async : false,
+                error : function(request) {
+                    parent.layer.alert("Connection error");
+                },
+                success : function(data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+        }, function(index){
+            //按钮【按钮二】的回调
+
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.petroleum_engineering_award.dao.OilAwardUnitInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardUnitInfoDO">
+		select `id`,`unit_type`,`full_unit_name`,`mailing_address_postal_code`,`contact_person_tel_number`,`name_position_number_project`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated`,apply_info_id from ass_oil_award_unit_info where id = #{value}
+	</select>
+
+	<select id="getByProId" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardUnitInfoDO">
+		select `id`,`unit_type`,`full_unit_name`,`mailing_address_postal_code`,`contact_person_tel_number`,`name_position_number_project`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated`,apply_info_id from ass_oil_award_unit_info     where pro_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardUnitInfoDO">
+		select `id`,`unit_type`,`full_unit_name`,`mailing_address_postal_code`,`contact_person_tel_number`,`name_position_number_project`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`created`,`updated`,apply_info_id from ass_oil_award_unit_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="unitType != null and unitType != ''"> and unit_type = #{unitType} </if>
+		  		  <if test="fullUnitName != null and fullUnitName != ''"> and full_unit_name = #{fullUnitName} </if>
+		  		  <if test="mailingAddressPostalCode != null and mailingAddressPostalCode != ''"> and mailing_address_postal_code = #{mailingAddressPostalCode} </if>
+		  		  <if test="contactPersonTelNumber != null and contactPersonTelNumber != ''"> and contact_person_tel_number = #{contactPersonTelNumber} </if>
+		  		  <if test="namePositionNumberProject != null and namePositionNumberProject != ''"> and name_position_number_project = #{namePositionNumberProject} </if>
+			      <if test="applyInfoId != null and applyInfoId != ''"> and apply_info_id = #{applyInfoId} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_oil_award_unit_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="unitType != null and unitType != ''"> and unit_type = #{unitType} </if>
+		  		  <if test="fullUnitName != null and fullUnitName != ''"> and full_unit_name = #{fullUnitName} </if>
+		  		  <if test="mailingAddressPostalCode != null and mailingAddressPostalCode != ''"> and mailing_address_postal_code = #{mailingAddressPostalCode} </if>
+		  		  <if test="contactPersonTelNumber != null and contactPersonTelNumber != ''"> and contact_person_tel_number = #{contactPersonTelNumber} </if>
+		  		  <if test="namePositionNumberProject != null and namePositionNumberProject != ''"> and name_position_number_project = #{namePositionNumberProject} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardUnitInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_oil_award_unit_info
+		(
+			`unit_type`,
+			`full_unit_name`, 
+			`mailing_address_postal_code`, 
+			`contact_person_tel_number`, 
+			`name_position_number_project`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`, 
+			`created`, 
+			`updated`,
+			apply_info_id
+		)
+		values
+		(
+			#{unitType},
+			#{fullUnitName}, 
+			#{mailingAddressPostalCode}, 
+			#{contactPersonTelNumber}, 
+			#{namePositionNumberProject}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}, 
+			now(),
+			#{updated},
+		    #{applyInfoId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.petroleum_engineering_award.domain.OilAwardUnitInfoDO">
+		update ass_oil_award_unit_info 
+		<set>
+			<if test="unitType != null">`unit_type` = #{unitType}, </if>
+			<if test="fullUnitName != null">`full_unit_name` = #{fullUnitName}, </if>
+			<if test="mailingAddressPostalCode != null">`mailing_address_postal_code` = #{mailingAddressPostalCode}, </if>
+			<if test="contactPersonTelNumber != null">`contact_person_tel_number` = #{contactPersonTelNumber}, </if>
+			<if test="namePositionNumberProject != null">`name_position_number_project` = #{namePositionNumberProject}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_oil_award_unit_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_oil_award_unit_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

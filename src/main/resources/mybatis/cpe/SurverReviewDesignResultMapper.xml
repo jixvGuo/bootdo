@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverReviewDesignResultDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverReviewDesignResultDO">
+		select `id`,`num_copies`,`apply_unit_is_bear`,`bureau_is_first_award`,`superior_is_opionion`,`use_time_is_cert`,`technology_is_start`,`file_is_approval`,`investment_is_beyond`,`design_is_cert`,`unit_is_three_safe`,`user_list`,`local_gov_is_opinion`,`build_is_opinion`,`contract_is_cert`,`superior_is_cert`,`local_gov_is_cert`,`view_new_is_report`,`tech_file_is_check`,`pro_is_desc`,`apply_is_reason`,`main_economic_is_ok`,`main_technology_is_ok`,`new_technology_is_ok`,`general_layout_is_ok`,`workmanship_is_ok`,`equ_table_is_ok`,`workmanship_sys_is_ok`,`normal_general_layout_is_ok`,`high_general_layout_is_ok`,`structural_pic_is_ok`,`equ_pic_is_ok`,`surver_is_report`,`soft_list_is_ok`,`complete_is_cert`,`economic_is_ok`,`social_is_ok`,`env_is_ok`,`safe_is_ok`,`raw_material_is_ok`,`quality_is_ok`,`expend_is_ok`,`residue_is_ok`,`audio_is_need`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`review_result`
+		     ,`remarks`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated` from ass_surver_review_design_result where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverReviewDesignResultDO">
+		select cr.`id`,`num_copies`,`apply_unit_is_bear`,`bureau_is_first_award`,`superior_is_opionion`,`use_time_is_cert`,`technology_is_start`,`file_is_approval`,`investment_is_beyond`,`design_is_cert`,`unit_is_three_safe`,`user_list`,`local_gov_is_opinion`,`build_is_opinion`,`contract_is_cert`,`superior_is_cert`,`local_gov_is_cert`,`view_new_is_report`,`tech_file_is_check`,`pro_is_desc`,`apply_is_reason`,`main_economic_is_ok`,`main_technology_is_ok`,`new_technology_is_ok`,`general_layout_is_ok`,`workmanship_is_ok`,`equ_table_is_ok`,`workmanship_sys_is_ok`,`normal_general_layout_is_ok`,`high_general_layout_is_ok`,`structural_pic_is_ok`,`equ_pic_is_ok`,`surver_is_report`,`soft_list_is_ok`,`complete_is_cert`,`economic_is_ok`,`social_is_ok`,`env_is_ok`,`safe_is_ok`,`raw_material_is_ok`,`quality_is_ok`,`expend_is_ok`,`residue_is_ok`,`audio_is_need`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`review_result`
+		     ,cr.`remarks`,cr.`opt_uid`,cr.`task_id`,cr.`created`,cr.`updated`,
+		     pro.id pro_id,
+		     pro.major,
+		     pro.pro_code,
+		     pro.pro_sub_type,
+		     pro.pro_type,
+		     pro.chengguo pro_name,
+		     sd.name apply_company
+		   from boot_do.ass_award_enterprise_project pro
+		           JOIN
+		        sys_user su ON pro.create_uid = su.user_id
+		           JOIN
+		        sys_dept sd ON su.dept_id = sd.dept_id
+		           LEFT JOIN
+		        ass_surver_review_design_result cr ON cr.pro_id = pro.id
+        <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="applyUnitIsBear != null and applyUnitIsBear != ''"> and apply_unit_is_bear = #{applyUnitIsBear} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="useTimeIsCert != null and useTimeIsCert != ''"> and use_time_is_cert = #{useTimeIsCert} </if>
+		  		  <if test="technologyIsStart != null and technologyIsStart != ''"> and technology_is_start = #{technologyIsStart} </if>
+		  		  <if test="fileIsApproval != null and fileIsApproval != ''"> and file_is_approval = #{fileIsApproval} </if>
+		  		  <if test="investmentIsBeyond != null and investmentIsBeyond != ''"> and investment_is_beyond = #{investmentIsBeyond} </if>
+		  		  <if test="designIsCert != null and designIsCert != ''"> and design_is_cert = #{designIsCert} </if>
+		  		  <if test="unitIsThreeSafe != null and unitIsThreeSafe != ''"> and unit_is_three_safe = #{unitIsThreeSafe} </if>
+		  		  <if test="userList != null and userList != ''"> and user_list = #{userList} </if>
+		  		  <if test="localGovIsOpinion != null and localGovIsOpinion != ''"> and local_gov_is_opinion = #{localGovIsOpinion} </if>
+		  		  <if test="buildIsOpinion != null and buildIsOpinion != ''"> and build_is_opinion = #{buildIsOpinion} </if>
+		  		  <if test="contractIsCert != null and contractIsCert != ''"> and contract_is_cert = #{contractIsCert} </if>
+		  		  <if test="superiorIsCert != null and superiorIsCert != ''"> and superior_is_cert = #{superiorIsCert} </if>
+		  		  <if test="localGovIsCert != null and localGovIsCert != ''"> and local_gov_is_cert = #{localGovIsCert} </if>
+		  		  <if test="viewNewIsReport != null and viewNewIsReport != ''"> and view_new_is_report = #{viewNewIsReport} </if>
+		  		  <if test="techFileIsCheck != null and techFileIsCheck != ''"> and tech_file_is_check = #{techFileIsCheck} </if>
+		  		  <if test="proIsDesc != null and proIsDesc != ''"> and pro_is_desc = #{proIsDesc} </if>
+		  		  <if test="applyIsReason != null and applyIsReason != ''"> and apply_is_reason = #{applyIsReason} </if>
+		  		  <if test="mainEconomicIsOk != null and mainEconomicIsOk != ''"> and main_economic_is_ok = #{mainEconomicIsOk} </if>
+		  		  <if test="mainTechnologyIsOk != null and mainTechnologyIsOk != ''"> and main_technology_is_ok = #{mainTechnologyIsOk} </if>
+		  		  <if test="newTechnologyIsOk != null and newTechnologyIsOk != ''"> and new_technology_is_ok = #{newTechnologyIsOk} </if>
+		  		  <if test="generalLayoutIsOk != null and generalLayoutIsOk != ''"> and general_layout_is_ok = #{generalLayoutIsOk} </if>
+		  		  <if test="workmanshipIsOk != null and workmanshipIsOk != ''"> and workmanship_is_ok = #{workmanshipIsOk} </if>
+		  		  <if test="equTableIsOk != null and equTableIsOk != ''"> and equ_table_is_ok = #{equTableIsOk} </if>
+		  		  <if test="workmanshipSysIsOk != null and workmanshipSysIsOk != ''"> and workmanship_sys_is_ok = #{workmanshipSysIsOk} </if>
+		  		  <if test="normalGeneralLayoutIsOk != null and normalGeneralLayoutIsOk != ''"> and normal_general_layout_is_ok = #{normalGeneralLayoutIsOk} </if>
+		  		  <if test="highGeneralLayoutIsOk != null and highGeneralLayoutIsOk != ''"> and high_general_layout_is_ok = #{highGeneralLayoutIsOk} </if>
+		  		  <if test="structuralPicIsOk != null and structuralPicIsOk != ''"> and structural_pic_is_ok = #{structuralPicIsOk} </if>
+		  		  <if test="equPicIsOk != null and equPicIsOk != ''"> and equ_pic_is_ok = #{equPicIsOk} </if>
+		  		  <if test="surverIsReport != null and surverIsReport != ''"> and surver_is_report = #{surverIsReport} </if>
+		  		  <if test="softListIsOk != null and softListIsOk != ''"> and soft_list_is_ok = #{softListIsOk} </if>
+		  		  <if test="completeIsCert != null and completeIsCert != ''"> and complete_is_cert = #{completeIsCert} </if>
+		  		  <if test="economicIsOk != null and economicIsOk != ''"> and economic_is_ok = #{economicIsOk} </if>
+		  		  <if test="socialIsOk != null and socialIsOk != ''"> and social_is_ok = #{socialIsOk} </if>
+		  		  <if test="envIsOk != null and envIsOk != ''"> and env_is_ok = #{envIsOk} </if>
+		  		  <if test="safeIsOk != null and safeIsOk != ''"> and safe_is_ok = #{safeIsOk} </if>
+		  		  <if test="rawMaterialIsOk != null and rawMaterialIsOk != ''"> and raw_material_is_ok = #{rawMaterialIsOk} </if>
+		  		  <if test="qualityIsOk != null and qualityIsOk != ''"> and quality_is_ok = #{qualityIsOk} </if>
+		  		  <if test="expendIsOk != null and expendIsOk != ''"> and expend_is_ok = #{expendIsOk} </if>
+		  		  <if test="residueIsOk != null and residueIsOk != ''"> and residue_is_ok = #{residueIsOk} </if>
+		  		  <if test="audioIsNeed != null and audioIsNeed != ''"> and audio_is_need = #{audioIsNeed} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by cr.id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from boot_do.ass_award_enterprise_project pro
+		   JOIN
+		sys_user su ON pro.create_uid = su.user_id
+		   JOIN
+		sys_dept sd ON su.dept_id = sd.dept_id
+		   LEFT JOIN
+		ass_surver_review_design_result cr ON cr.pro_id = pro.id
+		 <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="applyUnitIsBear != null and applyUnitIsBear != ''"> and apply_unit_is_bear = #{applyUnitIsBear} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="useTimeIsCert != null and useTimeIsCert != ''"> and use_time_is_cert = #{useTimeIsCert} </if>
+		  		  <if test="technologyIsStart != null and technologyIsStart != ''"> and technology_is_start = #{technologyIsStart} </if>
+		  		  <if test="fileIsApproval != null and fileIsApproval != ''"> and file_is_approval = #{fileIsApproval} </if>
+		  		  <if test="investmentIsBeyond != null and investmentIsBeyond != ''"> and investment_is_beyond = #{investmentIsBeyond} </if>
+		  		  <if test="designIsCert != null and designIsCert != ''"> and design_is_cert = #{designIsCert} </if>
+		  		  <if test="unitIsThreeSafe != null and unitIsThreeSafe != ''"> and unit_is_three_safe = #{unitIsThreeSafe} </if>
+		  		  <if test="userList != null and userList != ''"> and user_list = #{userList} </if>
+		  		  <if test="localGovIsOpinion != null and localGovIsOpinion != ''"> and local_gov_is_opinion = #{localGovIsOpinion} </if>
+		  		  <if test="buildIsOpinion != null and buildIsOpinion != ''"> and build_is_opinion = #{buildIsOpinion} </if>
+		  		  <if test="contractIsCert != null and contractIsCert != ''"> and contract_is_cert = #{contractIsCert} </if>
+		  		  <if test="superiorIsCert != null and superiorIsCert != ''"> and superior_is_cert = #{superiorIsCert} </if>
+		  		  <if test="localGovIsCert != null and localGovIsCert != ''"> and local_gov_is_cert = #{localGovIsCert} </if>
+		  		  <if test="viewNewIsReport != null and viewNewIsReport != ''"> and view_new_is_report = #{viewNewIsReport} </if>
+		  		  <if test="techFileIsCheck != null and techFileIsCheck != ''"> and tech_file_is_check = #{techFileIsCheck} </if>
+		  		  <if test="proIsDesc != null and proIsDesc != ''"> and pro_is_desc = #{proIsDesc} </if>
+		  		  <if test="applyIsReason != null and applyIsReason != ''"> and apply_is_reason = #{applyIsReason} </if>
+		  		  <if test="mainEconomicIsOk != null and mainEconomicIsOk != ''"> and main_economic_is_ok = #{mainEconomicIsOk} </if>
+		  		  <if test="mainTechnologyIsOk != null and mainTechnologyIsOk != ''"> and main_technology_is_ok = #{mainTechnologyIsOk} </if>
+		  		  <if test="newTechnologyIsOk != null and newTechnologyIsOk != ''"> and new_technology_is_ok = #{newTechnologyIsOk} </if>
+		  		  <if test="generalLayoutIsOk != null and generalLayoutIsOk != ''"> and general_layout_is_ok = #{generalLayoutIsOk} </if>
+		  		  <if test="workmanshipIsOk != null and workmanshipIsOk != ''"> and workmanship_is_ok = #{workmanshipIsOk} </if>
+		  		  <if test="equTableIsOk != null and equTableIsOk != ''"> and equ_table_is_ok = #{equTableIsOk} </if>
+		  		  <if test="workmanshipSysIsOk != null and workmanshipSysIsOk != ''"> and workmanship_sys_is_ok = #{workmanshipSysIsOk} </if>
+		  		  <if test="normalGeneralLayoutIsOk != null and normalGeneralLayoutIsOk != ''"> and normal_general_layout_is_ok = #{normalGeneralLayoutIsOk} </if>
+		  		  <if test="highGeneralLayoutIsOk != null and highGeneralLayoutIsOk != ''"> and high_general_layout_is_ok = #{highGeneralLayoutIsOk} </if>
+		  		  <if test="structuralPicIsOk != null and structuralPicIsOk != ''"> and structural_pic_is_ok = #{structuralPicIsOk} </if>
+		  		  <if test="equPicIsOk != null and equPicIsOk != ''"> and equ_pic_is_ok = #{equPicIsOk} </if>
+		  		  <if test="surverIsReport != null and surverIsReport != ''"> and surver_is_report = #{surverIsReport} </if>
+		  		  <if test="softListIsOk != null and softListIsOk != ''"> and soft_list_is_ok = #{softListIsOk} </if>
+		  		  <if test="completeIsCert != null and completeIsCert != ''"> and complete_is_cert = #{completeIsCert} </if>
+		  		  <if test="economicIsOk != null and economicIsOk != ''"> and economic_is_ok = #{economicIsOk} </if>
+		  		  <if test="socialIsOk != null and socialIsOk != ''"> and social_is_ok = #{socialIsOk} </if>
+		  		  <if test="envIsOk != null and envIsOk != ''"> and env_is_ok = #{envIsOk} </if>
+		  		  <if test="safeIsOk != null and safeIsOk != ''"> and safe_is_ok = #{safeIsOk} </if>
+		  		  <if test="rawMaterialIsOk != null and rawMaterialIsOk != ''"> and raw_material_is_ok = #{rawMaterialIsOk} </if>
+		  		  <if test="qualityIsOk != null and qualityIsOk != ''"> and quality_is_ok = #{qualityIsOk} </if>
+		  		  <if test="expendIsOk != null and expendIsOk != ''"> and expend_is_ok = #{expendIsOk} </if>
+		  		  <if test="residueIsOk != null and residueIsOk != ''"> and residue_is_ok = #{residueIsOk} </if>
+		  		  <if test="audioIsNeed != null and audioIsNeed != ''"> and audio_is_need = #{audioIsNeed} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverReviewDesignResultDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_review_design_result
+		(
+			`num_copies`,
+			`apply_unit_is_bear`,
+			`bureau_is_first_award`,
+			`superior_is_opionion`,
+			`use_time_is_cert`,
+			`technology_is_start`,
+			`file_is_approval`,
+			`investment_is_beyond`,
+			`design_is_cert`,
+			`unit_is_three_safe`,
+			`user_list`,
+			`local_gov_is_opinion`,
+			`build_is_opinion`,
+			`contract_is_cert`,
+			`superior_is_cert`,
+			`local_gov_is_cert`,
+			`view_new_is_report`,
+			`tech_file_is_check`,
+			`pro_is_desc`,
+			`apply_is_reason`,
+			`main_economic_is_ok`,
+			`main_technology_is_ok`,
+			`new_technology_is_ok`,
+			`general_layout_is_ok`,
+			`workmanship_is_ok`,
+			`equ_table_is_ok`,
+			`workmanship_sys_is_ok`,
+			`normal_general_layout_is_ok`,
+			`high_general_layout_is_ok`,
+			`structural_pic_is_ok`,
+			`equ_pic_is_ok`,
+			`surver_is_report`,
+			`soft_list_is_ok`,
+			`complete_is_cert`,
+			`economic_is_ok`,
+			`social_is_ok`,
+			`env_is_ok`,
+			`safe_is_ok`,
+			`raw_material_is_ok`,
+			`quality_is_ok`,
+			`expend_is_ok`,
+			`residue_is_ok`,
+			`audio_is_need`,
+			`apply_source_question`,
+			`feedback_info`,
+			`pro_contact`,
+			`main_user`,
+			`review_result`,
+			`remarks`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`
+		)
+		values
+		(
+			#{numCopies},
+			#{applyUnitIsBear},
+			#{bureauIsFirstAward},
+			#{superiorIsOpionion},
+			#{useTimeIsCert},
+			#{technologyIsStart},
+			#{fileIsApproval},
+			#{investmentIsBeyond},
+			#{designIsCert},
+			#{unitIsThreeSafe},
+			#{userList},
+			#{localGovIsOpinion},
+			#{buildIsOpinion},
+			#{contractIsCert},
+			#{superiorIsCert},
+			#{localGovIsCert},
+			#{viewNewIsReport},
+			#{techFileIsCheck},
+			#{proIsDesc},
+			#{applyIsReason},
+			#{mainEconomicIsOk},
+			#{mainTechnologyIsOk},
+			#{newTechnologyIsOk},
+			#{generalLayoutIsOk},
+			#{workmanshipIsOk},
+			#{equTableIsOk},
+			#{workmanshipSysIsOk},
+			#{normalGeneralLayoutIsOk},
+			#{highGeneralLayoutIsOk},
+			#{structuralPicIsOk},
+			#{equPicIsOk},
+			#{surverIsReport},
+			#{softListIsOk},
+			#{completeIsCert},
+			#{economicIsOk},
+			#{socialIsOk},
+			#{envIsOk},
+			#{safeIsOk},
+			#{rawMaterialIsOk},
+			#{qualityIsOk},
+			#{expendIsOk},
+			#{residueIsOk},
+			#{audioIsNeed},
+			#{applySourceQuestion},
+			#{feedbackInfo},
+			#{proContact},
+			#{mainUser},
+			#{reviewResult},
+			#{remarks},
+			#{optUid},
+			#{proId},
+			#{taskId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverReviewDesignResultDO">
+		update ass_surver_review_design_result
+		<set>
+			<if test="numCopies != null">`num_copies` = #{numCopies}, </if>
+			<if test="applyUnitIsBear != null">`apply_unit_is_bear` = #{applyUnitIsBear}, </if>
+			<if test="bureauIsFirstAward != null">`bureau_is_first_award` = #{bureauIsFirstAward}, </if>
+			<if test="superiorIsOpionion != null">`superior_is_opionion` = #{superiorIsOpionion}, </if>
+			<if test="useTimeIsCert != null">`use_time_is_cert` = #{useTimeIsCert}, </if>
+			<if test="technologyIsStart != null">`technology_is_start` = #{technologyIsStart}, </if>
+			<if test="fileIsApproval != null">`file_is_approval` = #{fileIsApproval}, </if>
+			<if test="investmentIsBeyond != null">`investment_is_beyond` = #{investmentIsBeyond}, </if>
+			<if test="designIsCert != null">`design_is_cert` = #{designIsCert}, </if>
+			<if test="unitIsThreeSafe != null">`unit_is_three_safe` = #{unitIsThreeSafe}, </if>
+			<if test="userList != null">`user_list` = #{userList}, </if>
+			<if test="localGovIsOpinion != null">`local_gov_is_opinion` = #{localGovIsOpinion}, </if>
+			<if test="buildIsOpinion != null">`build_is_opinion` = #{buildIsOpinion}, </if>
+			<if test="contractIsCert != null">`contract_is_cert` = #{contractIsCert}, </if>
+			<if test="superiorIsCert != null">`superior_is_cert` = #{superiorIsCert}, </if>
+			<if test="localGovIsCert != null">`local_gov_is_cert` = #{localGovIsCert}, </if>
+			<if test="viewNewIsReport != null">`view_new_is_report` = #{viewNewIsReport}, </if>
+			<if test="techFileIsCheck != null">`tech_file_is_check` = #{techFileIsCheck}, </if>
+			<if test="proIsDesc != null">`pro_is_desc` = #{proIsDesc}, </if>
+			<if test="applyIsReason != null">`apply_is_reason` = #{applyIsReason}, </if>
+			<if test="mainEconomicIsOk != null">`main_economic_is_ok` = #{mainEconomicIsOk}, </if>
+			<if test="mainTechnologyIsOk != null">`main_technology_is_ok` = #{mainTechnologyIsOk}, </if>
+			<if test="newTechnologyIsOk != null">`new_technology_is_ok` = #{newTechnologyIsOk}, </if>
+			<if test="generalLayoutIsOk != null">`general_layout_is_ok` = #{generalLayoutIsOk}, </if>
+			<if test="workmanshipIsOk != null">`workmanship_is_ok` = #{workmanshipIsOk}, </if>
+			<if test="equTableIsOk != null">`equ_table_is_ok` = #{equTableIsOk}, </if>
+			<if test="workmanshipSysIsOk != null">`workmanship_sys_is_ok` = #{workmanshipSysIsOk}, </if>
+			<if test="normalGeneralLayoutIsOk != null">`normal_general_layout_is_ok` = #{normalGeneralLayoutIsOk}, </if>
+			<if test="highGeneralLayoutIsOk != null">`high_general_layout_is_ok` = #{highGeneralLayoutIsOk}, </if>
+			<if test="structuralPicIsOk != null">`structural_pic_is_ok` = #{structuralPicIsOk}, </if>
+			<if test="equPicIsOk != null">`equ_pic_is_ok` = #{equPicIsOk}, </if>
+			<if test="surverIsReport != null">`surver_is_report` = #{surverIsReport}, </if>
+			<if test="softListIsOk != null">`soft_list_is_ok` = #{softListIsOk}, </if>
+			<if test="completeIsCert != null">`complete_is_cert` = #{completeIsCert}, </if>
+			<if test="economicIsOk != null">`economic_is_ok` = #{economicIsOk}, </if>
+			<if test="socialIsOk != null">`social_is_ok` = #{socialIsOk}, </if>
+			<if test="envIsOk != null">`env_is_ok` = #{envIsOk}, </if>
+			<if test="safeIsOk != null">`safe_is_ok` = #{safeIsOk}, </if>
+			<if test="rawMaterialIsOk != null">`raw_material_is_ok` = #{rawMaterialIsOk}, </if>
+			<if test="qualityIsOk != null">`quality_is_ok` = #{qualityIsOk}, </if>
+			<if test="expendIsOk != null">`expend_is_ok` = #{expendIsOk}, </if>
+			<if test="residueIsOk != null">`residue_is_ok` = #{residueIsOk}, </if>
+			<if test="audioIsNeed != null">`audio_is_need` = #{audioIsNeed}, </if>
+			<if test="applySourceQuestion != null">`apply_source_question` = #{applySourceQuestion}, </if>
+			<if test="feedbackInfo != null">`feedback_info` = #{feedbackInfo}, </if>
+			<if test="proContact != null">`pro_contact` = #{proContact}, </if>
+			<if test="mainUser != null">`main_user` = #{mainUser}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_review_design_result where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_review_design_result where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

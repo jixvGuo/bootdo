@@ -1,0 +1,480 @@
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<link href="/css/layui.css" th:href="@{/css/layui.css}" rel="stylesheet">
+<style>
+    .validateFileCheckbox{
+        float: right;
+        margin-right: 55px;
+    }
+    .validateExtFormTitle{
+        width: 150px;
+    }
+    .validateExtFormInput{
+        width: 94%;
+    }
+    .validateExtFormTxt{
+        padding-top: 10px;
+    }
+</style>
+<body class="gray-bg">
+    <div class="animated fadeInRight">
+        <input type="hidden" id="proId" name="proId" th:value="${proId}" />
+        <input type="hidden" id="scienceScoreRst" th:value="${scoreInfo.scienceScore}"/>
+        <input type="hidden" id="teamScoreRst" th:value="${scoreInfo.teamScore}"/>
+        <input type="hidden" id="personalScoreRst" th:value="${scoreInfo.personalScore}"/>
+        <div class="row">
+            <div class="">
+                <ul class="nav nav-tabs">
+                    <li class="active" th:if="${proInfo.rstScienceValiFile == ''}"><a data-toggle="tab" href="#technology">科技进步奖材料评分标准</a>
+                    </li>
+                    <li class="" th:if="${proInfo.rstTuanduiValiFile == ''}"><a data-toggle="tab" href="#technology1">科技创新团队材料评分标准</a>
+                    </li>
+                    <li class="" th:if="${proInfo.rstPersonalValiFile == ''}"><a data-toggle="tab" href="#technology2">先进个人材料评分标准</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+
+                    <div id="technology" class="tab-pane active">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                    <div class="ibox-title">
+                                        <h5>科技进步奖申报材料评分标准</h5>
+                                    </div>
+                                        <div class="ibox-content">
+                                            <p>注：1、三项指标的六个考核内容中，每一个内容设3~4档，如果不够最低档视为“0”分；</p>
+                                            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp2、知识产权要查看扫描件；</p>
+                                            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp3、水平及创新参考鉴定意见；</p>
+                                            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp4、效益参考用户报告等；</p>
+                                            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp5、一般特等奖为95分以上，一等奖为90分以上，二等奖为90~75分，三等奖为75~60；</p>
+                                            <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp6、获奖比例控制原则：特等和一等奖不大于15%，二等奖不大于20%，不评或缓评不小于10%。</p>
+
+                                            <form method="post" class="form-horizontal">
+                                                <table class="table table-bordered" id="science_score">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td colspan="3" style="text-align:center;width:90%">评价指标</td>
+                                                        <td style="text-align:center">分值</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:10%;vertical-align:middle" rowspan="10">技术指标（42分）</td>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="4">1、技术先进程度（15分）</td>
+                                                        <td>国际领先</td>
+                                                        <td style="text-align:center"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>国际先进</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_adv_gadv}" name="tech_adv_gadv" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>国内领先</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_adv_nfirst}" name="tech_adv_nfirst" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>国内先进</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_adv_nadv}" name="tech_adv_nadv" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="3">2、创新程度（14分）</td>
+                                                        <td>在原理、结构、技术特征方面属国内首创</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_inno_gfirst}" name="tech_inno_gfirst" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>在原理、结构、技术特征方面属本企业首创</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_inno_efirst}" name="tech_inno_efirst" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>创新部分较少</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_inno_less}" name="tech_inno_less" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="3">3、难易与复杂程度（13分）</td>
+                                                        <td>技术复杂、难度大</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_easy_hard}" name="tech_easy_hard" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>技术不复杂，有一定难度</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_easy_ok}" name="tech_easy_ok" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>技术属于模仿，难度一般</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${tech_easy_normal}" name="tech_easy_normal" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:10%;vertical-align:middle" rowspan="4">知识产权（8分）</td>
+                                                        <td style="width:20%;vertical-align:middle">发明专利</td>
+                                                        <td>两项以上</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${know_create_more}" name="know_create_more" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>发明专利</td>
+                                                        <td>有</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${know_create_have}" name="know_create_have" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>实用新型专利</td>
+                                                        <td>有</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${know_use_have}" name="know_use_have" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>软件著作权</td>
+                                                        <td>有</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${know_write_have}" name="know_write_have" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:10%;vertical-align:middle" rowspan="6">经济指标（30分）</td>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="3">4、经济 效益（20分）</td>
+                                                        <td>自应用起一年内实现利润20万元或在生产中应用效果很显著</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${econ_benefit_20}" name="econ_benefit_20" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>自应用起一年内实现利润5万元或在生产中应用效果显著</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${econ_benefit_5}" name="econ_benefit_5" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>自应用起一年内实现利润5万元以下或在生产中应用效果较显著</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${econ_benefit_5a}" name="econ_benefit_5a" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="3">5、社会 效益（10分）</td>
+                                                        <td>很显著</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${econ_social_best}" name="econ_social_best" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>显著</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${econ_social_good}" name="econ_social_good" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>较显著</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${econ_social_better}" name="econ_social_better" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:10%;vertical-align:middle" rowspan="6">综合指标（20分）</td>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="3">6、推广应用 前景（13分）</td>
+                                                        <td>很大</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${all_future_biggest}" name="all_future_biggest" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>较大</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${all_future_bigger}" name="all_future_bigger" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>一般</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${all_future_big}" name="all_future_big" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:20%;vertical-align:middle" rowspan="3">7、材料准备情况、表 达能力（7分）</td>
+                                                        <td>材料准备充分，表达能力强</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${all_ability_best}" name="all_ability_best" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>材料准备充分，表达能力较强</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${all_ability_better}" name="all_ability_better" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>材料准备不充分，表达能力一般</td>
+                                                        <td style="text-align:center"><input type="number" th:value="${all_ability_good}" name="all_ability_good" class="form-control" min="0" max="100" step="1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" style="width:90%">最高分合计</td>
+                                                        <td style="text-align:center"><span name="total" th:text="${scoreInfo.scienceScore}"></span></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="hr-line-dashed"></div>
+                                                <div class="form-group" id="scienceForm" th:if="${science_score == null || science_score == false}">
+                                                    <div class="col-sm-4 col-sm-offset-2">
+                                                        <button class="btn btn-primary" id="scienceScoreSaveBtn" type="button">保存内容</button>
+                                                        <button class="btn btn-white" type="submit">取消</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="technology1" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>科技创新先进团队申报材料评分标准</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <table class="table table-bordered" id="team_score">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;width:10%">序号</td>
+                                        <td colspan="2" style="text-align:center;width:80%">评价指标</td>
+                                        <td>分值</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align:middle" >1</td>
+                                        <td rowspan="3" style="vertical-align:middle">应在科研项目中稳定合作</td>
+                                        <td>﹥10年</td>
+                                        <td style="text-align:center"><input type="number" th:value="${cooperate_g10}" name="cooperate_g10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5~≦10年</td>
+                                        <td style="text-align:center"><input type="number" th:value="${cooperate_5and10}" name="cooperate_5and10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3~≦5年</td>
+                                        <td style="text-align:center"><input type="number" th:value="${cooperate_3and5}" name="cooperate_3and5" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align:middle">2</td>
+                                        <td rowspan="3" style="vertical-align:middle">担任本团队学术领头人的资历及在本团队研究领域的权威性</td>
+                                        <td>院士、国家或行业大师</td>
+                                        <td style="text-align:center"><input type="number" th:value="${leader_master}" name="leader_master" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>教授级高级工程师</td>
+                                        <td style="text-align:center"><input type="number" th:value="${leader_engineer}" name="leader_engineer" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>高级工程师</td>
+                                        <td style="text-align:center"><input type="number" th:value="${leader_senior}" name="leader_senior" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align:middle">3</td>
+                                        <td rowspan="3" style="vertical-align:middle">近三年获得科技创新成果</td>
+                                        <td>﹥10项</td>
+                                        <td style="text-align:center"><input type="number" th:value="${result_g10}" name="result_g10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5~≦10项</td>
+                                        <td style="text-align:center"><input type="number" th:value="${result_5and10}" name="result_5and10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3~≦5项</td>
+                                        <td style="text-align:center"><input type="number" th:value="${result_3and5}" name="result_3and5" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align:middle">4</td>
+                                        <td rowspan="3" style="vertical-align:middle">获得国家发明专利</td>
+                                        <td>﹥3件</td>
+                                        <td style="text-align:center"><input type="number" th:value="${patent_g3}" name="patent_g3" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2件</td>
+                                        <td style="text-align:center"><input th:value="${patent_e2}" name="patent_e2" type="number" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1件</td>
+                                        <td style="text-align:center"><input type="number" th:value="${patent_one}" name="patent_one" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align:middle">5</td>
+                                        <td rowspan="3" style="vertical-align:middle">获得国家实用新型专利</td>
+                                        <td>﹥10件</td>
+                                        <td style="text-align:center"><input type="number" th:value="${newp_g10}" name="newp_g10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5~≦10件</td>
+                                        <td style="text-align:center"><input type="number" th:value="${newp_5and10}" name="newp_5and10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3~≦5件</td>
+                                        <td style="text-align:center"><input type="number" th:value="${newp_3and5}" name="newp_3and5" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" style="vertical-align:middle">6</td>
+                                        <td rowspan="3" style="vertical-align:middle">科技成果转化率</td>
+                                        <td>﹥70%</td>
+                                        <td style="text-align:center"><input type="number" th:value="${transfer_g70}" name="transfer_g70" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>50~≦70%</td>
+                                        <td style="text-align:center"><input type="number" th:value="${transfer_50and70}" name="transfer_50and70" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>30~≦50%</td>
+                                        <td style="text-align:center"><input type="number" th:value="${transfer30and50}" name="transfer30and50" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">合计</td>
+                                        <td style="text-align:center"><span id="team_total" name="total"  th:text="${scoreInfo.teamScore}"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group" id="teamForm"  th:if="${team_score == null || team_score == false}">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" id="teamScoreSaveBtn" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="technology2" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <div class="col-sm-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>科技创新先进个人申报材料评分标准</h5>
+                                        </div>
+
+                                        <div class="ibox-content">
+                        <p>说明：1.每个评分单元以最高等级评分</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  2.知识产权部分发明专利和实用新型组合可根据情况结合评分标准适当打分。</p>
+                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  3.中奖率控制在50%以内。</p>
+                        <form method="post" class="form-horizontal">
+                            <table class="table table-bordered" id="personal_score">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;width:10%">序号</td>
+                                        <td style="text-align:center;width:10%">评价因素</td>
+                                        <td colspan="2" style="text-align:center;width:60%">评价标准</td>
+                                        <td style="text-align:center;width:10%">评分等级</td>
+                                        <td style="text-align:center;width:10%">分值</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">1</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">科技创新能力（30分）</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">主持和正在主持国家级科研课题</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">担任课题长<br>担任副课题长<br>担任研发骨干</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">26-30<br>21-25<br>16-20</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${science_guo_leader}" name="science_guo_leader" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">主持和正在主持省部级科研课题</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">担任课题长<br>担任副课题长<br>担任研发骨干</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">21-25<br>16-20<br>11-15</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${science_guo_deputy}" name="science_guo_deputy" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">主持和正在主持局级科研课题</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">担任课题长<br>担任副课题长<br>担任研发骨干</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">16-20<br>11-15<br>5-10</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${science_guo_user}" name="science_guo_user" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">2</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">获奖成果（30分）</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">国家级科技进步奖（含技术发明奖）主要贡献人</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">03</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${gain_guo_person}" name="gain_guo_person" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">行业（省部级）科技进步奖（含技术发明奖）主要贡献人</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">20</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${gain_sheng_person}" name="gain_sheng_person" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">局级科技进步奖（含技术发明奖）主要贡献人</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">10</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${gain_ju_person}" name="gain_ju_person" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">3</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">科技贡献（20分）</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">在本领域取得重大突破，创造重大经济效益</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">16-20</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${science_biggest}" name="science_biggest" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">在本领域取得较大突破，创造较大经济效益</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">11-15</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${science_bigger}" name="science_bigger" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">在本领域取得一定突破，创造一定经济效益</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">6-10</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${science_normal}" name="science_normal" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">4</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">知识产权（10）</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">发明专利3项及以上或者实用新型10项及以上</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">9-10</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${know_3and10}" name="know_3and10" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">发明专利1-2项及以上或者实用新型6-9项</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">6-8</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${know_2and9}" name="know_2and9" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="2">实用新型小于5项及以下</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">1-5</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${know_less_5}" name="know_less_5" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">5</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" rowspan="3">发表论著（10分）</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" rowspan="3">近3年发表论文情况（署名前三或独著）</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">1.在国际权威检索学术刊物上发表与本专业相关的论文或著作，国家标准或规范的主编人（主要起草人）</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">9-10</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${publish_3_guo}" name="publish_3_guo" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">2.在专业核心期刊上发表与本专业相关的论文或著作，行业或地方标准的主编人（主要起草人）</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">6-8</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${publish_3_major}" name="publish_3_major" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center">3.在公开发行的国家刊物上发表过与本专业相关的论文或著作</td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">1-5</td>
+                                        <td style="text-align:center;vertical-align:middle"><input type="number" th:value="${publish_3_nei}" name="publish_3_nei" class="form-control" min="0" max="100" step="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align:middle" colspan="5">合计</td>
+                                        <td style="vertical-align:middle;text-align:center" colspan="4"><span id="personal_total" name="total"  th:text="${scoreInfo.personalScore}"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group" id="personalForm"  th:if="${personal_score == null || personal_score == false}">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" id="personalScoreSaveBtn" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/js/demo/peity-demo.min.js"></script>
+    <script src="/js/layui.js"></script>
+    <script>
+        $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
+    </script>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/act/award/specialist_score_rule.js" ></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+</html>

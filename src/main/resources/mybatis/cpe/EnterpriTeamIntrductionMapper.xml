@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.EnterpriTeamIntrductionDao">
+
+    <select id="get" resultType="com.bootdo.cpe.domain.EnterpriTeamIntrductionDO">
+		select `id`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`create`,`team_des`,
+		 `team_build_info`,
+        `team_innovate`,
+        `team_social`,
+        `team_development`
+		 from ass_enterpri_team_intrduction where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.bootdo.cpe.domain.EnterpriTeamIntrductionDO">
+        select `id`,`pro_id`,`task_id`,`apply_id`,`opt_uid`,`create`,`team_des`,
+        `team_build_info`,
+        `team_innovate`,
+        `team_social`,
+        `team_development`
+        from ass_enterpri_team_intrduction
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="optUid != null and optUid != ''">and opt_uid = #{optUid}</if>
+            <if test="create != null and create != ''">and create = #{create}</if>
+            <if test="teamDes != null and teamDes != ''">and team_des = #{teamDes}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from ass_enterpri_team_intrduction
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="proId != null and proId != ''">and pro_id = #{proId}</if>
+            <if test="taskId != null and taskId != ''">and task_id = #{taskId}</if>
+            <if test="optUid != null and optUid != ''">and opt_uid = #{optUid}</if>
+            <if test="create != null and create != ''">and create = #{create}</if>
+            <if test="teamDes != null and teamDes != ''">and team_des = #{teamDes}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.cpe.domain.EnterpriTeamIntrductionDO" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into ass_enterpri_team_intrduction
+		(
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`opt_uid`, 
+			`create`, 
+			`team_des`,
+			 `team_build_info`,
+             `team_innovate`,
+             `team_social`,
+             `team_development`
+		)
+		values
+		(
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{optUid}, 
+			#{create}, 
+			#{teamDes},
+			#{teamBuildInfo},
+	        #{teamInnovate},
+	        #{teamSocial},
+	        #{teamDevelopment}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.cpe.domain.EnterpriTeamIntrductionDO">
+        update ass_enterpri_team_intrduction
+        <set>
+            <if test="proId != null">`pro_id` = #{proId},</if>
+            <if test="taskId != null">`task_id` = #{taskId},</if>
+            <if test="applyId != null">`apply_id` = #{applyId},</if>
+            <if test="optUid != null">`opt_uid` = #{optUid},</if>
+            <if test="create != null">`create` = #{create},</if>
+            <if test="teamDes != null">`team_des` = #{teamDes},</if>
+            <if test="teamBuildInfo != null">`team_build_info` = #{teamBuildInfo},</if>
+            <if test="teamInnovate != null">`team_innovate` = #{teamInnovate},</if>
+            <if test="teamSocial != null">`team_social` = #{teamSocial},</if>
+            <if test="teamDevelopment != null">`team_development` = #{teamDevelopment},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from ass_enterpri_team_intrduction where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from ass_enterpri_team_intrduction where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

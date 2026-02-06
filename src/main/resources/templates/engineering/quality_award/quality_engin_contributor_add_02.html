@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityAward/toEnginDescUpload(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">项目概况</a>
+    <a th:href="@{/enterpriseQualityAward/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">石油优质工程奖申报单</a>
+    <a th:href="@{/enterpriseQualityAward/toContributorList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="active item">突出贡献者名单</a>
+    <a th:href="@{/enterpriseQualityAward/toUploadFile(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+</div>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityAward/toContributorList(proId=${proId},taskId=${taskId},readonly=${readonly})}" class="item">列表 </a>
+    <a th:if="${readonly} eq null or ${readonly} ne 1" href="#" class="active item">新增 </a>
+    <a th:if="${tagName} ne null and ${tagName} ne ''" href="#" class="active item" th:text="${tagName}"></a>
+    <a th:href="@{/enterpriseQualityAward/toContributorPrint(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">打印 </a>
+</div>
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form  class="ui basic form" id="signupForm">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input name="id" th:value="${data.id}" type="hidden"/>
+            <input name="proId" th:value="${proId}" type="hidden">
+            <input name="taskId" th:value="${taskId}" type="hidden">
+            <input name="applyId" th:value="${applyId}" type="hidden">
+
+
+
+
+            <input name="type"  value="1" type="hidden">
+
+            <h4 class="ui red horizontal divider header">基本信息</h4>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>承建（参建）单位</label>
+                    <input type="text"  id="contractorsParticipants" th:value="${data.contractorsParticipants}"  name="contractorsParticipants" placeholder="承建（参建）单位" >
+                </div>
+                <div class="ui field">
+                    <label>姓名</label>
+                    <input type="text"  id="name"   name="name" placeholder="姓名" th:value="${data.name}" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>职务</label>
+                    <input type="text"   id="post"    name="post" placeholder="职务"  th:value="${data.post}" >
+                </div>
+                <div class="ui field">
+                    <label>工程建设中的作用</label>
+                    <input type="text"   id="affectProjectConstruction"  th:value="${data.affectProjectConstruction}"   name="affectProjectConstruction" placeholder="工程建设中的作用" >
+                </div>
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+
+                <div th:if="${data.id == null|| data.id == 0}" class="ui submit button " onclick="save()" type="submit">保存</div>
+
+                <div th:if="${data.id != null && data.id > 0}" class="ui submit button " onclick="update()" type="submit">更新</div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 详情页面 -->
+<div th:include="include::footer"></div>
+<script th:if="${data.id != null && data.id > 0}" type="text/javascript"
+        src="/js/appjs/act/contribution/edit.js"></script>
+<script th:if="${data.id == null || data.id == 0}" type="text/javascript"
+        src="/js/appjs/act/contribution/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+
+<script>
+    $('.ui.dropdown').dropdown();
+    $('.ui.radio.checkbox').checkbox();
+
+
+    $('.ui.form').form({
+        on:'blur',
+        fields :{
+            companyname: {
+                identifier  : 'companyname',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写承建（参建）单位'
+                    }
+                ]
+            },
+            name: {
+                identifier  : 'name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写姓名'
+                    }
+                ]
+            },
+            postname: {
+                identifier  : 'postname',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写职务'
+                    }
+                ]
+            },
+            effect: {
+                identifier  : 'effect',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '请填写工程建设中的作用'
+                    }
+                ]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

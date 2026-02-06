@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.AwardStyleValidatePersonDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.AwardStyleValidatePersonDO">
+		select `id`,`apply_company`,`apply_name`,`is_employment_relationship`,`is_morality`,`is_knowledge_right`,`is_science`,`is_paper`,`is_standard`,`is_other_honour`,`validate_result`,`validate_uid`,`pro_id`,`is_last_validate`,`reject_reason`,`created`,person_id,
+		(SELECT pro_group_name FROM boot_do.ass_award_enterprise_project where id = vp.pro_id limit 1) proGroupName
+		from ass_award_style_validate_person vp where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.AwardStyleValidatePersonDO">
+		select `id`,`apply_company`,`apply_name`,`is_employment_relationship`,`is_morality`,`is_knowledge_right`,`is_science`,`is_paper`,`is_standard`,`is_other_honour`,`validate_result`,`validate_uid`,`pro_id`,`is_last_validate`,`reject_reason`,`created`,person_id,
+		(SELECT pro_group_name FROM boot_do.ass_award_enterprise_project where id = vp.pro_id limit 1) proGroupName
+		from ass_award_style_validate_person vp
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyName != null and applyName != ''"> and apply_name = #{applyName} </if>
+		  		  <if test="isEmploymentRelationship != null and isEmploymentRelationship != ''"> and is_employment_relationship = #{isEmploymentRelationship} </if>
+		  		  <if test="isMorality != null and isMorality != ''"> and is_morality = #{isMorality} </if>
+		  		  <if test="isKnowledgeRight != null and isKnowledgeRight != ''"> and is_knowledge_right = #{isKnowledgeRight} </if>
+		  		  <if test="isScience != null and isScience != ''"> and is_science = #{isScience} </if>
+		  		  <if test="isPaper != null and isPaper != ''"> and is_paper = #{isPaper} </if>
+		  		  <if test="isStandard != null and isStandard != ''"> and is_standard = #{isStandard} </if>
+		  		  <if test="isOtherHonour != null and isOtherHonour != ''"> and is_other_honour = #{isOtherHonour} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="validateUid != null and validateUid != ''"> and validate_uid = #{validateUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="isLastValidate != null and isLastValidate != ''"> and is_last_validate = #{isLastValidate} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_award_style_validate_person
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyName != null and applyName != ''"> and apply_name = #{applyName} </if>
+		  		  <if test="isEmploymentRelationship != null and isEmploymentRelationship != ''"> and is_employment_relationship = #{isEmploymentRelationship} </if>
+		  		  <if test="isMorality != null and isMorality != ''"> and is_morality = #{isMorality} </if>
+		  		  <if test="isKnowledgeRight != null and isKnowledgeRight != ''"> and is_knowledge_right = #{isKnowledgeRight} </if>
+		  		  <if test="isScience != null and isScience != ''"> and is_science = #{isScience} </if>
+		  		  <if test="isPaper != null and isPaper != ''"> and is_paper = #{isPaper} </if>
+		  		  <if test="isStandard != null and isStandard != ''"> and is_standard = #{isStandard} </if>
+		  		  <if test="isOtherHonour != null and isOtherHonour != ''"> and is_other_honour = #{isOtherHonour} </if>
+		  		  <if test="validateResult != null and validateResult != ''"> and validate_result = #{validateResult} </if>
+		  		  <if test="validateUid != null and validateUid != ''"> and validate_uid = #{validateUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="isLastValidate != null and isLastValidate != ''"> and is_last_validate = #{isLastValidate} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.AwardStyleValidatePersonDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_award_style_validate_person
+		(
+			`apply_company`, 
+			`apply_name`, 
+			`is_employment_relationship`, 
+			`is_morality`, 
+			`is_knowledge_right`, 
+			`is_science`, 
+			`is_paper`, 
+			`is_standard`, 
+			`is_other_honour`, 
+			`validate_result`, 
+			`validate_uid`, 
+			`pro_id`, 
+			`is_last_validate`, 
+			`created`,
+			`reject_reason`,
+			person_id
+		)
+		values
+		(
+			#{applyCompany}, 
+			#{applyName}, 
+			#{isEmploymentRelationship}, 
+			#{isMorality}, 
+			#{isKnowledgeRight}, 
+			#{isScience}, 
+			#{isPaper}, 
+			#{isStandard}, 
+			#{isOtherHonour}, 
+			#{validateResult}, 
+			#{validateUid}, 
+			#{proId}, 
+			#{isLastValidate}, 
+			now(),
+			#{rejectReason},
+			#{personId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.AwardStyleValidatePersonDO">
+		update ass_award_style_validate_person 
+		<set>
+			<if test="applyCompany != null">`apply_company` = #{applyCompany}, </if>
+			<if test="applyName != null">`apply_name` = #{applyName}, </if>
+			<if test="isEmploymentRelationship != null">`is_employment_relationship` = #{isEmploymentRelationship}, </if>
+			<if test="isMorality != null">`is_morality` = #{isMorality}, </if>
+			<if test="isKnowledgeRight != null">`is_knowledge_right` = #{isKnowledgeRight}, </if>
+			<if test="isScience != null">`is_science` = #{isScience}, </if>
+			<if test="isPaper != null">`is_paper` = #{isPaper}, </if>
+			<if test="isStandard != null">`is_standard` = #{isStandard}, </if>
+			<if test="isOtherHonour != null">`is_other_honour` = #{isOtherHonour}, </if>
+			<if test="validateResult != null">`validate_result` = #{validateResult}, </if>
+			<if test="validateUid != null">`validate_uid` = #{validateUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="isLastValidate != null">`is_last_validate` = #{isLastValidate}, </if>
+			<if test="created != null">`created` = #{created}</if>
+			<if test="rejectReason != null and rejectReason != ''">`reject_reason` = #{rejectReason}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="cleanLastValidate">
+		update ass_award_style_validate_person set is_last_validate = 0 where pro_id = #{proId} and person_id = #{personId}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_award_style_validate_person where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_award_style_validate_person where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

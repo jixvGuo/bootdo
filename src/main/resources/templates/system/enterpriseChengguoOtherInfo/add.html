@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="proId" name="proId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要科技创新：</label>
+								<div class="col-sm-8">
+									<input id="mainTechnologicalInnovation" name="mainTechnologicalInnovation" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">验收类文件-文件填写：</label>
+								<div class="col-sm-8">
+									<input id="checkFileInfo" name="checkFileInfo" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">验收类文件-验收报告：</label>
+								<div class="col-sm-8">
+									<input id="checkReport" name="checkReport" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">验收类文件-验收意见：</label>
+								<div class="col-sm-8">
+									<input id="checkOpinion" name="checkOpinion" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">验收类文件-各种验收结论：</label>
+								<div class="col-sm-8">
+									<input id="checkConclusion" name="checkConclusion" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">验收类文件-其他证明材料：</label>
+								<div class="col-sm-8">
+									<input id="checkEvidence" name="checkEvidence" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第三方资料：</label>
+								<div class="col-sm-8">
+									<input id="thirdData" name="thirdData" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">特殊成果资料：</label>
+								<div class="col-sm-8">
+									<input id="specialData" name="specialData" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权类别：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyType" name="intellectualPropertyType" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权名称：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyName" name="intellectualPropertyName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-国家(地区)：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyCountry" name="intellectualPropertyCountry" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-授权号：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyAuthNum" name="intellectualPropertyAuthNum" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-授权日期：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyAuthDate" name="intellectualPropertyAuthDate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-证书编号：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyCertificateNum" name="intellectualPropertyCertificateNum" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-权利人：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyRightUser" name="intellectualPropertyRightUser" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-发明人：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyInventor" name="intellectualPropertyInventor" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权-专利有效状态：</label>
+								<div class="col-sm-8">
+									<input id="intellectualPropertyEffectiveStat" name="intellectualPropertyEffectiveStat" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果标准：</label>
+								<div class="col-sm-8">
+									<input id="chengguoStandard" name="chengguoStandard" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">第三方评价意见及证书：</label>
+								<div class="col-sm-8">
+									<input id="thirdOpinion" name="thirdOpinion" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-单位名称：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompanyName" name="mainEnterpriseCompanyName" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-主要完成人姓名：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleter" name="mainEnterpriseCompleter" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-性别：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterGender" name="mainEnterpriseCompleterGender" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-排名：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterSort" name="mainEnterpriseCompleterSort" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-出生年月：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterBirth" name="mainEnterpriseCompleterBirth" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-身份证号：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterId" name="mainEnterpriseCompleterId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-民族：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterNation" name="mainEnterpriseCompleterNation" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-国籍：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterCountry" name="mainEnterpriseCompleterCountry" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-学历：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterEducation" name="mainEnterpriseCompleterEducation" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-行政职务：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterAdministrativePost" name="mainEnterpriseCompleterAdministrativePost" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">技术职称：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterTechnicalTitle" name="mainEnterpriseCompleterTechnicalTitle" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-从事的专业：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterMajorWork" name="mainEnterpriseCompleterMajorWork" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-所学的专业：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterMajorStudy" name="mainEnterpriseCompleterMajorStudy" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-办公电话：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterWorkTelphone" name="mainEnterpriseCompleterWorkTelphone" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-手机：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterWorkMobile" name="mainEnterpriseCompleterWorkMobile" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-电子邮箱：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterWorkEmail" name="mainEnterpriseCompleterWorkEmail" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">通讯地址：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterWorkAddress" name="mainEnterpriseCompleterWorkAddress" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">邮编：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterWorkAddrCode" name="mainEnterpriseCompleterWorkAddrCode" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-参加本项目的起止时间：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterPartakeTime" name="mainEnterpriseCompleterPartakeTime" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-主要完成人对本项目的学术贡献 ：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterAcademicContribution" name="mainEnterpriseCompleterAcademicContribution" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">主要完成单位及主要完成人情况-主要完成单位对本项目科技创新和推广应用情况的贡献 ：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseContribution" name="mainEnterpriseContribution" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">已获奖项：</label>
+								<div class="col-sm-8">
+									<input id="mainEnterpriseCompleterAwards" name="mainEnterpriseCompleterAwards" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果基本情况-申报书：</label>
+								<div class="col-sm-8">
+									<input id="chengguoBaseDeclaration" name="chengguoBaseDeclaration" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建日期：</label>
+								<div class="col-sm-8">
+									<input id="created" name="created" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/enterpriseChengguoOtherInfo/add.js">
+	</script>
+</body>
+</html>

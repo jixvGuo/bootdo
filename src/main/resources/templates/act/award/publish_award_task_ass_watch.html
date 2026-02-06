@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+						<input id="cid" name="cid" type="hidden">
+						<div class="form-group">
+							<label class="col-sm-1 control-label">标题：</label>
+							<div class="col-sm-4">
+								<input id="taskName" placeholder="标题" readonly th:value="${awardTask.taskName}"  name="taskName" class="form-control" type="text">
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">协会联系人：</label>
+							<div class="col-sm-4">
+
+
+								<input  class="form-control layer-date" readonly  th:value="${awardTask.associationUserName}" >
+
+								<!--<span data-visible="false" class="help-block m-b-none"><i class="fa fa-info-circle"></i> 这里从协会人员库里选择负责人</span>-->
+							</div>
+
+							<label class="col-sm-1 control-label">任务申报阶段：</label>
+							<div class="col-sm-4">
+								<input placeholder="开始日期" disabled="disabled" class="form-control layer-date" readonly  th:value="${awardTask.applyStartDate}"  id="task_start_time">
+								<input placeholder="结束日期" disabled="disabled" class="form-control layer-date" readonly th:value="${awardTask.applyEndDate}" id="task_end_time">
+							</div>
+
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-1 control-label">形式审查阶段：</label>
+							<div class="col-sm-4">
+								<input placeholder="开始日期" disabled="disabled" class="form-control layer-date" readonly  th:value="${awardTask.checkStartTime}" id="check_start_time">
+								<input placeholder="结束日期" disabled="disabled" class="form-control layer-date" readonly  th:value="${awardTask.checkEndTime}" id="check_end_time">
+							</div>
+							<label th:if="${awardTask.awardId != '3'}" class="col-sm-1 control-label">专家审查阶段：</label>
+							<div th:if="${awardTask.awardId != '3'}" class="col-sm-4">
+								<input placeholder="开始日期" disabled="disabled" class="form-control layer-date" readonly  th:value="${awardTask.expertStartTime}" id="expert_start_time">
+								<input placeholder="结束日期" disabled="disabled" class="form-control layer-date" readonly th:value="${awardTask.expertEndTime}" id="expert_end_time">
+							</div>
+						</div>
+
+						<div th:if="${awardTask.awardId eq '3' or awardTask.awardId eq '5'}" class="form-group">
+							<label class="col-sm-1 control-label">第一阶段专家评审：</label>
+							<div class="col-sm-4">
+								<input placeholder="开始日期" disabled="disabled" class="form-control layer-date" readonly  th:value="${awardTask.expertStartTime}" id="expert_start_time">
+								<input placeholder="结束日期" disabled="disabled" class="form-control layer-date" readonly th:value="${awardTask.expertEndTime}" id="expert_end_time">
+							</div>
+							<label class="col-sm-1 control-label">第二阶段专家评审：</label>
+							<div class="col-sm-4">
+								<input placeholder="开始日期" disabled="disabled" class="form-control layer-date" readonly  th:value="${awardTask.expertStartTimeSecond}" id="expert_start_time_second">
+								<input placeholder="结束日期" disabled="disabled" class="form-control layer-date" readonly th:value="${awardTask.expertEndTimeSecond}" id="expert_end_time_second">
+							</div>
+						</div>
+
+						<input type="hidden" id="fileId" th:value="${awardTask.fileId}" />
+						<input type="hidden" id="fileUrl" th:value="${awardTask.fileUrl}" />
+
+
+						<!--"fileId":"134,","fileUrl":"/files/879228c3-7dc5-4719-bcf4-628ce4ea1685.docx"-->
+						<div class="form-group">
+							<input id="content" name="content" type="hidden"> <label
+								class="col-sm-1 control-label">评审要求：</label>
+							<div class="col-sm-8">
+								<textarea id="editor" disabled="disabled" placeholder="这里输入内容" readonly th:text="${awardTask.validateRequire}"></textarea>
+							</div>
+						</div>
+
+						<div id="task_file" style="display:block; margin-top: 20px" class="updocss_b col-sm-9">
+							<!--<div class="ibox float-e-margins">-->
+								<!--<div class="ibox-content">-->
+									<!--<button type="button" id="btn-blockdd" class="btn btn-primary" fileType="task_file">-->
+										<!--上传文件-->
+									<!--</button>-->
+								<!--</div>-->
+							<!--</div>-->
+							<div class="row">
+								<div class="col-sm-12" id="upload_div">
+
+									<div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'task_file'"
+										 class="file-box">
+										<div class="file">
+											<a href="javascript:void(0)"
+											   th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+												<span class="corner"></span>
+
+												<div class="icon">
+													<i class="fa fa-file"></i>
+												</div>
+												<div class="file-name">
+													<span th:text="${doc.fileName}"/>
+													<br/>
+													<small>添加时间：<span
+															th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span>
+													</small>
+												</div>
+											</a>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<!--<div class="form-group">-->
+							<!--<label class="col-sm-1 control-label"></label>-->
+							<!--<div class="col-sm-8">-->
+								<!--&lt;!&ndash;<button class="btn btn-primary btn-xs" style="width:100px"&ndash;&gt;-->
+										<!--&lt;!&ndash;type="button" id="test1" onclick="document.getElementById('upload').click()">上传文件</button>&ndash;&gt;-->
+
+								<!--&lt;!&ndash;<input type="file" style="display: none;" id="upload">&ndash;&gt;-->
+								<!--<button class="btn btn-primary btn-xs" style="width:100px" type="button">查看</button>-->
+								<!--<button class="btn btn-primary btn-xs" style="width:100px" type="button">下载</button>-->
+								<!--<button class="btn btn-primary btn-xs" style="width:100px" type="button">批量下载</button>-->
+								<!--<button class="btn btn-primary btn-xs" style="width:100px" type="button">删除</button>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="ibox-content">-->
+							<!--<div id="upFileInfo"></div>-->
+
+
+						<!--</div>-->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    $(".i-checks").iCheck({ checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green", });
+    var editor = new Simditor({ textarea: $("#editor"), defaultImage: "img/a9.jpg" })
+
+    // var task_start_time={elem:"#task_start_time",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){end.min=datas;end.start=datas}};
+	//
+    // var task_end_time={elem:"#task_end_time",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){start.max=datas}};laydate(task_start_time);laydate(task_end_time);
+	//
+    // var check_start_time={elem:"#check_start_time",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){end.min=datas;end.start=datas}};
+	//
+    // var check_end_time={elem:"#check_end_time",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){start.max=datas}};laydate(check_start_time);laydate(check_end_time);
+	//
+    // var expert_start_time={elem:"#expert_start_time",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){end.min=datas;end.start=datas}};
+	//
+    // var expert_end_time={elem:"#expert_end_time",format:"YYYY/MM/DD hh:mm:ss",min:laydate.now(),max:"2099-06-16 23:59:59",istime:true,istoday:false,choose:function(datas){start.max=datas}};laydate(expert_start_time);laydate(expert_end_time);
+</script>
+
+<script type="text/javascript" src="/js/appjs/act/award/publish_award_task_ass_watch.js?v=1.0">
+</script>
+
+
+
+<script type="text/javascript">
+
+    function toViewUploadDoc(fileName,url) {
+        parent.layer.open({
+            type : 2,
+            title : fileName,
+            maxmin : true,
+            shadeClose : false, // 点击遮罩关闭层
+            area : [ '800px', '520px' ],
+            content : url  // iframe的url
+        });
+    }
+</script>
+</body>
+</html>

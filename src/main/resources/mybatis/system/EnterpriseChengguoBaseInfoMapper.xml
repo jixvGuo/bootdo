@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriseChengguoBaseInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriseChengguoBaseInfoDO">
+		select `id`,`pro_id`,`chengguo_name`,`apply_enterprise`,`master_complete_enterprise`,`main_complete_users`,`major`,`subject_type`,`concat_user`,`concat_work_position`,`concat_tel`,`concat_phone`,`concat_department`,`concat_fax`,`concat_code`,`concat_addr`,`concat_email`,`task_source`,`plan_detal_name_code`,`start_time`,`end_time`,`comment`,`comment_reult`,`reiew_department`,`security_level`,`security_time_len`,`sure_security_date`,`sure_security_department`,`department_award_info`,`enterprise_opinion`,`apply_book_content`,`created` from ass_enterprise_chengguo_base_info where id = #{value}
+	</select>
+
+
+	<select id="getByProId" resultType="com.bootdo.system.domain.EnterpriseChengguoBaseInfoDO">
+		select `id`,`pro_id`,`chengguo_name`,`apply_enterprise`,`master_complete_enterprise`,`main_complete_users`,`major`,`subject_type`,`concat_user`,`concat_work_position`,`concat_tel`,`concat_phone`,`concat_department`,`concat_fax`,`concat_code`,`concat_addr`,`concat_email`,`task_source`,`plan_detal_name_code`,`start_time`,`end_time`,`comment`,`comment_reult`,`reiew_department`,`security_level`,`security_time_len`,`sure_security_date`,`sure_security_department`,`department_award_info`,`enterprise_opinion`,`apply_book_content`,`created` from ass_enterprise_chengguo_base_info where pro_id = #{value}
+	</select>
+
+
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriseChengguoBaseInfoDO">
+		select pi.`id`,pi.`pro_id`,pi.`chengguo_name`,pi.`apply_enterprise`,pi.`master_complete_enterprise`,
+		 `main_complete_users`,pi.`major`,
+		 `subject_type`,`concat_user`,`concat_work_position`,`concat_tel`,`concat_phone`,`concat_department`,`concat_fax`,
+	 	 `concat_code`,`concat_addr`,
+		 `concat_email`,`task_source`,`plan_detal_name_code`,`start_time`,`end_time`,`comment`,`comment_reult`,`reiew_department`,
+		 `security_level`,
+		 `security_time_len`,`sure_security_date`,`sure_security_department`,`department_award_info`,`enterprise_opinion`,
+		 `apply_book_content`,pi.`created`,
+		 pro.pro_stat,
+		 pro.pro_code,
+		 pro.pro_result_code,
+		 (select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid limit 1) enterprise_name,
+         (SELECT max(created) FROM boot_do.ass_award_score_detail where pro_id = pro.id
+		    <if test="scoreSpecialistUid != null">
+				and score_uid = #{scoreSpecialistUid}
+			</if>
+		) score_date
+		from ass_enterprise_chengguo_base_info pi
+	    join ass_award_enterprise_project pro on pi.pro_id = pro.id
+	    join ass_award_publish_task pt on pt.id = pro.publish_task_id
+		<if test="associationUserId!=null">
+			join ass_award_publish_task task on pi.task_id = task.id and task.association_userid = #{associationUserId}
+		</if>
+		<if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.pro_group_name = si.group_name and si.user_id = #{scoreSpecialistUid} and si.deleted = 0
+        </if>
+        <where>
+			      <if test="scoreSpecialistUid != null"> and now() between pt.expert_start_time and pt.expert_end_time</if>
+		  		  <if test="id != null and id != ''"> and pi.id = #{id} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+			      <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		   	      <if test="chengguoName != null and chengguoName != ''"> and chengguo_name = #{chengguoName} </if>
+		  		  <if test="applyEnterprise != null and applyEnterprise != ''"> and apply_enterprise = #{applyEnterprise} </if>
+		  		  <if test="masterCompleteEnterprise != null and masterCompleteEnterprise != ''"> and master_complete_enterprise = #{masterCompleteEnterprise} </if>
+		  		  <if test="mainCompleteUsers != null and mainCompleteUsers != ''"> and main_complete_users = #{mainCompleteUsers} </if>
+		  		  <if test="major != null and major != ''"> and pi.major = #{major} </if>
+		  		  <if test="subjectType != null and subjectType != ''"> and subject_type = #{subjectType} </if>
+		  		  <if test="concatUser != null and concatUser != ''"> and concat_user = #{concatUser} </if>
+		  		  <if test="concatWorkPosition != null and concatWorkPosition != ''"> and concat_work_position = #{concatWorkPosition} </if>
+		  		  <if test="concatTel != null and concatTel != ''"> and concat_tel = #{concatTel} </if>
+		  		  <if test="concatPhone != null and concatPhone != ''"> and concat_phone = #{concatPhone} </if>
+		  		  <if test="concatDepartment != null and concatDepartment != ''"> and concat_department = #{concatDepartment} </if>
+		  		  <if test="concatFax != null and concatFax != ''"> and concat_fax = #{concatFax} </if>
+		  		  <if test="concatCode != null and concatCode != ''"> and concat_code = #{concatCode} </if>
+		  		  <if test="concatAddr != null and concatAddr != ''"> and concat_addr = #{concatAddr} </if>
+		  		  <if test="concatEmail != null and concatEmail != ''"> and concat_email = #{concatEmail} </if>
+		  		  <if test="taskSource != null and taskSource != ''"> and task_source = #{taskSource} </if>
+		  		  <if test="planDetalNameCode != null and planDetalNameCode != ''"> and plan_detal_name_code = #{planDetalNameCode} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and end_time = #{endTime} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		  <if test="commentReult != null and commentReult != ''"> and comment_reult = #{commentReult} </if>
+		  		  <if test="reiewDepartment != null and reiewDepartment != ''"> and reiew_department = #{reiewDepartment} </if>
+		  		  <if test="securityLevel != null and securityLevel != ''"> and security_level = #{securityLevel} </if>
+		  		  <if test="securityTimeLen != null and securityTimeLen != ''"> and security_time_len = #{securityTimeLen} </if>
+		  		  <if test="sureSecurityDate != null and sureSecurityDate != ''"> and sure_security_date = #{sureSecurityDate} </if>
+		  		  <if test="sureSecurityDepartment != null and sureSecurityDepartment != ''"> and sure_security_department = #{sureSecurityDepartment} </if>
+		  		  <if test="departmentAwardInfo != null and departmentAwardInfo != ''"> and department_award_info = #{departmentAwardInfo} </if>
+		  		  <if test="enterpriseOpinion != null and enterpriseOpinion != ''"> and enterprise_opinion = #{enterpriseOpinion} </if>
+		  		  <if test="applyBookContent != null and applyBookContent != ''"> and apply_book_content = #{applyBookContent} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		limit 0, 200
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterprise_chengguo_base_info pi
+		<if test="associationUserId!=null">
+			join ass_award_publish_task task on pi.task_id = task.id and task.association_userid = #{associationUserId}
+		</if>
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="chengguoName != null and chengguoName != ''"> and chengguo_name = #{chengguoName} </if>
+		  		  <if test="applyEnterprise != null and applyEnterprise != ''"> and apply_enterprise = #{applyEnterprise} </if>
+		  		  <if test="masterCompleteEnterprise != null and masterCompleteEnterprise != ''"> and master_complete_enterprise = #{masterCompleteEnterprise} </if>
+		  		  <if test="mainCompleteUsers != null and mainCompleteUsers != ''"> and main_complete_users = #{mainCompleteUsers} </if>
+		  		  <if test="major != null and major != ''"> and major = #{major} </if>
+		  		  <if test="subjectType != null and subjectType != ''"> and subject_type = #{subjectType} </if>
+		  		  <if test="concatUser != null and concatUser != ''"> and concat_user = #{concatUser} </if>
+		  		  <if test="concatWorkPosition != null and concatWorkPosition != ''"> and concat_work_position = #{concatWorkPosition} </if>
+		  		  <if test="concatTel != null and concatTel != ''"> and concat_tel = #{concatTel} </if>
+		  		  <if test="concatPhone != null and concatPhone != ''"> and concat_phone = #{concatPhone} </if>
+		  		  <if test="concatDepartment != null and concatDepartment != ''"> and concat_department = #{concatDepartment} </if>
+		  		  <if test="concatFax != null and concatFax != ''"> and concat_fax = #{concatFax} </if>
+		  		  <if test="concatCode != null and concatCode != ''"> and concat_code = #{concatCode} </if>
+		  		  <if test="concatAddr != null and concatAddr != ''"> and concat_addr = #{concatAddr} </if>
+		  		  <if test="concatEmail != null and concatEmail != ''"> and concat_email = #{concatEmail} </if>
+		  		  <if test="taskSource != null and taskSource != ''"> and task_source = #{taskSource} </if>
+		  		  <if test="planDetalNameCode != null and planDetalNameCode != ''"> and plan_detal_name_code = #{planDetalNameCode} </if>
+		  		  <if test="startTime != null and startTime != ''"> and start_time = #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and end_time = #{endTime} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		  <if test="commentReult != null and commentReult != ''"> and comment_reult = #{commentReult} </if>
+		  		  <if test="reiewDepartment != null and reiewDepartment != ''"> and reiew_department = #{reiewDepartment} </if>
+		  		  <if test="securityLevel != null and securityLevel != ''"> and security_level = #{securityLevel} </if>
+		  		  <if test="securityTimeLen != null and securityTimeLen != ''"> and security_time_len = #{securityTimeLen} </if>
+		  		  <if test="sureSecurityDate != null and sureSecurityDate != ''"> and sure_security_date = #{sureSecurityDate} </if>
+		  		  <if test="sureSecurityDepartment != null and sureSecurityDepartment != ''"> and sure_security_department = #{sureSecurityDepartment} </if>
+		  		  <if test="departmentAwardInfo != null and departmentAwardInfo != ''"> and department_award_info = #{departmentAwardInfo} </if>
+		  		  <if test="enterpriseOpinion != null and enterpriseOpinion != ''"> and enterprise_opinion = #{enterpriseOpinion} </if>
+		  		  <if test="applyBookContent != null and applyBookContent != ''"> and apply_book_content = #{applyBookContent} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriseChengguoBaseInfoDO">
+		insert into ass_enterprise_chengguo_base_info
+		(
+			`id`, 
+			`pro_id`, 
+			`chengguo_name`, 
+			`apply_enterprise`, 
+			`master_complete_enterprise`, 
+			`main_complete_users`, 
+			`major`, 
+			`subject_type`, 
+			`concat_user`, 
+			`concat_work_position`, 
+			`concat_tel`, 
+			`concat_phone`, 
+			`concat_department`, 
+			`concat_fax`, 
+			`concat_code`, 
+			`concat_addr`, 
+			`concat_email`, 
+			`task_source`, 
+			`plan_detal_name_code`, 
+			`start_time`, 
+			`end_time`, 
+			`comment`, 
+			`comment_reult`, 
+			`reiew_department`, 
+			`security_level`, 
+			`security_time_len`, 
+			`sure_security_date`, 
+			`sure_security_department`, 
+			`department_award_info`, 
+			`enterprise_opinion`, 
+			`apply_book_content`
+		)
+		values
+		(
+			#{id}, 
+			#{proId}, 
+			#{chengguoName}, 
+			#{applyEnterprise}, 
+			#{masterCompleteEnterprise}, 
+			#{mainCompleteUsers}, 
+			#{major}, 
+			#{subjectType}, 
+			#{concatUser}, 
+			#{concatWorkPosition}, 
+			#{concatTel}, 
+			#{concatPhone}, 
+			#{concatDepartment}, 
+			#{concatFax}, 
+			#{concatCode}, 
+			#{concatAddr}, 
+			#{concatEmail}, 
+			#{taskSource}, 
+			#{planDetalNameCode}, 
+			#{startTime}, 
+			#{endTime}, 
+			#{comment}, 
+			#{commentReult}, 
+			#{reiewDepartment}, 
+			#{securityLevel}, 
+			#{securityTimeLen}, 
+			#{sureSecurityDate}, 
+			#{sureSecurityDepartment}, 
+			#{departmentAwardInfo}, 
+			#{enterpriseOpinion}, 
+			#{applyBookContent}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriseChengguoBaseInfoDO">
+		update ass_enterprise_chengguo_base_info 
+		<set>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="chengguoName != null">`chengguo_name` = #{chengguoName}, </if>
+			<if test="applyEnterprise != null">`apply_enterprise` = #{applyEnterprise}, </if>
+			<if test="masterCompleteEnterprise != null">`master_complete_enterprise` = #{masterCompleteEnterprise}, </if>
+			<if test="mainCompleteUsers != null">`main_complete_users` = #{mainCompleteUsers}, </if>
+			<if test="major != null">`major` = #{major}, </if>
+			<if test="subjectType != null">`subject_type` = #{subjectType}, </if>
+			<if test="concatUser != null">`concat_user` = #{concatUser}, </if>
+			<if test="concatWorkPosition != null">`concat_work_position` = #{concatWorkPosition}, </if>
+			<if test="concatTel != null">`concat_tel` = #{concatTel}, </if>
+			<if test="concatPhone != null">`concat_phone` = #{concatPhone}, </if>
+			<if test="concatDepartment != null">`concat_department` = #{concatDepartment}, </if>
+			<if test="concatFax != null">`concat_fax` = #{concatFax}, </if>
+			<if test="concatCode != null">`concat_code` = #{concatCode}, </if>
+			<if test="concatAddr != null">`concat_addr` = #{concatAddr}, </if>
+			<if test="concatEmail != null">`concat_email` = #{concatEmail}, </if>
+			<if test="taskSource != null">`task_source` = #{taskSource}, </if>
+			<if test="planDetalNameCode != null">`plan_detal_name_code` = #{planDetalNameCode}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="endTime != null">`end_time` = #{endTime}, </if>
+			<if test="comment != null">`comment` = #{comment}, </if>
+			<if test="commentReult != null">`comment_reult` = #{commentReult}, </if>
+			<if test="reiewDepartment != null">`reiew_department` = #{reiewDepartment}, </if>
+			<if test="securityLevel != null">`security_level` = #{securityLevel}, </if>
+			<if test="securityTimeLen != null">`security_time_len` = #{securityTimeLen}, </if>
+			<if test="sureSecurityDate != null">`sure_security_date` = #{sureSecurityDate}, </if>
+			<if test="sureSecurityDepartment != null">`sure_security_department` = #{sureSecurityDepartment}, </if>
+			<if test="departmentAwardInfo != null">`department_award_info` = #{departmentAwardInfo}, </if>
+			<if test="enterpriseOpinion != null">`enterprise_opinion` = #{enterpriseOpinion}, </if>
+			<if test="applyBookContent != null">`apply_book_content` = #{applyBookContent}, </if>
+		</set>
+		where
+		<if test="id != null and id > 0">`id` = #{id} </if>
+		<if test="proId != null and (id == null or id == 0)">`pro_id` = #{proId} </if>
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterprise_chengguo_base_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterprise_chengguo_base_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<update id="addBaseInfo" parameterType="com.bootdo.system.domain.EnterpriseChengguoBaseInfoDO">
+	insert into ass_enterprise_chengguo_base_info
+		(
+			`pro_id`,
+			`chengguo_name`,
+			`apply_enterprise`,
+			`master_complete_enterprise`,
+			`main_complete_users`,
+			`major`,
+			`subject_type`,
+			`concat_user`,
+			`concat_work_position`,
+			`concat_tel`,
+			`concat_phone`,
+			`concat_department`,
+			`concat_fax`,
+			`concat_code`,
+			`concat_addr`,
+			`concat_email`,
+			`task_source`,
+			`plan_detal_name_code`,
+			`start_time`,
+			`end_time`,
+			`comment`,
+			`comment_reult`,
+			`reiew_department`,
+			`security_level`,
+			`security_time_len`,
+			`sure_security_date`,
+			`sure_security_department`,
+			`department_award_info`,
+			`enterprise_opinion`,
+			`apply_book_content`
+		)
+		select
+			#{proId},
+			#{chengguoName},
+			#{applyEnterprise},
+			#{masterCompleteEnterprise},
+			#{mainCompleteUsers},
+			#{major},
+			#{subjectType},
+			#{concatUser},
+			#{concatWorkPosition},
+			#{concatTel},
+			#{concatPhone},
+			#{concatDepartment},
+			#{concatFax},
+			#{concatCode},
+			#{concatAddr},
+			#{concatEmail},
+			#{taskSource},
+			#{planDetalNameCode},
+			#{startTime},
+			#{endTime},
+			#{comment},
+			#{commentReult},
+			#{reiewDepartment},
+			#{securityLevel},
+			#{securityTimeLen},
+			#{sureSecurityDate},
+			#{sureSecurityDepartment},
+			#{departmentAwardInfo},
+			#{enterpriseOpinion},
+			#{applyBookContent}
+        from dual
+		where not exists (
+		  select id from ass_enterprise_chengguo_base_info where pro_id = #{proId}
+		)
+	</update>
+
+</mapper>

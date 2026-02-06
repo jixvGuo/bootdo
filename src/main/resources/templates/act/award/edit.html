@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="taskId" name="taskId" th:value="${award.taskId}" type="hidden">
+                        <input id="id" name="id" th:value="${award.id}" type="hidden">
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">流程实例ID：</label>
+                            <div class="col-sm-8">
+                                <input id="procInsId" name="procInsId" th:value="${award.procInsId}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">变动用户：</label>
+                            <div class="col-sm-8">
+                                <input id="userId" name="userId" th:value="${award.userId}" class="form-control"
+                                       type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">归属部门：</label>
+                            <div class="col-sm-8">
+                                <input id="officeId" name="officeId" th:value="${award.officeId}" class="form-control"
+                                       type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">岗位：</label>
+                            <div class="col-sm-8">
+                                <input id="post" name="post" th:value="${award.post}" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group  hidden">
+                            <label class="col-sm-3 control-label">性别：</label>
+                            <div class="col-sm-8">
+                                <input id="age" name="age" th:value="${award.age}" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">学历：</label>
+                            <div class="col-sm-8">
+                                <input id="edu" name="edu" th:value="${award.edu}" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">调整原因：</label>
+                            <div class="col-sm-8">
+                                <input id="content" name="content" th:value="${award.content}" class="form-control"
+                                       type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">现行标准 薪酬档级：</label>
+                            <div class="col-sm-8">
+                                <input id="olda" name="olda" th:value="${award.olda}" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">现行标准 月工资额：</label>
+                            <div class="col-sm-8">
+                                <input id="oldb" name="oldb" th:value="${award.oldb}" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">现行标准 年薪总额：</label>
+                            <div class="col-sm-8">
+                                <input id="oldc" name="oldc" th:value="${award.oldc}" class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">调整后标准 薪酬档级：</label>
+                            <div class="col-sm-8">
+                                <input id="newa" name="newa" th:value="${award.newa}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">调整后标准 月工资额：</label>
+                            <div class="col-sm-8">
+                                <input id="newb" name="newb" th:value="${award.newb}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">调整后标准 年薪总额：</label>
+                            <div class="col-sm-8">
+                                <input id="newc" name="newc" th:value="${award.newc}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group hidden">
+                            <label class="col-sm-3 control-label">月增资：</label>
+                            <div class="col-sm-8">
+                                <input id="addNum" name="addNum" th:value="${award.addNum}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">执行时间：</label>
+                            <div class="col-sm-8">
+                                <input id="exeDate" name="exeDate" th:value="${award.exeDate}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">人力资源部门意见：</label>
+                            <div class="col-sm-8">
+                                <input id="hrText" name="hrText" th:value="${award.hrText}" class="form-control"
+                                       type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">分管领导意见：</label>
+                            <div class="col-sm-8">
+                                <input id="leadText" name="leadText" th:value="${award.leadText}" class="form-control"
+                                       type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">集团主要领导意见：</label>
+                            <div class="col-sm-8">
+                                <input id="mainLeadText" name="mainLeadText" th:value="${award.mainLeadText}"
+                                       class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">您的意见：</label>
+                            <div class="col-sm-8">
+                                <textarea id="taskComment" name="taskComment" th:value="${award.taskComment}"
+                                          class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <input id="taskPass" name="taskPass" class="hidden">
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary" onclick="$('#taskPass').val('1')">提交
+                                </button>
+                                <button type="submit" class="btn btn-warning" onclick="$('#taskPass').val('0')">退回
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/act/award/edit.js">
+</script>
+</body>
+</html>

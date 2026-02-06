@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverReviewSoftResultDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverReviewSoftResultDO">
+		select `id`,`num_copies`,`unit_is_development`,`bureau_is_first`,`superior_is_opionion`,`cert_is_auth`,`popularize_is_use`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`manual_is_use`,`cert_is_ok`,`popularize_is_cert`,`bureau_is_cert`,`view_new_is_report`,`review_result`,`remarks`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated` from ass_surver_review_soft_result where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverReviewSoftResultDO">
+		select cr.`id`,`num_copies`,`unit_is_development`,`bureau_is_first`,`superior_is_opionion`,`cert_is_auth`,`popularize_is_use`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`manual_is_use`,`cert_is_ok`,`popularize_is_cert`,`bureau_is_cert`,`view_new_is_report`,`review_result`
+		     ,cr.`remarks`,cr.`opt_uid`,cr.`task_id`,cr.`created`,cr.`updated`,
+		     pro.id pro_id,
+		     pro.major,
+		     pro.pro_code,
+		     pro.pro_sub_type,
+		     pro.pro_type,
+		     pro.chengguo pro_name,
+		     sd.name apply_company
+		from
+		     boot_do.ass_award_enterprise_project pro
+                   JOIN
+             sys_user su on pro.create_uid = su.user_id
+                   JOIN
+             sys_dept sd ON su.dept_id = sd.dept_id
+		           LEFT JOIN
+	     	 ass_surver_review_soft_result cr on cr.pro_id = pro.id
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="unitIsDevelopment != null and unitIsDevelopment != ''"> and unit_is_development = #{unitIsDevelopment} </if>
+		  		  <if test="bureauIsFirst != null and bureauIsFirst != ''"> and bureau_is_first = #{bureauIsFirst} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="certIsAuth != null and certIsAuth != ''"> and cert_is_auth = #{certIsAuth} </if>
+		  		  <if test="popularizeIsUse != null and popularizeIsUse != ''"> and popularize_is_use = #{popularizeIsUse} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="manualIsUse != null and manualIsUse != ''"> and manual_is_use = #{manualIsUse} </if>
+		  		  <if test="certIsOk != null and certIsOk != ''"> and cert_is_ok = #{certIsOk} </if>
+		  		  <if test="popularizeIsCert != null and popularizeIsCert != ''"> and popularize_is_cert = #{popularizeIsCert} </if>
+		  		  <if test="bureauIsCert != null and bureauIsCert != ''"> and bureau_is_cert = #{bureauIsCert} </if>
+		  		  <if test="viewNewIsReport != null and viewNewIsReport != ''"> and view_new_is_report = #{viewNewIsReport} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by cr.id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from boot_do.ass_award_enterprise_project pro
+		   JOIN
+		sys_user su on pro.create_uid = su.user_id
+		   JOIN
+		sys_dept sd ON su.dept_id = sd.dept_id
+	   	   LEFT JOIN
+		ass_surver_review_soft_result cr on cr.pro_id = pro.id
+		 <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="unitIsDevelopment != null and unitIsDevelopment != ''"> and unit_is_development = #{unitIsDevelopment} </if>
+		  		  <if test="bureauIsFirst != null and bureauIsFirst != ''"> and bureau_is_first = #{bureauIsFirst} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="certIsAuth != null and certIsAuth != ''"> and cert_is_auth = #{certIsAuth} </if>
+		  		  <if test="popularizeIsUse != null and popularizeIsUse != ''"> and popularize_is_use = #{popularizeIsUse} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="manualIsUse != null and manualIsUse != ''"> and manual_is_use = #{manualIsUse} </if>
+		  		  <if test="certIsOk != null and certIsOk != ''"> and cert_is_ok = #{certIsOk} </if>
+		  		  <if test="popularizeIsCert != null and popularizeIsCert != ''"> and popularize_is_cert = #{popularizeIsCert} </if>
+		  		  <if test="bureauIsCert != null and bureauIsCert != ''"> and bureau_is_cert = #{bureauIsCert} </if>
+		  		  <if test="viewNewIsReport != null and viewNewIsReport != ''"> and view_new_is_report = #{viewNewIsReport} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverReviewSoftResultDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_review_soft_result
+		(
+			`num_copies`,
+			`unit_is_development`,
+			`bureau_is_first`,
+			`superior_is_opionion`,
+			`cert_is_auth`,
+			`popularize_is_use`,
+			`apply_source_question`,
+			`feedback_info`,
+			`pro_contact`,
+			`main_user`,
+			`manual_is_use`,
+			`cert_is_ok`,
+			`popularize_is_cert`,
+			`bureau_is_cert`,
+			`view_new_is_report`,
+			`review_result`,
+			`remarks`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`
+		)
+		values
+		(
+			#{numCopies},
+			#{unitIsDevelopment},
+			#{bureauIsFirst},
+			#{superiorIsOpionion},
+			#{certIsAuth},
+			#{popularizeIsUse},
+			#{applySourceQuestion},
+			#{feedbackInfo},
+			#{proContact},
+			#{mainUser},
+			#{manualIsUse},
+			#{certIsOk},
+			#{popularizeIsCert},
+			#{bureauIsCert},
+			#{viewNewIsReport},
+			#{reviewResult},
+			#{remarks},
+			#{optUid},
+			#{proId},
+			#{taskId}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverReviewSoftResultDO">
+		update ass_surver_review_soft_result
+		<set>
+			<if test="numCopies != null">`num_copies` = #{numCopies}, </if>
+			<if test="unitIsDevelopment != null">`unit_is_development` = #{unitIsDevelopment}, </if>
+			<if test="bureauIsFirst != null">`bureau_is_first` = #{bureauIsFirst}, </if>
+			<if test="superiorIsOpionion != null">`superior_is_opionion` = #{superiorIsOpionion}, </if>
+			<if test="certIsAuth != null">`cert_is_auth` = #{certIsAuth}, </if>
+			<if test="popularizeIsUse != null">`popularize_is_use` = #{popularizeIsUse}, </if>
+			<if test="applySourceQuestion != null">`apply_source_question` = #{applySourceQuestion}, </if>
+			<if test="feedbackInfo != null">`feedback_info` = #{feedbackInfo}, </if>
+			<if test="proContact != null">`pro_contact` = #{proContact}, </if>
+			<if test="mainUser != null">`main_user` = #{mainUser}, </if>
+			<if test="manualIsUse != null">`manual_is_use` = #{manualIsUse}, </if>
+			<if test="certIsOk != null">`cert_is_ok` = #{certIsOk}, </if>
+			<if test="popularizeIsCert != null">`popularize_is_cert` = #{popularizeIsCert}, </if>
+			<if test="bureauIsCert != null">`bureau_is_cert` = #{bureauIsCert}, </if>
+			<if test="viewNewIsReport != null">`view_new_is_report` = #{viewNewIsReport}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_review_soft_result where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_review_soft_result where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

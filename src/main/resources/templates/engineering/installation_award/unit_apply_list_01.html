@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="active item">申报单位 </a>
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="item">申报工程概况 </a>
+    <a th:href="@{/enterpriseUnitApply/toUnitOpinionList(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+       class="item">有关单位意见 </a>
+    <a th:href="@{/enterpriseUnitApply/to_upload_real_file(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+
+
+
+</div>
+<div class="ui container segment">
+    <div class="ui top attached tabular menu">
+        <a href="#" class="active item">列表 </a>
+        <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}"
+           class="item">新增 </a>
+        <div class="right menu">
+            <div class="item">
+                <div class="ui transparent icon input">
+                    <input type="text" placeholder="搜索用户……">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui bottom attached segment">
+        <table class="ui table">
+            <thead>
+            <th></th>
+            <th>编号</th>
+            <th>单位名称</th>
+            <th>法人代表</th>
+            <th>职务</th>
+            <th>联系电话</th>
+            <th>项目经理</th>
+            <th>联系电话</th>
+            <th>操作</th>
+            </thead>
+            <tbody>
+            <tr th:each="data,dataStat:${pageUtils.rows}">
+                <td th:text="${dataStat.count}"></td>
+                <td th:text="${data.id}"></td>
+                <td th:text="${data.comanyName}"></td>
+                <td th:text="${data.legalRepresentative}"></td>
+                <td th:text="${data.duty}"></td>
+                <td th:text="${data.fixedTelephone}"></td>
+                <td th:text="${data.projectManager}"></td>
+                <td th:text="${data.mobilePhoneManager}"></td>
+                <td>
+                    <a th:href="@{'/enterpriseUnitApply/toEdit?id='+${data.id}+'&proId='+${proId}+'&taskId='+${taskId}+'&applyId='+${applyId}}"
+                       class="ui teal mini basic button">修改</a>
+                    <a href="#" th:onclick="'javascript:delUnitApply(\''+${data.id}+'\')'"
+                       class="ui teal mini basic button">删除</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <th colspan="10 ">
+                <div class="ui pagination mini menu">
+                    <a th:href="@{'/enterpriseUnitApply/toUnitList?pageType=up&pageNum='+${pageNum}+'&proId='+${proId}+'&taskId='+${taskId}+'&applyId='+${applyId}}"
+                       class="icon item">上一页</a>
+                    <a th:href="@{'/enterpriseUnitApply/toUnitList?pageType=down&pageNum='+${pageNum}+'&proId='+${proId}+'&taskId='+${taskId}+'&applyId='+${applyId}}"
+                       class="icon item">下一页</a>
+                </div>
+            </th>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script>
+
+    function delUnitApply(id) {
+
+        parent.layer.confirm('是否删除?', {icon: 3, title: '删除确认提示'}, function (index) {
+            //do something
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/petroleum_engineering_award/oilProApplyInfo/remove",
+                data: {
+                    id: id,
+                    proId: "${proId}",
+                    taskId: "${taskId}",
+                    applyId: "${applyId}"
+                },// 你的formid
+                async: false,
+                error: function (request) {
+                    parent.layer.alert("Connection error");
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+            layer.close(index);
+        });
+
+    }
+
+</script>
+</body>
+</html>

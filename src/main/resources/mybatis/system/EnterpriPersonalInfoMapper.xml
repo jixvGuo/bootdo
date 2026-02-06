@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriPersonalInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriPersonalInfoDO">
+		select pi.`id`,`user_name`,`gender`,`birthday`,`photo`,`nation`,`work_major`,`technical_title`,`user_iden`,
+			   `technical_position`,`highest_education`,`graduate_school`,pi.`major`,`graduation_time`,`is_enjoy_government_subsidies`,
+			   `contacts_name`,`contacts_phone`,`contacts_address`,`contacts_telphone`,`contacts_fax`,`contacts_postcode`,
+			   `personal_summary`,pi.`opt_uid`,pi.`created`,
+			   pi.task_id,pi.apply_id,company_opinion,pi.pro_id proId,
+			   pro.pro_stat,
+			   task.apply_start_date,
+			   task.apply_end_date,
+			   task.expert_start_time,
+			   task.check_start_time,
+			   task.check_end_time,
+			   task.expert_end_time,
+			   (select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid
+																limit 1) enterprise_name,
+              (SELECT max(created) FROM boot_do.ass_award_score_detail where pro_id = pro.id) score_date
+		       from ass_enterpri_personal_info pi
+				join ass_award_enterprise_project pro on pi.pro_id = pro.id
+		    	join ass_award_publish_task task on pi.task_id = task.id
+		       where pi.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriPersonalInfoDO">
+		select pi.`id`,`user_name`,`gender`,`birthday`,`photo`,`nation`,`work_major`,`technical_title`,`user_iden`,
+		`technical_position`,`highest_education`,`graduate_school`,pi.`major` pMajor,`graduation_time`,`is_enjoy_government_subsidies`,
+		`contacts_name`,`contacts_phone`,`contacts_address`,`contacts_telphone`,`contacts_fax`,`contacts_postcode`,
+		`personal_summary`,pi.`opt_uid`,pi.`created`,
+		pi.task_id,pi.apply_id,company_opinion,pi.pro_id proId,
+		(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid limit 1) apply_account,
+		pro.pro_stat,
+		pi.major,
+		pro.pro_code showNum,
+		pro.pro_result_code proResultCode,
+		task.apply_start_date,
+		task.apply_end_date,
+		task.expert_start_time,
+		task.check_start_time,
+		task.check_end_time,
+		task.expert_end_time,
+		(select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid
+        limit 1) enterprise_name,
+         (SELECT max(created) FROM boot_do.ass_award_score_detail where pro_id = pro.id
+		    <if test="scoreSpecialistUid != null">
+				and score_uid = #{scoreSpecialistUid}
+			</if>
+		 ) score_date
+		 from ass_enterpri_personal_info pi
+ 		 join ass_award_enterprise_project pro on pi.pro_id = pro.id
+		join ass_award_publish_task task on pi.task_id = task.id
+		<if test="associationUserId!=null">
+			 and task.association_userid = #{associationUserId}
+		</if>
+		<if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.pro_group_name = si.group_name and si.user_id = #{scoreSpecialistUid} and si.deleted = 0
+        </if>
+
+        <if test="scoreType != null">
+			join ass_award_project_score_result sr on pro.id = sr.pro_id and pro.pro_type = #{scoreType}
+		</if>
+        <if test="scoreMajor != null and scoreMajor != ''">
+            join add_special_info smi on pro.major = smi.group_name and smi.group_name = #{scoreMajor} and smi.deleted = 0
+        </if>
+        <if test="scoreAccount != null and scoreAccount != ''">
+            join add_special_info sai on pro.major = sai.group_name and sai.deleted = 0
+            join sys_user su on su.user_id = sai.user_id and su.username = #{scoreAccount}
+        </if>
+
+        <where>  
+		  		  <if test="id != null and id != ''"> and pi.id = #{id} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="gender != null and gender != ''"> and gender = #{gender} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="photo != null and photo != ''"> and photo = #{photo} </if>
+		  		  <if test="nation != null and nation != ''"> and nation = #{nation} </if>
+		  		  <if test="workMajor != null and workMajor != ''"> and work_major = #{workMajor} </if>
+		  		  <if test="technicalTitle != null and technicalTitle != ''"> and technical_title = #{technicalTitle} </if>
+		  		  <if test="userIden != null and userIden != ''"> and user_iden = #{userIden} </if>
+		  		  <if test="technicalPosition != null and technicalPosition != ''"> and technical_position = #{technicalPosition} </if>
+		  		  <if test="highestEducation != null and highestEducation != ''"> and highest_education = #{highestEducation} </if>
+		  		  <if test="graduateSchool != null and graduateSchool != ''"> and graduate_school = #{graduateSchool} </if>
+		  		  <if test="major != null and major != ''"> and pro.major = #{major} </if>
+		  		  <if test="graduationTime != null and graduationTime != ''"> and graduation_time = #{graduationTime} </if>
+		  		  <if test="isEnjoyGovernmentSubsidies != null and isEnjoyGovernmentSubsidies != ''"> and is_enjoy_government_subsidies = #{isEnjoyGovernmentSubsidies} </if>
+		  		  <if test="contactsName != null and contactsName != ''"> and contacts_name = #{contactsName} </if>
+		  		  <if test="contactsPhone != null and contactsPhone != ''"> and contacts_phone = #{contactsPhone} </if>
+		  		  <if test="contactsAddress != null and contactsAddress != ''"> and contacts_address = #{contactsAddress} </if>
+		  		  <if test="contactsTelphone != null and contactsTelphone != ''"> and contacts_telphone = #{contactsTelphone} </if>
+		  		  <if test="contactsFax != null and contactsFax != ''"> and contacts_fax = #{contactsFax} </if>
+		  		  <if test="contactsPostcode != null and contactsPostcode != ''"> and contacts_postcode = #{contactsPostcode} </if>
+		  		  <if test="personalSummary != null and personalSummary != ''"> and personal_summary = #{personalSummary} </if>
+		  		  <if test="optUid != null and optUid != 0"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+			      <if test="companyOpinion != null and companyOpinion != ''"> and company_opinion = #{companyOpinion} </if>
+			      <if test="keyWord != null and keyWord != '' and proStatStr == ''">
+						and (
+ 		                  exists(select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid and sd.name like #{keyWord})
+ 		                  or user_name like #{keyWord}
+ 		                  or pi.`major` like #{keyWord}
+						  or exists(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid and su.username like #{keyWord})
+						)
+				  </if>
+					<if test="proStatStr != null and proStatStr != '' and proStatStr != 'apply'">
+						and find_in_set(pro.pro_stat, #{proStatStr})
+					</if>
+					<if test="proStatStr != null and proStatStr != '' and proStatStr == 'apply'">
+						and (pro.pro_stat is null or pro.pro_stat = '')
+					</if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id asc
+			</otherwise>
+        </choose>
+		limit 0, 200
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(pi.id) from ass_enterpri_personal_info pi
+		join ass_award_enterprise_project pro on pi.pro_id = pro.id
+		join ass_award_publish_task task on pi.task_id = task.id
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="gender != null and gender != ''"> and gender = #{gender} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="photo != null and photo != ''"> and photo = #{photo} </if>
+		  		  <if test="nation != null and nation != ''"> and nation = #{nation} </if>
+		  		  <if test="workMajor != null and workMajor != ''"> and work_major = #{workMajor} </if>
+		  		  <if test="technicalTitle != null and technicalTitle != ''"> and technical_title = #{technicalTitle} </if>
+		  		  <if test="userIden != null and userIden != ''"> and user_iden = #{userIden} </if>
+		  		  <if test="technicalPosition != null and technicalPosition != ''"> and technical_position = #{technicalPosition} </if>
+		  		  <if test="highestEducation != null and highestEducation != ''"> and highest_education = #{highestEducation} </if>
+		  		  <if test="graduateSchool != null and graduateSchool != ''"> and graduate_school = #{graduateSchool} </if>
+		  		  <if test="major != null and major != ''"> and major = #{major} </if>
+		  		  <if test="graduationTime != null and graduationTime != ''"> and graduation_time = #{graduationTime} </if>
+		  		  <if test="isEnjoyGovernmentSubsidies != null and isEnjoyGovernmentSubsidies != ''"> and is_enjoy_government_subsidies = #{isEnjoyGovernmentSubsidies} </if>
+		  		  <if test="contactsName != null and contactsName != ''"> and contacts_name = #{contactsName} </if>
+		  		  <if test="contactsPhone != null and contactsPhone != ''"> and contacts_phone = #{contactsPhone} </if>
+		  		  <if test="contactsAddress != null and contactsAddress != ''"> and contacts_address = #{contactsAddress} </if>
+		  		  <if test="contactsTelphone != null and contactsTelphone != ''"> and contacts_telphone = #{contactsTelphone} </if>
+		  		  <if test="contactsFax != null and contactsFax != ''"> and contacts_fax = #{contactsFax} </if>
+		  		  <if test="contactsPostcode != null and contactsPostcode != ''"> and contacts_postcode = #{contactsPostcode} </if>
+		  		  <if test="personalSummary != null and personalSummary != ''"> and personal_summary = #{personalSummary} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+			      <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+     			  <if test="companyOpinion != null and companyOpinion != ''"> and company_opinion = #{companyOpinion} </if>
+				  <if test="keyWord != null and keyWord != '' and proStatStr == ''">
+					 and (
+					 exists(select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid and sd.name like #{keyWord})
+					 or user_name like #{keyWord}
+					 or pi.`major` like #{keyWord}
+					 or exists(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid and su.username like #{keyWord})
+					 )
+				  </if>
+				 <if test="proStatStr != '' and proStatStr != 'apply'">
+					 and find_in_set(pro.pro_stat, #{proStatStr})
+				 </if>
+				 <if test="proStatStr != '' and proStatStr == 'apply'">
+					 and (pro.pro_stat is null or pro.pro_stat = '')
+				 </if>
+		 </where>
+	</select>
+	 
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.bootdo.system.domain.EnterpriPersonalInfoDO">
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into ass_enterpri_personal_info
+		(
+			`id`, 
+			`user_name`, 
+			`gender`, 
+			`birthday`, 
+			`photo`, 
+			`nation`, 
+			`work_major`, 
+			`technical_title`, 
+			`user_iden`, 
+			`technical_position`, 
+			`highest_education`, 
+			`graduate_school`, 
+			`major`, 
+			`graduation_time`, 
+			`is_enjoy_government_subsidies`, 
+			`contacts_name`, 
+			`contacts_phone`, 
+			`contacts_address`, 
+			`contacts_telphone`, 
+			`contacts_fax`, 
+			`contacts_postcode`, 
+			`personal_summary`, 
+			`opt_uid`,
+			task_id,
+			apply_id,
+			company_opinion,
+			pro_id
+		)
+		values
+		(
+			#{id}, 
+			#{userName}, 
+			#{gender}, 
+			#{birthday}, 
+			#{photo}, 
+			#{nation}, 
+			#{workMajor}, 
+			#{technicalTitle}, 
+			#{userIden}, 
+			#{technicalPosition}, 
+			#{highestEducation}, 
+			#{graduateSchool}, 
+			#{major}, 
+			#{graduationTime}, 
+			#{isEnjoyGovernmentSubsidies}, 
+			#{contactsName}, 
+			#{contactsPhone}, 
+			#{contactsAddress}, 
+			#{contactsTelphone}, 
+			#{contactsFax}, 
+			#{contactsPostcode}, 
+			#{personalSummary}, 
+			#{optUid},
+			#{taskId},
+			#{applyId},
+			#{companyOpinion},
+			#{proId}
+		)
+
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriPersonalInfoDO">
+		update ass_enterpri_personal_info 
+		<set>
+			<if test="userName != null">`user_name` = #{userName}, </if>
+			<if test="gender != null">`gender` = #{gender}, </if>
+			<if test="birthday != null">`birthday` = #{birthday}, </if>
+			<if test="photo != null">`photo` = #{photo}, </if>
+			<if test="nation != null">`nation` = #{nation}, </if>
+			<if test="workMajor != null">`work_major` = #{workMajor}, </if>
+			<if test="technicalTitle != null">`technical_title` = #{technicalTitle}, </if>
+			<if test="userIden != null">`user_iden` = #{userIden}, </if>
+			<if test="technicalPosition != null">`technical_position` = #{technicalPosition}, </if>
+			<if test="highestEducation != null">`highest_education` = #{highestEducation}, </if>
+			<if test="graduateSchool != null">`graduate_school` = #{graduateSchool}, </if>
+			<if test="major != null">`major` = #{major}, </if>
+			<if test="graduationTime != null">`graduation_time` = #{graduationTime}, </if>
+			<if test="isEnjoyGovernmentSubsidies != null">`is_enjoy_government_subsidies` = #{isEnjoyGovernmentSubsidies}, </if>
+			<if test="contactsName != null">`contacts_name` = #{contactsName}, </if>
+			<if test="contactsPhone != null">`contacts_phone` = #{contactsPhone}, </if>
+			<if test="contactsAddress != null">`contacts_address` = #{contactsAddress}, </if>
+			<if test="contactsTelphone != null">`contacts_telphone` = #{contactsTelphone}, </if>
+			<if test="contactsFax != null">`contacts_fax` = #{contactsFax}, </if>
+			<if test="contactsPostcode != null">`contacts_postcode` = #{contactsPostcode}, </if>
+			<if test="personalSummary != null">`personal_summary` = #{personalSummary}, </if>
+			<if test="companyOpinion != null">`company_opinion` = #{companyOpinion}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+
+			created = now()
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateMajor" parameterType="com.bootdo.system.domain.EnterpriPersonalInfoDO">
+		UPDATE ass_enterpri_personal_info
+		SET
+			work_major = #{workMajor}
+		WHERE
+			pro_id = #{proId}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_personal_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_personal_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

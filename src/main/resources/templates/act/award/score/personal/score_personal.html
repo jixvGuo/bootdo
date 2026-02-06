@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+
+<div class="ui bottom attached segment">
+    <form   class="ui basic form" >
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui field">
+            <label>姓名</label>
+            <input type="text" disabled class="form-control" name="name" th:value="${proInfo.userName}">
+
+
+        </div>
+        <h4 class="ui red horizontal divider header">打分详情 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>科技创新能力</label>
+                <input type="number" id="technology_create" name="technology_create" th:value="${technology_create}" placeholder="科技创新能力" >
+            </div>
+            <div class="ui field">
+                <label>获奖成果</label>
+                <input type="number" id= "gain_awards" name="gain_awards" th:value="${gain_awards}" placeholder="获奖成果" >
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>科技贡献</label>
+                <input type="number" id="science_contribution" name="science_contribution" th:value="${science_contribution}"  placeholder="科技贡献" >
+            </div>
+            <div class="ui field">
+                <label>知识产权</label>
+                <input type="number" id="intelli_right" name="intelli_right" th:value="${intelli_right}" placeholder="知识产权" >
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>发表论著</label>
+                <input type="number" id="pub_work" name="pub_work" th:value="${pub_work}" placeholder="发表论著" >
+            </div>
+            <div class="ui field disabled">
+                <label>总分</label>
+                <input type="number" name="Totalscore"  id="Totalscore"  placeholder="总分" >
+            </div>
+        </div>
+        <h4 class="ui red horizontal divider header">意见备注 </h4>
+        <div class="ui field">
+            <label>推荐意见等级</label>
+            <div class="ui selection dropdown">
+                <input type="hidden" name="opinionlevel">
+                <i class="dropdown icon"></i>
+                <div class="default text">推荐意见等级</div>
+                <div class="menu">
+                    <div class="item" data-value="特等">特等</div>
+                    <div class="item" data-value="一等">一等</div>
+                    <div class="item" data-value="二等">二等</div>
+                    <div class="item" data-value="三等">三等</div>
+                    <div class="item" data-value="缓评">缓评</div>
+                    <div class="item" data-value="不推荐">不推荐</div>
+                </div>
+            </div>
+        </div>
+        <div class="ui field">
+            <input type="hidden" name="opinionlevel">
+            <label>评审意见</label>
+            <textarea name="opinion"></textarea>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <div   class="ui submit button"  onclick="saveData()" >保存</div>
+        </div>
+    </form>
+
+</div>
+</div>
+
+<script>
+    $(function(){$(".full-height-scroll").slimScroll({height:"100%"})});
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/act/score/personal/personal_score.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+<link href="/css/semantic/semantic.min.css" rel="stylesheet">
+<head th:include="include::header"></head>
+
+<body>
+<div class="ui top attached tabular menu">
+
+	<a href="../index.html" class="active item">列表 </a>
+	<a href="../enterprise_personal_add_index.html" class="item">新增 </a>
+	<a href="../enterprise_personal_print.html" class="item">打印 </a>
+
+
+</div>
+<div class="ui container">
+	<div class="ui bottom attached segment">
+		<table class="ui table celled">
+			<tbody>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					申报人姓名
+				</td>
+				<td style="width:30%;vertical-align:middle;text-align:left"colspan="2" rowspan="1">
+					张三
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+					rowspan="1">
+					性别
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" rowspan="1"
+					colspan="1">
+					男
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+					rowspan="1">
+					出生年月
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" rowspan="1" colspan="2"
+					2020-09-09
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+					rowspan="1">
+					照片
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					民族
+				</td>
+				<td style="width:30%;vertical-align:middle;text-align:left"  colspan="2">
+					汉
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					从事专业
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left"
+					colspan="1">
+					建筑专业
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					技术职称
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="2">
+					11111111
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+					rowspan="2" onclick="upload()">
+					上传
+				</td>
+
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					身份证
+				</td>
+				<td style="width:45%;vertical-align:middle;text-align:left" colspan="4">
+					11111111111111111111111
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					技术职务
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left"  colspan="2">
+					1111111111
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					最高学历
+				</td>
+				<td style="width:45%;vertical-align:middle;text-align:left" colspan="3">
+					博士
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					毕业学校
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="4">
+					北京大学
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					所学专业
+				</td>
+				<td style="width:45%;vertical-align:middle;text-align:left" colspan="3">
+					建筑专业
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					毕业时间
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="1">
+					2020-09-09
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					是否享受政府津贴
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="2">
+					是
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+					rowspan="3">
+					联系人
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					姓名
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="4">
+					张三
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					电话
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="2">
+					18311111111
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					手机
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left"  colspan="4">
+					18311111111
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					传真
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="2">
+					18311111111
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					通讯地址
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="4">
+					山东
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					邮政编码
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left"  colspan="2">
+					90875834
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1"
+					rowspan="2" id="increase1">
+					主要技术（科技）工作经历
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="4">
+					起止时间
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					单位名称
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="1">
+					职务
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="2">
+					从事工作
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:left" name="inputtrigger" colspan="4">
+					2020-09-09 至 2002-12-12
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" name="inputtrigger" colspan="2">
+					中铁十三局
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" name="inputtrigger" colspan="1">
+					项目经理
+				</td>
+				<td style="width:10%;vertical-align:middle;text-align:left" name="inputtrigger" colspan="2">
+					管理项目进度及日常运转
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:left" colspan="10">
+					个人综述
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;text-align:left;height: 300px;" colspan="10"></td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+					（公章）
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+					年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+					申报人所在单位意见：
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;text-align:left;height: 300px;" colspan="10"></td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+					（公章）
+				</td>
+			</tr>
+			<tr>
+				<td style="width:10%;vertical-align:middle;text-align:center" colspan="10">
+					年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<div class="ui basic center aligned segment">
+			<button class="ui button" type="submit">在线查看</button>
+			<button class="ui button" type="submit">下载</button>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/js/semantic/semantic.min.js" ></script>
+
+
+ <div th:include="include::footer"></div>
+
+
+
+</body>
+</html>

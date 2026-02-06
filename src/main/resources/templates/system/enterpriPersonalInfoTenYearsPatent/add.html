@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="personalId" name="personalId" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="name" name="name" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="type" name="type" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="effect" name="effect" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">指标索引值:1、近十年内由申报人参与完成并取得授权的专利 ;2、近十年内由申报人参与完成并获批工法 ;3、近十年内由申报人参与完成并通过具有科技成果鉴定权机构鉴定的科技成果(不含QC) ;4、近十年内由申报人参与完成的成果所获科技类奖项（不含QC） ;5、近十年内由申报人参与完成并公开发表、发行的论文及专著 ;6. 近十年内申报人获得的科技类个人荣誉（称号）奖 ：</label>
+								<div class="col-sm-8">
+									<input id="indicatorIndex" name="indicatorIndex" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">操作的用户id：</label>
+								<div class="col-sm-8">
+									<input id="optUid" name="optUid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="created" name="created" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/enterpriPersonalInfoTenYearsPatent/add.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body>
+<input type="hidden" id="isReadonly" th:value="${readonly}">
+<input name="proId" th:value="${proId}" type="hidden">
+<input name="taskId" th:value="${taskId}" type="hidden">
+<input name="applyId" th:value="${applyId}" type="hidden">
+<div class="ui container">
+    <div class="ui top attached tabular menu">
+        <a href="#" class="active item">列表 </a>
+        <a th:href="@{/chengguo_personal/base_info_add(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">新增 </a>
+
+    </div>
+
+
+    <div class="ui bottom attached segment">
+        <table class="ui table">
+            <thead>
+            <th></th>
+            <th>姓名</th>
+            <th>申报单位</th>
+            <th>专业</th>
+            <th>填写日期</th>
+            <th>操作</th>
+
+            </thead>
+            <tbody>
+            <tr th:each="t:${projectInfoDo}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.userName}"></td>
+            <td th:text="${t.major}"></td>
+            <td th:text="当前企业"></td>
+            <td th:text="${t.created}"></td>
+            <td>
+            <a th:href="@{/chengguo_personal/base_info_add(id=${t.id},isUpdate='yes',proId=${proId},taskId=${taskId},applyId=${applyId})}" class="ui teal mini basic button">修改</a>
+            <a href="#" th:onclick= "'javascript:deletePersonInfo(\''+${t.id}+'\',\''+${t.userName}+'\')'" class="ui teal mini basic button">删除</a>
+
+            </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:include="include::footer"></div>
+</body>
+<script>
+    function deletePersonInfo(id,teamName) {
+        parent.layer.confirm('是否删除"'+teamName +'"?', {
+            btn: ['确定', '取消'] //可以无限个按钮
+        }, function(index, layero){
+            //按钮【按钮一】的回调
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : "/chengguo_personal/personal_info/delete",
+                data : {id:id},// 你的formid
+                async : false,
+                error : function(request) {
+                    parent.layer.alert("Connection error");
+                },
+                success : function(data) {
+                    if (data.code == 0) {
+                        parent.layer.msg("操作成功");
+                        window.location.reload();
+                    } else {
+                        parent.layer.alert(data.msg)
+                    }
+                }
+            });
+        }, function(index){
+            //按钮【按钮二】的回调
+
+        });
+    }
+</script>
+</html>

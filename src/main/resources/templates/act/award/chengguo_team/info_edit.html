@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <textarea id="teamDesc" name="teamDesc" th:text="${enterpriTeamInfo.teamDesc}" style="height: 260px;" class="form-control" required="" aria-required="true"></textarea>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                </div>
+                            </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+</html>

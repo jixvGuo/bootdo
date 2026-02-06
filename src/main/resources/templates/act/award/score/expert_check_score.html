@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <input type="hidden" name="major" value=""/>
+    <input type="hidden" name="specialistAccount" value=""/>
+    <input type="hidden" name="taskId" id="taskId" th:value="${taskId}"/>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">奖项选择：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control m-b" name="scoreType" id="award_select">
+                                    <option value="science_progress" th:selected="${proType == 'science_progress'}">科技奖</option>
+                                    <option value="science_team" th:selected="${proType == 'science_team'}">团队</option>
+                                    <option value="science_personal" th:selected="${proType == 'science_personal'}">个人</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox-content">
+                <div id="treeview1" class="test"></div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>已分配：</h5>
+                </div>
+                <div class="ibox-content">
+                    <table id="exampleTable" data-mobile-responsive="true">
+                    </table>
+                    <table class="table table-bordered">
+                        <thead id="tableHead">
+                        <tr>
+                            <th>序号</th>
+                            <th>奖项名称</th>
+                            <th>奖项类型</th>
+                            <th>申请单位</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button type="button" id="viewSummaryBtn" style="display: none;" class="btn btn-primary btn-xs" onclick="viewSummary()">查看打分汇总表</button>
+            <button type="button" id="downSummaryBtn"  style="display: none;"  class="btn btn-primary btn-xs" onclick="downSummary()">下载打分汇总表</button>
+
+            <button type="button" id="downScoreTableBtn" style="display: none;" class="btn btn-primary btn-xs" onclick="downScoreTable()">下载专家评审打分表</button>
+            <button type="button" id="downReviewTableBtn" style="display: none;" class="btn btn-primary btn-xs" onclick="downReviewTable()">下载专家评审意见表</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div th:include="include :: footer"></div>
+<script src="/js/plugins/treeview/bootstrap-treeview.js"></script>
+<script src="/js/plugins/nestable/jquery.nestable.js"></script>
+
+<script src="/js/appjs/act/score/expert_check.js?v=1.20"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () { $(".i-checks").iCheck({ checkboxClass: "icheckbox_square-green", radioClass: "iradio_square-green", }) });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <input id="id" name="id" th:value="${enterpriTeamInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1">团队名称
+                                        </td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="teamName" name="teamName" th:value="${enterpriTeamInfo.teamName}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1">研究方向
+                                        </td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="researchDirection" name="researchDirection" th:value="${enterpriTeamInfo.researchDirection}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1">团队带头人
+                                        </td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="leader" name="leader" th:value="${enterpriTeamInfo.leader}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1">主要支持单位
+                                        </td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="mainSupportCompany" name="mainSupportCompany" th:value="${enterpriTeamInfo.mainSupportCompany}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1">团队成立时间
+                                        </td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="teamBuildTime" name="teamBuildTime" th:value="${enterpriTeamInfo.teamBuildTime}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="1"
+                                            rowspan="4">
+                                            申报单位<br />（盖章）</td>
+                                        <td style="width:40%;vertical-align:middle;text-align:left"
+                                             colspan="2" rowspan="4">
+                                            <input id="applyCompany" name="applyCompany" th:value="${enterpriTeamInfo.applyCompany}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            申报材料</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="applyData" name="applyData" th:value="${enterpriTeamInfo.applyData}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            密级</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="securityLevel" name="securityLevel" th:value="${enterpriTeamInfo.securityLevel}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            可否公示</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="isPublic" name="isPublic" th:value="${enterpriTeamInfo.isPublic}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            可否公开宣传</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            >
+                                            <input id="isPropaganda" name="isPropaganda" th:value="${enterpriTeamInfo.isPropaganda}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            学科分类名称</td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left" colspan="4"
+                                            >
+                                            <input id="subjectClassificationName" name="subjectClassificationName" th:value="${enterpriTeamInfo.subjectClassificationName}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            所属国民经济行业</td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left" colspan="4"
+                                            >
+                                            <input id="industryNationalEconomy" name="industryNationalEconomy" th:value="${enterpriTeamInfo.industryNationalEconomy}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center">
+                                            所属国家重点发展领域</td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left" colspan="4"
+                                            contentEditable="plaintext-only">
+                                            <input id="nationalKeyDevelopmentAreas" name="nationalKeyDevelopmentAreas" th:value="${enterpriTeamInfo.nationalKeyDevelopmentAreas}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script th:if="${enterpriTeamInfo.id != null && enterpriTeamInfo.id > 0}" type="text/javascript" src="/js/appjs/system/enterpriTeamInfo/edit.js"></script>
+    <script th:if="${enterpriTeamInfo.id == null || enterpriTeamInfo.id == 0}" type="text/javascript" src="/js/appjs/system/enterpriTeamInfo/add.js"></script>
+</body>
+
+</html>

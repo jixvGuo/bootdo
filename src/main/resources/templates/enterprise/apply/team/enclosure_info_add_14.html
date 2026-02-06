@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a class="item"
+       th:href="@{/system/enterpriTeamEnclosureList/toList(proId=${proId},taskId=${taskId},applyId=${applyId})}">列表 </a>
+    <a class="active item" href="#">新增 </a>
+    <!--<a href="#" class="item">打印 </a>-->
+</div>
+<div class="ui bottom attached segment">
+    <form action="" class="ui form" id="signupForm">
+        <input id="id" name="id" th:value="${enterpriTeamEnclosureList.id}" type="hidden">
+        <input id="proId" name="proId" th:value="${proId}" type="hidden">
+        <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+        <input id="applyId" name="applyId" th:value="${applyId}" type="hidden">
+        <h4 class="ui red horizontal divider header">基本信息 </h4>
+        <div class="ui two fields">
+            <div class="ui field">
+                <label>附件编号</label>
+                <input name="encNum" placeholder="附件编号" th:value="${enterpriTeamEnclosureList.encNum}" type="text">
+            </div>
+            <div class="ui field">
+                <label>附件名称</label>
+                <input name="encName" placeholder="附加名称" th:value="${enterpriTeamEnclosureList.encName}" type="text">
+            </div>
+        </div>
+        <div class="ui field">
+            <label>备注</label>
+            <textarea name="encMemo" th:text="${enterpriTeamEnclosureList.encMemo}"></textarea>
+        </div>
+        <div class="ui field">
+            <div class="ui button green mini" onclick="F_Open_dialog()">上传附件</div>
+            <input id="btn_file" name="file" style="display:none" type="file">
+            <a class="ui header" id="filename" target="_blank" th:href="${enterpriTeamEnclosureList.fileUrl}"
+               th:text="${enterpriTeamEnclosureList.fileName}"></a>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui basic center aligned segment">
+            <button class="ui button" type="submit">保存</button>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/appjs/system/enterpriTeamEnclosureList/add.js" type="text/javascript"></script>
+
+<script>
+    $('#btn_file').change(function () {
+        var name = this.files[0].name;
+        $('#filename').text(name);
+    });
+
+    function F_Open_dialog() {
+        document.getElementById("btn_file").click();
+    }
+
+    $('.ui.dropdown').dropdown();
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            encName: {
+                identifier: 'encName',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写附件名称'
+                    }
+                ]
+            },
+            encNum: {
+                identifier: 'encNum',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写附件编号'
+                    }
+                ]
+            },
+            encMemo: {
+                identifier: 'encMemo',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写备注'
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

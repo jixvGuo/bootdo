@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<title>申报</title>
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/bootstrap.min.css">
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/flexslider.css">
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/main.css">
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/responsive.css">
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/animate.min.css">
+<link rel="stylesheet" href="/js/appjs/blog/uwp/css/font-icon.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+  <div class="row">
+    <div class="col-sm-12">
+     <div class="ibox float-e-margins">
+      <div class="ibox-content">
+      <!-- portfolio section -->
+      <section id="works" class="works section no-padding">
+        <div class="container">
+          <div class="row no-gutter">
+            <div class="col-lg-6 col-md-6 col-sm-6 work">
+
+              <a href="/to_index" onblur="btnAction(1)"  class="work-box"> <img src="/js/appjs/blog/uwp/images/work-4.jpg" alt="">
+              <div class="overlay">
+                <div class="overlay-caption"  >
+                  <h3>科学技术奖申报入口</h3>
+                  <p><i class="fa fa-search-plus fa-2x"></i></p>
+                </div>
+              </div>
+              <!-- overlay -->
+            </a> </div>
+
+            <script type="text/javascript">
+                /***
+                 * 点击事件
+                 */
+                function btnAction(type)
+                {
+                    localStorage.setItem("enterType",type); //存入 参数： 1.调用的值 2.所要存入的数据
+                    console.log(localStorage.getItem("enterType") +" ===============");//输出
+                }
+
+            </script>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 work">
+              <a href="javascript:bulidTip()" onblur="btnAction(2)" class="work-box"> <img src="/js/appjs/blog/uwp/images/work-5.jpg" alt="">
+              <div class="overlay">
+                <div class="overlay-caption" >
+                  <h3>优秀勘察设计奖申报入口</h3>
+                  <p><i class="fa fa-search-plus fa-2x"></i></p>
+                </div>
+              </div>
+              <!-- overlay -->
+            </a> </div>
+          </div>
+          <div class="row no-gutter">
+            <div class="col-lg-6 col-md-6 col-sm-6 work"> <a href="javascript:bulidTip()" class="work-box"> <img src="/js/appjs/blog/uwp/images/work-6.jpg" alt="">
+              <div class="overlay">
+                <div class="overlay-caption" onclick="btnAction(3)" >
+                  <h3>QC奖申报入口</h3>
+                  <p><i class="fa fa-search-plus fa-2x"></i></p>
+                </div>
+              </div>
+              <!-- overlay -->
+            </a> </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 work">
+<!--              <a href="javascript:bulidTip()" onclick="btnAction(4)"  class="work-box"> <img src="/js/appjs/blog/uwp/images/work-7.jpg" alt="">-->
+                <a href="/to_index"    class="work-box" onclick="btnAction(4)">
+                    <img src="/js/appjs/blog/uwp/images/work-4.jpg" alt="">
+              <div class="overlay">
+                <div class="overlay-caption"  >
+                  <h3>优质工程奖申报入口</h3>
+                  <p><i class="fa fa-search-plus fa-2x"></i></p>
+                </div>
+              </div>
+              <!-- overlay -->
+            </a> </div>
+          </div>
+        </div>
+      </section>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:include="include::footer"></div>
+<script>
+  function add() {
+      $.ajax({
+        url : "/blog/bContent/add",
+        type : "post",
+        data : {
+
+        },
+        success : function(r) {
+
+        }
+      });
+  }
+  function bulidTip() {
+    alert("建设中。。。");
+  }
+</script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script src="/js/appjs/blog/uwp/js/bootstrap.min.js"></script>
+<script src="/js/appjs/blog/uwp/js/jquery.flexslider-min.js"></script>
+<script src="/js/appjs/blog/uwp/js/jquery.fancybox.pack.js"></script>
+<script src="/js/appjs/blog/uwp/js/jquery.waypoints.min.js"></script>
+<script src="/js/appjs/blog/uwp/js/retina.min.js"></script>
+<script src="/js/appjs/blog/uwp/js/modernizr.js"></script>
+<script src="/js/appjs/blog/uwp/js/main.js"></script>
+
+</body>
+</html>
+
+

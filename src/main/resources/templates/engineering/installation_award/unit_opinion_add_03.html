@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseUnitApply/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="item">申报单位 </a>
+    <a th:href="@{/enterpriseUnitApply/toEngineeDescAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="item">申报工程概况 </a>
+    <a th:href="@{/enterpriseUnitApply/toUnitOpinionList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+       class="active item">有关单位意见 </a>
+    <a th:href="@{/enterpriseUnitApply/to_upload_real_file(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+</div>
+<div class="ui container segment">
+    <div class="ui top attached tabular menu">
+        <a th:href="@{/enterpriseUnitApply/toUnitOpinionList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}"
+           class="item">列表 </a>
+        <a th:if="${readonly} eq null or ${readonly} ne 1" th:href="@{/enterpriseUnitApply/toUnitOpinionAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}" th:classappend="${tagName==null || tagName == ''} ? 'active': ''" class="item">新增</a>
+        <a href="#" class="active item" th:text="${tagName}" th:if="${tagName != null && tagName != ''}"></a>
+    </div>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" class="ui basic form" id="signupForm">
+                <input type="hidden" id="isReadonly" th:value="${readonly}">
+                <input name="id" th:value="${data.id}" type="hidden"/>
+                <input name="proId" th:value="${proId}" type="hidden">
+                <input name="taskId" th:value="${taskId}" type="hidden">
+                <input name="applyId" th:value="${applyId}" type="hidden">
+                <div style="text-align: center;color:red;" th:text="${desc}"></div>
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui field">
+                    <label>建设单位（使用单位）意见：</label>
+                    <textarea name="constructionOpinions" th:text="${data.constructionOpinions}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>设计单位意见：</label>
+                    <textarea name="designUnitOpinions" th:text="${data.designUnitOpinions}"></textarea>
+                </div>
+                <div class="ui field">
+                    <label>监理单位意见：</label>
+                    <textarea name="supervisionOpinions" th:text="${data.supervisionOpinions}"></textarea>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 详情页面 -->
+<div th:include="include::footer"></div>
+
+<script th:if="${data.id != null && data.id > 0}" type="text/javascript"
+        src="/js/appjs/cpe/petroleum_engineering_award/oilProUnitOpinion/edit.js"></script>
+<script th:if="${data.id == null || data.id == 0}" type="text/javascript"
+        src="/js/appjs/cpe/petroleum_engineering_award/oilProUnitOpinion/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<script>
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            name: {
+                constructionOpinions: 'constructionOpinions',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写建设单位（使用单位）意见'
+                    }
+                ]
+            },
+            designUnitOpinions: {
+                identifier: 'designUnitOpinions',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写设计单位意见'
+                    }
+                ]
+            },
+            supervisionOpinions: {
+                identifier: 'supervisionOpinions',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写监理单位意见'
+                    }
+                ]
+            },
+        }
+    });
+
+</script>
+</body>
+</html>

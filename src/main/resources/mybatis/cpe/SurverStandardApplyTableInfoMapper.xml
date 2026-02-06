@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverStandardApplyTableInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverStandardApplyTableInfoDO">
+		select `id`,`apply_major`,`gallery_name`,`atlas_number`,`design_start_end`,`approval_document_number`,`approved_document_number`,`dditor_chief`,`cooperation_unit`,`reporting_contact_person`,`reporting_contact_phone`,`accessories_catalog`,`main_content_atlas`,`main_advantages_disadvantages_benefits`,`award_received`,`reporting_unit_opinion`,`up_recommendation`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted`, fax from ass_surver_standard_apply_table_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverStandardApplyTableInfoDO">
+		select `id`,`apply_major`,`gallery_name`,`atlas_number`,`design_start_end`,`approval_document_number`,`approved_document_number`,`dditor_chief`,`cooperation_unit`,`reporting_contact_person`,`reporting_contact_phone`,`accessories_catalog`,`main_content_atlas`,`main_advantages_disadvantages_benefits`,`award_received`,`reporting_unit_opinion`,`up_recommendation`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`,`deleted`, fax from ass_surver_standard_apply_table_info
+        <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="galleryName != null and galleryName != ''"> and gallery_name = #{galleryName} </if>
+		  		  <if test="atlasNumber != null and atlasNumber != ''"> and atlas_number = #{atlasNumber} </if>
+		  		  <if test="designStartEnd != null and designStartEnd != ''"> and design_start_end = #{designStartEnd} </if>
+		  		  <if test="approvalDocumentNumber != null and approvalDocumentNumber != ''"> and approval_document_number = #{approvalDocumentNumber} </if>
+		  		  <if test="approvedDocumentNumber != null and approvedDocumentNumber != ''"> and approved_document_number = #{approvedDocumentNumber} </if>
+		  		  <if test="dditorChief != null and dditorChief != ''"> and dditor_chief = #{dditorChief} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="reportingContactPerson != null and reportingContactPerson != ''"> and reporting_contact_person = #{reportingContactPerson} </if>
+		  		  <if test="reportingContactPhone != null and reportingContactPhone != ''"> and reporting_contact_phone = #{reportingContactPhone} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="mainContentAtlas != null and mainContentAtlas != ''"> and main_content_atlas = #{mainContentAtlas} </if>
+		  		  <if test="mainAdvantagesDisadvantagesBenefits != null and mainAdvantagesDisadvantagesBenefits != ''"> and main_advantages_disadvantages_benefits = #{mainAdvantagesDisadvantagesBenefits} </if>
+		  		  <if test="awardReceived != null and awardReceived != ''"> and award_received = #{awardReceived} </if>
+		  		  <if test="reportingUnitOpinion != null and reportingUnitOpinion != ''"> and reporting_unit_opinion = #{reportingUnitOpinion} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+			      <if test="fax != null and fax != ''"> and fax = #{fax} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from ass_surver_standard_apply_table_info
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="applyMajor != null and applyMajor != ''"> and apply_major = #{applyMajor} </if>
+		  		  <if test="galleryName != null and galleryName != ''"> and gallery_name = #{galleryName} </if>
+		  		  <if test="atlasNumber != null and atlasNumber != ''"> and atlas_number = #{atlasNumber} </if>
+		  		  <if test="designStartEnd != null and designStartEnd != ''"> and design_start_end = #{designStartEnd} </if>
+		  		  <if test="approvalDocumentNumber != null and approvalDocumentNumber != ''"> and approval_document_number = #{approvalDocumentNumber} </if>
+		  		  <if test="approvedDocumentNumber != null and approvedDocumentNumber != ''"> and approved_document_number = #{approvedDocumentNumber} </if>
+		  		  <if test="dditorChief != null and dditorChief != ''"> and dditor_chief = #{dditorChief} </if>
+		  		  <if test="cooperationUnit != null and cooperationUnit != ''"> and cooperation_unit = #{cooperationUnit} </if>
+		  		  <if test="reportingContactPerson != null and reportingContactPerson != ''"> and reporting_contact_person = #{reportingContactPerson} </if>
+		  		  <if test="reportingContactPhone != null and reportingContactPhone != ''"> and reporting_contact_phone = #{reportingContactPhone} </if>
+		  		  <if test="accessoriesCatalog != null and accessoriesCatalog != ''"> and accessories_catalog = #{accessoriesCatalog} </if>
+		  		  <if test="mainContentAtlas != null and mainContentAtlas != ''"> and main_content_atlas = #{mainContentAtlas} </if>
+		  		  <if test="mainAdvantagesDisadvantagesBenefits != null and mainAdvantagesDisadvantagesBenefits != ''"> and main_advantages_disadvantages_benefits = #{mainAdvantagesDisadvantagesBenefits} </if>
+		  		  <if test="awardReceived != null and awardReceived != ''"> and award_received = #{awardReceived} </if>
+		  		  <if test="reportingUnitOpinion != null and reportingUnitOpinion != ''"> and reporting_unit_opinion = #{reportingUnitOpinion} </if>
+		  		  <if test="upRecommendation != null and upRecommendation != ''"> and up_recommendation = #{upRecommendation} </if>
+			      <if test="fax != null and fax != ''"> and fax = #{fax} </if>
+			      <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverStandardApplyTableInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_standard_apply_table_info
+		(
+			`apply_major`,
+			`gallery_name`,
+			`atlas_number`,
+			`design_start_end`,
+			`approval_document_number`,
+			`approved_document_number`,
+			`dditor_chief`,
+			`cooperation_unit`,
+			`reporting_contact_person`,
+			`reporting_contact_phone`,
+			`accessories_catalog`,
+			`main_content_atlas`,
+			`main_advantages_disadvantages_benefits`,
+			`award_received`,
+			`reporting_unit_opinion`,
+			`up_recommendation`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`,
+		     fax
+		)
+		values
+		(
+			#{applyMajor},
+			#{galleryName},
+			#{atlasNumber},
+			#{designStartEnd},
+			#{approvalDocumentNumber},
+			#{approvedDocumentNumber},
+			#{dditorChief},
+			#{cooperationUnit},
+			#{reportingContactPerson},
+			#{reportingContactPhone},
+			#{accessoriesCatalog},
+			#{mainContentAtlas},
+			#{mainAdvantagesDisadvantagesBenefits},
+			#{awardReceived},
+			#{reportingUnitOpinion},
+			#{upRecommendation},
+			#{optUid},
+			#{proId},
+			#{taskId},
+			#{fax}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverStandardApplyTableInfoDO">
+		update ass_surver_standard_apply_table_info
+		<set>
+			<if test="applyMajor != null">`apply_major` = #{applyMajor}, </if>
+			<if test="fax != null">`fax` = #{fax}, </if>
+			<if test="galleryName != null">`gallery_name` = #{galleryName}, </if>
+			<if test="atlasNumber != null">`atlas_number` = #{atlasNumber}, </if>
+			<if test="designStartEnd != null">`design_start_end` = #{designStartEnd}, </if>
+			<if test="approvalDocumentNumber != null">`approval_document_number` = #{approvalDocumentNumber}, </if>
+			<if test="approvedDocumentNumber != null">`approved_document_number` = #{approvedDocumentNumber}, </if>
+			<if test="dditorChief != null">`dditor_chief` = #{dditorChief}, </if>
+			<if test="cooperationUnit != null">`cooperation_unit` = #{cooperationUnit}, </if>
+			<if test="reportingContactPerson != null">`reporting_contact_person` = #{reportingContactPerson}, </if>
+			<if test="reportingContactPhone != null">`reporting_contact_phone` = #{reportingContactPhone}, </if>
+			<if test="accessoriesCatalog != null">`accessories_catalog` = #{accessoriesCatalog}, </if>
+			<if test="mainContentAtlas != null">`main_content_atlas` = #{mainContentAtlas}, </if>
+			<if test="mainAdvantagesDisadvantagesBenefits != null">`main_advantages_disadvantages_benefits` = #{mainAdvantagesDisadvantagesBenefits}, </if>
+			<if test="awardReceived != null">`award_received` = #{awardReceived}, </if>
+			<if test="reportingUnitOpinion != null">`reporting_unit_opinion` = #{reportingUnitOpinion}, </if>
+			<if test="upRecommendation != null">`up_recommendation` = #{upRecommendation}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_standard_apply_table_info where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_standard_apply_table_info where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

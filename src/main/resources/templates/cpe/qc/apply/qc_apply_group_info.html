@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body>
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <input type="hidden" th:value="${groupInfo.proStat}" id="proStat">
+        <form id="signupForm" action="" class="ui basic form">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${groupInfo.id}" type="hidden">
+            <input id="proId" name="proId" th:value="${proId}" type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}" type="hidden">
+            <h4 class="ui red horizontal divider header">基本信息 </h4>
+
+            <div class="ui three fields">
+                <div class="ui field">
+                    <label>完成单位</label>
+                    <input type="text" th:value="${groupInfo.groupDesc}" name="groupDesc" placeholder="完成单位">
+                </div>
+                <div class="ui field">
+                    <label>课题名称</label>
+                    <input type="text" th:value="${groupInfo.topicName}" name="topicName" placeholder="课题名称">
+                </div>
+                <div class="ui field">
+                    <label>课题编号</label>
+                    <input type="text" readonly th:value="${groupInfo.applyId}" name="applyId" placeholder="课题编号">
+                </div>
+            </div>
+            <div class="ui three fields">
+                <div class="ui field">
+                    <label>课题类型</label>
+                    <input type="text" th:if="${readonly} eq 1"
+                           th:value="${@dictServiceImpl.getName('projectType',groupInfo.topicType)}" name=""
+                           placeholder="">
+                    <div th:if="${readonly} ne 1" class="ui selection dropdown">
+                        <input type="hidden" name="topicType" th:value="${groupInfo.topicType}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">课题类型</div>
+                        <div class="menu">
+                            <div th:each="item : ${projectTypes}" class="item" th:data-value="${item.value}">
+                                [[${item.name}]]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>小组名称</label>
+                    <input type="text" th:value="${groupInfo.groupName}" name="groupName" placeholder="小组名称">
+                </div>
+                <div class="ui field">
+                    <label>小组人数</label>
+                    <input type="text" th:value="${groupInfo.actDesc}" name="actDesc" placeholder="小组人数">
+                </div>
+            </div>
+            <div class="ui three fields">
+                <div class="ui field">
+                    <label>申报单位</label>
+                    <input th:value="${groupInfo.unitName}" type="text" name="unitName" placeholder="申报单位">
+                </div>
+                <div class="ui field">
+                    <label>分类</label>
+                    <input type="text" th:if="${readonly} eq 1"
+                           th:value="${@dictServiceImpl.getName('classification',groupInfo.professionalScope)}" name=""
+                           placeholder="">
+                    <div th:if="${readonly} ne 1" class="ui selection  dropdown">
+                        <input type="hidden" name="professionalScope" th:value="${groupInfo.professionalScope}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">专业范围</div>
+                        <div class="menu">
+                            <div th:each="item : ${classifications}" class="item" th:data-value="${item.value}">
+                                [[${item.name}]]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                </div>
+            </div>
+            <label>
+                注：<br>
+                1. 单位名称要写全称，即发证书名称。<br>
+                2. 课题类型：问题解决型课题、创新型课题<br>
+            </label>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" >保存</div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 详情页面 -->
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/cpe/qcGroupApplyInfo/add.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/petroleum_engineering_award/readonly.js"></script>
+
+<!-- <script>
+
+     function checkData(){
+
+         let readonly = $("#isReadonly").val();
+         console.log("AA" + readonly);
+         if (readonly == 1){
+             $(".simditor-body").attr("contenteditable",false);
+             $('.ui.dropdown').addClass("disabled");
+         }else  {
+             $('.ui.dropdown').dropdown();
+         }
+     }
+     checkData();
+
+ </script>-->
+<script type="text/javascript">
+
+    let proId = $("#proId").val();
+    let uploadObj = {
+        url: '/common/sysFile/upload?action=image&fileType=simditorQc&proId=' + proId, //文件上传的接口地址
+        params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+        fileKey: 'file[]', //服务器端获取文件数据的参数名
+        connectionCount: 3,
+        leaveConfirm: '正在上传文件'
+    };
+    $('.ui.dropdown').dropdown();
+    function addimage() {
+        $("#fileimage").trigger("click");
+    }
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            groupDesc:{
+                identifier: 'groupDesc',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写完成单位名称'
+                }]
+            },
+            groupname: {
+                identifier: 'groupName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写小组名称'
+                }]
+            },
+            topicName: {
+                identifier: 'topicName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写课题名称'
+                }]
+            },
+            topicType: {
+                identifier: 'topicType',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写课题类型'
+                }]
+            },
+            actDesc: {
+                identifier: 'actDesc',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写小组人数'
+                }]
+            },
+            unitName: {
+                identifier: 'unitName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写申报单位'
+                }]
+            },
+            professionalScope: {
+                identifier: 'professionalScope',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请填写分类类型'
+                }]
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

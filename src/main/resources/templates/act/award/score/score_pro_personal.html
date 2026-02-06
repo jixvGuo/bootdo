@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header">
+
+</head>
+
+
+<body class="gray-bg">
+<div class="ui container">
+    <div class="ui bottom attached segment">
+        <form action="" class="ui basic form">
+            <input id="itemId" name="itemId" th:value="${itemId}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proInfo.proId}"  type="hidden">
+            <input id="major" name="major" th:value="${proInfo.workMajor}"  type="hidden">
+            <h4 class="ui red horizontal divider header">基本信息 </h4>
+            <div class="ui field">
+                <label>姓名</label>
+                <input type="text" disabled class="form-control" name="name" th:value="${proInfo.userName}">
+
+
+            </div>
+            <h4 class="ui red horizontal divider header">打分详情 </h4>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>科技创新能力</label>
+                    <input type="number" id="technology_create" name="technology_create" th:value="${technology_create}" placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>获奖成果</label>
+                    <input type="number" id= "gain_awards" name="gain_awards" th:value="${gain_awards}" placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>科技贡献</label>
+                    <input type="number" id="science_contribution" name="science_contribution" th:value="${science_contribution}"  placeholder="" >
+                </div>
+                <div class="ui field">
+                    <label>知识产权</label>
+                    <input type="number" id="intelli_right" name="intelli_right" th:value="${intelli_right}" placeholder="" >
+                </div>
+            </div>
+            <div class="ui two fields">
+                <div class="ui field">
+                    <label>发表论著</label>
+                    <input type="number" id="pub_work" name="pub_work" th:value="${pub_work}" placeholder="" >
+                </div>
+                <div class="ui field disabled">
+                    <label>总分</label>
+                    <input type="number" name="totalScore" id="totalScore" th:value="${totalScore}" placeholder="" >
+                </div>
+            </div>
+            <h4 class="ui red horizontal divider header">意见备注 </h4>
+            <div class="ui field">
+                <label>推荐意见等级</label>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="opinionLevel" th:value="${opinion_level}" id="opinion_level">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">推荐意见等级</div>
+                    <div class="menu">
+                        <div class="item" data-value="特等">特等</div>
+                        <div class="item" data-value="一等">一等</div>
+                        <div class="item" data-value="二等">二等</div>
+                        <div class="item" data-value="三等">三等</div>
+                        <div class="item" data-value="缓评">缓评</div>
+                        <div class="item" data-value="不推荐">不推荐</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui field">
+                <label>评审意见</label>
+                <textarea name="opinionText" id="opinion_text" th:text="${opinion_text}"></textarea>
+            </div>
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div   class="ui submit button"  onclick="saveData()" >保存</div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 详情页面 -->
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/act/score/personal/personal_score.js?v=1.2"></script>
+
+
+
+
+
+<script>
+    $('.ui.dropdown').dropdown();
+    $("input[type='number']").keyup(function () {
+        var totalScore = 0;
+        $("input[type='number']").each(function () {
+            var namec = $(this).attr("name");
+            if (namec != "totalScore") {
+                totalScore += Number($(this).val());
+            }
+        });
+        $("input[name='totalScore']").val(totalScore);
+    });
+    $("input[type='number']").change(function(){
+        var totalScore = 0;
+        $("input[type='number']").each(function () {
+            var namec = $(this).attr("name");
+            if(namec != "totalScore"){
+                totalScore += Number($(this).val());
+            }
+        });
+        $("input[name='totalScore']").val(totalScore);
+    });
+
+    function addimage() {
+        $("#fileimage").trigger("click");
+    }
+
+    $('.ui.form').form({
+        on: 'blur',
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写姓名'
+                    }
+                ]
+            },
+            innovate: {
+                identifier: 'innovate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写科技创新能力分数'
+                    }
+                ]
+            },
+            achievements: {
+                identifier: 'achievements',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写获奖成果分数'
+                    }
+                ]
+            },
+            contribution: {
+                identifier: 'contribution',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写科技贡献分数'
+                    }
+                ]
+            },
+            propertyright: {
+                identifier: 'propertyright',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写知识产权分数'
+                    }
+                ]
+            },
+            works: {
+                identifier: 'works',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写发表论著分数'
+                    }
+                ]
+            },
+            opinionLevel: {
+                identifier: 'opinionLevel',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写推荐意见等级'
+                    }
+                ]
+            },
+            opinion: {
+                identifier: 'opinion',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '请填写评审意见'
+                    }
+                ]
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
+

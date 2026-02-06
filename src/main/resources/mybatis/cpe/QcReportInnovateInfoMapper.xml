@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.QcReportInnovateInfoDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.QcReportInnovateInfoDO">
+		select `id`,`opt_uid`,`pro_id`,`task_id`,`apply_id`,`group_name`,`topic_name`,`topic_type`,`group_desc`,`sel_topic`,`target_prove`,`plan_desc`,`strategy_desc`,`strategy_implement`,`effect_check`,`standard_desc`,`sum_plan`,`created`,`updated`,`deleted` from ass_qc_report_innovate_info where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.QcReportInnovateInfoDO">
+		select `id`,`opt_uid`,`pro_id`,`task_id`,`apply_id`,`group_name`,`topic_name`,`topic_type`,`group_desc`,`sel_topic`,`target_prove`,`plan_desc`,`strategy_desc`,`strategy_implement`,`effect_check`,`standard_desc`,`sum_plan`,`created`,`updated`,`deleted` from ass_qc_report_innovate_info
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="groupName != null and groupName != ''"> and group_name = #{groupName} </if>
+		  		  <if test="topicName != null and topicName != ''"> and topic_name = #{topicName} </if>
+		  		  <if test="topicType != null and topicType != ''"> and topic_type = #{topicType} </if>
+		  		  <if test="groupDesc != null and groupDesc != ''"> and group_desc = #{groupDesc} </if>
+		  		  <if test="selTopic != null and selTopic != ''"> and sel_topic = #{selTopic} </if>
+		  		  <if test="targetProve != null and targetProve != ''"> and target_prove = #{targetProve} </if>
+		  		  <if test="planDesc != null and planDesc != ''"> and plan_desc = #{planDesc} </if>
+		  		  <if test="strategyDesc != null and strategyDesc != ''"> and strategy_desc = #{strategyDesc} </if>
+		  		  <if test="strategyImplement != null and strategyImplement != ''"> and strategy_implement = #{strategyImplement} </if>
+		  		  <if test="effectCheck != null and effectCheck != ''"> and effect_check = #{effectCheck} </if>
+		  		  <if test="standardDesc != null and standardDesc != ''"> and standard_desc = #{standardDesc} </if>
+		  		  <if test="sumPlan != null and sumPlan != ''"> and sum_plan = #{sumPlan} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_qc_report_innovate_info
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
+		  		  <if test="groupName != null and groupName != ''"> and group_name = #{groupName} </if>
+		  		  <if test="topicName != null and topicName != ''"> and topic_name = #{topicName} </if>
+		  		  <if test="topicType != null and topicType != ''"> and topic_type = #{topicType} </if>
+		  		  <if test="groupDesc != null and groupDesc != ''"> and group_desc = #{groupDesc} </if>
+		  		  <if test="selTopic != null and selTopic != ''"> and sel_topic = #{selTopic} </if>
+		  		  <if test="targetProve != null and targetProve != ''"> and target_prove = #{targetProve} </if>
+		  		  <if test="planDesc != null and planDesc != ''"> and plan_desc = #{planDesc} </if>
+		  		  <if test="strategyDesc != null and strategyDesc != ''"> and strategy_desc = #{strategyDesc} </if>
+		  		  <if test="strategyImplement != null and strategyImplement != ''"> and strategy_implement = #{strategyImplement} </if>
+		  		  <if test="effectCheck != null and effectCheck != ''"> and effect_check = #{effectCheck} </if>
+		  		  <if test="standardDesc != null and standardDesc != ''"> and standard_desc = #{standardDesc} </if>
+		  		  <if test="sumPlan != null and sumPlan != ''"> and sum_plan = #{sumPlan} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.cpe.domain.QcReportInnovateInfoDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_qc_report_innovate_info
+		(
+			`opt_uid`, 
+			`pro_id`, 
+			`task_id`, 
+			`apply_id`, 
+			`group_name`, 
+			`topic_name`, 
+			`topic_type`, 
+			`group_desc`, 
+			`sel_topic`, 
+			`target_prove`, 
+			`plan_desc`, 
+			`strategy_desc`, 
+			`strategy_implement`, 
+			`effect_check`, 
+			`standard_desc`, 
+			`sum_plan`, 
+			`created`, 
+			`updated`, 
+			`deleted`
+		)
+		values
+		(
+			#{optUid}, 
+			#{proId}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{groupName}, 
+			#{topicName}, 
+			#{topicType}, 
+			#{groupDesc}, 
+			#{selTopic}, 
+			#{targetProve}, 
+			#{planDesc}, 
+			#{strategyDesc}, 
+			#{strategyImplement}, 
+			#{effectCheck}, 
+			#{standardDesc}, 
+			#{sumPlan},
+		    now(),
+			#{updated}, 
+			#{deleted}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.cpe.domain.QcReportInnovateInfoDO">
+		update ass_qc_report_innovate_info 
+		<set>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="groupName != null">`group_name` = #{groupName}, </if>
+			<if test="topicName != null">`topic_name` = #{topicName}, </if>
+			<if test="topicType != null">`topic_type` = #{topicType}, </if>
+			<if test="groupDesc != null">`group_desc` = #{groupDesc}, </if>
+			<if test="selTopic != null">`sel_topic` = #{selTopic}, </if>
+			<if test="targetProve != null">`target_prove` = #{targetProve}, </if>
+			<if test="planDesc != null">`plan_desc` = #{planDesc}, </if>
+			<if test="strategyDesc != null">`strategy_desc` = #{strategyDesc}, </if>
+			<if test="strategyImplement != null">`strategy_implement` = #{strategyImplement}, </if>
+			<if test="effectCheck != null">`effect_check` = #{effectCheck}, </if>
+			<if test="standardDesc != null">`standard_desc` = #{standardDesc}, </if>
+			<if test="sumPlan != null">`sum_plan` = #{sumPlan}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}, </if>
+			<if test="deleted != null">`deleted` = #{deleted}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_qc_report_innovate_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_qc_report_innovate_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

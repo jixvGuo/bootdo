@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: bootstrap">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/font-awesome/4.4.0/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/plugins/markdown/bootstrap-markdown.min.css" />
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <!--<div class="col-sm-8">
+            <div class="ibox">-->
+        <div class="ibox-content">
+            <div class="clients-list">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-file-text-o" style="font-size:20px;color:green"></i> 评审须知</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-1"><i class="fa fa-check-circle" style="font-size:20px;color:green"></i> 科技创新先进团队奖评分标准</a>
+                    </li>
+                    <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i> 科技创新先进团队奖缓评和不评标准</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-3" class="tab-pane active">
+                        <div class="full-height-scroll">
+                            <div class="ui container">
+                            <h3 style="text-align: center">2022年中国石油工程建设科学技术奖评审须知</h3>
+                            <p>
+                                一、请各位评委对照“中国石油工程建设科学技术奖评选标准”，认真阅读、研判本组所有成果的申报材料，给出每个成果的评审分数并将每个项目的评审分填入评分表。
+                            </p>
+                            <p>
+                                二、请各位评委首先对组内形式审查缓评和不评的成果（或团队、或个人）进行核实，如同意形式审查意见可不给出评审分数，如认为应参评可给出评审分数；再对形式审查通过的成果按入门条件进行核查，如有不满足的可给出缓评和不评意见，并把不满足入门条件的问题填写到打分表的备注栏，可不给评审分数；然后各位评委对通过审核的成果给出评审分数。
+                            </p>
+                            <p>
+                                三、各位评委在完成评分后，请按下述第六条表1的要求对获奖成果和获奖等级给出推荐意见，坚持宁缺毋滥的原则，不够一、二、三等奖标准的不凑数。
+                            </p>
+                            <p>
+                                四、请各位评委将完成的评分和推荐意见表签字并提交。
+                            </p>
+                            <p>
+                                五、计分原则：本次评审分组计分，每组每个评委对本组每个成果的评分，分别去掉1个最高分和一个最低分，以其余评委分数的算术平均值计算总分。
+                            </p>
+                            <p>
+                                六、中国石油工程建设科学技术奖科技进步奖设一、二、三等奖。获奖成果比例为申报项目的70%，各组一、二、三等奖数量按表1推荐。
+                            </p>
+                            <div class="ui segment">
+                                <table class="ui fixed single line celled table "  >
+                                    <thead>
+                                    <tr>
+                                        <th colspan="6">表1         各组获奖比例分配表</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">组别</th>
+                                        <th rowspan="2">参评数量</th>
+                                        <th rowspan="2">获奖数（项）</th>
+                                        <th colspan="3">获奖等级指标（项）</th>
+                                    </tr>
+                                    <tr>
+                                        <th>一等</th>
+                                        <th>二等</th>
+                                        <th>三等</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1.油气集输与储运</td>
+                                        <td>25</td>
+                                        <td>18</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.施工组</td>
+                                        <td>21</td>
+                                        <td>15</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>7</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3.软件组</td>
+                                        <td>25</td>
+                                        <td>18</td>
+                                        <td>3</td>
+                                        <td>6</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4.综合组</td>
+                                        <td>12</td>
+                                        <td>8</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>合计</td>
+                                        <td>83</td>
+                                        <td>59</td>
+                                        <td>12</td>
+                                        <td>18</td>
+                                        <td>29</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p>
+                                    七、各组按项目得分排序确定获奖项目名单及推荐获奖等级。
+                                </p>
+                                <p>八、评选原则为“宁缺毋滥”原则上各等级分数应满足如下要求。</p>
+                                <p>一等：总分90分及以上；</p>
+                                <p>二等：总分76及以上-89分；</p>
+                                <p>三等：总分61-75分；</p>
+                                <p>落选：60分以下。</p>
+                                <p>确定的各等级成果应满足该等级的分数要求，进入分数段的成果数量如超出表1要求，按表1执行。</p>
+                                <p>九、科技创新先进团队和科技创新先进个人不分等级，由评委投票确定获奖名单。</p>
+                                <p>十、在评审过程中如发现申报材料不实的问题，请及时与会务组联系，一经查实，取消其参评资格。</p>
+                                <p>十一、评审纪律：各位评委必须遵循“公平、公正、实事求是的原则”进行评审，在评审期间不得泄露评委名单及本组评选成果名单，不打听其他评委的评审情况，不泄露评分情况，不向其他评委“拉分”。</p>
+                                <p>联系人及联系方式：</p>
+                                <p>赵玉华：010-86301505</p>
+                                <p>李  丹：15510199396 /010-61915853.86301562</p>
+                                <p style="text-align: center">中国石油工程建设协会</p>
+                                <p style="text-align: center">2022年9月5日</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div id="tab-1" class="tab-pane ">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td width="5%" valign="top"><p align="center"><strong>序号 </strong></p></td>
+                                        <td width="83%" colspan="2" valign="top"><p align="center"><strong>评价指标 </strong></p></td>
+                                        <td width="10%" valign="top"><p align="center"><strong>分值 </strong></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" rowspan="3" valign="top"><p>1</p></td>
+                                        <td width="58%" rowspan="3" valign="top"><p>应在科研项目中稳定合作 </p></td>
+                                        <td width="25%" valign="top"><p>﹥10年 </p></td>
+                                        <td width="10%" valign="top"><p align="center">20</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>5~≦10年 </p></td>
+                                        <td width="10%" valign="top"><p align="center">&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>3~≦5年 </p></td>
+                                        <td width="10%" valign="top"><p align="center">12</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" rowspan="3" valign="top"><p>2</p></td>
+                                        <td width="58%" rowspan="3" valign="top"><p>担任本团队学术领头人的资历及在本团队研究领域的权威性 </p></td>
+                                        <td width="25%" valign="top"><p>院士、国家或行业大师 </p></td>
+                                        <td width="10%" valign="top"><p align="center">16</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>教授级高级工程师 </p></td>
+                                        <td width="10%" valign="top"><p align="center">&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>高级工程师 </p></td>
+                                        <td width="10%" valign="top"><p align="center">8</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" rowspan="3" valign="top"><p>3</p></td>
+                                        <td width="58%" rowspan="3" valign="top"><p>近三年获得科技创新成果 </p></td>
+                                        <td width="25%" valign="top"><p>﹥10项 </p></td>
+                                        <td width="10%" valign="top"><p align="center">18</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>5~≦10项 </p></td>
+                                        <td width="10%" valign="top"><p align="center">&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>3~≦5项 </p></td>
+                                        <td width="10%" valign="top"><p align="center">12</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" rowspan="3" valign="top"><p>4</p></td>
+                                        <td width="58%" rowspan="3" valign="top"><p>获得国家发明专利 </p></td>
+                                        <td width="25%" valign="top"><p>﹥3件 </p></td>
+                                        <td width="10%" valign="top"><p align="center">18</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>2件 </p></td>
+                                        <td width="10%" valign="top"><p align="center">&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>1件 </p></td>
+                                        <td width="10%" valign="top"><p align="center">10</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" rowspan="3" valign="top"><p>5</p></td>
+                                        <td width="58%" rowspan="3" valign="top"><p>获得国家实用新型专利 </p></td>
+                                        <td width="25%" valign="top"><p>﹥10件 </p></td>
+                                        <td width="10%" valign="top"><p align="center">12</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>5~≦10件 </p></td>
+                                        <td width="10%" valign="top"><p align="center">&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>3~≦5件 </p></td>
+                                        <td width="10%" valign="top"><p align="center">8</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" rowspan="3" valign="top"><p>6</p></td>
+                                        <td width="58%" rowspan="3" valign="top"><p>科技成果转化率 </p></td>
+                                        <td width="25%" valign="top"><p>﹥70%</p></td>
+                                        <td width="10%" valign="top"><p align="center">16</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>50~≦70%</p></td>
+                                        <td width="10%" valign="top"><p align="center">&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="25%" valign="top"><p>30~≦50%</p></td>
+                                        <td width="10%" valign="top"><p align="center">10</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="58%" valign="top"><p>合计 </p></td>
+                                        <td width="25%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="10%" valign="top"><p align="center">60~100</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="full-height-scroll">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td width="3%" valign="top"><p>部分 </p></td>
+                                        <td width="8%" valign="top"><p>团队性质 </p></td>
+                                        <td width="59%" valign="top"><p>内容 </p></td>
+                                        <td width="19%" valign="top"><p>备注 </p></td>
+                                        <td width="5%" valign="top"><p>缓评 </p></td>
+                                        <td width="5%" valign="top"><p>不评 </p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="3%" rowspan="7" valign="top"><p>第一部分 </p></td>
+                                        <td width="8%" rowspan="7" valign="top"><p>团队 </p></td>
+                                        <td width="59%" valign="top"><p>（1）有共同研发的项目。 </p></td>
+                                        <td width="19%" valign="top"><p>如没有 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（2）应在科研项目中稳定合作3~5年以上。 </p></td>
+                                        <td width="19%" valign="top"><p>低于3年，满足时可参评 </p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（3）有担任过本团队研究领域重大项目的科研或工程技术专家，在科研一线工作，并取得系列性、原创性研究成果（具有高级职称，必要条件）。 </p></td>
+                                        <td width="19%" valign="top"><p>如带头人不满足，满足后可参评 </p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（4）近三年获得科技创新成果3项以下（不含3项）。 </p></td>
+                                        <td width="19%" valign="top"><p>成果够数后可参评 </p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（5）获得的工程应用专利或科学发明专利低于5件（不含5件）。 </p></td>
+                                        <td width="19%" valign="top"><p>专利够数后可参评 </p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（6）科技成果转化率不足30%。 </p></td>
+                                        <td width="19%" valign="top"><p>待达到时可参评 </p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（7）无稳定的科研经费。 </p></td>
+                                        <td width="19%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="3%" rowspan="10" valign="top"><p>第 <br />
+                                            二 <br />
+                                            部 <br />
+                                            分 </p></td>
+                                        <td width="8%" rowspan="10" valign="top"><p>&nbsp;</p>
+                                            <p>企事业单位 </p></td>
+                                        <td width="59%" valign="top"><p>（1）须是国内石油工程建设行业（包括项目建设、勘察设计咨询、工程公司、招投标、施工、监理、设备制造等）产权明晰、经政府注册、具有本行业专业以上资质的独立法人企事业（包括子公司和分公司）单位（必要条件）。 </p></td>
+                                        <td width="19%" valign="top"><p>如不符 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（2）协会会员的企事业单位（必要条件）。 </p></td>
+                                        <td width="19%" valign="top"><p>如不是 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（3）申报单位应正常运营，并具有良好的发展趋势。（必要条件）。 </p></td>
+                                        <td width="19%" valign="top"><p>如不能正常营业 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（4）近三年发生国一般及以上质量安全事故（必要条件）。 </p></td>
+                                        <td width="19%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（5）有违法违纪及其他不良记录（必要条件）。 </p></td>
+                                        <td width="19%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（6）企业无科技发展规划和实施计划。 </p></td>
+                                        <td width="19%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（7）科研资金投入有预算，科技投入占收入的8%。（不含8%） </p></td>
+                                        <td width="19%" valign="top"><p>低于8%</p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（8）科研机构健全，有人才队伍。 </p></td>
+                                        <td width="19%" valign="top"><p>如无 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（9）制度健全，有成熟的管理模式和运行机制。 </p></td>
+                                        <td width="19%" valign="top"><p>如无 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="59%" valign="top"><p>（10）单位有国内先进以上的科技成果，并在实际应用中取得良好的经济效益和社会效益。 </p></td>
+                                        <td width="19%" valign="top"><p>如无 </p></td>
+                                        <td width="5%" valign="top"><p>&nbsp;</p></td>
+                                        <td width="5%" valign="top"><p>ⅴ</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p>注：企事业单位除应具备第二部分内容，还应同时具备第一部分内容。此外，按评分排序中奖率控制在50%以内。 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div th:include="include :: footer"></div>
+<script>
+    $(function(){$(".full-height-scroll").slimScroll({height:"100%"})});
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+</body>
+</html>
+
+

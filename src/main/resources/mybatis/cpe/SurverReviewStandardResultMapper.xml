@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.SurverReviewStandardResultDao">
+
+	<select id="get" resultType="com.bootdo.cpe.domain.SurverReviewStandardResultDO">
+		select `id`,`num_copies`,`apply_unit_is_bear`,`design_is_year`,`design_is_cert`,`unit_is_three_safe`,`bureau_is_first_award`,`superior_is_opionion`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`standard_is_desc`,`department_is_approve`,`two_user_is_use`,`economic_is_cert`,`bureau_award_is_cert`,`review_result`,`remarks`,`opt_uid`,`pro_id`,`task_id`,`created`,`updated`, approve_is_publish from ass_surver_review_standard_result where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.cpe.domain.SurverReviewStandardResultDO">
+		select cr.`id`,`num_copies`,`apply_unit_is_bear`,`design_is_year`,`design_is_cert`,`unit_is_three_safe`,`bureau_is_first_award`,`superior_is_opionion`,`apply_source_question`,`feedback_info`,`pro_contact`,`main_user`,`standard_is_desc`,`department_is_approve`,`two_user_is_use`,`economic_is_cert`,`bureau_award_is_cert`,`review_result`
+		     ,cr.`remarks`,cr.`opt_uid`,cr.`task_id`,cr.`created`,cr.`updated`, cr.approve_is_publish,
+		     pro.id pro_id,
+		     pro.major,
+		     pro.pro_code,
+		     pro.pro_sub_type,
+		     pro.pro_type,
+		     pro.chengguo pro_name,
+		     sd.name apply_company
+		from
+		    boot_do.ass_award_enterprise_project pro
+		        JOIN
+		    sys_user su on pro.create_uid = su.user_id
+		        JOIN
+		    sys_dept sd ON su.dept_id = sd.dept_id
+		        LEFT JOIN
+		    ass_surver_review_standard_result cr on cr.pro_id = pro.id
+        <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="applyUnitIsBear != null and applyUnitIsBear != ''"> and apply_unit_is_bear = #{applyUnitIsBear} </if>
+		  		  <if test="designIsYear != null and designIsYear != ''"> and design_is_year = #{designIsYear} </if>
+		  		  <if test="designIsCert != null and designIsCert != ''"> and design_is_cert = #{designIsCert} </if>
+		  		  <if test="unitIsThreeSafe != null and unitIsThreeSafe != ''"> and unit_is_three_safe = #{unitIsThreeSafe} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="standardIsDesc != null and standardIsDesc != ''"> and standard_is_desc = #{standardIsDesc} </if>
+		  		  <if test="departmentIsApprove != null and departmentIsApprove != ''"> and department_is_approve = #{departmentIsApprove} </if>
+		  		  <if test="twoUserIsUse != null and twoUserIsUse != ''"> and two_user_is_use = #{twoUserIsUse} </if>
+		  		  <if test="economicIsCert != null and economicIsCert != ''"> and economic_is_cert = #{economicIsCert} </if>
+		  		  <if test="bureauAwardIsCert != null and bureauAwardIsCert != ''"> and bureau_award_is_cert = #{bureauAwardIsCert} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from boot_do.ass_award_enterprise_project pro
+		       JOIN
+		   sys_user su on pro.create_uid = su.user_id
+		       JOIN
+		   sys_dept sd ON su.dept_id = sd.dept_id
+		       LEFT JOIN
+		   ass_surver_review_standard_result cr on cr.pro_id = pro.id
+		 <where>
+		  		  <if test="id != null and id != ''"> and cr.id = #{id} </if>
+		  		  <if test="numCopies != null and numCopies != ''"> and num_copies = #{numCopies} </if>
+		  		  <if test="applyUnitIsBear != null and applyUnitIsBear != ''"> and apply_unit_is_bear = #{applyUnitIsBear} </if>
+		  		  <if test="designIsYear != null and designIsYear != ''"> and design_is_year = #{designIsYear} </if>
+		  		  <if test="designIsCert != null and designIsCert != ''"> and design_is_cert = #{designIsCert} </if>
+		  		  <if test="unitIsThreeSafe != null and unitIsThreeSafe != ''"> and unit_is_three_safe = #{unitIsThreeSafe} </if>
+		  		  <if test="bureauIsFirstAward != null and bureauIsFirstAward != ''"> and bureau_is_first_award = #{bureauIsFirstAward} </if>
+		  		  <if test="superiorIsOpionion != null and superiorIsOpionion != ''"> and superior_is_opionion = #{superiorIsOpionion} </if>
+		  		  <if test="applySourceQuestion != null and applySourceQuestion != ''"> and apply_source_question = #{applySourceQuestion} </if>
+		  		  <if test="feedbackInfo != null and feedbackInfo != ''"> and feedback_info = #{feedbackInfo} </if>
+		  		  <if test="proContact != null and proContact != ''"> and pro_contact = #{proContact} </if>
+		  		  <if test="mainUser != null and mainUser != ''"> and main_user = #{mainUser} </if>
+		  		  <if test="standardIsDesc != null and standardIsDesc != ''"> and standard_is_desc = #{standardIsDesc} </if>
+		  		  <if test="departmentIsApprove != null and departmentIsApprove != ''"> and department_is_approve = #{departmentIsApprove} </if>
+		  		  <if test="twoUserIsUse != null and twoUserIsUse != ''"> and two_user_is_use = #{twoUserIsUse} </if>
+		  		  <if test="economicIsCert != null and economicIsCert != ''"> and economic_is_cert = #{economicIsCert} </if>
+		  		  <if test="bureauAwardIsCert != null and bureauAwardIsCert != ''"> and bureau_award_is_cert = #{bureauAwardIsCert} </if>
+		  		  <if test="reviewResult != null and reviewResult != ''"> and review_result = #{reviewResult} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="optUid != null and optUid != ''"> and cr.opt_uid = #{optUid} </if>
+		  		  <if test="proId != null and proId != ''"> and pro.id = #{proId} </if>
+		  		  <if test="taskId != null and taskId != ''"> and pro.publish_task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.cpe.domain.SurverReviewStandardResultDO" useGeneratedKeys="true" keyProperty="id">
+		insert into ass_surver_review_standard_result
+		(
+			`num_copies`,
+			`apply_unit_is_bear`,
+			`design_is_year`,
+			`design_is_cert`,
+			`unit_is_three_safe`,
+			`bureau_is_first_award`,
+			`superior_is_opionion`,
+			`apply_source_question`,
+			`feedback_info`,
+			`pro_contact`,
+			`main_user`,
+			`standard_is_desc`,
+			`department_is_approve`,
+			`two_user_is_use`,
+			`economic_is_cert`,
+			`bureau_award_is_cert`,
+			`review_result`,
+			`remarks`,
+			`opt_uid`,
+			`pro_id`,
+			`task_id`,
+		    approve_is_publish
+		)
+		values
+		(
+			#{numCopies},
+			#{applyUnitIsBear},
+			#{designIsYear},
+			#{designIsCert},
+			#{unitIsThreeSafe},
+			#{bureauIsFirstAward},
+			#{superiorIsOpionion},
+			#{applySourceQuestion},
+			#{feedbackInfo},
+			#{proContact},
+			#{mainUser},
+			#{standardIsDesc},
+			#{departmentIsApprove},
+			#{twoUserIsUse},
+			#{economicIsCert},
+			#{bureauAwardIsCert},
+			#{reviewResult},
+			#{remarks},
+			#{optUid},
+			#{proId},
+			#{taskId},
+		    #{approveIsPublish}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.cpe.domain.SurverReviewStandardResultDO">
+		update ass_surver_review_standard_result
+		<set>
+			<if test="numCopies != null">`num_copies` = #{numCopies}, </if>
+			<if test="applyUnitIsBear != null">`apply_unit_is_bear` = #{applyUnitIsBear}, </if>
+			<if test="designIsYear != null">`design_is_year` = #{designIsYear}, </if>
+			<if test="designIsCert != null">`design_is_cert` = #{designIsCert}, </if>
+			<if test="unitIsThreeSafe != null">`unit_is_three_safe` = #{unitIsThreeSafe}, </if>
+			<if test="bureauIsFirstAward != null">`bureau_is_first_award` = #{bureauIsFirstAward}, </if>
+			<if test="superiorIsOpionion != null">`superior_is_opionion` = #{superiorIsOpionion}, </if>
+			<if test="applySourceQuestion != null">`apply_source_question` = #{applySourceQuestion}, </if>
+			<if test="feedbackInfo != null">`feedback_info` = #{feedbackInfo}, </if>
+			<if test="proContact != null">`pro_contact` = #{proContact}, </if>
+			<if test="mainUser != null">`main_user` = #{mainUser}, </if>
+			<if test="standardIsDesc != null">`standard_is_desc` = #{standardIsDesc}, </if>
+			<if test="departmentIsApprove != null">`department_is_approve` = #{departmentIsApprove}, </if>
+			<if test="twoUserIsUse != null">`two_user_is_use` = #{twoUserIsUse}, </if>
+			<if test="economicIsCert != null">`economic_is_cert` = #{economicIsCert}, </if>
+			<if test="bureauAwardIsCert != null">`bureau_award_is_cert` = #{bureauAwardIsCert}, </if>
+			<if test="reviewResult != null">`review_result` = #{reviewResult}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="proId != null">`pro_id` = #{proId}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+			<if test="approveIsPublish != null">`approve_is_publish` = #{approveIsPublish}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from ass_surver_review_standard_result where id = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from ass_surver_review_standard_result where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

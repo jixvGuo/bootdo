@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header_lu"></head>
+
+
+<body>
+    <div class="ui container">
+        <div class="ui bottom attached segment">
+            <form action="" class="ui basic form">
+                <input id="proId" name="proId" th:value="${proId}" type="hidden">
+                <input id="major" name="major" th:value="${major}" type="hidden">
+                <input id="itemId" name="itemId" th:value="${itemId}" type="hidden">
+                <h4 class="ui red horizontal divider header">基本信息 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>项目编号</label>
+                        <input type="text" name="procode" th:value="${proInfo.showNum}" placeholder="项目编号">
+                    </div>
+                    <div class="ui field">
+                        <label>课题名称</label>
+                        <input type="text" name="topicname" th:value="${proInfo.chengguo}" placeholder="课题名称">
+                    </div>
+                </div>
+                <h4 class="ui red horizontal divider header">评审项目 </h4>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>工艺技术来源及创新程度（25）</label>
+                        <input type="number" name="advancedtechnique" id="advancedtechnique"  th:value="${advancedtechnique}">
+                    </div>
+                    <div class="ui field">
+                        <label>总体工艺技术水平（25）</label>
+                        <input type="number" name="innovate" id="innovate"  th:value="${innovate}">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>符合国家有关法规和标准规范（15）</label>
+                        <input type="number" name="facilityvalue" id="facilityvalue" th:value="${facilityvalue}">
+                    </div>
+                    <div class="ui field">
+                        <label>设计质量（10）</label>
+                        <input type="number" name="intellectualproperty" id="intellectualproperty" th:value="${intellectualproperty}">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>节能降耗、经济效益、社会效益（10）</label>
+                        <input type="number" name="economics" id="economics" th:value="${economics}">
+                    </div>
+                    <div class="ui field">
+                        <label>绿色建造情况（5）</label>
+                        <input type="number" name="energyconservation" id="energyconservation" th:value="${energyconservation}">
+                    </div>
+                </div>
+                <div class="ui two fields">
+                    <div class="ui field">
+                        <label>申报材料质量（10）</label>
+                        <input type="number" name="materialquality" id="materialquality" th:value="${materialquality}">
+                    </div>
+                </div>
+                <div class="ui field disabled">
+                    <label>形审情况或参评项目总分（100）</label>
+                    <input type="number" name="total" id="total" th:value="${totalScore}" placeholder="总分">
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui basic center aligned segment">
+                    <div class="ui submit button" onclick="saveData()">保存</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 详情页面 -->
+    <div th:include="include :: footer_lu"></div>
+
+    <script type="text/javascript" src="/js/appjs/cpe/surver/surver_score.js?v=1.0"></script>
+
+    <script>
+        $('.ui.dropdown').dropdown();
+
+        console.log("----------->>aaaa");
+
+        $("input[type='number']").blur(function() {
+            console.log("---->>>");
+            var totalScore = 0;
+            $("input[type='number']").each(function() {
+                var namec = $(this).attr("name");
+                if (namec != "total") {
+                    totalScore += Number($(this).val());
+                }
+            });
+            $("input[name='total']").val(totalScore);
+        });
+
+        function addimage() {
+            $("#fileimage").trigger("click");
+        }
+
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                procode: {
+                    identifier: 'procode',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写项目编号'
+                    }]
+                },
+                topicname: {
+                    identifier: 'topicname',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写课题名称'
+                    }]
+                },
+                advancedtechnique: {
+                    identifier: 'advancedtechnique',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写工艺技术来源及创新程度（25）'
+                    }]
+                },
+                innovate: {
+                    identifier: 'innovate',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写总体工艺技术水平（25）'
+                    }]
+                },
+                facilityvalue: {
+                    identifier: 'facilityvalue',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写符合国家有关法规和标准规范（15）'
+                    }]
+                },
+                intellectualproperty: {
+                    identifier: 'intellectualproperty',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写设计质量（10）'
+                    }]
+                },
+                economics: {
+                    identifier: 'economics',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写节能降耗、经济效益、社会效益（10）'
+                    }]
+                },
+                energyconservation: {
+                    identifier: 'energyconservation',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写绿色建造情况（5）'
+                    }]
+                },
+                Materialquality: {
+                    identifier: 'Materialquality',
+                    rules: [{
+                        type: 'empty',
+                        prompt: '请填写申报材料质量（10）'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${awardStyleValidateScience.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="proId" name="proId" th:value="${awardStyleValidateScience.proId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="optUid" name="optUid" th:value="${awardStyleValidateScience.optUid}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否有申报书,是，否：</label>
+								<div class="col-sm-8">
+									<input id="isShenbaoshu" name="isShenbaoshu" th:value="${awardStyleValidateScience.isShenbaoshu}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">研究报告：</label>
+								<div class="col-sm-8">
+									<input id="isYanjiubaogao" name="isYanjiubaogao" th:value="${awardStyleValidateScience.isYanjiubaogao}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果立项文件：</label>
+								<div class="col-sm-8">
+									<input id="isChengguolixiang" name="isChengguolixiang" th:value="${awardStyleValidateScience.isChengguolixiang}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果验收报告：</label>
+								<div class="col-sm-8">
+									<input id="isChengguoyanshou" name="isChengguoyanshou" th:value="${awardStyleValidateScience.isChengguoyanshou}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="scienceJiandingshu" name="scienceJiandingshu" th:value="${awardStyleValidateScience.scienceJiandingshu}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果鉴定等级：</label>
+								<div class="col-sm-8">
+									<input id="chengguoLevel" name="chengguoLevel" th:value="${awardStyleValidateScience.chengguoLevel}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">知识产权证明数量：</label>
+								<div class="col-sm-8">
+									<input id="zhishichanquanCount" name="zhishichanquanCount" th:value="${awardStyleValidateScience.zhishichanquanCount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否是查新报告：</label>
+								<div class="col-sm-8">
+									<input id="isChaxinbaogao" name="isChaxinbaogao" th:value="${awardStyleValidateScience.isChaxinbaogao}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="isOtherZhengming" name="isOtherZhengming" th:value="${awardStyleValidateScience.isOtherZhengming}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果形成的国标、行标：</label>
+								<div class="col-sm-8">
+									<input id="isChengguobiaozhun" name="isChengguobiaozhun" th:value="${awardStyleValidateScience.isChengguobiaozhun}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">检测报告：</label>
+								<div class="col-sm-8">
+									<input id="reviewReport" name="reviewReport" th:value="${awardStyleValidateScience.reviewReport}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">检测报告出具单位：</label>
+								<div class="col-sm-8">
+									<input id="reviewPortCompany" name="reviewPortCompany" th:value="${awardStyleValidateScience.reviewPortCompany}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="assAwardStyleValidateRecordcol" name="assAwardStyleValidateRecordcol" th:value="${awardStyleValidateScience.assAwardStyleValidateRecordcol}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果应用证明：</label>
+								<div class="col-sm-8">
+									<input id="isCheengguoZhengming" name="isCheengguoZhengming" th:value="${awardStyleValidateScience.isCheengguoZhengming}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">成果应用时间：</label>
+								<div class="col-sm-8">
+									<input id="chengguoApplyTime" name="chengguoApplyTime" th:value="${awardStyleValidateScience.chengguoApplyTime}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">应用单位数量：</label>
+								<div class="col-sm-8">
+									<input id="applyComapnyCount" name="applyComapnyCount" th:value="${awardStyleValidateScience.applyComapnyCount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">完成人名单排序表等：</label>
+								<div class="col-sm-8">
+									<input id="isSort" name="isSort" th:value="${awardStyleValidateScience.isSort}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">审查存在问题：</label>
+								<div class="col-sm-8">
+									<input id="validateQuestion" name="validateQuestion" th:value="${awardStyleValidateScience.validateQuestion}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">是否参评：</label>
+								<div class="col-sm-8">
+									<input id="isCanping" name="isCanping" th:value="${awardStyleValidateScience.isCanping}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="created" name="created" th:value="${awardStyleValidateScience.created}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/awardStyleValidateScience/edit.js">
+	</script>
+</body>
+</html>

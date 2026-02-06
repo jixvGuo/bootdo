@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriPersonalInfoScienceKpiDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriPersonalInfoScienceKpiDO">
+		select `id`,`patent_name`,`patent_type`,`patent_effect`,`method_name`,`method_approva`,`method_effect`,`result_name`,`result_appraisal`,`result_effect`,`award_name`,`award_organization`,`award_effect`,`paper_name`,`paper_type`,`paper_effect`,`honor_name`,`honor_organization`,`honor_time`,`task_id`,`apply_id`,`apply_opt_uid`,`created` from ass_enterpri_personal_info_science_kpi where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriPersonalInfoScienceKpiDO">
+		select `id`,`patent_name`,`patent_type`,`patent_effect`,`method_name`,`method_approva`,`method_effect`,`result_name`,`result_appraisal`,`result_effect`,`award_name`,`award_organization`,`award_effect`,`paper_name`,`paper_type`,`paper_effect`,`honor_name`,`honor_organization`,`honor_time`,`task_id`,`apply_id`,`apply_opt_uid`,`created` from ass_enterpri_personal_info_science_kpi
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="patentName != null and patentName != ''"> and patent_name = #{patentName} </if>
+		  		  <if test="patentType != null and patentType != ''"> and patent_type = #{patentType} </if>
+		  		  <if test="patentEffect != null and patentEffect != ''"> and patent_effect = #{patentEffect} </if>
+		  		  <if test="methodName != null and methodName != ''"> and method_name = #{methodName} </if>
+		  		  <if test="methodApprova != null and methodApprova != ''"> and method_approva = #{methodApprova} </if>
+		  		  <if test="methodEffect != null and methodEffect != ''"> and method_effect = #{methodEffect} </if>
+		  		  <if test="resultName != null and resultName != ''"> and result_name = #{resultName} </if>
+		  		  <if test="resultAppraisal != null and resultAppraisal != ''"> and result_appraisal = #{resultAppraisal} </if>
+		  		  <if test="resultEffect != null and resultEffect != ''"> and result_effect = #{resultEffect} </if>
+		  		  <if test="awardName != null and awardName != ''"> and award_name = #{awardName} </if>
+		  		  <if test="awardOrganization != null and awardOrganization != ''"> and award_organization = #{awardOrganization} </if>
+		  		  <if test="awardEffect != null and awardEffect != ''"> and award_effect = #{awardEffect} </if>
+		  		  <if test="paperName != null and paperName != ''"> and paper_name = #{paperName} </if>
+		  		  <if test="paperType != null and paperType != ''"> and paper_type = #{paperType} </if>
+		  		  <if test="paperEffect != null and paperEffect != ''"> and paper_effect = #{paperEffect} </if>
+		  		  <if test="honorName != null and honorName != ''"> and honor_name = #{honorName} </if>
+		  		  <if test="honorOrganization != null and honorOrganization != ''"> and honor_organization = #{honorOrganization} </if>
+		  		  <if test="honorTime != null and honorTime != ''"> and honor_time = #{honorTime} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="applyOptUid != null and applyOptUid != ''"> and apply_opt_uid = #{applyOptUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_personal_info_science_kpi
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="patentName != null and patentName != ''"> and patent_name = #{patentName} </if>
+		  		  <if test="patentType != null and patentType != ''"> and patent_type = #{patentType} </if>
+		  		  <if test="patentEffect != null and patentEffect != ''"> and patent_effect = #{patentEffect} </if>
+		  		  <if test="methodName != null and methodName != ''"> and method_name = #{methodName} </if>
+		  		  <if test="methodApprova != null and methodApprova != ''"> and method_approva = #{methodApprova} </if>
+		  		  <if test="methodEffect != null and methodEffect != ''"> and method_effect = #{methodEffect} </if>
+		  		  <if test="resultName != null and resultName != ''"> and result_name = #{resultName} </if>
+		  		  <if test="resultAppraisal != null and resultAppraisal != ''"> and result_appraisal = #{resultAppraisal} </if>
+		  		  <if test="resultEffect != null and resultEffect != ''"> and result_effect = #{resultEffect} </if>
+		  		  <if test="awardName != null and awardName != ''"> and award_name = #{awardName} </if>
+		  		  <if test="awardOrganization != null and awardOrganization != ''"> and award_organization = #{awardOrganization} </if>
+		  		  <if test="awardEffect != null and awardEffect != ''"> and award_effect = #{awardEffect} </if>
+		  		  <if test="paperName != null and paperName != ''"> and paper_name = #{paperName} </if>
+		  		  <if test="paperType != null and paperType != ''"> and paper_type = #{paperType} </if>
+		  		  <if test="paperEffect != null and paperEffect != ''"> and paper_effect = #{paperEffect} </if>
+		  		  <if test="honorName != null and honorName != ''"> and honor_name = #{honorName} </if>
+		  		  <if test="honorOrganization != null and honorOrganization != ''"> and honor_organization = #{honorOrganization} </if>
+		  		  <if test="honorTime != null and honorTime != ''"> and honor_time = #{honorTime} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="applyOptUid != null and applyOptUid != ''"> and apply_opt_uid = #{applyOptUid} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriPersonalInfoScienceKpiDO">
+		insert into ass_enterpri_personal_info_science_kpi
+		(
+			`id`, 
+			`patent_name`, 
+			`patent_type`, 
+			`patent_effect`, 
+			`method_name`, 
+			`method_approva`, 
+			`method_effect`, 
+			`result_name`, 
+			`result_appraisal`, 
+			`result_effect`, 
+			`award_name`, 
+			`award_organization`, 
+			`award_effect`, 
+			`paper_name`, 
+			`paper_type`, 
+			`paper_effect`, 
+			`honor_name`, 
+			`honor_organization`, 
+			`honor_time`, 
+			`task_id`, 
+			`apply_id`, 
+			`apply_opt_uid`,
+			pro_id
+		)
+		values
+		(
+			#{id}, 
+			#{patentName}, 
+			#{patentType}, 
+			#{patentEffect}, 
+			#{methodName}, 
+			#{methodApprova}, 
+			#{methodEffect}, 
+			#{resultName}, 
+			#{resultAppraisal}, 
+			#{resultEffect}, 
+			#{awardName}, 
+			#{awardOrganization}, 
+			#{awardEffect}, 
+			#{paperName}, 
+			#{paperType}, 
+			#{paperEffect}, 
+			#{honorName}, 
+			#{honorOrganization}, 
+			#{honorTime}, 
+			#{taskId}, 
+			#{applyId}, 
+			#{applyOptUid},
+			#{proId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriPersonalInfoScienceKpiDO">
+		update ass_enterpri_personal_info_science_kpi 
+		<set>
+			<if test="patentName != null">`patent_name` = #{patentName}, </if>
+			<if test="patentType != null">`patent_type` = #{patentType}, </if>
+			<if test="patentEffect != null">`patent_effect` = #{patentEffect}, </if>
+			<if test="methodName != null">`method_name` = #{methodName}, </if>
+			<if test="methodApprova != null">`method_approva` = #{methodApprova}, </if>
+			<if test="methodEffect != null">`method_effect` = #{methodEffect}, </if>
+			<if test="resultName != null">`result_name` = #{resultName}, </if>
+			<if test="resultAppraisal != null">`result_appraisal` = #{resultAppraisal}, </if>
+			<if test="resultEffect != null">`result_effect` = #{resultEffect}, </if>
+			<if test="awardName != null">`award_name` = #{awardName}, </if>
+			<if test="awardOrganization != null">`award_organization` = #{awardOrganization}, </if>
+			<if test="awardEffect != null">`award_effect` = #{awardEffect}, </if>
+			<if test="paperName != null">`paper_name` = #{paperName}, </if>
+			<if test="paperType != null">`paper_type` = #{paperType}, </if>
+			<if test="paperEffect != null">`paper_effect` = #{paperEffect}, </if>
+			<if test="honorName != null">`honor_name` = #{honorName}, </if>
+			<if test="honorOrganization != null">`honor_organization` = #{honorOrganization}, </if>
+			<if test="honorTime != null">`honor_time` = #{honorTime}, </if>
+			<if test="taskId != null">`task_id` = #{taskId}, </if>
+			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="applyOptUid != null">`apply_opt_uid` = #{applyOptUid}, </if>
+			<if test="created != null">`created` = #{created}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_personal_info_science_kpi where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_personal_info_science_kpi where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

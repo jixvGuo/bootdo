@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+
+<body class="gray-bg">
+<input type="hidden" id="isReadonly" th:value="${readonly}">
+<input name="proId" th:value="${proId}" type="hidden">
+<input name="taskId" th:value="${taskId}" type="hidden">
+<input name="applyId" th:value="${applyId}" type="hidden">
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <table id="exampleTable" data-mobile-responsive="true">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/system/enterpriPersonalInfo/personal_pro_review_result_list.js"></script>
+
+</body>
+</html>

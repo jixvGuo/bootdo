@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="stylesheet" href="/js/semantic/semantic.min.css">
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <button  th:disabled="${!isApply}" th:if="${apply_type != null && apply_type != ''}" onclick="toApplyPro()" class="btn btn-primary" style="width:100px" type="button"><i class="fa fa-plus"></i>&nbsp;申报</button>
+
+					<button class="btn btn-success" onclick="printExcelPro()" th:if="${isViewProCode}">导出excel</button>
+					<input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+
+					<div class="columns ui pull-right action input">
+						<div class="ui floating dropdown  icon button">
+							<input type="hidden" name="keyType" id="keyType" value="">
+							<span class="text">
+								  <div class="ui red empty circular label"></div>
+									全部
+								</span>
+							<div class="menu">
+								<div class="ui icon search input">
+									<i class="search icon"></i>
+									<input type="text" placeholder="Search tags...">
+								</div>
+								<div class="divider"></div>
+								<div class="scrolling menu">
+									<div class="item" data-value="全部">
+										<div class="ui red empty circular label"></div>
+										全部
+									</div>
+									<div class="item" data-value="序号">
+										<div class="ui black empty circular label"></div>
+										序号
+									</div>
+									<div class="item" data-value="成果编号">
+										<div class="ui purple empty circular label"></div>
+										成果编号
+									</div>
+									<div class="item" data-value="类别">
+										<div class="ui orange empty circular label"></div>
+										类别
+									</div>
+									<div class="item" data-value="课题名称">
+										<div class="ui empty circular label"></div>
+										课题名称
+									</div>
+									<div class="item" data-value="小组名称">
+										<div class="ui yellow empty circular label"></div>
+										小组名称
+									</div>
+									<div class="item" data-value="单位名称">
+										<div class="ui green empty circular label"></div>
+										单位名称
+									</div>
+									<div class="item" data-value="小组类型">
+										<div class="ui empty empty circular label"></div>
+										小组类型
+									</div>
+									<!--<div class="item" data-value="专业范围">
+										<div class="ui black empty circular label"></div>
+										专业范围
+									</div>-->
+									<div class="item" data-value="申报账号">
+										<div class="ui purple empty circular label"></div>
+										申报账号
+									</div>
+									<div class="item" data-value="状态">
+										<div class="ui green empty circular label"></div>
+										状态
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="ui labeled icon input">
+							<input type="text" name="keyWord" id="keyWord" placeholder="输入关键字">
+							<i class=" search link icon" onclick="reLoad()"></i>
+						</div>
+					</div>
+				</div>
+                <div class="ibox-content">
+					<input type="hidden" id="isViewProCode"  th:value="${isViewProCode}" />
+                    <table id="exampleTable" data-mobile-responsive="true"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+		<script type="text/javascript">
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+            var s_assValidatePro_h = 'hidden';
+			var s_print_h = 'hidden';
+			var s_review_h = 'hidden';
+			var s_cancel_review_h = 'hidden';
+			var s_download_doc_h = 'hidden';
+			var s_save_code_h = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:ass_validate_pro" th:if="${isReview}">
+		<script type="text/javascript">
+			s_assValidatePro_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:add">
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:remove">
+		<script type="text/javascript">
+			s_remove_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:publish_award_task_apply">
+		<script type="text/javascript">
+			s_apply_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:print">
+		<script type="text/javascript">
+			s_print_h = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:review">
+		<script type="text/javascript">
+			s_review_h = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:cancelReview">
+		<script type="text/javascript">
+			s_cancel_review_h = '';
+		</script>
+	</div>
+
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:download">
+		<script type="text/javascript">
+			s_download_doc_h = '';
+		</script>
+	</div>
+    <div shiro:haspermission="cpe:qcGroupApplyInfo:saveCode">
+		<script type="text/javascript">
+			s_save_code_h = ''
+		</script>
+	</div>
+
+
+<div style="display: none" id="reloadId" onclick="reloadData()"></div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/cpe/qcGroupApplyInfo/qcGroupApplyInfo.js?v=1.6"></script>
+<script th:inline="javascript">
+    let projectTypes =  /*[[${projectTypes}]]*/ [];
+    let classifications =  /*[[${classifications}]]*/ [];
+	function toApplyPro() {
+		let taskId = $("#taskId").val();
+		page('/qcAward/view/apply?taskId=' + taskId, 'QC奖申报', 20220205);
+	}
+
+    function reloadData() {
+        var applyPage = layer.open({
+            type: 2,
+            title: "QC奖申报",
+            maxmin: true,
+            shadeClose: false, // 点击遮罩关闭层
+            area: ['800px', '520px'],
+            content: "/qcAward/view/apply" // iframe的url
+        });
+
+        layer.full(applyPage)
+    }
+
+
+	$('.ui.dropdown').dropdown();
+
+	function isUpdateType(that, proId) {
+		layer.confirm('确定要更新专业吗？', {
+			btn: ['确定', '取消']
+		}, function () {
+			$.ajax({
+				url: "/scienceProgressScience/updateProMajor",
+				type: "post",
+				data: {
+					'id': proId,
+					'major':$(that).val(),
+					'proType':'science'
+				},
+				success: function (r) {
+					if (r.code == 0) {
+						layer.msg(r.msg);
+						reLoad();
+					} else {
+						layer.msg(r.msg);
+					}
+				}
+			});
+		})
+	}
+
+</script>
+
+
+</body>
+</html>

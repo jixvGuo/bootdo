@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#basic-1" aria-expanded="true"> 优秀工程设计评审标准分值表 </a> </li>
+                        <li class=""><a data-toggle="tab" href="#basic-2" onclick="againload('basic-2')" aria-expanded="false">优秀工程勘察设计软件与优秀工程标准设计评审标准分值表</a> </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="basic-1" class="tab-pane active">
+                            <div class="panel-body">
+                                <iframe id="applyTable" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/surverScore/standardDesign}"></iframe>
+                            </div>
+                        </div>
+                        <div id="basic-2" class="tab-pane">
+                            <div class="panel-body">
+                                <iframe id="majorMaterialsUse" style="height: 700px; width: 100%;" frameborder='0' scrolling="yes" th:src="@{/surverScore/standardScore}"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+
+    <script>
+        var basic2 = true;
+        var basic3 = true;
+        var basic4 = true;
+        var basic5 = true;
+        var basic6 = true;
+        var basic7 = true;
+        var basic8 = true;
+
+        function againload(e) {
+            var Number = e.charAt(e.length - 1);
+
+            if (Number == 2) {
+                if (basic2) {
+                    var src = $("#" + e + " iframe").attr("src");
+                    $("#" + e + " iframe").attr("src", src);
+                    basic2 = false;
+                }
+            } else if (Number == 3) {
+                if (basic3) {
+                    var src = $("#" + e + " iframe").attr("src");
+                    $("#" + e + " iframe").attr("src", src);
+                    basic3 = false;
+                }
+            }
+
+
+        }
+    </script>
+
+
+</body>
+
+</html>

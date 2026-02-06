@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content" style="overflow:scroll">
+                        <form method="post" class="form-horizontal" id="signupForm">
+                            <table class="table table-bordered" style="width:2000px;overflow:scroll">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;vertical-align:middle;width:20px" rowspan="2">序号</th>
+                                        <th style="text-align:center;vertical-align:middle;width:100px" rowspan="2">申报单位</th>
+                                        <th style="text-align:center;vertical-align:middle;width:100px" rowspan="2">申报成果名称</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">三年以上稳定合作</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">技术专家（具有高级职称，必要条件）</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">科技奖励</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">知识产权证书</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">论文、论著证明</th>
+                                        <th style="text-align:center;vertical-align:middle;width:50px" rowspan="2">科技成果应用证明</th>
+                                        <th style="text-align:center;vertical-align:middle;width:40px" colspan="2">若为企事业单位</th>
+                                        <th style="text-align:center;vertical-align:middle;width:80px" colspan="4">审查结论</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">营业执照</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">质量、安全环保证明</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">参评</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">完善后参评</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">不评</th>
+                                        <th style="text-align:center;vertical-align:middle;width:20px">缓评</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;">1</td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox i-checks">
+                                                <label>
+                                                    <input type="checkbox" value="">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input type="radio" value="option1" name="a">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input type="radio" value="option1" name="a">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input type="radio" value="option1" name="a">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radio i-checks">
+                                                <label>
+                                                    <input type="radio" value="option1" name="a">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(" .i-checks").iCheck({
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green"
+            })
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body>
+    <div class="ui bottom attached segment">
+        <h1 style="text-align: center;">质量管理小组概况统计表</h1>
+        <table  id="scoreTable" class="ui celled  table">
+            <input type="hidden" id="isReadonly" th:value="${readonly}">
+            <input id="id" name="id" th:value="${score.id}"  type="hidden">
+            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+            <tr>
+                <th style="width: 10%;text-align: center;">序号</th>
+                <th style="width: 70%;text-align: center;">项目</th>
+                <th style="width: 10%;text-align: center;">单位</th>
+                <th style="width: 10%;text-align: center;">数量</th>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">1</td>
+                <td style="width: 70%;text-align: center;">推行全面质量管理企业数</td>
+                <td style="width: 10%;text-align: center;">个</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="enterpriseCount" th:text="${score.enterpriseCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">2</td>
+                <td style="width: 70%;text-align: center;">企业职工总数</td>
+                <td style="width: 10%;text-align: center;">万人</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="enterWorkerCount" th:text="${score.enterWorkerCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">3</td>
+                <td style="width: 70%;text-align: center;">历年来登记注册QC小组累计数量</td>
+                <td style="width: 10%;text-align: center;">个</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="regQcCount" th:text="${score.regQcCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">4</td>
+                <td style="width: 70%;text-align: center;">本年度登记注册QC小组</td>
+                <td style="width: 10%;text-align: center;">个</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearRegCount" th:text="${score.thisYearRegCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">5</td>
+                <td style="width: 70%;text-align: center;">QC小组当年取得成果数量</td>
+                <td style="width: 10%;text-align: center;">个</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearResultCount" th:text="${score.thisYearResultCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">6</td>
+                <td style="width: 70%;text-align: center;">本年度开展活动的QC小组数量</td>
+                <td style="width: 10%;text-align: center;">个</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearActCount" th:text="${score.thisYearActCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">7</td>
+                <td style="width: 70%;text-align: center;">本年度开展活动的QC小组直接效益</td>
+                <td style="width: 10%;text-align: center;">万元</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearIncome" th:text="${score.thisYearIncome}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">8</td>
+                <td style="width: 70%;text-align: center;">本年度QC小组成果率=取得成果数/注册小组数×100%</td>
+                <td style="width: 10%;text-align: center;">%</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearResultRate" th:text="${score.thisYearResultRate}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">9</td>
+                <td style="width: 70%;text-align: center;">本年度QC小组普及率=参加QC小组人数/职工总数×100%</td>
+                <td style="width: 10%;text-align: center;">%</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearWorkerRate" th:text="${score.thisYearWorkerRate}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">10</td>
+                <td style="width: 70%;text-align: center;">参加QC小组培训</td>
+                <td style="width: 10%;text-align: center;">人次</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="trainCount" th:text="${score.trainCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">11</td>
+                <td style="width: 70%;text-align: center;">本年度QC小组成员提合理化建议数量</td>
+                <td style="width: 10%;text-align: center;">条</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="thisYearProposeCount" th:text="${score.thisYearProposeCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;">12</td>
+                <td style="width: 70%;text-align: center;">具有中国质协QC小组活动推进者资格</td>
+                <td style="width: 10%;text-align: center;">人</td>
+                <td style="width: 10%;text-align: center;" contentEditable="true" name="score" id="qualificationCount" th:text="${score.qualificationCount}"></td>
+            </tr>
+            <tr>
+                <td style="width: 10%;text-align: center;"></td>
+                <td style="width: 70%;text-align: center;">
+                    注：1、各统计数字，务必扣除行业直属企业数。<br>
+                    2、现QC小组工作联系人：<br>
+                    联系电话：
+                </td>
+                <td style="width: 10%;text-align: center;"></td>
+                <td style="width: 10%;text-align: center;"></td>
+            </tr>
+        </table>
+        <form id="signupForm" action="" class="ui basic form">
+            <div class="ui error message"></div>
+            <div class="ui basic center aligned segment">
+                <div class="ui submit button" onclick="save()">保存</div>
+            </div>
+        </form>
+    </div>
+    <div th:include="include :: footer"></div>
+    <script type="text/javascript" src="/js/appjs/cpe/qcSurveyStatisticInfo/add.js"></script>
+
+    <script>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:include="include :: header"></head>
+
+
+<body>
+    <div class="ui top attached tabular menu">
+        <a href="#" class="item active">列表</a>
+        <a th:href="@{/surverExlentApply/toProDescAdd(proId=${proId},taskId=${taskId},readonly=${readonly})}" class="item">新增</a>
+    </div>
+    <div class="ui bottom attached segment">
+        <table class="ui table">
+            <thead>
+                <th>项目编号</th>
+                <th>申报单位</th>
+                <th>奖项类别</th>
+                <th>项目名称</th>
+                <th>推荐等级</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr th:each=" data: ${list}">
+                    <td th:text="${data.projectId}"></td>
+                    <td th:text="${data.reportingUnit}"></td>
+                    <td th:text="${data.awardCategory}"></td>
+                    <td th:text="${data.projectName}"></td>
+                    <td th:text="${data.recommendedGrade}"></td>
+                    <td>
+                        <a th:href="@{'/surverConsultingApply/toProDescView?id='+${data.id}+'&proId='+${proId}+'&taskId='+${taskId} + '&readonly=' + ${readonly}+'&tagName=查看'}" class="ui teal mini basic button">查看</a>
+                        <a th:if="${readonly} eq null or ${readonly} ne 1" th:href="@{'/surverConsultingApply/toProDescView?id='+${data.id}+'&proId='+${proId}+'&taskId='+${taskId}+'&tagName=修改'}" class="ui teal mini basic button">修改</a>
+                        <a th:if="${readonly} eq null or ${readonly} ne 1" class="ui teal mini basic button" href="#" th:onclick="'javascript:delItem(\''+${data.id}+'\')'">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <th colspan="11 ">
+                    <div class="ui pagination mini menu">
+                        <a th:href="@{'/surverConsultingApply/toProDesc?pageType=up&pageNum='+${pageNum}+'&proId='+${proId}+'&taskId='+${taskId}}" class="icon item">上一页</a>
+                        <a th:href="@{'/surverConsultingApply/toProDesc?pageType=down&pageNum='+${pageNum}+'&proId='+${proId}+'&taskId='+${taskId}}" class="icon item">下一页</a>
+                    </div>
+                </th>
+            </tfoot>
+        </table>
+    </div>
+    <div th:include="include :: footer"></div>
+
+    <script>
+        function delItem(id) {
+            parent.layer.confirm('是否删除?', {icon: 3, title: '删除确认提示'}, function (index) {
+                //do something
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: "/cpe/surverConsultApplyProjectProfile/remove",
+                    data: {
+                        id: id,
+                        proId: "${proId}",
+                        taskId: "${taskId}",
+                    },// 你的formid
+                    async: false,
+                    error: function (request) {
+                        parent.layer.alert("Connection error");
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            parent.layer.msg("操作成功");
+                            window.location.reload();
+                        } else {
+                            parent.layer.alert(data.msg)
+                        }
+                    }
+                });
+                layer.close(index);
+            });
+        }
+    </script>
+</body>
+
+</html>

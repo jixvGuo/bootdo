@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.EnterpriTeamInfoDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.EnterpriTeamInfoDO">
+		SELECT
+			ti.`id`,
+			`team_name`,
+			`research_direction`,
+			`leader`,
+			`main_support_company`,
+			`team_build_time`,
+			`apply_company`,
+			`apply_data`,
+			`security_level`,
+			`is_public`,
+			`is_propaganda`,
+			`subject_classification_name`,
+			`industry_national_economy`,
+			`national_key_development_areas`,
+			`opt_uid`,
+			`task_id`,
+			ti.`created`,
+			(select team_des from ass_enterpri_team_intrduction where pro_id = pro.id LIMIT 1)`team_desc`,
+			pro_id,
+			team_stat,
+			(SELECT
+				 created
+			 FROM
+				 ass_award_style_validate_team
+			 WHERE
+				 team_id = ti.id AND is_last_validate = 1
+				LIMIT 1) validate_date,
+    (SELECT
+            sd.name
+        FROM
+            sys_dept sd
+                JOIN
+            sys_user su ON sd.dept_id = su.dept_id
+        WHERE
+            su.user_id = pro.create_uid
+        LIMIT 1) enterprise_name,
+    (SELECT
+            MAX(created)
+        FROM
+            boot_do.ass_award_score_detail
+        WHERE
+            pro_id = pro.id) score_date
+		FROM
+			ass_enterpri_team_info ti
+			JOIN
+			ass_award_enterprise_project pro ON ti.pro_id = pro.id
+		WHERE
+			ti.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.EnterpriTeamInfoDO">
+		select pi.`id`,`team_name`,`research_direction`,`leader`,`main_support_company`,`team_build_time`,`apply_company`,
+		`apply_data`,`security_level`,`is_public`,`is_propaganda`,`subject_classification_name`,`industry_national_economy`,
+		`national_key_development_areas`,`opt_uid`,pi.`task_id`,pi.`created`,`team_desc`,pi.pro_id,team_stat,
+		(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid limit 1) apply_account,
+		 pro.pro_stat,
+		 pro.major,
+		 pro.pro_code showNum,
+		 pro.pro_result_code proResultCode,
+		 pt.apply_start_date,
+		 pt.apply_end_date,
+		 pt.expert_start_time,
+		 pt.check_start_time,
+		 pt.check_end_time,
+		 pt.expert_end_time,
+		 (SELECT group_concat(su.`name`) FROM boot_do.ass_award_assign_project ap join sys_user su on ap.uid = su.user_id where ap.pro_id = pro.id) outUserNames,
+		 (SELECT created FROM ass_award_style_validate_team WHERE team_id = pi.id AND is_last_validate = 1 limit 1) validate_date,
+		 (select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid
+        limit 1) enterprise_name,
+         (SELECT max(created) FROM boot_do.ass_award_score_detail where pro_id = pro.id
+		    <if test="scoreSpecialistUid != null">
+				and score_uid = #{scoreSpecialistUid}
+			</if>
+		 ) score_date
+		 from ass_enterpri_team_info pi
+		 join ass_award_enterprise_project pro on pi.pro_id = pro.id
+		 join ass_award_publish_task pt on pt.id = pro.publish_task_id
+		<if test="associationUserId!=null">
+			join ass_award_publish_task task on pi.task_id = task.id and task.association_userid = #{associationUserId}
+		</if>
+
+		<if test="scoreSpecialistUid != null">
+            join add_special_info si on pro.pro_group_name = si.group_name and si.user_id = #{scoreSpecialistUid} and si.deleted = 0
+        </if>
+
+		<if test="assignUid != null">
+			join ass_award_assign_project ap on ap.pro_id = pi.pro_id and ap.uid = #{assignUid}
+		</if>
+
+        <if test="scoreType != null">
+			join ass_award_project_score_result sr on pro.id = sr.pro_id and pro.pro_type = #{scoreType}
+		</if>
+		<if test="scoreMajor != null and scoreMajor != ''">
+            join add_special_info smi on pro.major = smi.group_name and smi.group_name = #{scoreMajor} and smi.deleted = 0
+        </if>
+        <if test="scoreAccount != null and scoreAccount != ''">
+            join add_special_info sai on pro.major = sai.group_name and sai.deleted = 0
+            join sys_user su on su.user_id = sai.user_id and su.username = #{scoreAccount}
+        </if>
+
+        <where>
+                  <if test="enterpriseUid != null"> and pro.create_uid = #{enterpriseUid} </if>
+		  		  <if test="id != null and id != ''"> and pi.id = #{id} </if>
+		  		  <if test="teamName != null and teamName != ''"> and team_name = #{teamName} </if>
+		  		  <if test="researchDirection != null and researchDirection != ''"> and research_direction = #{researchDirection} </if>
+		  		  <if test="leader != null and leader != ''"> and leader = #{leader} </if>
+		  		  <if test="mainSupportCompany != null and mainSupportCompany != ''"> and main_support_company = #{mainSupportCompany} </if>
+		  		  <if test="teamBuildTime != null and teamBuildTime != ''"> and team_build_time = #{teamBuildTime} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyData != null and applyData != ''"> and apply_data = #{applyData} </if>
+		  		  <if test="securityLevel != null and securityLevel != ''"> and security_level = #{securityLevel} </if>
+		  		  <if test="isPublic != null and isPublic != ''"> and is_public = #{isPublic} </if>
+		  		  <if test="isPropaganda != null and isPropaganda != ''"> and is_propaganda = #{isPropaganda} </if>
+		  		  <if test="subjectClassificationName != null and subjectClassificationName != ''"> and subject_classification_name = #{subjectClassificationName} </if>
+		  		  <if test="industryNationalEconomy != null and industryNationalEconomy != ''"> and industry_national_economy = #{industryNationalEconomy} </if>
+		  		  <if test="nationalKeyDevelopmentAreas != null and nationalKeyDevelopmentAreas != ''"> and national_key_development_areas = #{nationalKeyDevelopmentAreas} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+			      <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="teamDesc != null and teamDesc != ''"> and team_desc = #{teamDesc} </if>
+		  		  <if test="isValidate">
+					   and pro.pro_stat in('to_validate','validate' , 'check')
+				  </if>
+			      <if test="keyWord != null and keyWord != '' and proStatStr == ''">
+						and (exists(
+					        select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid and sd.name like #{keyWord}
+						) or team_name like #{keyWord}
+
+					      or pro.pro_code like #{keyWord}
+                          or pro.major like #{keyWord}
+
+		                  or leader like #{keyWord}
+		                  or research_direction like #{keyWord}
+		                  or team_desc like #{keyWord}
+						or exists(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid and su.username like #{keyWord}))
+				  </if>
+				  <if test="proStatStr != null and proStatStr != '' and proStatStr != 'apply'">
+						and find_in_set(pro.pro_stat, #{proStatStr})
+				  </if>
+				  <if test="proStatStr != null and proStatStr != '' and proStatStr == 'apply'">
+						and (pro.pro_stat is null or pro.pro_stat = '')
+				  </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by pi.id asc
+			</otherwise>
+        </choose>
+		limit 0, 200
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from ass_enterpri_team_info pi
+		join ass_award_enterprise_project pro on pi.pro_id = pro.id
+		<if test="associationUserId!=null">
+			join ass_award_publish_task task on pi.task_id = task.id and task.association_userid = #{associationUserId}
+		</if>
+		<if test="enterpriseUid != null">
+			 and pro.create_uid = #{enterpriseUid}
+		</if>
+		<if test="assignUid != null">
+			join ass_award_assign_project ap on ap.pro_id = pi.pro_id and ap.uid = #{assignUid}
+		</if>
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="teamName != null and teamName != ''"> and team_name = #{teamName} </if>
+		  		  <if test="researchDirection != null and researchDirection != ''"> and research_direction = #{researchDirection} </if>
+		  		  <if test="leader != null and leader != ''"> and leader = #{leader} </if>
+		  		  <if test="mainSupportCompany != null and mainSupportCompany != ''"> and main_support_company = #{mainSupportCompany} </if>
+		  		  <if test="teamBuildTime != null and teamBuildTime != ''"> and team_build_time = #{teamBuildTime} </if>
+		  		  <if test="applyCompany != null and applyCompany != ''"> and apply_company = #{applyCompany} </if>
+		  		  <if test="applyData != null and applyData != ''"> and apply_data = #{applyData} </if>
+		  		  <if test="securityLevel != null and securityLevel != ''"> and security_level = #{securityLevel} </if>
+		  		  <if test="isPublic != null and isPublic != ''"> and is_public = #{isPublic} </if>
+		  		  <if test="isPropaganda != null and isPropaganda != ''"> and is_propaganda = #{isPropaganda} </if>
+		  		  <if test="subjectClassificationName != null and subjectClassificationName != ''"> and subject_classification_name = #{subjectClassificationName} </if>
+		  		  <if test="industryNationalEconomy != null and industryNationalEconomy != ''"> and industry_national_economy = #{industryNationalEconomy} </if>
+		  		  <if test="nationalKeyDevelopmentAreas != null and nationalKeyDevelopmentAreas != ''"> and national_key_development_areas = #{nationalKeyDevelopmentAreas} </if>
+		  		  <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
+		  		  <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="teamDesc != null and teamDesc != ''"> and team_desc = #{teamDesc} </if>
+		  		  <if test="isValidate">
+					   and pro.pro_stat in('to_validate','validate' , 'check')
+				  </if>
+				  <if test="keyWord != null and keyWord != '' and proStatStr == ''">
+					 and (exists(
+					 select sd.name from sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = pro.create_uid and sd.name like #{keyWord}
+					 ) or team_name like #{keyWord}
+
+					 or pro.pro_code like #{keyWord}
+                     or pro.major like #{keyWord}
+
+					 or leader like #{keyWord}
+					 or research_direction like #{keyWord}
+					 or team_desc like #{keyWord}
+					 or exists(SELECT su.username FROM sys_user su where su.user_id = pro.create_uid and su.username like #{keyWord}))
+				  </if>
+					 <if test="proStatStr != '' and proStatStr != 'apply'">
+						 and find_in_set(pro.pro_stat, #{proStatStr})
+					 </if>
+					 <if test="proStatStr != '' and proStatStr == 'apply'">
+						 and (pro.pro_stat is null or pro.pro_stat = '')
+					 </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.EnterpriTeamInfoDO">
+		insert into ass_enterpri_team_info
+		(
+			`id`, 
+			`team_name`, 
+			`research_direction`, 
+			`leader`, 
+			`main_support_company`, 
+			`team_build_time`, 
+			`apply_company`, 
+			`apply_data`, 
+			`security_level`, 
+			`is_public`, 
+			`is_propaganda`, 
+			`subject_classification_name`, 
+			`industry_national_economy`, 
+			`national_key_development_areas`, 
+			`opt_uid`, 
+			`task_id`,
+			`team_desc`,
+			pro_id,
+			team_stat
+		)
+		values
+		(
+			#{id}, 
+			#{teamName}, 
+			#{researchDirection}, 
+			#{leader}, 
+			#{mainSupportCompany}, 
+			#{teamBuildTime}, 
+			#{applyCompany}, 
+			#{applyData}, 
+			#{securityLevel}, 
+			#{isPublic}, 
+			#{isPropaganda}, 
+			#{subjectClassificationName}, 
+			#{industryNationalEconomy}, 
+			#{nationalKeyDevelopmentAreas}, 
+			#{optUid}, 
+			#{taskId},
+			#{teamDesc},
+			#{proId},
+			#{teamStat}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.EnterpriTeamInfoDO">
+		update ass_enterpri_team_info 
+		<set>
+			<if test="teamName != null">`team_name` = #{teamName}, </if>
+			<if test="researchDirection != null">`research_direction` = #{researchDirection}, </if>
+			<if test="leader != null">`leader` = #{leader}, </if>
+			<if test="mainSupportCompany != null">`main_support_company` = #{mainSupportCompany}, </if>
+			<if test="teamBuildTime != null">`team_build_time` = #{teamBuildTime}, </if>
+			<if test="applyCompany != null">`apply_company` = #{applyCompany}, </if>
+			<if test="applyData != null">`apply_data` = #{applyData}, </if>
+			<if test="securityLevel != null">`security_level` = #{securityLevel}, </if>
+			<if test="isPublic != null">`is_public` = #{isPublic}, </if>
+			<if test="isPropaganda != null">`is_propaganda` = #{isPropaganda}, </if>
+			<if test="subjectClassificationName != null">`subject_classification_name` = #{subjectClassificationName}, </if>
+			<if test="industryNationalEconomy != null">`industry_national_economy` = #{industryNationalEconomy}, </if>
+			<if test="nationalKeyDevelopmentAreas != null">`national_key_development_areas` = #{nationalKeyDevelopmentAreas}, </if>
+			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="teamDesc != null">`team_desc` = #{teamDesc}</if>
+			<if test="teamStat != null">`team_stat` = #{teamStat}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateMajor" parameterType="com.bootdo.system.domain.EnterpriTeamInfoDO">
+		UPDATE ass_enterpri_team_info
+		SET
+			subject_classification_name = #{subjectClassificationName},
+			research_direction = #{researchDirection}
+		WHERE
+			pro_id = #{proId}
+	</update>
+	
+	<delete id="remove">
+		delete from ass_enterpri_team_info where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from ass_enterpri_team_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

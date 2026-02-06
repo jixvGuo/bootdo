@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+                            <input id="applyId" name="applyId" th:value="${applyId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;vertical-align:middle;width:5%">类型</th>
+                                        <th style="text-align:center;vertical-align:middle;width:10%">成果名称</th>
+                                        <th style="text-align:center;vertical-align:middle;width:10%">本团队中合作者/排序
+                                        </th>
+                                        <th style="text-align:center;vertical-align:middle;width:10%">备注</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;">标志性成果</td>
+                                        <td contentEditable="contentEditable"></td>
+                                        <td contentEditable="contentEditable"></td>
+                                        <td contentEditable="contentEditable"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">发表论文专著情况</td>
+                                        <td contentEditable="contentEditable"></td>
+                                        <td contentEditable="contentEditable"></td>
+                                        <td contentEditable="contentEditable"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">所获知识产权和技术标准情况</td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">团队承担项目及科研经费情况</td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center;">团队曾获科技奖励情况</td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                        <td contentEditable="plaintext-only"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+
+</body>
+
+</html>

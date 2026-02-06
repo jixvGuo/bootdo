@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityAward/toEnginDescUpload(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">项目概况</a>
+    <a th:href="@{/enterpriseQualityAward/toAdd(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">石油优质工程奖申报单</a>
+    <a th:href="@{/enterpriseQualityAward/toContributorList(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="active item">突出贡献者名单</a>
+    <a th:href="@{/enterpriseQualityAward/toUploadFile(proId=${proId},taskId=${taskId},applyId=${applyId},readonly=${readonly})}" class="item">证实性文件上传</a>
+</div>
+<div class="ui top attached tabular menu">
+    <a th:href="@{/enterpriseQualityAward/toContributorList(proId=${proId},taskId=${taskId},readonly=${readonly})}" class="item">列表 </a>
+    <a th:if="${readonly} eq null or ${readonly} ne 1" th:href="@{/enterpriseQualityAward/toContributorAdd(proId=${proId},taskId=${taskId},applyId=${applyId})}" class="item">新增 </a>
+    <a href="#" class="active item">打印 </a>
+</div>
+<div class="ui container">
+    <input name="taskId" th:value="${taskId}" type="hidden">
+
+
+    <div class="ui bottom attached segment">
+        <table class="ui table celled">
+            <tbody>
+            <tr>
+                <td style="width:5%;vertical-align:middle;text-align:center">
+                    序号
+                </td>
+                <td style="width:35%;vertical-align:middle;text-align:center">
+                    承建（参建）单位
+                </td>
+                <td style="width:10%;vertical-align:middle;text-align:left">
+                    姓 名
+                </td>
+                <td style="width:10%;vertical-align:middle;text-align:left">
+                    职 务
+                </td>
+                <td style="width:40%;vertical-align:middle;text-align:left">
+                    工程建设中的作用
+                </td>
+            </tr>
+
+            <tr th:each="data,dataStat:${pageUtils.rows}">
+                <td th:text="${dataStat.count}"></td>
+                <td th:text="${data.contractorsParticipants}"></td>
+                <td th:text="${data.name}"></td>
+                <td th:text="${data.post}"></td>
+                <td th:text="${data.affectProjectConstruction}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="ui basic center aligned segment">
+
+            <a th:href="@{'/enterpriseQualityAward/toPrint?proId='+${proId}}" class="ui teal mini basic button">下载</a>
+
+
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+
+<!--<script th:if="${data.id != null && data.id > 0}" type="text/javascript"-->
+<!--        src="/js/appjs/act/contribution/edit.js"></script>-->
+<!--<script th:if="${data.id == null || data.id == 0}" type="text/javascript"-->
+<!--        src="/js/appjs/act/contribution/add.js"></script>-->
+
+
+
+<script>
+
+
+</script>
+</body>
+</html>

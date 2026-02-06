@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+    <input type="hidden" id="pageSource" th:value="${pageSource}">
+	<div class="wrapper wrapper-content ">
+        <input type="hidden" id="publishTaskId" name="publishTaskId" th:value="${publishTaskId}"/>
+		<input type="hidden" id="role" name="role" th:value="${role}"/>
+		<input type="hidden" id="act" name="act" th:value="${act}"/>
+		<input type="hidden" id="applyType" name="applyType" th:value="${apply_type}"/>
+		<input type="hidden" id="apply_pro_type" name="apply_pro_type" th:value="${apply_pro_type}"/>
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+                            <button th:if="${apply_type != null && apply_type != ''}" type="button" class="btn  btn-primary" onclick="applyAwardPro()">
+								<i class="fa fa-plus" aria-hidden="true"></i>申报
+							</button>
+						</div>
+
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select id="searchName" data-placeholder="选择任务" class="form-control chosen-select"
+									tabindex="2" style="width: 100%">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+
+					<input type="hidden" id="isViewProCode"  th:value="${isViewProCode}" />
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+	<div>
+		<script type="text/javascript">
+			var s_edit_h = 'hidden';
+			var s_remove_h = 'hidden';
+			var s_resetPwd_h = 'hidden';
+            var s_assValidatePro_h = 'hidden';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:award:ass_validate_pro" th:if="${isReview}">
+		<script type="text/javascript">
+			s_assValidatePro_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="system:enterpriPersonalInfo:edit">
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:award:publish_award_task_remove">
+		<script type="text/javascript">
+			var s_remove_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="act:award:publish_award_task_apply">
+		<script type="text/javascript">
+			var s_apply_h = '';
+		</script>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/system/enterpriTeamInfo/enterpriTeamInfo.js?v=1.0"></script>
+</body>
+</html>

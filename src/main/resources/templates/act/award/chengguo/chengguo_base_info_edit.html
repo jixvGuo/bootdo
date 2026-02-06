@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link rel="shortcut icon" href="favicon.ico">
+<link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+<link href="/css/animate.css" rel="stylesheet">
+<link href="/css/layui.css" rel="stylesheet">
+<link href="/css/style.css?v=4.1.0" rel="stylesheet">
+<link href="/css/plugins/datepicker/bootstrap-datetimepicker.css" rel="stylesheet">
+</head>
+<!-- 成果基本信息-表格填写Mirrored from www.zi-han.net/theme/hplus/form_basic.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:15 GMT -->
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal"  id="signupForm">
+                            <input type="hidden" id="isReadonly" th:value="${readonly}">
+                            <input id="id" name="id" th:value="${enterpriseChengguoBaseInfo.id}"  type="hidden">
+                            <input id="proId" name="proId" th:value="${proId}"  type="hidden">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">成果名称
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                            colspan="7">
+                                            <input id="chengguoName" name="chengguoName" th:value="${enterpriseChengguoBaseInfo.chengguoName}" class="form-control" type="text">                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">申报单位
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                             colspan="7">
+                                            <input id="applyEnterprise" name="applyEnterprise" th:value="${enterpriseChengguoBaseInfo.applyEnterprise}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3"  id="inputtrigger2">主要完成单位
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                             colspan="7">
+                                            <input id="masterCompleteEnterprise" name="masterCompleteEnterprise" th:value="${enterpriseChengguoBaseInfo.masterCompleteEnterprise}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">主要完成人员
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                             colspan="7">
+                                            <input id="mainCompleteUsers" name="mainCompleteUsers" th:value="${enterpriseChengguoBaseInfo.mainCompleteUsers}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">成果所属专业
+                                        </td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                             colspan="7">
+                                            <input id="major" name="major" th:value="${enterpriseChengguoBaseInfo.major}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">
+                                            成果所属学科分类</td>
+                                        <td style="width:70%;vertical-align:middle;text-align:left"
+                                             colspan="7">
+                                            <input id="subjectType" name="subjectType" th:value="${enterpriseChengguoBaseInfo.subjectType}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">联系人</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="concatUser" name="concatUser" th:value="${enterpriseChengguoBaseInfo.concatUser}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">部门</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="concatDepartment" name="concatDepartment" th:value="${enterpriseChengguoBaseInfo.concatDepartment}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">职务
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                             colspan="1">
+                                            <input id="concatWorkPosition" name="concatWorkPosition" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">电话</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="concatTel" name="concatTel" th:value="${enterpriseChengguoBaseInfo.concatTel}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">手机</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="concatPhone" name="concatPhone" th:value="${enterpriseChengguoBaseInfo.concatPhone}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">传真
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:left"
+                                            colspan="1">
+                                            <input id="concatFax" name="concatFax" th:value="${enterpriseChengguoBaseInfo.concatFax}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">邮编</td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="concatCode" name="concatCode" th:value="${enterpriseChengguoBaseInfo.concatCode}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">地址</td>
+                                        <td style="width:60%;vertical-align:middle;text-align:left"
+                                            colspan="6">
+                                            <input id="concatAddr" name="concatAddr" th:value="${enterpriseChengguoBaseInfo.concatAddr}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:10%;vertical-align:middle;text-align:center">电子邮件</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="concatEmail" name="concatEmail" th:value="${enterpriseChengguoBaseInfo.concatEmail}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">任务来源
+                                        </td>
+                                        <td style="width:40%;vertical-align:middle;text-align:left"
+                                            colspan="4">
+                                            <input id="taskSource" name="taskSource" th:value="${enterpriseChengguoBaseInfo.taskSource}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">
+                                            具体计划、基金的名称及编号</td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="8">
+                                            <input id="planDetalNameCode" name="planDetalNameCode" th:value="${enterpriseChengguoBaseInfo.planDetalNameCode}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">项目起止时间
+                                        </td>
+                                        <td style="width:10%;vertical-align:middle;text-align:center" colspan="1" >开始
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left" colspan="3">
+                                            <div class="input-group date form_date col-md-5" data-link-field="startTime">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input class="form-control" size="16" th:value="${enterpriseChengguoBaseInfo.startTime}" type="text" readonly >
+                                            </div>
+                                            <input id="startTime" name="startTime" th:value="${enterpriseChengguoBaseInfo.startTime}" class="form-control" type="hidden" value="">
+                                        </td>
+                                        <td style=" width:10%;vertical-align:middle;text-align:center" colspan="1">完成
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left" colspan="3">
+                                            <div class="input-group date form_date col-md-5" data-link-field="endTime">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input class="form-control" size="16" th:value="${enterpriseChengguoBaseInfo.endTime}" type="text" readonly >
+                                            </div>
+                                            <input id="endTime" name="endTime" th:value="${enterpriseChengguoBaseInfo.endTime}" class="form-control" type="hidden" value="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">
+                                            成果（评价）鉴定部门</td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"
+                                            colspan="3">
+                                            <input id="reiewDepartment" name="reiewDepartment" th:value="${enterpriseChengguoBaseInfo.reiewDepartment}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">评价结论
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                            colspan="2">
+                                            <input id="commentReult" name="commentReult" th:value="${enterpriseChengguoBaseInfo.commentReult}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">项目密级
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left" 
+                                             colspan="3">
+                                            <input id="securityLevel" name="securityLevel" th:value="${enterpriseChengguoBaseInfo.securityLevel}" class="form-control" type="text">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">保密期限
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="securityTimeLen" name="securityTimeLen" th:value="${enterpriseChengguoBaseInfo.securityTimeLen}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2">定密日期
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:left"  colspan="3">
+                                            <div class="input-group date form_date col-md-5" data-link-field="sureSecurityDate">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                <input class="form-control" size="16" th:value="${enterpriseChengguoBaseInfo.sureSecurityDate}" type="text" readonly >
+                                            </div>
+                                            <input id="sureSecurityDate" name="sureSecurityDate" th:value="${enterpriseChengguoBaseInfo.sureSecurityDate}" class="form-control" type="hidden" value="">
+                                        </td>
+                                        <td style="width:30%;vertical-align:middle;text-align:center" colspan="3">定密审查单位
+                                        </td>
+                                        <td style="width:20%;vertical-align:middle;text-align:left"
+                                             colspan="2">
+                                            <input id="sureSecurityDepartment" name="sureSecurityDepartment" th:value="${enterpriseChengguoBaseInfo.sureSecurityDepartment}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;text-align:center" colspan="2">
+                                            本成果曾获何部门何种<br />奖励，奖励等级及奖金</td>
+                                        <td style="width:80%;vertical-align:middle;text-align:left"
+                                            colspan="8">
+                                            <input id="departmentAwardInfo" name="departmentAwardInfo" th:value="${enterpriseChengguoBaseInfo.departmentAwardInfo}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;vertical-align:middle;text-align:center" colspan="2"
+                                            rowspan="3">
+                                            申<br />报<br />单<br />位<br />意<br />见</td>
+                                        <td style="width:80%;height: 300px;text-align:left" colspan="8">
+                                            <input id="enterpriseOpinion" name="enterpriseOpinion" th:value="${enterpriseChengguoBaseInfo.enterpriseOpinion}" class="form-control" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center " colspan="8">申报单位公章</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center " colspan="8">年月日</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div th:if="${isOnlyView == null || !isOnlyView}" class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn" onclick="javascript:window.print()">打印</button>
+                                    <button class="btn btn-white" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:include="include :: footer"></div>
+    <script src="/js/plugins/datepicker/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" th:if="${enterpriseChengguoBaseInfo.id > 0}" src="/js/appjs/system/enterpriseChengguoBaseInfo/edit.js"></script>
+    <script type="text/javascript" th:if="${enterpriseChengguoBaseInfo.id == null || enterpriseChengguoBaseInfo.id == 0}" src="/js/appjs/system/enterpriseChengguoBaseInfo/add.js"></script>
+    <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+    </body>
+
+</html>

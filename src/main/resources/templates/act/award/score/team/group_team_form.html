@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="ui bottom attached segment">
+    <h2 class="ui center aligned header">石油工程建设科技创新先进团队评审评分表</h2>
+    <table class="ui celled table">
+        <tbody>
+        <tr>
+            <td rowspan="2">项目编号</td>
+            <td rowspan="2">团队名称</td>
+            <td colspan="6" class="ui center aligned">打分</td>
+            <td rowspan="2">总分(100)</td>
+        </tr>
+        <tr>
+            <td>科研项目中稳定合作时间</td>
+            <td>学术领头人的资历及权威性</td>
+            <td>科技创新成果</td>
+            <td>国家发明专利</td>
+            <td>实用新型专利</td>
+            <td>科技成果转化率</td>
+        </tr>
+        <tr th:each="detail,detailStat:${list}">
+            <td th:text="${detail.proId}"></td>
+            <td th:text="${detail.proName}"></td>
+            <td th:text="${detail.scoreDetailMap['cooperation_time']}"></td>
+            <td th:text="${detail.scoreDetailMap['academic_authority']}"></td>
+            <td th:text="${detail.scoreDetailMap['scientific_achievements']}"></td>
+            <td th:text="${detail.scoreDetailMap['national_patent']}"></td>
+            <td th:text="${detail.scoreDetailMap['utility_model_patents']}"></td>
+            <td th:text="${detail.scoreDetailMap['conversion_rate']}"></td>
+            <td th:text="${detail.totalScore}"></td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <div class="ui basic center aligned segment">专家签字：<img th:src="${signature}"></div>
+                <div class="ui basic right aligned segment" th:text="${#dates.format(created,'yyyy年MM月dd日')}"></div>
+            </td>
+            <td colspan="2" style="border-left-width: 0; "></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<div th:include="include :: footer"></div>
+ 
+</body>
+</html>
