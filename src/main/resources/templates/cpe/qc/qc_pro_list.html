@@ -13,8 +13,12 @@
 
 					<button class="btn btn-success" onclick="printExcelPro()" th:if="${isViewProCode}">导出excel</button>
 					<input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
-
-					<div class="columns ui pull-right action input">
+					<select class="btn btn-default" id="statusFilter">
+						<option value="">全部</option>
+						<option value="NOT_SUBMITTED">未提交</option>
+						<option value="check">审核中</option>
+					</select>
+					<div class="columns ui pull-right action input" style="display: none;">
 						<div class="ui floating dropdown  icon button">
 							<input type="hidden" name="keyType" id="keyType" value="">
 							<span class="text">

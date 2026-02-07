@@ -3,105 +3,93 @@
 
 <mapper namespace="com.bootdo.cpe.dao.QcAwardDao">
 
-    <select id="getProDataList" resultType="com.bootdo.cpe.dto.QcProDataDto">
-        select qa.`id`,`opt_uid`, qa.`pro_id`,`task_id`,`apply_id`,`group_name`,`topic_name`,`topic_type`,`contacts`,`phone`,`professional_scope`,`group_desc`,`sel_topic_reason`,`act_desc`,`main_result`,`recommend_action`,qa.`created`,qa.`updated`,qa.`deleted`,
-               (SELECT sd.name FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id where  su.user_id = qa.opt_uid limit 1) company_name,
-               (select username from sys_user where user_id = qa.opt_uid limit 1) apply_account,
-               pt.apply_start_date,
-               pt.apply_end_date,
-               pt.expert_start_time,
-               pt.expert_end_time,
-               pt.expert_start_time_second,
-               pt.expert_end_time_second,
-               pt.check_start_time,
-               pt.check_end_time,
-               pt.task_stat,
-               pro.pro_stat,
-               pro.pro_result_code proCode,
-               (SELECT username FROM boot_do.sys_user where user_id = qa.opt_uid limit 1) opt_account
-               from ass_qc_group_apply_info qa
-                  join
-               ass_award_publish_task pt on qa.task_id = pt.id
-                  JOIN
-               ass_award_enterprise_project pro ON qa.pro_id = pro.id
-         <if test="associationUserId!=null">
-             and pt.association_userid =
-            #{associationUserId}
-        </if>
-
-        <if test="ass_worker_uid != null and associationUserId == null">
-             and pt.association_userid = #{ass_worker_uid}
-        </if>
+    <!-- 1. 定义可复用的 Join 关联逻辑 -->
+    <sql id="proJoins">
+        from ass_qc_group_apply_info qa
+        join ass_award_publish_task pt on qa.task_id = pt.id
+        join ass_award_enterprise_project pro ON qa.pro_id = pro.id
         <if test="scoreSpecialistUid != null">
             join add_special_info si on pro.major = si.group_name and si.user_id = #{scoreSpecialistUid} and pro.pro_stat = 'score' and si.deleted = 0
         </if>
-
         <if test="ass_assign_uid != null">
             join ass_award_assign_project asignPro on asignPro.pro_id = pro.id and asignPro.uid = #{ass_assign_uid}
             <if test="pro_assign_uid != null">
                 and asignPro.assign_uid = #{pro_assign_uid}
             </if>
-            <if test="pro_assign_uid == null">
-                and asignPro.assign_uid != -100
-            </if>
         </if>
-
         <if test="scoreAccount != null and scoreAccount != ''">
             join ass_award_project_score sr on pro.id = sr.pro_id
             join add_special_info sai on sr.score_uid = sai.user_id
             and sai.login_account = #{scoreAccount} and sai.deleted = 0
         </if>
+    </sql>
 
-
+    <!-- 2. 定义可复用的 Where 过滤逻辑（包含 NOT_SUBMITTED 处理） -->
+    <sql id="proWhere">
         <where>
-
             <if test="id != null and id != ''"> and qa.id = #{id} </if>
-            <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
-            <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
-            <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
-            <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
-            <if test="groupName != null and groupName != ''"> and group_name = #{groupName} </if>
-            <if test="topicName != null and topicName != ''"> and topic_name = #{topicName} </if>
-            <if test="topicType != null and topicType != ''"> and topic_type = #{topicType} </if>
-            <if test="contacts != null and contacts != ''"> and contacts = #{contacts} </if>
-            <if test="phone != null and phone != ''"> and phone = #{phone} </if>
-            <if test="professionalScope != null and professionalScope != ''"> and professional_scope = #{professionalScope} </if>
-            <if test="groupDesc != null and groupDesc != ''"> and group_desc = #{groupDesc} </if>
-            <if test="selTopicReason != null and selTopicReason != ''"> and sel_topic_reason = #{selTopicReason} </if>
-            <if test="actDesc != null and actDesc != ''"> and act_desc = #{actDesc} </if>
-            <if test="mainResult != null and mainResult != ''"> and main_result = #{mainResult} </if>
-            <if test="recommendAction != null and recommendAction != ''"> and recommend_action = #{recommendAction} </if>
-            <if test="created != null and created != ''"> and qa.created = #{created} </if>
-            <if test="updated != null and updated != ''"> and updated = #{updated} </if>
-            <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+            <if test="optUid != null and optUid != ''"> and qa.opt_uid = #{optUid} </if>
+            <if test="proId != null and proId != ''"> and qa.pro_id = #{proId} </if>
+            <if test="taskId != null and taskId != ''"> and qa.task_id = #{taskId} </if>
+
             <if test="keyWord != null and keyWord != ''">
-                 and (
-                   qa.id like #{keyWord} or
-                   pro.pro_result_code like #{keyWord} or
-                   topic_name like #{keyWord} or
-                   group_name like #{keyWord} or
-                   exists(
-                     SELECT sd.name FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id where  su.user_id = qa.opt_uid
-                     and sd.name like #{keyWord}
-                   ) or
-                   topic_type like #{keyWord} or
-                   professional_scope like #{keyWord} or
-                   exists(
-                      select username from sys_user where user_id = qa.opt_uid and username like #{keyWord}
-                   )
-                   or pro.pro_stat like #{keyWord}
-                )
+                <choose>
+                    <!-- 【修正点】因为后台可能自动加了 %，所以用 contains 来判断 -->
+                    <when test="keyWord.contains('NOT_SUBMITTED')">
+                        and (pro.pro_stat IS NULL or pro.pro_stat = '' or pro.pro_stat = '申请中')
+                    </when>
+                    <otherwise>
+                        and (
+                        qa.id like concat('%', #{keyWord}, '%') or
+                        qa.apply_id like concat('%', #{keyWord}, '%') or
+                        topic_name like concat('%', #{keyWord}, '%') or
+                        group_name like concat('%', #{keyWord}, '%') or
+                        pro.pro_stat like concat('%', #{keyWord}, '%') or
+                        exists(
+                        SELECT sd.name FROM sys_dept sd
+                        join sys_user su on sd.dept_id = su.dept_id
+                        where su.user_id = qa.opt_uid and sd.name like concat('%', #{keyWord}, '%')
+                        )
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+
+            <if test="associationUserId != null">
+                and pt.association_userid = #{associationUserId}
             </if>
             <if test="enterpriseUid != null">
-              and qa.opt_uid = #{enterpriseUid}
+                and qa.opt_uid = #{enterpriseUid}
             </if>
         </where>
+    </sql>
+
+    <!-- 3. 获取项目数据列表 -->
+    <select id="getProDataList" resultType="com.bootdo.cpe.dto.QcProDataDto">
+        select
+        qa.`id`, qa.`opt_uid`, qa.`pro_id`, qa.`task_id`, qa.`apply_id`,
+        qa.`group_name`, qa.`topic_name`, qa.`topic_type`, qa.`contacts`,
+        qa.`phone`, qa.`professional_scope`, qa.`group_desc`, qa.`sel_topic_reason`,
+        qa.`act_desc`, qa.`main_result`, qa.`recommend_action`,
+        qa.`created`, qa.`updated`, qa.`deleted`,
+        (SELECT sd.name FROM sys_dept sd join sys_user su on sd.dept_id = su.dept_id where su.user_id = qa.opt_uid limit 1) company_name,
+        (select username from sys_user where user_id = qa.opt_uid limit 1) apply_account,
+        pt.apply_start_date, pt.apply_end_date, pt.expert_start_time, pt.expert_end_time,
+        pt.expert_start_time_second, pt.expert_end_time_second, pt.check_start_time, pt.check_end_time,
+        pt.task_stat,
+        pro.pro_stat,
+        qa.apply_id as proCode, <!-- 使用 qa 的 apply_id 作为成果编号 -->
+        (SELECT username FROM sys_user where user_id = qa.opt_uid limit 1) opt_account
+
+        <include refid="proJoins" />
+        <include refid="proWhere" />
+
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
             </when>
             <otherwise>
-                order by id desc
+                order by qa.id desc
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">
@@ -109,65 +97,14 @@
         </if>
     </select>
 
+    <!-- 4. 获取数据总数（必须与列表共享逻辑） -->
     <select id="countProData" resultType="java.lang.Integer">
-        select count(*) from ass_qc_group_apply_info  qa
-                  join
-               ass_award_publish_task pt on qa.task_id = pt.id
-                  JOIN
-               ass_award_enterprise_project pro ON qa.pro_id = pro.id
-        <if test="associationUserId!=null">
-             and pt.association_userid =
-            #{associationUserId}
-        </if>
-
-        <if test="ass_worker_uid != null and associationUserId == null">
-             and pt.association_userid = #{ass_worker_uid}
-        </if>
-        <if test="scoreSpecialistUid != null">
-            join add_special_info si on pro.major = si.group_name and si.user_id = #{scoreSpecialistUid} and pro.pro_stat = 'score' and si.deleted = 0
-        </if>
-
-        <if test="ass_assign_uid != null">
-            join ass_award_assign_project asignPro on asignPro.pro_id = pro.id and asignPro.uid = #{ass_assign_uid}
-            <if test="pro_assign_uid != null">
-                and asignPro.assign_uid = #{pro_assign_uid}
-            </if>
-            <if test="pro_assign_uid == null">
-                and asignPro.assign_uid != -100
-            </if>
-        </if>
-
-        <if test="scoreAccount != null and scoreAccount != ''">
-            join ass_award_project_score sr on pro.id = sr.pro_id
-            join add_special_info sai on sr.score_uid = sai.user_id
-            and sai.login_account = #{scoreAccount} and sai.deleted = 0
-        </if>
-        <where>
-            <if test="id != null and id != ''"> and id = #{id} </if>
-            <if test="optUid != null and optUid != ''"> and opt_uid = #{optUid} </if>
-            <if test="proId != null and proId != ''"> and pro_id = #{proId} </if>
-            <if test="taskId != null and taskId != ''"> and task_id = #{taskId} </if>
-            <if test="applyId != null and applyId != ''"> and apply_id = #{applyId} </if>
-            <if test="groupName != null and groupName != ''"> and group_name = #{groupName} </if>
-            <if test="topicName != null and topicName != ''"> and topic_name = #{topicName} </if>
-            <if test="topicType != null and topicType != ''"> and topic_type = #{topicType} </if>
-            <if test="contacts != null and contacts != ''"> and contacts = #{contacts} </if>
-            <if test="phone != null and phone != ''"> and phone = #{phone} </if>
-            <if test="professionalScope != null and professionalScope != ''"> and professional_scope = #{professionalScope} </if>
-            <if test="groupDesc != null and groupDesc != ''"> and group_desc = #{groupDesc} </if>
-            <if test="selTopicReason != null and selTopicReason != ''"> and sel_topic_reason = #{selTopicReason} </if>
-            <if test="actDesc != null and actDesc != ''"> and act_desc = #{actDesc} </if>
-            <if test="mainResult != null and mainResult != ''"> and main_result = #{mainResult} </if>
-            <if test="recommendAction != null and recommendAction != ''"> and recommend_action = #{recommendAction} </if>
-            <if test="created != null and created != ''"> and created = #{created} </if>
-            <if test="updated != null and updated != ''"> and updated = #{updated} </if>
-            <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
-            <if test="enterpriseUid != null">
-              and qa.opt_uid = #{enterpriseUid}
-            </if>
-        </where>
+        select count(*)
+        <include refid="proJoins" />
+        <include refid="proWhere" />
     </select>
 
+    <!-- 5. 更新项目状态 -->
     <update id="updateProStat">
         update ass_award_enterprise_project set pro_stat = #{proStat} where id = #{proId}
     </update>

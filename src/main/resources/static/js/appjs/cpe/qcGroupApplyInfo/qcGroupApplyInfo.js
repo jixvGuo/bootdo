@@ -1,6 +1,11 @@
 var prefix = "/qcAward"
 $(function () {
     load();
+    $("#statusFilter").on("change", function () {
+        setStatusFilter($(this).val());
+        console.log("状态切换为：" + $(this).val());
+        reLoad();
+    });
 });
 
 function load() {
@@ -51,7 +56,7 @@ function load() {
                     },
                     {
                         field: 'proCode',
-                        title: '成果编号',
+                        title: '课题编号',
                     },
                     {
                         field: 'proType',
@@ -257,7 +262,10 @@ function printExcelPro() {
         content: prefix + "/qc/printExcel" // iframe的url
     });
 }
-
+function setStatusFilter(statusText) {
+    $("#keyWord").val(statusText || "");
+    reLoad();
+}
 
 function cancelCheck(proId) {
     layer.confirm('确定要撤回,重新修改吗？', {
