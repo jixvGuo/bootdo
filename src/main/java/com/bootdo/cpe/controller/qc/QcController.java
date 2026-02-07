@@ -29,6 +29,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -104,7 +105,7 @@ public class QcController extends BaseQcProController {
         List<Long> roleIdList = user.getRoleIds();
         if(!roleIdList.contains(ROLE_ENTERPRISE_QC_ID)) {
             //非企业角色不显示申请按钮
-           map.put("apply_type", null);
+            map.put("apply_type", null);
         }
         List<DictDO> projectTypes = dictService.listByType("projectType");
         List<DictDO> classifications = dictService.listByType("classification");
@@ -568,7 +569,7 @@ public class QcController extends BaseQcProController {
 //
 //          BufferedInputStream bis = null;
 //
-            //  优质申报表
+        //  优质申报表
 
 //
 //        OutputStream outputStream = null;
@@ -641,6 +642,56 @@ public class QcController extends BaseQcProController {
 //        return "enterprise/apply/print";
     }
 
+
+    @Autowired
+    private ScienceProcessService scienceProcessService;
+    @PostMapping("/downloadProDocFiles")
+    //@RequiresPermissions("system:scienceProcess:downloadProDocFiles")
+    @ResponseBody
+    public R downloadUpDocFiles(Integer proId) {
+        if (proId == null) {
+            return R.error("选择要下载的项目");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("proId", proId);
+        List<EnterpriseDocUploadDo> docUploadDoList = fileService.listUploadEnterpriseDocs(params);
+        String uploadPath = bootdoConfig.getUploadPath();
+
+        Set<String> filePathList = new HashSet<>();
+        docUploadDoList.stream().forEach(url -> {
+            String filePath = uploadPath + "/" + url.getUrl().replaceAll("/files/", "");
+            filePathList.add(filePath);
+        });
+
+        //打包数据下发
+        String curDate = DateUtils.getCurDate();
+        String[] dateArr = curDate.split("-");
+        String userFolderPath = dateArr[0] + "/" + dateArr[1] + "/u_" + getUserId() + "/zip";
+        String storeZipFolder = uploadPath + userFolderPath;
+        File zipFolder = new File(storeZipFolder);
+        if (!zipFolder.exists()) {
+            zipFolder.mkdirs();
+        }
+
+        String zipFileName = System.currentTimeMillis() + "_" + proId;
+
+        List<String> fList = new ArrayList<>();
+        filePathList.stream().forEach(f -> {
+            fList.add(f);
+        });
+        try {
+            ZipCompress.compress(storeZipFolder, zipFileName, fList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String zipUrl = "/files/" + userFolderPath + "/" + zipFileName + ".zip";
+        R result = R.ok();
+        result.put("zipUrl", zipUrl);
+        return result;
+    }
+
+
     /**
      * 下载
      * @return
@@ -657,104 +708,104 @@ public class QcController extends BaseQcProController {
 
         File storeFile = null;
 
-            //  优质申报表
-            QcGroupApplyInfoDO applyInfoDO = new QcGroupApplyInfoDO();
-            if(proIdObj != null) {
-                Map<String, Object> groupParamsMap = new HashMap<>();
-                groupParamsMap.put("proId", proIdObj);
-                List<QcGroupApplyInfoDO> groupApplyInfoDOList = qcGroupApplyInfoService.list(groupParamsMap);
-                applyInfoDO = groupApplyInfoDOList.size() > 0 ? groupApplyInfoDOList.get(0) : applyInfoDO;
-            }
-           //  问题解决型
-            QcReportSolveInfoDO reportSolveInfoDO = new QcReportSolveInfoDO();
-            if(proIdObj != null) {
-                Map<String, Object> repMap = new HashMap<>();
-                repMap.put("proId", proIdObj);
-                List<QcReportSolveInfoDO> list = qcReportSolveInfoService.list(repMap);
-                reportSolveInfoDO = list.size() > 0 ? list.get(0) : reportSolveInfoDO;
-            }
-            // 创新型课题
-            QcReportInnovateInfoDO reportInnovateInfoDO = new QcReportInnovateInfoDO();
-            if(proIdObj != null) {
-                Map<String, Object> repMap = new HashMap<>();
-                repMap.put("proId", proIdObj);
-                List<QcReportInnovateInfoDO> list = qcReportInnovateInfoService.list(repMap);
-                reportInnovateInfoDO = list.size() > 0 ? list.get(0) : reportInnovateInfoDO;
-            }
-            // 活动现场评价
-            QcAppraiseActiveScoreDO activeScoreDO = new QcAppraiseActiveScoreDO();
-            if(proIdObj != null) {
-                Map<String, Object> repMap = new HashMap<>();
-                repMap.put("proId", proIdObj);
-                List<QcAppraiseActiveScoreDO> list = qcAppraiseActiveScoreService.list(repMap);
-                activeScoreDO = list.size() > 0 ? list.get(0) : activeScoreDO;
-            }
-            //解决成果评价
-            QcResultSolveScoreDO resultSolveScoreDO = new QcResultSolveScoreDO();
-            if(proIdObj != null) {
-                Map<String, Object> repMap = new HashMap<>();
-                repMap.put("proId", proIdObj);
-                List<QcResultSolveScoreDO> list = qcResultSolveScoreService.list(repMap);
-                resultSolveScoreDO = list.size() > 0 ? list.get(0) : resultSolveScoreDO;
-            }
-            // 创新型成果评价
-            QcResultInnovateScoreDO resultInnovateScoreDO = new QcResultInnovateScoreDO();
-            if(proIdObj != null) {
-                Map<String, Object> repMap = new HashMap<>();
-                repMap.put("proId", proIdObj);
-                List<QcResultInnovateScoreDO> list = qcResultInnovateScoreService.list(repMap);
-                resultInnovateScoreDO = list.size() > 0 ? list.get(0) : resultInnovateScoreDO;
-            }
-            // 质量管理小组概况统计表
-            QcSurveyStatisticInfoDO surveyStatisticInfoDO = new QcSurveyStatisticInfoDO();
-            if(proIdObj != null) {
-                Map<String, Object> repMap = new HashMap<>();
-                repMap.put("proId", proIdObj);
-                List<QcSurveyStatisticInfoDO> list = qcSurveyStatisticInfoService.list(repMap);
-                surveyStatisticInfoDO = list.size() > 0 ? list.get(0) : surveyStatisticInfoDO;
-            }
+        //  优质申报表
+        QcGroupApplyInfoDO applyInfoDO = new QcGroupApplyInfoDO();
+        if(proIdObj != null) {
+            Map<String, Object> groupParamsMap = new HashMap<>();
+            groupParamsMap.put("proId", proIdObj);
+            List<QcGroupApplyInfoDO> groupApplyInfoDOList = qcGroupApplyInfoService.list(groupParamsMap);
+            applyInfoDO = groupApplyInfoDOList.size() > 0 ? groupApplyInfoDOList.get(0) : applyInfoDO;
+        }
+        //  问题解决型
+        QcReportSolveInfoDO reportSolveInfoDO = new QcReportSolveInfoDO();
+        if(proIdObj != null) {
+            Map<String, Object> repMap = new HashMap<>();
+            repMap.put("proId", proIdObj);
+            List<QcReportSolveInfoDO> list = qcReportSolveInfoService.list(repMap);
+            reportSolveInfoDO = list.size() > 0 ? list.get(0) : reportSolveInfoDO;
+        }
+        // 创新型课题
+        QcReportInnovateInfoDO reportInnovateInfoDO = new QcReportInnovateInfoDO();
+        if(proIdObj != null) {
+            Map<String, Object> repMap = new HashMap<>();
+            repMap.put("proId", proIdObj);
+            List<QcReportInnovateInfoDO> list = qcReportInnovateInfoService.list(repMap);
+            reportInnovateInfoDO = list.size() > 0 ? list.get(0) : reportInnovateInfoDO;
+        }
+        // 活动现场评价
+        QcAppraiseActiveScoreDO activeScoreDO = new QcAppraiseActiveScoreDO();
+        if(proIdObj != null) {
+            Map<String, Object> repMap = new HashMap<>();
+            repMap.put("proId", proIdObj);
+            List<QcAppraiseActiveScoreDO> list = qcAppraiseActiveScoreService.list(repMap);
+            activeScoreDO = list.size() > 0 ? list.get(0) : activeScoreDO;
+        }
+        //解决成果评价
+        QcResultSolveScoreDO resultSolveScoreDO = new QcResultSolveScoreDO();
+        if(proIdObj != null) {
+            Map<String, Object> repMap = new HashMap<>();
+            repMap.put("proId", proIdObj);
+            List<QcResultSolveScoreDO> list = qcResultSolveScoreService.list(repMap);
+            resultSolveScoreDO = list.size() > 0 ? list.get(0) : resultSolveScoreDO;
+        }
+        // 创新型成果评价
+        QcResultInnovateScoreDO resultInnovateScoreDO = new QcResultInnovateScoreDO();
+        if(proIdObj != null) {
+            Map<String, Object> repMap = new HashMap<>();
+            repMap.put("proId", proIdObj);
+            List<QcResultInnovateScoreDO> list = qcResultInnovateScoreService.list(repMap);
+            resultInnovateScoreDO = list.size() > 0 ? list.get(0) : resultInnovateScoreDO;
+        }
+        // 质量管理小组概况统计表
+        QcSurveyStatisticInfoDO surveyStatisticInfoDO = new QcSurveyStatisticInfoDO();
+        if(proIdObj != null) {
+            Map<String, Object> repMap = new HashMap<>();
+            repMap.put("proId", proIdObj);
+            List<QcSurveyStatisticInfoDO> list = qcSurveyStatisticInfoService.list(repMap);
+            surveyStatisticInfoDO = list.size() > 0 ? list.get(0) : surveyStatisticInfoDO;
+        }
 
-            QCDocBaseDataWord word = new QCDocBaseDataWord();
-            word.setApplyInfoDO(applyInfoDO);
-            word.setActiveScoreDO(activeScoreDO);
-            word.setReportInnovateInfoDO(reportInnovateInfoDO);
-            word.setResultInnovateScoreDO(resultInnovateScoreDO);
-            word.setSurveyStatisticInfoDO(surveyStatisticInfoDO);
-            word.setReportSolveInfoDO(reportSolveInfoDO);
-            word.setResultSolveScoreDO(resultSolveScoreDO);
+        QCDocBaseDataWord word = new QCDocBaseDataWord();
+        word.setApplyInfoDO(applyInfoDO);
+        word.setActiveScoreDO(activeScoreDO);
+        word.setReportInnovateInfoDO(reportInnovateInfoDO);
+        word.setResultInnovateScoreDO(resultInnovateScoreDO);
+        word.setSurveyStatisticInfoDO(surveyStatisticInfoDO);
+        word.setReportSolveInfoDO(reportSolveInfoDO);
+        word.setResultSolveScoreDO(resultSolveScoreDO);
 
-            File templateFile = PathUtil.getJarResourceFile(ConstantCommonData.TEMPLATE_DOC_QC_APPLY_CLASS_PATH);
-            if (templateFile == null) {
-                Resource resource = resourceLoader.getResource(ConstantCommonData.TEMPLATE_DOC_QC_APPLY_CLASS_PATH);
-                templateFile = resource.getFile();
-            }
-            String fName = templateFile.getName();
-            String[] fNameArr = fName.split("\\.");
-            String tmpFileName = fNameArr[0] + "_" + System.currentTimeMillis() + RandomStringUtils.randomAlphabetic(5) + "." + fNameArr[1];
-            tmpFileName = URLEncoder.encode(tmpFileName, "UTF-8");
-            response.setHeader("Content-Disposition", "attachment; filename=" + tmpFileName);
-            String storePath = bootdoConfig.getUploadPath() + "/print_doc/" + DateUtils.getCurDate();
-            storeFile = new File(storePath);
-            if (!storeFile.exists()) {
-                storeFile.mkdirs();
-            }
-            storePath = storePath + "/" + tmpFileName;
-            storeFile = new File(storePath);
-            FileUtils.copyFile(templateFile, storeFile);
-            PoiWordQCProUtils.createProQCWord(templateFile.getAbsolutePath(), storePath, word);
-            InputStream inputStream = new FileInputStream(storeFile);
-            //这个路径为待下载文件的路径
-            BufferedInputStream bis = new BufferedInputStream(inputStream);
-            byte[] buff = new byte[1024];
-            int read = bis.read(buff);
-            OutputStream outputStream = response.getOutputStream();
-            //通过while循环写入到指定了的文件夹中
-            while (read != -1) {
-                outputStream.write(buff, 0, buff.length);
-                outputStream.flush();
-                read = bis.read(buff);
-            }
-            bis.close();
+        File templateFile = PathUtil.getJarResourceFile(ConstantCommonData.TEMPLATE_DOC_QC_APPLY_CLASS_PATH);
+        if (templateFile == null) {
+            Resource resource = resourceLoader.getResource(ConstantCommonData.TEMPLATE_DOC_QC_APPLY_CLASS_PATH);
+            templateFile = resource.getFile();
+        }
+        String fName = templateFile.getName();
+        String[] fNameArr = fName.split("\\.");
+        String tmpFileName = fNameArr[0] + "_" + System.currentTimeMillis() + RandomStringUtils.randomAlphabetic(5) + "." + fNameArr[1];
+        tmpFileName = URLEncoder.encode(tmpFileName, "UTF-8");
+        response.setHeader("Content-Disposition", "attachment; filename=" + tmpFileName);
+        String storePath = bootdoConfig.getUploadPath() + "/print_doc/" + DateUtils.getCurDate();
+        storeFile = new File(storePath);
+        if (!storeFile.exists()) {
+            storeFile.mkdirs();
+        }
+        storePath = storePath + "/" + tmpFileName;
+        storeFile = new File(storePath);
+        FileUtils.copyFile(templateFile, storeFile);
+        PoiWordQCProUtils.createProQCWord(templateFile.getAbsolutePath(), storePath, word);
+        InputStream inputStream = new FileInputStream(storeFile);
+        //这个路径为待下载文件的路径
+        BufferedInputStream bis = new BufferedInputStream(inputStream);
+        byte[] buff = new byte[1024];
+        int read = bis.read(buff);
+        OutputStream outputStream = response.getOutputStream();
+        //通过while循环写入到指定了的文件夹中
+        while (read != -1) {
+            outputStream.write(buff, 0, buff.length);
+            outputStream.flush();
+            read = bis.read(buff);
+        }
+        bis.close();
     }
 
 

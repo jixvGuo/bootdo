@@ -360,38 +360,31 @@ let saveValue = "";
 function setCode(code) {
     saveValue = code;
 }
-
 function downloadData(proId) {
-    layer.confirm('确定要下载选中的记录？', {
-        btn: ['确定', '取消']
-    }, function () {
-        // $.ajax({
-        // 	url : prefix+"/download/proinfo",
-        // 	type : "post",
-        // 	data : {
-        // 		'proId': proId
-        // 	},
-        // 	success : function(r) {
-        // 		if (r.code==0) {
-        // 			layer.msg(r.msg);
-        // 			reLoad();
-        // 		}else{
-        // 			layer.msg(r.msg);
-        // 		}
-        // 	}
-        // });
-        var applyPage = layer.open({
-            type: 2,
-            title: "打印文档",
-            maxmin: true,
-            shadeClose: false, // 点击遮罩关闭层
-            area: ['800px', '520px'],
-            content: prefix + "/download/proinfo/proId?proId=" + proId // iframe的url
-        });
-        layer.full(applyPage)
-
-    })
+    $.ajax({
+        url: "/qcAward/downloadProDocFiles",
+        type: "post",
+        data: {
+            'proId': proId
+        },
+        success: function (r) {
+            if (r.code == 0) {
+                layer.msg(r.msg);
+                layer.open({
+                    type: 2,
+                    title: "下载文件",
+                    maxmin: true,
+                    shadeClose: false, // 点击遮罩关闭层
+                    area: ['800px', '520px'],
+                    content: "/common/sysFile/toDownload?url=" + r.zipUrl // iframe的url
+                });
+            } else {
+                layer.msg(r.msg);
+            }
+        }
+    });
 }
+
 
 function remove(id, proId) {
     layer.confirm('确定要删除选中的记录？', {
