@@ -643,8 +643,8 @@ public class QcController extends BaseQcProController {
     }
 
 
-    @Autowired
-    private ScienceProcessService scienceProcessService;
+//    @Autowired
+//    private ScienceProcessService scienceProcessService;
     @PostMapping("/downloadProDocFiles")
     //@RequiresPermissions("system:scienceProcess:downloadProDocFiles")
     @ResponseBody
