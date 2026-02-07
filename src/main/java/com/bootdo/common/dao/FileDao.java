@@ -3,6 +3,7 @@ package com.bootdo.common.dao;
 import com.bootdo.activiti.domain.EnterpriseDocUploadDo;
 import com.bootdo.common.domain.FileDO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +51,6 @@ public interface FileDao {
     int saveSpecialistDocFile(SpecialistDocFileInfo fileInfo);
 
 	void deleteSpecialistDoc(Long id);
+
+	List fileTypeList(String proId);
 }

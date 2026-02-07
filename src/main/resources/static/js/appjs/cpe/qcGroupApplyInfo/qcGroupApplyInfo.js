@@ -119,7 +119,13 @@ function load() {
                     },
                     {
                         field: 'applyStat',
-                        title: '状态'
+                        title: '状态',
+                        formatter: function (value) {
+                            if (value === "申请中") {
+                                return "未提交";
+                            }
+                            return value;
+                        }
                     },
                     {
                         title: '操作',

@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2021-03-19 0:20
  */
 public enum OilProStatEnum {
-    APPLYING("","申请中", true, false, false, false, false),
+    APPLYING("","未提交", true, false, false, false, false),
     CHECK("check","审核中", false, true, true, false, true),
     PARTAKE_AWARD("partake_award", "参评", false, false, false, true, true),
     NO_AWARD("no_award", "不评", true, false, false, true, true),

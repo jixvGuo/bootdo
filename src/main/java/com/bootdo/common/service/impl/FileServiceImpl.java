@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -127,5 +128,10 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public void deleteSpecialistDoc(Long id) {
         sysFileMapper.deleteSpecialistDoc(id);
+	}
+
+	@Override
+	public List fileTypeList(String proId) {
+		return sysFileMapper.fileTypeList(proId);
 	}
 }

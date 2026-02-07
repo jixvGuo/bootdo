@@ -234,4 +234,11 @@
 		delete from ass_specialist_doc_files where file_id = #{id}
 	</delete>
 
+	<select id="fileTypeList" resultType="java.lang.String">
+		SELECT
+			file_type
+		FROM
+			ass_enterprise_docs
+		where pro_id=#{proId} GROUP BY file_type
+	</select>
 </mapper>

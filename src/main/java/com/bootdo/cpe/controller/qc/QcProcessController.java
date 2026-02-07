@@ -1,10 +1,12 @@
 package com.bootdo.cpe.controller.qc;
 
 import com.bootdo.activiti.domain.AssignProjectDataDo;
+import com.bootdo.activiti.domain.EnterpriseProjectInfoDo;
 import com.bootdo.activiti.domain.PublishAwardTaskDo;
 import com.bootdo.activiti.service.AwardEnterpriseProjectService;
 import com.bootdo.activiti.service.AwardPublishTaskService;
 import com.bootdo.common.controller.BaseQcProController;
+import com.bootdo.common.service.FileService;
 import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.StringUtils;
 import com.bootdo.cpe.domain.EnumProjectType;
@@ -16,6 +18,7 @@ import com.bootdo.cpe.dto.QcProDataDto;
 import com.bootdo.cpe.service.ExpertGroupService;
 import com.bootdo.cpe.service.QcAwardService;
 import com.bootdo.cpe.service.QcReviewResultRecordService;
+import com.bootdo.cpe.service.SurverReviewSoftResultService;
 import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -104,6 +107,10 @@ public class QcProcessController extends BaseQcProController {
         return prefix + "/check/qc_check_assignment";
     }
 
+    @Autowired
+    FileService fileService;
+    @Autowired
+    AwardEnterpriseProjectService projectService;
     /**
      * 提交审核项目
      *
@@ -113,6 +120,14 @@ public class QcProcessController extends BaseQcProController {
     @RequestMapping("/subCheck")
     @ResponseBody
     public R subCheckPro(Integer proId) {
+        // 质量奖检测附件内容是否完整
+        EnterpriseProjectInfoDo projectInfoDo = projectService.get(Integer.toString(proId));
+        if (projectInfoDo.getProType().equalsIgnoreCase("qc_group")){
+            List<String> types  = fileService.fileTypeList(Integer.toString(proId));
+            if (types.size() < 9){
+                return R.error("请上传所有附件");
+            }
+        }
         if (proId != null && proId > 0 && qcAwardService.updateProCheck(proId) > 0) {
             return R.ok();
         }

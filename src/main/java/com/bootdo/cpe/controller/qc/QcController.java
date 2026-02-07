@@ -186,6 +186,10 @@ public class QcController extends BaseQcProController {
             List<QcGroupApplyInfoDO> groupApplyInfoDOList = qcGroupApplyInfoService.list(groupParamsMap);
             applyInfoDO = groupApplyInfoDOList.size() > 0 ? groupApplyInfoDOList.get(0) : applyInfoDO;
         }
+        // 回显申报单位
+        if(StringUtils.isBlank(applyInfoDO.getUnitName())){
+            applyInfoDO.setUnitName(getUser().getName());
+        }
         map.put("groupInfo", applyInfoDO);
         //todo: 增加字典值
         List<DictDO> projectTypes = dictService.listByType("projectType");
