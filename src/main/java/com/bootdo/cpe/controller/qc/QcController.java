@@ -6,15 +6,15 @@ import com.bootdo.activiti.service.AwardEnterpriseProjectService;
 import com.bootdo.common.config.BootdoConfig;
 import com.bootdo.common.controller.BaseQcProController;
 import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.domain.FileDO;
 import com.bootdo.common.service.DictService;
 import com.bootdo.common.service.FileService;
 import com.bootdo.common.utils.*;
+import com.bootdo.cpe.dao.QcGroupMemberDao;
 import com.bootdo.cpe.domain.*;
 import com.bootdo.cpe.dto.QcProDataDto;
-import com.bootdo.cpe.petroleum_engineering_award.domain.*;
 import com.bootdo.cpe.service.*;
 import com.bootdo.cpe.utils.PathUtil;
-import com.bootdo.cpe.utils.PoiWordOilProUtils;
 import com.bootdo.cpe.utils.PoiWordQCProUtils;
 import com.bootdo.system.config.ConstantCommonData;
 import com.bootdo.system.controller.EnterpriPersonalInfoController;
@@ -33,9 +33,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
@@ -57,6 +56,8 @@ public class QcController extends BaseQcProController {
 
     private String prefix = "cpe/qc";
 
+    @Autowired
+    private FileService sysFileService;
     @Autowired
     private QcAwardService qcAwardService;
     @Autowired
@@ -83,6 +84,8 @@ public class QcController extends BaseQcProController {
     private BootdoConfig bootdoConfig;
     @Autowired
     private DictService dictService;
+    @Autowired
+    private QcGroupMemberService qcGroupMemberService;
 
     private Map<String, Object> newParams;
 
@@ -327,6 +330,117 @@ public class QcController extends BaseQcProController {
         return prefix + "/apply/qc_apply_survey_statistic";
     }
 
+
+    /**
+     * 跳转到 人员管理页签
+     */
+    @RequestMapping("/view/applyMember")
+    public String toQcApplyMenmber(ModelMap map, @RequestParam Map<String, Object> params) {
+
+        packageAwardTaskId(map, params);
+
+        String proId = (String) params.get("proId");
+        System.out.println("当前 proId = " + proId);
+
+        // 查询成员列表
+        List<QcGroupMember> memberList = qcGroupMemberService.getByProid(proId);
+        map.put("memberList", memberList);
+
+        return prefix + "/apply/qc_apply_member";
+    }
+
+    /**
+     * 成员列表接口
+     */
+    @RequestMapping("/member/list")
+    @ResponseBody
+    public List<QcGroupMember> getMemberList(String proId) {
+        return qcGroupMemberService.getByProid(proId);
+    }
+
+
+
+    /**
+     * 保存 / 更新成员
+     */
+    @RequestMapping("/member/save")
+    @ResponseBody
+//    @RequiresPermissions("cpe:qcGroupMember:add")
+    public R saveMember(QcGroupMember member) {
+
+        if (member == null) {
+            return R.error("参数不能为空");
+        }
+
+        if (member.getProid() == null) {
+            return R.error("缺少项目ID");
+        }
+
+        if (member.getIdCardNumber() == null) {
+            return R.error("缺少身份证号");
+        }
+
+        // 根据 proid + 身份证 判断是否存在
+        QcGroupMember exist = qcGroupMemberService.getOne(
+                member.getProid(),
+                member.getIdCardNumber()
+        );
+
+        if (exist == null) {
+            qcGroupMemberService.save(member);
+        } else {
+            qcGroupMemberService.update(member);
+        }
+
+        return R.ok();
+    }
+
+    /**
+     * 删除成员（按 proId + 身份证）
+     */
+    @RequestMapping("/member/remove")
+    @ResponseBody
+//    @RequiresPermissions("cpe:qcGroupMember:remove")
+    public R removeMember(String proId, String idCardNumber) {
+
+        if (proId == null || idCardNumber == null) {
+            return R.error("缺少参数");
+        }
+
+        qcGroupMemberService.removeOne(proId, idCardNumber);
+        return R.ok();
+    }
+
+    /**
+     * 查询单个成员（编辑回显）
+     */
+    @RequestMapping("/member/get")
+    @ResponseBody
+    public QcGroupMember getMember(String proId, String idCardNumber) {
+
+        if (proId == null || idCardNumber == null) {
+            return null;
+        }
+
+        return qcGroupMemberService.getOne(proId, idCardNumber);
+    }
+    /**
+     * 跳转成员编辑页（新增 / 编辑）
+     */
+    @RequestMapping("/memberEdit")
+    public String toMemberEdit(ModelMap map,
+                               @RequestParam(required = false) String proId,
+                               @RequestParam(required = false) String idCardNumber) {
+
+        map.put("proId", proId);
+        map.put("idCardNumber", idCardNumber);
+
+        return prefix + "/apply/qc_apply_member_edit";
+    }
+
+
+
+
     /**
      * 跳转到 附件上传页签
      * @param map
@@ -343,6 +457,9 @@ public class QcController extends BaseQcProController {
         map.put("projectInfo",projectInfoDo == null ? new EnterpriseProjectInfoDo() : projectInfoDo);
         return prefix + "/apply/qc_apply_annex";
     }
+
+
+
     @Autowired
     SequenceService sequenceService;
     /**
@@ -413,6 +530,70 @@ public class QcController extends BaseQcProController {
 
         return "";
     }
+
+    @ResponseBody
+    @PostMapping("/uploadQcAttachment")
+    public R uploadQcAttachment(@RequestParam("file") MultipartFile file,@RequestParam("idCardNumber") String idCardNumber) { // type 可用于标识附件类别
+        if (file.isEmpty()) {
+            return R.error("上传文件不能为空");
+        }
+
+        try {
+            // 1. 构建存储路径：年/月/u_用户id/
+            long uid = getUserId(); // 获取当前QC用户ID
+            String curDate = DateUtils.getCurDate(); // yyyy-MM-dd
+            String[] dateArr = curDate.split("-");
+            String userFolderPath = dateArr[0] + "/" + dateArr[1] + "/qc_" + uid + "/";
+
+            // 处理配置路径 (防止配置中包含 /** 导致路径错误)
+            String configUploadPath = bootdoConfig.getUploadPath();
+            if (configUploadPath.endsWith("/**")) {
+                configUploadPath = configUploadPath.substring(0, configUploadPath.length() - 3);
+            }
+            String uploadPath = configUploadPath + userFolderPath;
+
+            // 2. 创建目录
+            File fileFolder = new File(uploadPath);
+            if (!fileFolder.exists()) {
+                fileFolder.mkdirs();
+            }
+
+            // 3. 处理文件名：原名_时间戳+随机数.后缀
+            String originalFileName = file.getOriginalFilename();
+            String fileName = originalFileName;
+            if (originalFileName != null && originalFileName.contains(".")) {
+                int index = originalFileName.lastIndexOf(".");
+                fileName = originalFileName.substring(0, index)
+                        + "_" + System.currentTimeMillis()
+                        + RandomStringUtils.randomAlphanumeric(4)
+                        + originalFileName.substring(index);
+            }
+
+            // 4. 保存物理文件到磁盘
+            FileUtil.uploadFile(file.getBytes(), uploadPath, fileName);
+
+            // 5. 生成访问 URL
+            String fileUrl = "/files/" + userFolderPath + fileName;
+
+            // 6. 保存到系统文件表 sys_file（保持一致性）
+            FileDO sysFile = new FileDO(FileType.fileType(fileName), fileUrl, new Date());
+            sysFileService.save(sysFile);
+
+            // 7. 保存到 QC 用户附件表
+            QcGroupMember qgm = new QcGroupMember();
+            qgm.setIdCardNumber(idCardNumber);
+            qgm.setCertificateNumber(fileUrl);
+            qcGroupMemberService.update(qgm);
+
+            // 8. 返回成功及文件 URL
+            return R.ok().put("src", fileUrl);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("上传发生异常：" + e.getMessage());
+        }
+    }
+
 
 
     /**
@@ -880,5 +1061,24 @@ public class QcController extends BaseQcProController {
         int rst = qcAwardService.updateProResultCode(proId, resultCode);
         return  rst > 0 ? R.ok("保存成功") : R.error("保存失败");
     }
+
+
+    @ResponseBody
+    @PostMapping("/member/importExcel")
+    public R importExcel(@RequestParam("file") MultipartFile file,
+                         @RequestParam("proId") String proId) {
+        if (file.isEmpty()) {
+            return R.error("Excel 文件不能为空");
+        }
+
+        try {
+            int success = qcGroupMemberService.importFromExcel(file, proId);
+            return R.ok().put("success", success).put("fail", 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("导入失败：" + e.getMessage());
+        }
+    }
+
 
 }

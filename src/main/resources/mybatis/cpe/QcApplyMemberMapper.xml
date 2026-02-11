@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.cpe.dao.QcGroupMemberDao">
+
+    <resultMap id="BaseResultMap" type="com.bootdo.cpe.domain.QcGroupMember">
+        <result column="proid" property="proid"/>
+        <result column="membername" property="membername"/>
+        <result column="id_card_number" property="idCardNumber"/>
+        <result column="responsibilities" property="responsibilities"/>
+        <result column="professional_title" property="professionalTitle"/>
+        <result column="mailing_address" property="mailingAddress"/>
+        <result column="locate" property="locate"/>
+        <result column="certificate_number" property="certificateNumber"/>
+    </resultMap>
+
+    <sql id="BaseColumn">
+        proid, membername, id_card_number, responsibilities,
+        professional_title, mailing_address, locate, certificate_number
+    </sql>
+
+    <select id="selectByProid" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM ass_qc_apply_member
+        WHERE proid = #{proid}
+    </select>
+
+    <select id="selectByProidAndIdCard" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM ass_qc_apply_member
+        WHERE proid = #{proid}
+        AND id_card_number = #{idCardNumber}
+        LIMIT 1
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM ass_qc_apply_member
+    </select>
+
+    <insert id="insert">
+        INSERT INTO ass_qc_apply_member (
+            proid, membername, id_card_number, responsibilities,
+            professional_title, mailing_address, locate, certificate_number
+        )
+        VALUES (
+                   #{proid}, #{membername}, #{idCardNumber}, #{responsibilities},
+                   #{professionalTitle}, #{mailingAddress}, #{locate}, #{certificateNumber}
+               )
+    </insert>
+
+    <update id="update">
+        UPDATE ass_qc_apply_member
+        <set>
+            <if test="membername != null">membername = #{membername},</if>
+            <if test="idCardNumber != null">id_card_number = #{idCardNumber},</if>
+            <if test="responsibilities != null">responsibilities = #{responsibilities},</if>
+            <if test="professionalTitle != null">professional_title = #{professionalTitle},</if>
+            <if test="mailingAddress != null">mailing_address = #{mailingAddress},</if>
+            <if test="locate != null">locate = #{locate},</if>
+            <if test="certificateNumber != null">certificate_number = #{certificateNumber}</if>
+        </set>
+        WHERE id_card_number = #{idCardNumber}
+    </update>
+
+    <delete id="deleteByProid">
+        DELETE FROM ass_qc_apply_member WHERE proid = #{proid}
+    </delete>
+
+    <delete id="deleteByProidAndIdCard">
+        DELETE FROM ass_qc_apply_member
+        WHERE proid = #{proid}
+          AND id_card_number = #{idCardNumber}
+    </delete>
+
+    <insert id="batchInsert">
+        INSERT INTO ass_qc_apply_member (
+        proid, membername, id_card_number, responsibilities,
+        professional_title, mailing_address, locate, certificate_number
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.proid}, #{item.membername}, #{item.idCardNumber},
+            #{item.responsibilities}, #{item.professionalTitle},
+            #{item.mailingAddress}, #{item.locate}, #{item.certificateNumber}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="save" parameterType="com.bootdo.cpe.domain.QcGroupMember">
+        INSERT INTO ass_qc_apply_member (
+            proid, membername, id_card_number, responsibilities,
+            professional_title, mailing_address, locate, certificate_number
+        )
+        VALUES (
+                   #{proid}, #{membername}, #{idCardNumber}, #{responsibilities},
+                   #{professionalTitle}, #{mailingAddress}, #{locate}, #{certificateNumber}
+               )
+    </insert>
+
+</mapper>

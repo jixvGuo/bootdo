@@ -6,7 +6,7 @@
 	<select id="get" resultType="com.bootdo.common.domain.DictDO">
 		select
 		`id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
-		from sys_dict where id = #{value}
+		from sys_dict where id = #{value}  order by id
 	</select>
 
 	<select id="list" resultType="com.bootdo.common.domain.DictDO">

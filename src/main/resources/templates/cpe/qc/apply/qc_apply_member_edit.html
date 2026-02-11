@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>成员编辑</h5>
+                </div>
+
+                <div class="ibox-content">
+                    <form class="form-horizontal" id="memberForm">
+
+                        <input type="hidden" name="proid" id="proid">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">姓名：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="membername" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">身份证号：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="idCardNumber" id="idCardNumber" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">分工：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="responsibilities">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">职称：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="professionalTitle">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">联系方式：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="mailingAddress">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">通讯地址：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="locate">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">证书：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="certificateNumber">
+                            </div>
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-sm-2 control-label">附件：</label>-->
+<!--                            <div class="col-sm-4">-->
+<!--                                <button type="button" class="btn btn-primary" onclick="forceClickInput()">上传证书</button>-->
+<!--                            </div>-->
+<!--                            <input type="file" id="realFileHandler" accept="image/*" style="display: none;" onchange="startUploadLogic(this)" />-->
+
+<!--                        </div>-->
+                        <div class="form-group text-center">
+                            <button type="button" class="btn btn-primary" onclick="saveMember()">保存</button>
+                            <button type="button" class="btn btn-default" onclick="parent.layer.closeAll()">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+
+<script src="/js/jquery.min.js"></script>
+
+<script>
+    var prefix = "/qcAward";
+    var proId = getQuery("proId");
+    var idCardNumber = getQuery("idCardNumber");
+
+    $("#proid").val(proId);
+
+    function forceClickInput() {
+        document.getElementById('realFileHandler').click();
+    }
+    // 编辑回显
+    if (idCardNumber) {
+        $.get(prefix + "/member/get", {
+            proId: proId,
+            idCardNumber: idCardNumber
+        }, function (data) {
+            if (data) {
+                $("input[name='membername']").val(data.membername);
+                $("input[name='idCardNumber']").val(data.idCardNumber).attr("readonly", true);
+                $("input[name='responsibilities']").val(data.responsibilities);
+                $("input[name='professionalTitle']").val(data.professionalTitle);
+                $("input[name='mailingAddress']").val(data.mailingAddress);
+                $("input[name='locate']").val(data.locate);
+                $("input[name='certificateNumber']").val(data.certificateNumber);
+            }
+        });
+    }
+
+    function saveMember() {
+        $.post(prefix + "/member/save", $("#memberForm").serialize(), function (r) {
+            if (r.code === 0) {
+                layer.msg("保存成功");
+                parent.loadMembers();
+                parent.layer.closeAll();
+            } else {
+                layer.msg(r.msg);
+            }
+        });
+    }
+
+    function getQuery(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        return r != null ? decodeURIComponent(r[2]) : null;
+    }
+    function startUploadLogic(input) {
+        var file = input.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('proId', proId);
+        formData.append('idCardNumber',idCardNumber);
+        // formData.append('awardId', GLOBAL_AWARD_ID);
+
+        var loading = layer.load(1, {shade: [0.3, '#000']});
+
+        $.ajax({
+            url: '/qcAward/uploadQcAttachment',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                layer.close(loading);
+                if (res.code == 0) {
+                    layer.msg("保存成功！");
+                    setTimeout(function(){ location.reload(); }, 1000);
+                } else {
+                    layer.alert(res.msg || "保存失败");
+                }
+            },
+            error: function(xhr) {
+                layer.close(loading);
+                layer.msg("网络请求失败");
+            }
+        });
+        input.value = "";
+    }
+</script>
+
+</body>
+</html>
