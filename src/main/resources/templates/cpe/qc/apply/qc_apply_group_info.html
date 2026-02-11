@@ -49,15 +49,16 @@
                     <input type="text" th:value="${groupInfo.groupName}" name="groupName" placeholder="小组名称">
                 </div>
                 <div class="ui field">
-                    <label>小组人数</label>
-                    <input type="text" th:value="${groupInfo.actDesc}" name="actDesc" placeholder="小组人数">
-                </div>
-            </div>
-            <div class="ui three fields">
-                <div class="ui field">
                     <label>申报单位</label>
                     <input th:value="${groupInfo.unitName}" type="text" name="unitName" placeholder="申报单位">
                 </div>
+<!--                <div class="ui field">-->
+<!--                    <label>小组人数</label>-->
+<!--                    <input type="text" th:value="${groupInfo.actDesc}" name="actDesc" placeholder="小组人数">-->
+<!--                </div>-->
+            </div>
+            <div class="ui three fields">
+
                 <div class="ui field">
                     <label>分类</label>
                     <input type="text" th:if="${readonly} eq 1"
