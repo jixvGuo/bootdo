@@ -229,6 +229,15 @@
         });
     }
 
+    // ================= Excel 上传弹窗 =================
+    function openUploadSmall(fileType) {
+        var proId = $("#proId").val();
+        var url = "/award_flow/to_uploadsmall?proId=" + proId + "&fileType=" + fileType;
+        layer.open({ type: 2, title: "上传文件", area: ['800px', '520px'], content: url, maxmin: true, end: function() {
+            // 这里可以刷新成员表或文件名
+                loadMembers(); } });
+    }
+
     function startUploadLogic(input, idCardNumber) {
         var file = input.files[0];
         if (!file) return;
