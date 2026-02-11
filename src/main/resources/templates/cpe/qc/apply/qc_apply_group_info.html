@@ -48,6 +48,10 @@
                     <label>小组名称</label>
                     <input type="text" th:value="${groupInfo.groupName}" name="groupName" placeholder="小组名称">
                 </div>
+                <div class="ui field">
+                    <label>小组人数</label>
+                    <input type="text" th:value="${groupInfo.actDesc}" name="actDesc" placeholder="小组人数">
+                </div>
             </div>
             <div class="ui three fields">
                 <div class="ui field">
@@ -77,7 +81,6 @@
                 注：<br>
                 1. 单位名称要写全称，即发证书名称。<br>
                 2. 课题类型：问题解决型课题、创新型课题<br>
-                3. 完成单位有多个时，单位之间用逗号隔开<br>
             </label>
             <div class="ui error message"></div>
             <div class="ui basic center aligned segment">

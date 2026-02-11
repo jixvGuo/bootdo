@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+
+                <div class="ibox-title">
+                    <h5>小组成员管理</h5>
+                </div>
+
+                <div class="ibox-content">
+
+                    <input type="hidden" id="proId" th:value="${proId}">
+                    <input type="hidden" id="taskId" th:value="${taskId}">
+                    <!-- 只读标识 -->
+                    <input type="hidden" id="isReadonly" th:value="${readonly}">
+
+                    <!-- 成员表上传（Excel 弹窗） -->
+                    <button class="btn btn-primary btn-op" onclick="clickExcelInput()">EXCEL成员导入</button>
+                    <input type="file" id="excelFileInput" accept=".xls,.xlsx" style="display:none" onchange="uploadExcel(this)">
+                    <br></br>
+
+                    <!-- 成员表上传（扫描件） -->
+                    <div class="form-group btn-op">
+                        <button class="btn btn-primary" onclick="openUploadSmall('group_member')">上传成员表附件(扫描件)</button>
+                    </div>
+
+                    <!-- 成员列表 -->
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="60">序号</th>
+                            <th>姓名</th>
+                            <th>身份证号</th>
+                            <th>分工</th>
+                            <th>职称</th>
+                            <th>联系方式</th>
+                            <th>通讯地址</th>
+                            <th>证书</th>
+                            <th width="220">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="memberTableBody"></tbody>
+                    </table>
+
+                    <!-- 新增成员 -->
+                    <div class="text-center btn-op">
+                        <button class="btn btn-success" onclick="openAddMember()">+ 新增成员</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+
+<script src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+
+<script>
+
+    var prefix = "/qcAward";
+    var proId = $("#proId").val();
+
+    // ================= 成员表加载 =================
+    function loadMembers() {
+        $.get(prefix + "/member/list", { proId: proId }, function(list) {
+            renderMembers(list);
+        });
+    }
+
+    function clickExcelInput() {
+        $("#excelFileInput").click();
+    }
+
+    function uploadExcel(input) {
+        var file = input.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append("proId", proId);
+
+        var loading = layer.load(1, {shade: [0.3, '#000']});
+
+        $.ajax({
+            url: prefix + "/member/importExcel",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                layer.close(loading);
+
+                if (res.code == 0) {
+                    layer.alert("导入成功：" + res.success + " 条，失败：" + res.fail + " 条");
+                    loadMembers();
+                } else {
+                    layer.alert(res.msg || "导入失败");
+                }
+            },
+            error: function() {
+                layer.close(loading);
+                layer.msg("上传失败");
+            }
+        });
+
+        input.value = "";
+    }
+
+    // function renderMembers(list) {
+    //     var html = "";
+    //     var readonly = $("#isReadonly").val() == 1;
+    //
+    //     $.each(list, function(i, m) {
+    //
+    //         var fileInputId = "file_" + m.idCardNumber;
+    //
+    //         html += `
+    //         <tr>
+    //             <td>${i + 1}</td>
+    //             <td>${m.membername || ''}</td>
+    //             <td>${m.idCardNumber || ''}</td>
+    //             <td>${m.responsibilities || ''}</td>
+    //             <td>${m.professionalTitle || ''}</td>
+    //             <td>${m.mailingAddress || ''}</td>
+    //             <td>${m.locate || ''}</td>
+    //             <td>${m.certificateNumber || ''}</td>
+    //             <td>
+    //                 ${readonly ? '' : `
+    //                 <button class="btn btn-xs btn-primary" onclick="editMember('${m.proid}','${m.idCardNumber}')">编辑</button>
+    //                 <button class="btn btn-xs btn-danger" onclick="deleteMember('${m.proid}','${m.idCardNumber}')">删除</button>
+    //                 <button class="btn btn-xs btn-warning" onclick="forceClickInput('${m.idCardNumber}')">上传证书</button>
+    //                 <input type="file" id="${fileInputId}" accept="image/*" style="display:none;"
+    //                        onchange="startUploadLogic(this, '${m.idCardNumber}')">
+    //                 `}
+    //             </td>
+    //         </tr>
+    //     `;
+    //     });
+    //
+    //     $("#memberTableBody").html(html);
+    // }
+    function renderMembers(list) {
+        var html = "";
+        var readonly = $("#isReadonly").val() == 1;
+
+        $.each(list, function(i, m) {
+
+            var fileInputId = "file_" + m.idCardNumber;
+
+            // 证书显示逻辑
+            var certHtml = "-";
+            if (m.certificateNumber) {
+                var filePath = m.certificateNumber;
+                var fileName = filePath.split('/').pop(); // 取文件名
+
+                certHtml = `<a href="${filePath}" download title="点击下载">${fileName}</a>`;
+            }
+
+            html += `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${m.membername || ''}</td>
+            <td>${m.idCardNumber || ''}</td>
+            <td>${m.responsibilities || ''}</td>
+            <td>${m.professionalTitle || ''}</td>
+            <td>${m.mailingAddress || ''}</td>
+            <td>${m.locate || ''}</td>
+            <td>${certHtml}</td>
+            <td>
+                ${readonly ? '' : `
+                <button class="btn btn-xs btn-primary" onclick="editMember('${m.proid}','${m.idCardNumber}')">编辑</button>
+                <button class="btn btn-xs btn-danger" onclick="deleteMember('${m.proid}','${m.idCardNumber}')">删除</button>
+                <button class="btn btn-xs btn-warning" onclick="forceClickInput('${m.idCardNumber}')">上传证书</button>
+                <input type="file" id="${fileInputId}" accept="image/*" style="display:none;"
+                       onchange="startUploadLogic(this, '${m.idCardNumber}')">
+                `}
+            </td>
+        </tr>
+        `;
+        });
+
+        $("#memberTableBody").html(html);
+    }
+
+    // ================= 新增/编辑/删除 =================
+    function openAddMember() {
+        layer.open({
+            type: 2,
+            title: "新增成员",
+            area: ['600px', '520px'],
+            content: prefix + "/memberEdit?proId=" + proId
+        });
+    }
+
+    function forceClickInput(idCardNumber) {
+        $("#file_" + idCardNumber).click();
+    }
+
+    function editMember(proId, idCardNumber) {
+        layer.open({
+            type: 2,
+            title: "编辑成员",
+            area: ['600px', '520px'],
+            content: prefix + "/memberEdit?proId=" + proId + "&idCardNumber=" + idCardNumber
+        });
+    }
+
+    function deleteMember(proId, idCardNumber) {
+        layer.confirm("确认删除该成员？", function () {
+            $.post(prefix + "/member/remove", {
+                proId: proId,
+                idCardNumber: idCardNumber
+            }, function (r) {
+                if (r.code === 0) {
+                    layer.msg("删除成功");
+                    loadMembers();
+                } else {
+                    layer.msg(r.msg);
+                }
+            });
+        });
+    }
+
+    function startUploadLogic(input, idCardNumber) {
+        var file = input.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('proId', proId);
+        formData.append('idCardNumber', idCardNumber);
+
+        var loading = layer.load(1, {shade: [0.3, '#000']});
+
+        $.ajax({
+            url: '/qcAward/uploadQcAttachment',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                layer.close(loading);
+                if (res.code == 0) {
+                    layer.msg("上传成功！");
+                    loadMembers();
+                } else {
+                    layer.alert(res.msg || "上传失败");
+                }
+            },
+            error: function() {
+                layer.close(loading);
+                layer.msg("网络请求失败");
+            }
+        });
+
+        input.value = "";
+    }
+
+    loadMembers();
+</script>
+
+</body>
+</html>
