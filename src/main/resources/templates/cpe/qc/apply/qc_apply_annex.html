@@ -41,7 +41,7 @@
                         <!-- 1. QC小组成果材料 -->
                         <tr>
                             <td>1</td>
-                            <td>QC小组成果材料(包括成果报告及曾获奖励证书等其他材料)</td>
+                            <td>成果材料（可编辑）</td>
                             <td>
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -77,7 +77,7 @@
                         <!-- 2. 石油工程建设优秀QC小组申报表(附件1) -->
                         <tr>
                             <td>2</td>
-                            <td>石油工程建设优秀QC小组申报表(附件1)</td>
+                            <td>成果材料（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'apply_table'" class="file-box">
                                     <div class="file">
@@ -106,7 +106,7 @@
                         <!-- 3. 石油工程建设优秀QC小组报告单 -->
                         <tr>
                             <td>3</td>
-                            <td>石油工程建设优秀QC小组报告单(问题解决型课题[附件2]、创新型课题[附件3])</td>
+                            <td>小组申报表（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'report_paper'" class="file-box">
                                     <div class="file">
@@ -136,7 +136,7 @@
                         <!-- 4. 石油工程建设优秀QC小组活动现场评价表(附件4) -->
                         <tr>
                             <td>4</td>
-                            <td>石油工程建设优秀QC小组活动现场评价表(附件4)</td>
+                            <td>小组报告单（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'act_recommend'" class="file-box">
                                     <div class="file">
@@ -166,7 +166,7 @@
                         <!-- 5. 石油工程建设优秀QC小组活动成果评价表 -->
                         <tr>
                             <td>5</td>
-                            <td>石油工程建设优秀QC小组活动成果评价表(问题解决型课题[附件5]、创新型课题[附件6])</td>
+                            <td>现场评价表（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'result_recommend'" class="file-box">
                                     <div class="file">
@@ -196,7 +196,7 @@
                         <!-- 6. 石油工程建设优秀QC小组活动成果实际价值评价表(附件7) -->
                         <tr>
                             <td>6</td>
-                            <td>石油工程建设优秀QC小组活动成果实际价值评价表(附件7)</td>
+                            <td>成果评价表（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'result_real_recommend'" class="file-box">
                                     <div class="file">
@@ -226,7 +226,7 @@
                         <!-- 7. 石油工程建设优秀QC小组成员表(附件8) -->
                         <tr>
                             <td>7</td>
-                            <td>石油工程建设优秀QC小组成员表(附件8)</td>
+                            <td>实际价值评价表（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'group_member'" class="file-box">
                                     <div class="file">
@@ -256,7 +256,7 @@
                         <!-- 8. 质量管理小组概况统计表(附件9,每单位一份) -->
                         <tr>
                             <td>8</td>
-                            <td>质量管理小组概况统计表(附件9,每单位一份)</td>
+                            <td>概况统计表（PDF版）</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'survey_statistic'" class="file-box">
                                     <div class="file">
@@ -286,7 +286,7 @@
                         <!-- 9. 相关证书(附件9,每单位一份) -->
                         <tr>
                             <td>9</td>
-                            <td>相关证书(附件9,每单位一份)</td>
+                            <td>评价组长资格证书</td>
                             <td>
                                 <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'certificate'" class="file-box">
                                     <div class="file">
@@ -358,7 +358,8 @@ function actionInReadonly() {
  * 删除指定类型的全部文件
  * @param fileType 文件类型标识
  */
-function deleteAllFiles(fileType) {
+function deleteAllFiles(that) {
+    console.log("that：" + that);
     // 确认是否删除
     layer.confirm('确定要删除该类型的所有文件吗？', {
         btn: ['确定', '取消']
@@ -404,7 +405,7 @@ function deleteAllFiles(fileType) {
      // 打开layer上传弹窗（核心逻辑：替换原div显隐）
      parent.layer.open({
          type: 2,
-         title: "上传" + getFileTypeDesc(fileType), // 显示材料名称
+         title: "上传", // 显示材料名称
          maxmin: true,
          shadeClose: false,
          area: ['600px', '400px'],
