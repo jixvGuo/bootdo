@@ -58,10 +58,7 @@ function load() {
                         field: 'proCode',
                         title: '课题编号',
                     },
-                    {
-                        field: 'proType',
-                        title: '类别'
-                    },
+
                     {
                         field: 'topicName',
                         title: '课题名称'
@@ -69,6 +66,10 @@ function load() {
                     {
                         field: 'groupName',
                         title: '小组名称'
+                    },
+                    {
+                        field: 'groupMember',
+                        title: '小组成员'
                     },
                     {
                         field: 'companyName',
@@ -111,11 +112,6 @@ function load() {
                             });
                             return name;
                         }
-                    },
-
-                    {
-                        field: 'applyAccount',
-                        title: '申报账号'
                     },
                     {
                         field: 'applyStat',

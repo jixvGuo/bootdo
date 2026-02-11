@@ -14,6 +14,8 @@ public interface QcGroupMemberDao {
     QcGroupMember selectByProidAndIdCard(@Param("proid") String proid,
                                          @Param("idCardNumber") String idCardNumber);
 
+    List<QcGroupMember> selectByProids(@Param("proids") List<String> proids);
+
     List<QcGroupMember> selectAll();
 
     int insert(QcGroupMember member);

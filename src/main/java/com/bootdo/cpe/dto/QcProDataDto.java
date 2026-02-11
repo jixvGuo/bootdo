@@ -29,6 +29,19 @@ public class QcProDataDto extends QcGroupApplyInfoDO {
      */
     private String companyName;
 
+    /**
+     * 小组成员，多个用逗号隔开
+     */
+    private String groupMember;
+
+    public String getGroupMember() {
+        return groupMember;
+    }
+
+    public void setGroupMember(String groupMember) {
+        this.groupMember = groupMember;
+    }
+
     public String getOptAccount() {
         return optAccount;
     }

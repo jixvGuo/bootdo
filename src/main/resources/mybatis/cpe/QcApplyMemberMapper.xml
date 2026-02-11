@@ -26,6 +26,15 @@
         WHERE proid = #{proid}
     </select>
 
+    <select id="selectByProids" resultMap="BaseResultMap">
+        SELECT <include refid="BaseColumn"/>
+        FROM ass_qc_apply_member
+        WHERE proid  in
+        <foreach item="id" collection="proids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <select id="selectByProidAndIdCard" resultMap="BaseResultMap">
         SELECT <include refid="BaseColumn"/>
         FROM ass_qc_apply_member

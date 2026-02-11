@@ -3,16 +3,20 @@ package com.bootdo.cpe.service.impl;
 import com.bootdo.common.utils.R;
 import com.bootdo.cpe.dao.ProjectCommonDao;
 import com.bootdo.cpe.dao.QcAwardDao;
+import com.bootdo.cpe.dao.QcGroupMemberDao;
+import com.bootdo.cpe.domain.QcGroupMember;
 import com.bootdo.cpe.domain.QcProStatEnum;
 import com.bootdo.cpe.dto.QcProDataDto;
 import com.bootdo.cpe.petroleum_engineering_award.domain.OilProStatEnum;
 import com.bootdo.cpe.service.QcAwardService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * QC奖项目服务
@@ -29,6 +33,10 @@ public class QcAwardServiceImpl implements QcAwardService {
     @Autowired
     private ProjectCommonDao projectCommonDao;
 
+    @Autowired
+    private QcGroupMemberDao qcGroupMemberDao;
+
+
     /**
      * 获取项目列表
      *
@@ -38,9 +46,32 @@ public class QcAwardServiceImpl implements QcAwardService {
     @Override
     public List<QcProDataDto> listProInfo(Map<String, Object> map) {
         List<QcProDataDto> list = qcAwardDao.getProDataList(map);
+        List<String> proIds = list.stream()
+                .map(dto -> Integer.toString(dto.getProId()))
+                .distinct()
+                .collect(Collectors.toList());
+        Map<String,String> proNameMap = new HashMap<>();
+        if (CollectionUtils.isNotEmpty(proIds)){
+            List<QcGroupMember> qcGroupMemberList = qcGroupMemberDao.selectByProids(proIds);
+            if (CollectionUtils.isNotEmpty(qcGroupMemberList)){
+                proNameMap = qcGroupMemberList.stream()
+                        .collect(Collectors.groupingBy(
+                                QcGroupMember::getProid,
+                                Collectors.mapping(QcGroupMember::getMembername, Collectors.joining(","))
+                        ));
+
+            }
+        }
+        //此处查询出对应proId对应的小组成员，然后map对应赋值即可
         list.stream().forEach(pro->{
             pro.initApplyStat();
         });
+        //遍历项目列表，进行对符合proid的成员进行赋值
+        for (QcProDataDto pro:list){
+            if (proNameMap.containsKey(String.valueOf(pro.getProId()))){
+                pro.setGroupMember(proNameMap.get(String.valueOf(pro.getProId())));
+            }
+        }
         return list;
     }
 

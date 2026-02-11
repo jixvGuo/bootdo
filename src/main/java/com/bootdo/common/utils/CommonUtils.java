@@ -57,6 +57,10 @@ public class CommonUtils {
         if(roleIdList.contains(ROLE_SURVER_EXTERNAL_EMPLOYMENT_ID)) {
             return true;
         }
+        /*新增QC企业人员可以看到proCode add by sys@20260209*/
+        if(roleIdList.contains(ROLE_ENTERPRISE_QC_ID)) {
+            return true;
+        }
         return false;
     }
 
