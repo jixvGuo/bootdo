@@ -114,10 +114,10 @@ public class QcGroupMemberServiceImpl implements QcGroupMemberService {
             Workbook workbook = WorkbookFactory.create(file.getInputStream());
             Sheet sheet = workbook.getSheetAt(0);
 
-            for (int i = 2; i <= sheet.getLastRowNum(); i++) {
+            for (int i = 3; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
-
+                if (isRowEmpty(row)) continue;
                 try {
                     QcGroupMember m = new QcGroupMember();
                     m.setProid(proId);
@@ -142,6 +142,21 @@ public class QcGroupMemberServiceImpl implements QcGroupMemberService {
         }
 
         return successCount;
+    }
+
+    private boolean isRowEmpty(Row row) {
+        for (int i = 0; i <= row.getLastCellNum(); i++) {
+            Cell cell = row.getCell(i);
+            if (cell != null && StringUtils.isNotBlank(getCellValue(cell))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String getCellValue(Cell cell) {
+        cell.setCellType(CellType.STRING);
+        return cell.getStringCellValue().trim();
     }
 
 
