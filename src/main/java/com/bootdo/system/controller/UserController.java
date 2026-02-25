@@ -146,7 +146,12 @@ public class UserController extends BaseController {
 		boolean isCompanyAccount = false;
 		Integer companyId = user.getCompanyId();
 		if(companyId != null && companyId > 0) {
+			user.setDeptId(companyId.longValue());
 			isCompanyAccount = true;
+			DeptDO company = sysDeptService.get(companyId.longValue());
+			if(company == null) {
+				return R.error("关联的企业不存在，请联系管理员");
+			}
 			//企业注册账号
 			String emial = user.getEmail();
 			if(StringUtils.isNotBlank(emial)) {

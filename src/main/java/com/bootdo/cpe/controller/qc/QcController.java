@@ -106,6 +106,10 @@ public class QcController extends BaseQcProController {
         map.put("isApply", isApply);
         UserDO user = getUser();
         List<Long> roleIdList = user.getRoleIds();
+        boolean isReview = roleIdList.contains(ROLE_QC_ASSOCIATION_ID) ||
+                roleIdList.contains(ROLE_QC_EXTERNAL_EMPLOYMENT_ID) ||
+                roleIdList.contains(ROLE_SPECIALIST_ID);
+        map.put("isReview", isReview);
         if(!roleIdList.contains(ROLE_ENTERPRISE_QC_ID)) {
             //非企业角色不显示申请按钮
             map.put("apply_type", null);
@@ -128,6 +132,7 @@ public class QcController extends BaseQcProController {
         UserDO user = getUser();
         Long uid = getUserId();
         List<Long> roleIdList = user.getRoleIds();
+        getProListParamsByRole(params);
         if (roleIdList.contains(ROLE_QC_ASSOCIATION_ID)) {
             //todo 临时使用协会联系人的用户id
             params.put("associationUserId", roleIdList.contains(ROLE_QC_OFFLINE_VIEW_ID) ? 101 : user.getUserId());
@@ -138,7 +143,7 @@ public class QcController extends BaseQcProController {
             //分派给自己的项目
             params.put("ass_assign_uid", uid);
         }
-        getProListParamsByRole(params);
+//        getProListParamsByRole(params);
         this.newParams = params;
 
         params.put("proStatStr", "");
@@ -345,6 +350,13 @@ public class QcController extends BaseQcProController {
         // 查询成员列表
         List<QcGroupMember> memberList = qcGroupMemberService.getByProid(proId);
         map.put("memberList", memberList);
+        packageAwardTaskId(map, params);
+
+        List<EnterpriseDocUploadDo> docUploadDoList = fileService.listUploadEnterpriseDocs(params);
+        map.put("docUploadDoList",docUploadDoList);
+        map.put("fileSize",docUploadDoList.size());
+        EnterpriseProjectInfoDo projectInfoDo = awardEnterpriseProjectService.get(proId);
+        map.put("projectInfo",projectInfoDo == null ? new EnterpriseProjectInfoDo() : projectInfoDo);
 
         return prefix + "/apply/qc_apply_member";
     }
@@ -477,8 +489,8 @@ public class QcController extends BaseQcProController {
         qcGroupApplyInfoDO.setDeleted(0);
         Date now = new Date();
         qcGroupApplyInfoDO.setUpdated(now);
-        // 创建流水号
-        qcGroupApplyInfoDO.setApplyId(sequenceService.generateSequence("QC"));
+        // 创建流水号 新增修改如果为空则创建qc号
+        //qcGroupApplyInfoDO.setApplyId(sequenceService.generateSequence("QC"));
         Integer id = qcGroupApplyInfoDO.getId();
         int rst = 0;
 
@@ -486,8 +498,9 @@ public class QcController extends BaseQcProController {
         projectInfoDo.setId(qcGroupApplyInfoDO.getProId());
         projectInfoDo.setMajor(qcGroupApplyInfoDO.getProfessionalScope());
         awardEnterpriseProjectService.updateProjectInfo(projectInfoDo);
-
+        //新增修改如果为空则创建qc号
         if(id == null) {
+            qcGroupApplyInfoDO.setApplyId(sequenceService.generateSequence("QC"));
             qcGroupApplyInfoDO.setCreated(now);
             rst = qcGroupApplyInfoService.save(qcGroupApplyInfoDO);
             id = qcGroupApplyInfoDO.getId();

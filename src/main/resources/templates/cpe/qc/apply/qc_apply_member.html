@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:include="include :: header"></head>
+<head th:include="include :: header">
+    <!-- 引入必要的CSS（与代码2保持一致） -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .file-box { margin: 8px 0; padding: 10px; border: 1px solid #e7eaec; border-radius: 4px; background: #f9f9f9; }
+        .file { position: relative; }
+        .file-name { padding: 5px 0; word-break: break-all; font-size: 14px; }
+        .file-name span { font-weight: 500; color: #333; }
+        .file-name small { color: #999; font-size: 12px; }
+        .ui.two.buttons { display: flex; margin-top: 8px; gap: 5px; }
+        .ui.button, .ui.bottom.attached.button {
+            flex: 1; margin: 0; padding: 5px 10px; font-size: 13px;
+            border-radius: 3px; border: none; cursor: pointer;
+            background-color: #1ab394; color: #fff;
+        }
+        .ui.button:hover, .ui.bottom.attached.button:hover { opacity: 0.9; }
+        .ui.bottom.attached.button:last-child { background-color: #ed5565; }
+        .mt-10 { margin-top: 10px; }
+    </style>
+</head>
 
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
@@ -16,20 +36,42 @@
 
                     <input type="hidden" id="proId" th:value="${proId}">
                     <input type="hidden" id="taskId" th:value="${taskId}">
-                    <!-- 只读标识 -->
                     <input type="hidden" id="isReadonly" th:value="${readonly}">
 
-                    <!-- 成员表上传（Excel 弹窗） -->
+                    <!-- ==================== 成员表上传（Excel） ==================== -->
                     <button class="btn btn-primary btn-op" onclick="clickExcelInput()">EXCEL成员导入</button>
                     <input type="file" id="excelFileInput" accept=".xls,.xlsx" style="display:none" onchange="uploadExcel(this)">
-                    <br></br>
+                    <br><br>
 
-                    <!-- 成员表上传（扫描件） -->
+                    <!-- ==================== 成员表上传（扫描件）- 完全复制代码2第10行 ==================== -->
                     <div class="form-group btn-op">
-                        <button class="btn btn-primary" onclick="openUploadSmall('group_member')">上传成员表附件(扫描件)</button>
+                        <button class="btn btn-primary btn-op" fileType="member_list" onclick="showUpload('member_list','b')">
+                            <i class="fa fa-upload"></i> 上传成员表附件(扫描件)
+                        </button>
+
+                        <!-- 直接复制代码2第10行的文件展示区域 -->
+                        <div th:each="doc:${docUploadDoList}" th:if="${doc.fileType} eq 'member_list'" class="file-box mt-10">
+                            <div class="file">
+                                <a href="javascript:void(0)" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                    <div class="file-name">
+                                        <span th:text="${doc.fileName}"/>
+                                        <br/>
+                                        <small>添加时间：<span th:text="${#dates.format(doc.created,'yyyy-MM-dd')}"></span></small>
+                                    </div>
+                                </a>
+                                <div class="ui two buttons">
+                                    <div class="ui bottom attached button" th:onclick="'javascript:toViewUploadDoc(\''+${doc.fileName}+'\',\''+${doc.url}+'\')'">
+                                        <i class="eye icon"></i> 查看
+                                    </div>
+                                    <div class="ui bottom attached button" th:onclick="'javascript:delUploadDoc(this,'+${doc.fileId}+')'">
+                                        <i class="trash alternate outline icon"></i> 删除
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- 成员列表 -->
+                    <!-- ==================== 成员列表 ==================== -->
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -47,7 +89,7 @@
                         <tbody id="memberTableBody"></tbody>
                     </table>
 
-                    <!-- 新增成员 -->
+                    <!-- ==================== 新增成员 ==================== -->
                     <div class="text-center btn-op">
                         <button class="btn btn-success" onclick="openAddMember()">+ 新增成员</button>
                     </div>
@@ -60,21 +102,98 @@
 
 <div th:include="include :: footer"></div>
 
+<!-- ==================== 引入必要的JS ==================== -->
 <script src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/appjs/cpe/common/readonly.js"></script>
+<script src="/js/layui.js"></script>
+<!-- 关键：引入与代码2相同的文件操作JS -->
+<script type="text/javascript" src="/js/appjs/cpe/qc/qc_file_common.js"></script>
 
 <script>
-
     var prefix = "/qcAward";
     var proId = $("#proId").val();
+    var isReadonly = $("#isReadonly").val() == "1" || $("#isReadonly").val() == "true";
 
-    // ================= 成员表加载 =================
+    // ==================== 页面初始化 ====================
+    $(function() {
+        loadMembers();
+        handleReadonly();
+    });
+
+    function handleReadonly() {
+        if (isReadonly) {
+            $("button[onclick*='showUpload']").prop("disabled", true)
+                .addClass("disabled").css("opacity", "0.6");
+        }
+    }
+
+    // ==================== 成员列表加载 ====================
     function loadMembers() {
         $.get(prefix + "/member/list", { proId: proId }, function(list) {
             renderMembers(list);
         });
     }
 
+    function renderMembers(list) {
+        var html = "";
+        var readonly = isReadonly;
+
+        $.each(list, function(i, m) {
+            var fileInputId = "file_" + m.idCardNumber;
+            var certHtml = "-";
+
+            if (m.certificateNumber) {
+                var filePath = m.certificateNumber;
+                var fileName = filePath.split('/').pop();
+                certHtml = `<a href="${filePath}" download title="点击下载">${fileName}</a>`;
+            }
+
+            html += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${m.membername || ''}</td>
+                <td>${m.idCardNumber || ''}</td>
+                <td>${m.responsibilities || ''}</td>
+                <td>${m.professionalTitle || ''}</td>
+                <td>${m.mailingAddress || ''}</td>
+                <td>${m.locate || ''}</td>
+                <td>${certHtml}</td>
+                <td>
+                    ${readonly ? '' : `
+                    <button class="btn btn-xs btn-primary" onclick="editMember('${m.proid}','${m.idCardNumber}')">编辑</button>
+                    <button class="btn btn-xs btn-danger" onclick="deleteMember('${m.proid}','${m.idCardNumber}')">删除</button>
+                    <button class="btn btn-xs btn-warning" onclick="forceClickInput('${m.idCardNumber}')">上传证书</button>
+                    <input type="file" id="${fileInputId}" accept="image/*" style="display:none;"
+                           onchange="startUploadLogic(this, '${m.idCardNumber}')">
+                    `}
+                </td>
+            </tr>`;
+        });
+
+        $("#memberTableBody").html(html);
+    }
+
+    // ==================== 上传功能（复制代码2的showUpload函数） ====================
+    function showUpload(fileType, cssType) {
+        if (isReadonly) {
+            layer.msg("只读状态禁止上传", {icon: 2});
+            return;
+        }
+
+        var proId = $("#proId").val();
+        parent.layer.open({
+            type: 2,
+            title: "上传文件",
+            area: ['800px', '520px'],
+            content: "/award_flow/to_uploadsmall?proId=" + proId + "&fileType=" + fileType,
+            maxmin: true,
+            end: function() {
+                window.location.reload();
+            }
+        });
+    }
+
+    // ==================== Excel导入 ====================
     function clickExcelInput() {
         $("#excelFileInput").click();
     }
@@ -97,7 +216,6 @@
             contentType: false,
             success: function(res) {
                 layer.close(loading);
-
                 if (res.code == 0) {
                     layer.alert("导入成功：" + res.success + " 条，失败：" + res.fail + " 条");
                     loadMembers();
@@ -114,83 +232,7 @@
         input.value = "";
     }
 
-    // function renderMembers(list) {
-    //     var html = "";
-    //     var readonly = $("#isReadonly").val() == 1;
-    //
-    //     $.each(list, function(i, m) {
-    //
-    //         var fileInputId = "file_" + m.idCardNumber;
-    //
-    //         html += `
-    //         <tr>
-    //             <td>${i + 1}</td>
-    //             <td>${m.membername || ''}</td>
-    //             <td>${m.idCardNumber || ''}</td>
-    //             <td>${m.responsibilities || ''}</td>
-    //             <td>${m.professionalTitle || ''}</td>
-    //             <td>${m.mailingAddress || ''}</td>
-    //             <td>${m.locate || ''}</td>
-    //             <td>${m.certificateNumber || ''}</td>
-    //             <td>
-    //                 ${readonly ? '' : `
-    //                 <button class="btn btn-xs btn-primary" onclick="editMember('${m.proid}','${m.idCardNumber}')">编辑</button>
-    //                 <button class="btn btn-xs btn-danger" onclick="deleteMember('${m.proid}','${m.idCardNumber}')">删除</button>
-    //                 <button class="btn btn-xs btn-warning" onclick="forceClickInput('${m.idCardNumber}')">上传证书</button>
-    //                 <input type="file" id="${fileInputId}" accept="image/*" style="display:none;"
-    //                        onchange="startUploadLogic(this, '${m.idCardNumber}')">
-    //                 `}
-    //             </td>
-    //         </tr>
-    //     `;
-    //     });
-    //
-    //     $("#memberTableBody").html(html);
-    // }
-    function renderMembers(list) {
-        var html = "";
-        var readonly = $("#isReadonly").val() == 1;
-
-        $.each(list, function(i, m) {
-
-            var fileInputId = "file_" + m.idCardNumber;
-
-            // 证书显示逻辑
-            var certHtml = "-";
-            if (m.certificateNumber) {
-                var filePath = m.certificateNumber;
-                var fileName = filePath.split('/').pop(); // 取文件名
-
-                certHtml = `<a href="${filePath}" download title="点击下载">${fileName}</a>`;
-            }
-
-            html += `
-        <tr>
-            <td>${i + 1}</td>
-            <td>${m.membername || ''}</td>
-            <td>${m.idCardNumber || ''}</td>
-            <td>${m.responsibilities || ''}</td>
-            <td>${m.professionalTitle || ''}</td>
-            <td>${m.mailingAddress || ''}</td>
-            <td>${m.locate || ''}</td>
-            <td>${certHtml}</td>
-            <td>
-                ${readonly ? '' : `
-                <button class="btn btn-xs btn-primary" onclick="editMember('${m.proid}','${m.idCardNumber}')">编辑</button>
-                <button class="btn btn-xs btn-danger" onclick="deleteMember('${m.proid}','${m.idCardNumber}')">删除</button>
-                <button class="btn btn-xs btn-warning" onclick="forceClickInput('${m.idCardNumber}')">上传证书</button>
-                <input type="file" id="${fileInputId}" accept="image/*" style="display:none;"
-                       onchange="startUploadLogic(this, '${m.idCardNumber}')">
-                `}
-            </td>
-        </tr>
-        `;
-        });
-
-        $("#memberTableBody").html(html);
-    }
-
-    // ================= 新增/编辑/删除 =================
+    // ==================== 成员操作 ====================
     function openAddMember() {
         layer.open({
             type: 2,
@@ -229,15 +271,6 @@
         });
     }
 
-    // ================= Excel 上传弹窗 =================
-    function openUploadSmall(fileType) {
-        var proId = $("#proId").val();
-        var url = "/award_flow/to_uploadsmall?proId=" + proId + "&fileType=" + fileType;
-        layer.open({ type: 2, title: "上传文件", area: ['800px', '520px'], content: url, maxmin: true, end: function() {
-            // 这里可以刷新成员表或文件名
-                loadMembers(); } });
-    }
-
     function startUploadLogic(input, idCardNumber) {
         var file = input.files[0];
         if (!file) return;
@@ -273,8 +306,11 @@
         input.value = "";
     }
 
-    loadMembers();
+
 </script>
+
+<!-- Excel文件选择器（隐藏） -->
+<input type="file" id="excelFileInput" accept=".xls,.xlsx" style="display:none" onchange="uploadExcel(this)">
 
 </body>
 </html>

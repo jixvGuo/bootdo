@@ -63,7 +63,7 @@
 		 (select id from ass_award_flow_info where publish_task_id = pt.id order by create_date desc limit 1) pro_id,
 		 (select count(1) from ACT_RU_TASK where PROC_INST_ID_ = pt.PROC_INS_ID and TASK_DEF_KEY_ = 'sel_sepcialist') sel_specialist
 		  from ass_award_publish_task pt
-		join sys_user su on pt.association_userid = su.user_id
+		left join sys_user su on pt.association_userid = su.user_id
         <where>
 			and pt.deleted = 0
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -102,25 +102,79 @@
 		</if>
 	</select>
 
- 	<select id="count" resultType="int">
-		select count(*) from ass_award_publish_task pt
-		 <where>
-			 and deleted = 0
-			 <if test="id != null and id != ''"> and id = #{id} </if>
-			 <if test="taskName!= null and taskName != ''"> and  task_name = #{taskName} </if>
-			 <if test="associationUserId != null and associationUserId != ''"> and association_userid = #{associationUserId} </if>
-			 <if test="applyStartDate != null and applyStartDate != ''"> and apply_start_date &lt;= #{applyStartDate} </if>
-			 <if test="applyEndDate != null and applyEndDate != ''"> and apply_end_date >= #{applyEndDate} </if>
-			 <if test="publishDate != null and publishDate != ''"> and publish_date = #{publishDate} </if>
-             <if test="isOutWorker">
-                and now() between check_start_time and check_end_time
-			 </if>
-			 <if test="isSpecialist">
-                and exists(SELECT * FROM add_special_info where user_id = #{specialUid} and task_id = pt.id and deleted = 0)
-			 </if>
-		 </where>
+<!-- 	<select id="count" resultType="int">-->
+<!--		select count(*) from ass_award_publish_task pt-->
+<!--		 <where>-->
+<!--			 and deleted = 0-->
+<!--			 <if test="id != null and id != ''"> and id = #{id} </if>-->
+<!--			 <if test="taskName!= null and taskName != ''"> and  task_name = #{taskName} </if>-->
+<!--			 <if test="associationUserId != null and associationUserId != ''"> and association_userid = #{associationUserId} </if>-->
+<!--			 <if test="applyStartDate != null and applyStartDate != ''"> and apply_start_date &lt;= #{applyStartDate} </if>-->
+<!--			 <if test="applyEndDate != null and applyEndDate != ''"> and apply_end_date >= #{applyEndDate} </if>-->
+<!--			 <if test="publishDate != null and publishDate != ''"> and publish_date = #{publishDate} </if>-->
+<!--             <if test="isOutWorker">-->
+<!--                and now() between check_start_time and check_end_time-->
+<!--			 </if>-->
+<!--			 <if test="isSpecialist">-->
+<!--                and exists(SELECT * FROM add_special_info where user_id = #{specialUid} and task_id = pt.id and deleted = 0)-->
+<!--			 </if>-->
+<!--		 </where>-->
+<!--	</select>-->
+
+	<select id="count" resultType="int">
+		select count(*)
+		from ass_award_publish_task pt
+		<where>
+			and deleted = 0
+
+			<if test="id != null and id != ''">
+				and id = #{id}
+			</if>
+
+			<if test="taskName != null and taskName != ''">
+				and task_name = #{taskName}
+			</if>
+
+			<if test="associationUserId != null and associationUserId != ''">
+				and association_userid = #{associationUserId}
+			</if>
+
+			<if test="applyStartDate != null and applyStartDate != ''">
+				and apply_start_date &lt;= #{applyStartDate}
+			</if>
+
+			<if test="applyEndDate != null and applyEndDate != ''">
+				and apply_end_date >= #{applyEndDate}
+			</if>
+
+			<if test="publishDate != null and publishDate != ''">
+				and publish_date = #{publishDate}
+			</if>
+
+			<!-- ✅ 关键修复 -->
+			<if test="awardTypeId != null and awardTypeId != ''">
+				and pt.award_id = #{awardTypeId}
+			</if>
+
+			<if test="isOutWorker">
+				and now() between check_start_time and check_end_time
+			</if>
+
+			<if test="isSpecialist">
+				and exists(
+				SELECT 1
+				FROM add_special_info
+				WHERE user_id = #{specialUid}
+				AND task_id = pt.id
+				AND deleted = 0
+				)
+			</if>
+		</where>
 	</select>
-	 <!--添加发布任务-->
+
+
+
+	<!--添加发布任务-->
 	<insert id="save" parameterType="com.bootdo.activiti.domain.PublishAwardTaskDo"  >
 		insert into ass_award_publish_task
 		(

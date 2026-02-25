@@ -56,7 +56,7 @@ function load() {
                     },
                     {
                         field: 'proCode',
-                        title: '课题编号',
+                        title: '申报账号',
                     },
 
                     {

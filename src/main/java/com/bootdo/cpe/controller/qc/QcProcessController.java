@@ -228,7 +228,7 @@ public class QcProcessController extends BaseQcProController {
      * @return
      */
     @RequestMapping("/toReivew")
-    @RequiresPermissions("cpe:qcGroupApplyInfo:review")
+    @RequiresPermissions("cpe:qcGroupApplyInfo:ass_validate_pro")
     public String toReviewPro(@RequestParam Map<String, Object> params, ModelMap map) {
         packageAwardTaskId(map, params);
         Map<String, Object> proInfoParams = new HashMap<>();

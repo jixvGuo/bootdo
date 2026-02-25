@@ -87,8 +87,8 @@
                 { name:'工法奖', type:'blue', icon:'icon-renyuanguanli', },
                 { name:'科学技术奖', type:'blue', icon:'icon-GPS', },
                 { name:'勘察奖', type:'blue', icon:'icon-a-lujishigong2x', },
-                { name:'QC奖', type:'blue', icon:'icon-shujufuwuzhongxin', },
-                { name:'优质工程奖', type:'blue', icon:'icon-liangchang', }
+                { name:'QC', type:'blue', icon:'icon-shujufuwuzhongxin', },
+                { name:'优质工程', type:'blue', icon:'icon-liangchang', }
                 // { name:'咨询奖', type:'blue', icon:'icon-liangchang', }
             ],
             CurrentlySelected : ""
@@ -112,15 +112,15 @@
                  toLogin('/toLogin?award=science&awardId=1', 1);
                  return;
               }
-              if(this.CurrentlySelected == '勘察设计奖') {
+              if(this.CurrentlySelected == '勘察奖') {
                  toLogin('/toLogin?award=surver_pro&awardId=2', 2);
                  return;
               }
-              if(this.CurrentlySelected == 'QC奖') {
+              if(this.CurrentlySelected == 'QC') {
                  toLogin('/toLogin?award=qc&awardId=3', 3);
                  return;
               }
-              if(this.CurrentlySelected == '优质工程奖') {
+              if(this.CurrentlySelected == '优质工程') {
                  toLogin('/toLogin?award=engineer&awardId=4', 4);
                  return;
               }

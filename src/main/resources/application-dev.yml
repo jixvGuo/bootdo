@@ -1,9 +1,12 @@
 bootdo:
   uploadPath: D:\\mnt\\uploaded_files\\
+#  uploadPath: /mnt/uploaded_files/
 #  uploadPath: /Users/fei/Downloads/Server
-  username: admin
+  username: test
   password: 111111
-  imgUrlPre: http://123.57.10.88:5555
+  # imgUrlPre: http://123.57.10.88:5555
+  imgUrlPre: http://192.168.2.27:5555
+
 logging:
   level:
     root: info
@@ -13,8 +16,11 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.2.70:3307/boot_do?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: admin          # 替换为您的数据库用户名
+    # url: jdbc:mysql://172.17.237.57:3128/boot_do?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.2.70:3307/boot_do?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    # username: boot_do        # 替换为您的数据库用户名
+    # password: bootdo5767 # 替换为您的数据库密码
+    username: admin           # 替换为您的数据库用户名
     password: 123456 # 替换为您的数据库密码
     initialSize: 1
     minIdle: 3

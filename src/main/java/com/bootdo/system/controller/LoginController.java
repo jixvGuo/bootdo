@@ -317,71 +317,88 @@ public class LoginController extends BaseController {
     @PostMapping("/register_company")
     @ResponseBody
     R ajaxRegisterCompany(CompanyInfoVO companyInfoVO, @RequestParam(value = "awardIds", required = false) List<Long> awardIds) {
-       int rst = userService.registerCompanyInfo(companyInfoVO);
-       if(rst > 0) {
-           //发送通知消息
-           String title = companyInfoVO.getCompany_name() + "提交注册,已自动分配账号密码";
-           NotifyService notifyService = getBean("notifyService");
-           NotifyDO notifyDO = new NotifyDO();
-           //获取协会工作人员用户id
-           Map<String,Object> params = new HashMap<>();
-           //TODO 需要处理企业注册信息的协会工作人员
-           params.put("roleId",64);
-           List<UserDO> assWorkers = userService.list(params);
-           Long[] uids = new Long[assWorkers.size()];
-           //协会工作人员邮件
-           String[] emailArr = new String[uids.length];
-           final int[] i = {0};
-           assWorkers.stream().forEach(w->{
-               uids[i[0]] = w.getUserId();
-               emailArr[i[0]] = w.getEmail();
-               i[0]++;
-           });
-           notifyDO.setUserIds(uids);
-           notifyDO.setTitle(title);
-           notifyDO.setType("4");
-           notifyDO.setCreateBy(-100L);
-           notifyDO.setContent(title);
-           notifyService.save(notifyDO);
-           Long notifyId = notifyDO.getId();
-           int deptId = companyInfoVO.getDeptId();
-           AssDeptNotifyRecord assDeptNotifyRecord = new AssDeptNotifyRecord();
-           assDeptNotifyRecord.setNotifyId(notifyId == null ? 0 : notifyId.longValue());
-           assDeptNotifyRecord.setDeptId(deptId);
-           notifyService.saveDeptNotify(assDeptNotifyRecord);
-           //邮件通知协会人员
-           MailDO enterpriseMailNotify = new MailDO();
-           enterpriseMailNotify.setEmail(emailArr);
-           enterpriseMailNotify.setContent(title);
-           enterpriseMailNotify.setTitle(title);
-           mailService.sendTextMail(enterpriseMailNotify);
+        // 根据公司名称查询deptId
+        String companyName = companyInfoVO.getCompany_name();
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("name", companyName);
+        List<DeptDO> existingDepts = sysDeptService.list(queryMap);
+        int deptId;
 
-           //启用企业
-           DeptDO dept = new DeptDO();
-           dept.setDeptId((long) companyInfoVO.getDeptId());
-           dept.setDelFlag(1); // 启用企业
-           sysDeptService.update(dept);
 
-           //分配账号密码
-           UserDO user = new UserDO();
-           // 生成初始密码
-           String initPwd = "123456";
-           user.setUsername(companyInfoVO.getCompany_concat_phone()); // 用手机号做用户名
-           user.setName(companyInfoVO.getCompany_name());
-           user.setPassword(MD5Utils.encrypt(user.getUsername(), initPwd));
-           user.setDeptId((long) companyInfoVO.getDeptId()); // long类型
-           user.setEmail(companyInfoVO.getCompany_concat_email());
-           user.setRoleIds(awardIds);
-           System.out.println(user.getRoleIds().toString());
-           user.setStatus(1); // 启用
-           userService.save(user);
-           System.out.println("分配账号");
+        int rst = userService.registerCompanyInfo(companyInfoVO);
+        if(rst > 0) {
+            //发送通知消息
+            String title = companyInfoVO.getCompany_name() + "提交注册,已自动分配账号密码";
+            NotifyService notifyService = getBean("notifyService");
+            NotifyDO notifyDO = new NotifyDO();
+            //获取协会工作人员用户id
+            Map<String,Object> params = new HashMap<>();
+            //TODO 需要处理企业注册信息的协会工作人员
+            params.put("roleId",64);
+            List<UserDO> assWorkers = userService.list(params);
+            Long[] uids = new Long[assWorkers.size()];
+            //协会工作人员邮件
+            String[] emailArr = new String[uids.length];
+            final int[] i = {0};
+            assWorkers.stream().forEach(w->{
+                uids[i[0]] = w.getUserId();
+                emailArr[i[0]] = w.getEmail();
+                i[0]++;
+            });
+            notifyDO.setUserIds(uids);
+            notifyDO.setTitle(title);
+            notifyDO.setType("4");
+            notifyDO.setCreateBy(-100L);
+            notifyDO.setContent(title);
+            notifyService.save(notifyDO);
+            Long notifyId = notifyDO.getId();
+            int deptId1 = companyInfoVO.getDeptId();
+            AssDeptNotifyRecord assDeptNotifyRecord = new AssDeptNotifyRecord();
+            assDeptNotifyRecord.setNotifyId(notifyId == null ? 0 : notifyId.longValue());
+            assDeptNotifyRecord.setDeptId(deptId1);
+            notifyService.saveDeptNotify(assDeptNotifyRecord);
+            //邮件通知协会人员
+            MailDO enterpriseMailNotify = new MailDO();
+            enterpriseMailNotify.setEmail(emailArr);
+            enterpriseMailNotify.setContent(title);
+            enterpriseMailNotify.setTitle(title);
+            mailService.sendTextMail(enterpriseMailNotify);
 
-           return R.ok("注册成功<br/>"+ "账号：" + companyInfoVO.getCompany_concat_phone() + "<br/>" +
-                   "密码：123456" + "<br/>" +
-                   "请登录后尽快修改密码");
-       }
-       return R.error();
+            //启用企业
+            DeptDO dept = new DeptDO();
+            dept.setDeptId((long) companyInfoVO.getDeptId());
+            dept.setDelFlag(1); // 启用企业
+            sysDeptService.update(dept);
+
+            //分配账号密码
+            UserDO user = new UserDO();
+            // 生成初始密码
+            String initPwd = "123456";
+            user.setUsername(companyInfoVO.getCompany_concat_phone()); // 用手机号做用户名
+            user.setName(companyInfoVO.getCompany_name());
+            user.setPassword(MD5Utils.encrypt(user.getUsername(), initPwd));
+            if(existingDepts != null && !existingDepts.isEmpty()) {
+                // 如果找到同名企业，使用现有企业ID
+                deptId = existingDepts.get(0).getDeptId().intValue();
+                user.setDeptId((long) deptId);
+                System.out.println("找到同名企业: " + companyName + ", 使用deptId: " + deptId);
+            }else{
+                deptId =companyInfoVO.getDeptId();
+                user.setDeptId((long) companyInfoVO.getDeptId()); // long类型4
+                System.out.println("未找到同名企业: " + companyName + ", 使用deptId: " + deptId);
+            }
+            user.setEmail(companyInfoVO.getCompany_concat_email());
+            user.setRoleIds(awardIds);
+            System.out.println(user.getRoleIds().toString());
+            user.setStatus(1); // 启用
+            userService.save(user);
+            System.out.println("分配账号");
+
+            return R.ok("注册成功<br/>"+ "账号：" + companyInfoVO.getCompany_concat_phone() + "<br/>" +
+                    "密码：123456" + "<br/>" +
+                    "请登录后尽快修改密码");
+        }
+        return R.error();
     }
 
 

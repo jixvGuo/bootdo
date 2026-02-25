@@ -23,8 +23,8 @@
                     <input type="text" th:value="${groupInfo.topicName}" name="topicName" placeholder="课题名称">
                 </div>
                 <div class="ui field">
-                    <label>课题编号</label>
-                    <input type="text" readonly th:value="${groupInfo.applyId}" name="applyId" placeholder="课题编号">
+                    <label>申报账号</label>
+                    <input type="text" readonly th:value="${groupInfo.applyId}" name="applyId" placeholder="申报账号(自动生成)">
                 </div>
             </div>
             <div class="ui three fields">
@@ -48,16 +48,17 @@
                     <label>小组名称</label>
                     <input type="text" th:value="${groupInfo.groupName}" name="groupName" placeholder="小组名称">
                 </div>
-                <div class="ui field">
-                    <label>小组人数</label>
-                    <input type="text" th:value="${groupInfo.actDesc}" name="actDesc" placeholder="小组人数">
-                </div>
-            </div>
-            <div class="ui three fields">
+<!--                <div class="ui field">-->
+<!--                    <label>小组人数</label>-->
+<!--                    <input type="text" th:value="${groupInfo.actDesc}" name="actDesc" placeholder="小组人数">-->
+<!--                </div>-->
                 <div class="ui field">
                     <label>申报单位</label>
                     <input th:value="${groupInfo.unitName}" type="text" name="unitName" placeholder="申报单位">
                 </div>
+            </div>
+            <div class="ui three fields">
+
                 <div class="ui field">
                     <label>分类</label>
                     <input type="text" th:if="${readonly} eq 1"
@@ -81,6 +82,7 @@
                 注：<br>
                 1. 单位名称要写全称，即发证书名称。<br>
                 2. 课题类型：问题解决型课题、创新型课题<br>
+                3. 完成单位有多个时，单位之间用逗号隔开<br>
             </label>
             <div class="ui error message"></div>
             <div class="ui basic center aligned segment">

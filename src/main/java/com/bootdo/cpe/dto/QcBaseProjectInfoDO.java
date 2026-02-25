@@ -2,6 +2,7 @@ package com.bootdo.cpe.dto;
 
 import com.bootdo.common.utils.DateUtils;
 import com.bootdo.common.utils.StringUtils;
+import com.bootdo.cpe.domain.QcProStatEnum;
 import com.bootdo.cpe.petroleum_engineering_award.domain.OilProStatEnum;
 
 /**
@@ -260,7 +261,9 @@ public class QcBaseProjectInfoDO {
     }
 
     public void initApplyStat() {
-        OilProStatEnum[] statEnums = OilProStatEnum.values();
+//        OilProStatEnum[] statEnums = OilProStatEnum.values();
+        QcProStatEnum[] statEnums = QcProStatEnum.values();
+
         if(this.proStat == null) {
             this.proStat = "";
         }
@@ -272,8 +275,8 @@ public class QcBaseProjectInfoDO {
             this.isEdit = false;
         }
 
-        for(OilProStatEnum proStatEnum:statEnums) {
-            if(OilProStatEnum.APPLYING.getProStat().equals(this.proStat) && isTimeoutFlg) {
+        for(QcProStatEnum proStatEnum:statEnums) {
+            if(QcProStatEnum.APPLYING.getProStat().equals(this.proStat) && isTimeoutFlg) {
                 //如果目前状态为申请中且申报时间结束，则以申报时间结束的判断为准
                 continue;
             }
