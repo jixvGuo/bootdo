@@ -34,14 +34,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.bootdo.common.utils.SpringContextHolder.getBean;
 import java.io.File;
-import java.util.Date;
+
 @Controller
 public class LoginController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -317,6 +314,11 @@ public class LoginController extends BaseController {
     @PostMapping("/register_company")
     @ResponseBody
     R ajaxRegisterCompany(CompanyInfoVO companyInfoVO, @RequestParam(value = "awardIds", required = false) List<Long> awardIds) {
+        if (awardIds != null && !awardIds.isEmpty()) {
+            Set<Long> uniqueAwardIds = new LinkedHashSet<>(awardIds);
+            awardIds = new ArrayList<>(uniqueAwardIds);
+            System.out.println("去重后的角色IDs: " + awardIds.toString());
+        }
         // 根据公司名称查询deptId
         String companyName = companyInfoVO.getCompany_name();
         Map<String, Object> queryMap = new HashMap<>();

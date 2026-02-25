@@ -1,8 +1,12 @@
 var prefix = "/sys/user"
+var isFirstLoad = true;
 $(function() {
 	var deptId = '';
 	getTreeData();
-	load(deptId);
+	if(isFirstLoad) {
+		load(deptId);
+		isFirstLoad = false;
+	}
 });
 
 function load(deptId,roleId) {
@@ -204,7 +208,8 @@ function getTreeData() {
 function loadTree(tree) {
 	$('#jstree').jstree({
 		'core' : {
-			'data' : tree
+			'data' : tree,
+			'expand_selected_onload': false
 		},
 		"plugins" : [ "search" ]
 	});

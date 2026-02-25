@@ -219,9 +219,9 @@ function load() {
                               let applyBestProBtn = row.isApply ? s_apply_best_pro_btn : 'hidden';
                               applyAwardBtn = '<select class="btn btn-success btn-sm '+applyBestProBtn+'" onchange="applyBestProAward(\''+row.id+'\',this.options[this.options.selectedIndex].value,' + readonlyBestPro + ')">' +
                              	'  <option value="">选择申报项目</option>' +
-                             	'  <option value="bestPro">石油优质工程奖</option>' +
+                             	// '  <option value="bestPro">石油优质工程奖</option>' +
                              	'  <option value="bestProGold">石油优质工程金奖</option>' +
-                             	'  <option value="bestProInstall">石油安装工程</option>' +
+                             	// '  <option value="bestProInstall">石油安装工程</option>' +
                              	'</select>';
                               proListBtn =  '<a class="btn btn-success btn-sm ' + s_best_pro_list_btn + '" href="#" title="优质工程奖项目列表"  mce_href="#" onclick="bestProList(\''
                              							    	+ row.id
