@@ -68,12 +68,15 @@ public class BaseQcProController extends BaseController {
         String taskId = "";
         if(paramsTaskIdObj == null) {
             PublishAwardTaskDo taskDo = awardPublishTaskService.getLastProTaskByAwardType(EnumAwardType.QC.getAwrdType() + "");
+            System.out.println("taskname="+taskDo.getTaskName()+"taskid="+taskDo.getId());
             taskId = taskDo != null ? taskDo.getId() : "";
         }else {
             taskId = paramsTaskIdObj.toString();
+            System.out.println("else"+taskId);
         }
         if (StringUtils.isBlank(taskId)) {
             //TODO 抛出异常 用于提醒用户还未创建任务
+            System.out.println("taskId is null");
             return;
         }
         params.put("taskId", taskId);

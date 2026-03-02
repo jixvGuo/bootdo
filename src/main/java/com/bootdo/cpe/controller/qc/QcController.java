@@ -132,16 +132,20 @@ public class QcController extends BaseQcProController {
         UserDO user = getUser();
         Long uid = getUserId();
         List<Long> roleIdList = user.getRoleIds();
+        packageAwardTaskId(map, params);
         getProListParamsByRole(params);
         if (roleIdList.contains(ROLE_QC_ASSOCIATION_ID)) {
             //todo 临时使用协会联系人的用户id
             params.put("associationUserId", roleIdList.contains(ROLE_QC_OFFLINE_VIEW_ID) ? 101 : user.getUserId());
+            System.out.println("协会联系人");
         } else if (roleIdList.contains(ROLE_ENTERPRISE_QC_ID)) {
             //企业用户查看自己创建项目
             params.put("enterpriseUid", uid);
+            System.out.println("企业用户"+uid);
         } else {
             //分派给自己的项目
             params.put("ass_assign_uid", uid);
+            System.out.println("分派项目"+uid);
         }
 //        getProListParamsByRole(params);
         this.newParams = params;

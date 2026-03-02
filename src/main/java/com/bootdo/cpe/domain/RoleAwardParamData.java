@@ -248,6 +248,14 @@ public class RoleAwardParamData {
                 paramData.setType("3");
                 return paramData;
             }
+            if (roleList.contains(ROLE_QC_EXTERNAL_EMPLOYMENT_ID)) {
+                paramData.setIsAssociation(false);
+                paramData.setIsOutWorker(true);
+                paramData.setAwardId(awardIdInt);
+                paramData.setRoleId(ROLE_QC_EXTERNAL_EMPLOYMENT_ID);
+                paramData.setType("3");
+                return paramData;
+            }
         }
 
         // 优质工程奖 (awardId=4)

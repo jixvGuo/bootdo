@@ -57,7 +57,6 @@ public class LoginController extends BaseController {
     private NotifyService notifyService;
     @Autowired
     private MailService mailService;
-
     @Autowired
     private DeptService sysDeptService;
 
@@ -87,14 +86,23 @@ public class LoginController extends BaseController {
         System.out.println("DEBUG: 已将 awardId=" + awardId + " 存入 Session");
         try {
             RoleAwardParamData paramData = RoleAwardParamData.getInstance(getUser().getRoleIds(), awardId);
-            System.out.println(awardId);
-            System.out.println("当前awardid");
-            System.out.println(paramData.getAwardId());
-            System.out.println(paramData.toString());
-            awardIdInt = paramData.getAwardId();
 
+            // 添加空值检查
+            if (paramData != null) {
+                System.out.println("AwardId: " + paramData.getAwardId());
+                System.out.println("ParamData: " + paramData.toString());
+//                awardIdInt = paramData.getAwardId();
+            } else {
+                System.out.println("警告: RoleAwardParamData.getInstance()返回null");
+                // 设置默认值或处理逻辑
+
+            }
         } catch (CpeException e) {
+            System.out.println("RoleAwardParamData初始化异常: " + e.getMessage());
+            e.printStackTrace();
+
         }
+
         model.addAttribute("award", awardId);
         List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId(), awardIdInt);
         model.addAttribute("menus", menus);

@@ -576,6 +576,7 @@ public class PublishAwardTaskDo {
             }
         }
 
+
         if (StringUtils.isNotBlank(this.checkStartTime)) {
             long diffEnd = DateUtils.diffNow(this.checkEndTime);
             long diffStart = DateUtils.diffNow(this.checkStartTime);
@@ -646,6 +647,7 @@ public class PublishAwardTaskDo {
             }
         }
     }
+
 
     public boolean isApply() {
         return  "申请中".equals(this.taskStatStr);

@@ -315,7 +315,8 @@
 		from ass_award_publish_task pt
 			join sys_user su on pt.association_userid = su.user_id
 		where pt.award_id = #{awardType}
-		order by pt.record_id desc limit 1
+		order by pt.publish_date desc limit 1
+
     </select>
 
 	<select id="getTaskIdByProId" parameterType="int" resultType="String">

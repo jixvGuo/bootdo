@@ -161,17 +161,60 @@
             </if>
         </where>
     </select>
+<!--    <select id="listEnterpriseInfo" resultType="com.bootdo.cpe.domain.ApplyEnterpriseInfo">-->
+<!--        SELECT distinct sd.dept_id id,sd.name enterprise_name,-->
+<!--               (select store_path from ass_surver_enterprise_sort_info si where task_id = #{taskId} and department_id = sd.dept_id order by si.id desc limit 1 ) file_url-->
+<!--               FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id-->
+<!--               join ass_award_enterprise_project pro on pro.create_uid = su.user_id-->
+<!--               <if test="isAssocation == true">-->
+<!--                   join ass_award_assign_project ap on ap.pro_id = pro.id-->
+<!--               </if>-->
+<!--        <where>-->
+<!--            and pro.publish_task_id = #{taskId}-->
+<!--            <if test="isAssocation == false"> and pro.create_uid = #{enUid}</if>-->
+<!--        </where>-->
+<!--        <choose>-->
+<!--            <when test="sort != null and sort.trim() != ''">-->
+<!--                order by ${sort} ${order}-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--                order by sd.dept_id desc-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        <if test="offset != null and limit != null">-->
+<!--            limit #{offset}, #{limit}-->
+<!--        </if>-->
+<!--    </select>-->
+
+
+
+<!--    <select id="countEnterpriseInfo" resultType="java.lang.Integer">-->
+<!--        SELECT count(distinct sd.dept_id) FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id-->
+<!--        join ass_award_enterprise_project pro on pro.create_uid = su.user_id-->
+<!--        <if test="isAssocation == true">-->
+<!--            join ass_award_assign_project ap on ap.pro_id = pro.id-->
+<!--        </if>-->
+<!--        <where>-->
+<!--            and pro.publish_task_id = #{taskId}-->
+<!--            <if test="isAssocation == false"> and pro.create_uid = #{enUid}</if>-->
+<!--        </where>-->
+
+<!--    </select>-->
+
     <select id="listEnterpriseInfo" resultType="com.bootdo.cpe.domain.ApplyEnterpriseInfo">
         SELECT distinct sd.dept_id id,sd.name enterprise_name,
-               (select store_path from ass_surver_enterprise_sort_info si where task_id = #{taskId} and department_id = sd.dept_id order by si.id desc limit 1 ) file_url
-               FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id
-               join ass_award_enterprise_project pro on pro.create_uid = su.user_id
-               <if test="isAssocation == true">
-                   join ass_award_assign_project ap on ap.pro_id = pro.id
-               </if>
+        (select store_path from ass_surver_enterprise_sort_info si where task_id = #{taskId} and department_id = sd.dept_id order by si.id desc limit 1 ) file_url
+        FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id
+        join ass_award_enterprise_project pro on pro.create_uid = su.user_id
+        LEFT join ass_award_assign_project ap on ap.pro_id = pro.id
         <where>
-            and pro.publish_task_id = #{taskId}
-            <if test="isAssocation == false"> and pro.create_uid = #{enUid}</if>
+            pro.publish_task_id = #{taskId}
+            <if test="isAssocation == true">
+                and (ap.assign_uid != -100 or ap.assign_uid is null)
+            </if>
+            <if test="isAssocation == false">
+                and pro.create_uid = #{enUid}
+            </if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -189,15 +232,18 @@
     <select id="countEnterpriseInfo" resultType="java.lang.Integer">
         SELECT count(distinct sd.dept_id) FROM boot_do.sys_dept sd join sys_user su on sd.dept_id = su.dept_id
         join ass_award_enterprise_project pro on pro.create_uid = su.user_id
-        <if test="isAssocation == true">
-            join ass_award_assign_project ap on ap.pro_id = pro.id
-        </if>
+        LEFT join ass_award_assign_project ap on ap.pro_id = pro.id
         <where>
-            and pro.publish_task_id = #{taskId}
-            <if test="isAssocation == false"> and pro.create_uid = #{enUid}</if>
+            pro.publish_task_id = #{taskId}
+            <if test="isAssocation == true">
+                and (ap.assign_uid != -100 or ap.assign_uid is null)
+            </if>
+            <if test="isAssocation == false">
+                and pro.create_uid = #{enUid}
+            </if>
         </where>
-
     </select>
+
     <select id="getUploadFileList" resultType="com.bootdo.common.domain.FileDO">
         SELECT
             sf.*
