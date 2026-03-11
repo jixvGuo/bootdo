@@ -86,6 +86,10 @@ public class QcController extends BaseQcProController {
     private DictService dictService;
     @Autowired
     private QcGroupMemberService qcGroupMemberService;
+    @Autowired
+    private QcReviewResultRecordService qcReviewResultRecordService;
+    @Autowired
+    private com.bootdo.activiti.service.AwardPublishTaskService awardPublishTaskService;
 
     private Map<String, Object> newParams;
 
@@ -106,22 +110,108 @@ public class QcController extends BaseQcProController {
         map.put("isApply", isApply);
         UserDO user = getUser();
         List<Long> roleIdList = user.getRoleIds();
+        boolean isEnterpriseUser = roleIdList.contains(ROLE_ENTERPRISE_QC_ID);
+        boolean isAssociationLeader = roleIdList.contains(ROLE_ASSOCIATION_LEADER);
+        boolean isAssociationContact = roleIdList.contains(ROLE_QC_ASSOCIATION_ID);
+        map.put("isAssociationContact", isAssociationContact);
+        map.put("isAssociationLeader", isAssociationLeader);
+        map.put("isEnterpriseUser", isEnterpriseUser);
         boolean isReview = roleIdList.contains(ROLE_QC_ASSOCIATION_ID) ||
-                roleIdList.contains(ROLE_QC_EXTERNAL_EMPLOYMENT_ID) ||
-                roleIdList.contains(ROLE_SPECIALIST_ID);
+            roleIdList.contains(ROLE_QC_EXTERNAL_EMPLOYMENT_ID) ||
+            roleIdList.contains(ROLE_SPECIALIST_ID) ||
+            roleIdList.contains(ROLE_ASSOCIATION_LEADER);
         map.put("isReview", isReview);
         if(!roleIdList.contains(ROLE_ENTERPRISE_QC_ID)) {
             //非企业角色不显示申请按钮
             map.put("apply_type", null);
         }
+        boolean canShowCancelReviewBtn = roleIdList.contains(ROLE_QC_ASSOCIATION_ID)
+        || roleIdList.contains(ROLE_ASSOCIATION_LEADER)|| roleIdList.contains(ROLE_QC_EXTERNAL_EMPLOYMENT_ID);
+        map.put("canShowCancelReviewBtn", canShowCancelReviewBtn);
         List<DictDO> projectTypes = dictService.listByType("projectType");
         List<DictDO> classifications = dictService.listByType("classification");
         map.put("projectTypes", projectTypes);
         map.put("classifications", classifications);
+        // ===== 页面级阶段判定（用于左上角申报按钮、状态筛选显示）=====
+        String taskStageCode = "WAIT_APPLY";
+        String taskStageName = "等待申请";
+        boolean canApplyBtn = false;      // 左上角“申报”按钮
+        boolean showRejectStatus = false; // 状态筛选“已驳回”
+
+        Object taskIdObj = params.get("taskId");
+        if (taskIdObj != null) {
+            com.bootdo.activiti.domain.PublishAwardTaskDo taskDo =
+                    awardPublishTaskService.getProTaskByTaskId(taskIdObj.toString());
+            if (taskDo != null) {
+                String applyStart = taskDo.getApplyStartDate();
+                String applyEnd = taskDo.getApplyEndDate();
+                String checkStart = taskDo.getCheckStartTime();
+                String checkEnd = taskDo.getCheckEndTime();
+
+                boolean applyStarted = org.apache.commons.lang3.StringUtils.isNotBlank(applyStart)
+                        && com.bootdo.common.utils.DateUtils.diffNow(applyStart) >= 0;
+                boolean applyEnded = org.apache.commons.lang3.StringUtils.isNotBlank(applyEnd)
+                        && com.bootdo.common.utils.DateUtils.diffNow(applyEnd) >= 0;
+                boolean checkStarted = org.apache.commons.lang3.StringUtils.isNotBlank(checkStart)
+                        && com.bootdo.common.utils.DateUtils.diffNow(checkStart) >= 0;
+                boolean checkEnded = org.apache.commons.lang3.StringUtils.isNotBlank(checkEnd)
+                        && com.bootdo.common.utils.DateUtils.diffNow(checkEnd) >= 0;
+
+                if (!applyStarted && !checkStarted) {
+                    taskStageCode = "WAIT_APPLY";
+                    taskStageName = "等待申请";
+                    canApplyBtn = false;
+                } else if (applyStarted && !checkStarted && !applyEnded) {
+                    taskStageCode = "APPLYING";
+                    taskStageName = "申请中";
+                    canApplyBtn = true;
+                } else if (checkEnded) {
+                    taskStageCode = "CHECK_END";
+                    taskStageName = "形审结束";
+                    canApplyBtn = false;
+                } else if (checkStarted) {
+                    taskStageCode = "CHECKING";
+                    taskStageName = "形式审查";
+                    // 仅“申报进行中 + 形审已开始”可申报
+                    canApplyBtn = !applyEnded;
+                } else if (applyStarted && applyEnded) {
+                    taskStageCode = "CHECKING";
+                    taskStageName = "形式审查";
+                    canApplyBtn = false;
+                }
+            }
+        }
+
+        // “已驳回”状态在形审相关阶段展示
+        showRejectStatus = "CHECKING".equals(taskStageCode) || "CHECK_END".equals(taskStageCode);
+
+        map.put("taskStageCode", taskStageCode);
+        map.put("taskStageName", taskStageName);
+        map.put("canApplyBtn", canApplyBtn);
+        map.put("showRejectStatus", showRejectStatus);
 
         return prefix + "/qc_pro_list";
     }
-
+    @RequestMapping("/get/latestReviewComment")
+    @ResponseBody
+    public R getLatestReviewComment(Integer proId) {
+        if (proId == null) {
+            return R.error("参数错误");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("proId", proId);
+        // 这里调用现有service，查 ass_qc_review_result_record 最新一条
+        List<QcReviewResultRecordDO> list = qcReviewResultRecordService.list(params);
+        QcReviewResultRecordDO latest = (list != null && !list.isEmpty()) ? list.get(0) : null;
+//        QcReviewResultRecordDO latest = qcReviewResultRecordService.getLatestByProId(proId);
+        Map<String, Object> data = new HashMap<>();
+        if (latest != null) {
+            data.put("latestReviewResult", latest.getReviewResult());
+            data.put("latestReviewComment", latest.getOpinionDesc());
+            data.put("latestReviewTime", DateUtils.format(latest.getCreated(), "yyyy-MM-dd HH:mm:ss"));
+        }
+        return R.ok().put("data", data);
+    }
     /**
      * 获取项目列表
      * @return
@@ -149,25 +239,50 @@ public class QcController extends BaseQcProController {
         }
 //        getProListParamsByRole(params);
         this.newParams = params;
-
-        params.put("proStatStr", "");
-        Object keyWordObj = params.get("keyWord");
-        if (keyWordObj != null) {
-            List<String> proStatList = QcProStatEnum.getStatValByKey(keyWordObj.toString());
-            if (proStatList.size() > 0) {
-                String str = new String();
-                for (String s : proStatList) {
-                    str +=  s + ",";
-                }
-                params.put("proStatStr", str.substring(0, str.length() - 1));
-            }
+        // 第3步修改：QC协会角色项目列表状态可见范围控制（后端强约束）
+        if (roleIdList.contains(ROLE_ASSOCIATION_LEADER)) {
+            // 协会领导：只看审核中
+            params.put("proStatStr", "check");
+        } else if (roleIdList.contains(ROLE_QC_ASSOCIATION_ID)) {
+            // 协会联系人：未提交 + 审核中 + 已驳回
+            // 说明：你们SQL里“未提交”通常用 apply 特殊值映射，请与现有 mapper 约定保持一致
+            params.put("proStatStr", "apply,check,reject,improve_partake");
         }
+
+        // 第0步修改：使用独立状态筛选参数 statusFilter，兼容旧 keyWord
+        Object statusFilterObj = params.get("statusFilter");
+        Object keyWordObj = params.get("keyWord");
+        String proStatStr = buildProStatStrByStatusFilter(statusFilterObj, keyWordObj);
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(proStatStr)) {
+            params.put("proStatStr", proStatStr);
+        }
+        // params.put("proStatStr", "");
+        // Object keyWordObj = params.get("keyWord");
+        // if (keyWordObj != null) {
+        //     List<String> proStatList = QcProStatEnum.getStatValByKey(keyWordObj.toString());
+        //     if (proStatList.size() > 0) {
+        //         String str = new String();
+        //         for (String s : proStatList) {
+        //             str +=  s + ",";
+        //         }
+        //         params.put("proStatStr", str.substring(0, str.length() - 1));
+        //     }
+        // }
 
         Query query = new Query(params);
         //TODO 为了下载使用
         this.newParams = params;
 
         List<QcProDataDto> proDataDtoList = qcAwardService.listProInfo(query);
+        // 第0步修改：统一阶段码来源，列表行必须返回 taskStageCode
+        String currentTaskId = params.get("taskId") == null ? null : params.get("taskId").toString();
+        String unifiedTaskStageCode = resolveTaskStageCodeByTaskId(currentTaskId);
+        if (proDataDtoList != null) {
+            for (QcProDataDto dto : proDataDtoList) {
+                // 行级阶段统一赋值，避免前端 pageTaskStageCode / row.taskStageCode 混用
+                dto.setTaskStageCode(unifiedTaskStageCode);
+            }
+        }
         int total = qcAwardService.countProInfo(query);
         PageUtils pageUtils = new PageUtils(proDataDtoList, total);
         return pageUtils;
@@ -502,17 +617,32 @@ public class QcController extends BaseQcProController {
         projectInfoDo.setId(qcGroupApplyInfoDO.getProId());
         projectInfoDo.setMajor(qcGroupApplyInfoDO.getProfessionalScope());
         awardEnterpriseProjectService.updateProjectInfo(projectInfoDo);
-        //新增修改如果为空则创建qc号
-        if(id == null) {
+//        //新增修改如果为空则创建qc号
+//        if(StringUtils.isBlank(qcGroupApplyInfoDO.getApplyId())) {
+//            qcGroupApplyInfoDO.setApplyId(sequenceService.generateSequence("QC"));
+//            qcGroupApplyInfoDO.setCreated(now);
+//            rst = qcGroupApplyInfoService.save(qcGroupApplyInfoDO);
+//            id = qcGroupApplyInfoDO.getId();
+//        }else {
+//            rst = qcGroupApplyInfoService.update(qcGroupApplyInfoDO);
+//        }
+
+        // 1) 先兜底：applyId 为空就生成
+        if (StringUtils.isBlank(qcGroupApplyInfoDO.getApplyId())) {
             qcGroupApplyInfoDO.setApplyId(sequenceService.generateSequence("QC"));
+        }
+
+        // 2) 再按 id 判断新增/更新
+        if (id == null) {
             qcGroupApplyInfoDO.setCreated(now);
             rst = qcGroupApplyInfoService.save(qcGroupApplyInfoDO);
             id = qcGroupApplyInfoDO.getId();
-        }else {
+        } else {
             rst = qcGroupApplyInfoService.update(qcGroupApplyInfoDO);
         }
         R r = rst > 0 ? R.ok() : R.error("更新失败");
         r.put("id", id);
+        r.put("applyId", qcGroupApplyInfoDO.getApplyId());
         return r;
     }
 
@@ -1095,6 +1225,79 @@ public class QcController extends BaseQcProController {
             e.printStackTrace();
             return R.error("导入失败：" + e.getMessage());
         }
+    }
+
+        /**
+     * 统一计算任务阶段（第0步：统一契约）
+     * 返回值：WAIT_APPLY / APPLYING / CHECKING / CHECK_END
+     */
+    private String resolveTaskStageCodeByTaskId(String taskId) {
+        String taskStageCode = "WAIT_APPLY";
+        if (org.apache.commons.lang3.StringUtils.isBlank(taskId)) {
+            return taskStageCode;
+        }
+
+        com.bootdo.activiti.domain.PublishAwardTaskDo taskDo =
+                awardPublishTaskService.getProTaskByTaskId(taskId);
+        if (taskDo == null) {
+            return taskStageCode;
+        }
+
+        String applyStart = taskDo.getApplyStartDate();
+        String applyEnd = taskDo.getApplyEndDate();
+        String checkStart = taskDo.getCheckStartTime();
+        String checkEnd = taskDo.getCheckEndTime();
+
+        boolean applyStarted = org.apache.commons.lang3.StringUtils.isNotBlank(applyStart)
+                && com.bootdo.common.utils.DateUtils.diffNow(applyStart) >= 0;
+        boolean applyEnded = org.apache.commons.lang3.StringUtils.isNotBlank(applyEnd)
+                && com.bootdo.common.utils.DateUtils.diffNow(applyEnd) >= 0;
+        boolean checkStarted = org.apache.commons.lang3.StringUtils.isNotBlank(checkStart)
+                && com.bootdo.common.utils.DateUtils.diffNow(checkStart) >= 0;
+        boolean checkEnded = org.apache.commons.lang3.StringUtils.isNotBlank(checkEnd)
+                && com.bootdo.common.utils.DateUtils.diffNow(checkEnd) >= 0;
+
+        if (!applyStarted && !checkStarted) {
+            taskStageCode = "WAIT_APPLY";
+        } else if (applyStarted && !checkStarted && !applyEnded) {
+            taskStageCode = "APPLYING";
+        } else if (checkEnded) {
+            taskStageCode = "CHECK_END";
+        } else if (checkStarted) {
+            // 允许申报与形审重叠：只要形审开始且未结束，统一 CHECKING
+            taskStageCode = "CHECKING";
+        } else if (applyStarted && applyEnded) {
+            // 申报结束但形审未显式开始时，按你现有业务仍归入形审阶段
+            taskStageCode = "CHECKING";
+        }
+
+        return taskStageCode;
+    }
+
+    /**
+     * 第0步：状态筛选参数标准化
+     * 优先使用 statusFilter（新参数），兼容旧 keyWord（老参数）
+     */
+    private String buildProStatStrByStatusFilter(Object statusFilterObj, Object keyWordObj) {
+        List<String> proStatList = new ArrayList<>();
+
+        // 1) 新参数优先
+        if (statusFilterObj != null && org.apache.commons.lang3.StringUtils.isNotBlank(statusFilterObj.toString())) {
+            proStatList = QcProStatEnum.getStatValByKey(statusFilterObj.toString());
+        }
+        // 2) 兼容旧参数：仅当新参数为空时回退
+        else if (keyWordObj != null && org.apache.commons.lang3.StringUtils.isNotBlank(keyWordObj.toString())) {
+            proStatList = QcProStatEnum.getStatValByKey(keyWordObj.toString());
+        }
+
+        if (proStatList == null || proStatList.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String s : proStatList) {
+            sb.append(s).append(",");
+        }
+        return sb.substring(0, sb.length() - 1);
     }
 
 

@@ -28,14 +28,21 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.bootdo.cpe.domain.QcProStatEnum;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import com.bootdo.activiti.domain.EnterpriseDocUploadDo;
+import com.bootdo.cpe.domain.QcGroupApplyInfoDO;
+import com.bootdo.cpe.domain.QcGroupMember;
+import com.bootdo.cpe.service.QcGroupApplyInfoService;
+import com.bootdo.cpe.service.QcGroupMemberService;
 import static com.bootdo.common.config.Constant.ROLE_QC_EXTERNAL_EMPLOYMENT_ID;
+import com.bootdo.cpe.domain.science_process.ScienceAssignUserInfo;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * QC奖任务
@@ -60,6 +67,11 @@ public class QcProcessController extends BaseQcProController {
     private QcReviewResultRecordService qcReviewResultRecordService;
     @Autowired
     private ExpertGroupService expertGroupService;
+    @Autowired
+    private QcGroupApplyInfoService qcGroupApplyInfoService;
+
+    @Autowired
+    private QcGroupMemberService qcGroupMemberService;
     /**
      * 去分配项目给工作人员
      *
@@ -83,9 +95,11 @@ public class QcProcessController extends BaseQcProController {
         PublishAwardTaskDo taskDo = awardPublishTaskService.get(taskId);
         taskDo.initStat();
         boolean isAssgin = taskDo.getIsAssign();
-        if(!isAssgin) {
+        String taskStatStr = taskDo.getTaskStatStr();
+        boolean allowAssign = isAssgin || "形式审查".equals(taskStatStr);
+        if(!allowAssign) {
             //分派时间已截止
-            map.put("tipMsg", "分外外聘人员时间已结束,如需调整联系协会任务发布人员");
+            map.put("tipMsg", "分派外聘人员时间已结束,如需调整联系协会任务发布人员");
             return "enterprise/tip_msg";
         }
 
@@ -149,6 +163,22 @@ public class QcProcessController extends BaseQcProController {
         }
         return R.error();
     }
+    /**
+     * 形审驳回项目
+     */
+    @RequestMapping("/reject")
+    @ResponseBody
+    @RequiresPermissions("cpe:qcGroupApplyInfo:ass_validate_pro")
+    public R rejectPro(Integer proId) {
+        if (proId == null || proId <= 0) {
+            return R.error("参数错误");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("proId", proId);
+        params.put("proStat", QcProStatEnum.REJECT.getProStat()); // reject
+        int rst = qcAwardService.updateProStat(params);
+        return rst > 0 ? R.ok("驳回成功") : R.error("驳回失败");
+    }
 
     /**
      * 选择分派外聘人员的项目信息
@@ -203,24 +233,52 @@ public class QcProcessController extends BaseQcProController {
         String awardType = params.get("awardType").toString();
         String[] workerNameArr = asWorkerName.split(",");
         List<Long> workerUidList = userService.getUidsByLoginUserNames(workerNameArr);
-        String proIds = params.get("proIds").toString();
+        // String proIds = params.get("proIds").toString();
+        // if (StringUtils.isBlank(proIds)) {
+        //     awardEnterpriseProjectService.removeByExtUid(workerUidList, taskId, awardType);
+        //     return R.error(2, "分派项目已清空");
+        // }
+        // String[] proIdArr = proIds.split(",");
+        // List<AssignProjectDataDo> assignProjectDataDoList = new ArrayList<>();
+        // for (long wuid : workerUidList) {
+        //     for (String proId : proIdArr) {
+        //         long pid = Long.parseLong(proId);
+        //         AssignProjectDataDo assignData = new AssignProjectDataDo(assignUid, wuid, pid);
+        //         assignProjectDataDoList.add(assignData);
+        //     }
+        // }
+        // awardEnterpriseProjectService.removeByExtUid(workerUidList, taskId, awardType);
+        // awardEnterpriseProjectService.assignPro(assignProjectDataDoList);
+
+        // return R.ok();
+        String proIds = params.get("proIds") == null ? "" : params.get("proIds").toString();
+
+        // 先清空该外聘人员在当前任务+奖项下的历史分派（实现“取消”）
+        awardEnterpriseProjectService.removeByExtUid(workerUidList, taskId, awardType);
+        
+        // 右侧为空：表示用户要清空该外聘人员分派
         if (StringUtils.isBlank(proIds)) {
-            awardEnterpriseProjectService.removeByExtUid(workerUidList, taskId, awardType);
-            return R.error(2, "分派项目已清空");
+            return R.ok("分派已更新（已清空）");
         }
+        
+        // 重建右侧列表对应的分派（实现“新增/保留”）
         String[] proIdArr = proIds.split(",");
         List<AssignProjectDataDo> assignProjectDataDoList = new ArrayList<>();
         for (long wuid : workerUidList) {
             for (String proId : proIdArr) {
-                long pid = Long.parseLong(proId);
-                AssignProjectDataDo assignData = new AssignProjectDataDo(assignUid, wuid, pid);
-                assignProjectDataDoList.add(assignData);
+                if (StringUtils.isNotBlank(proId)) {
+                    long pid = Long.parseLong(proId.trim());
+                    assignProjectDataDoList.add(new AssignProjectDataDo(assignUid, wuid, pid));
+                }
             }
         }
-        awardEnterpriseProjectService.removeByExtUid(workerUidList, taskId, awardType);
+        
+        if (assignProjectDataDoList.isEmpty()) {
+            return R.ok("分派已更新");
+        }
+        
         awardEnterpriseProjectService.assignPro(assignProjectDataDoList);
-
-        return R.ok();
+        return R.ok("分派已更新");
     }
 
     /**
@@ -230,6 +288,8 @@ public class QcProcessController extends BaseQcProController {
     @RequestMapping("/toReivew")
     @RequiresPermissions("cpe:qcGroupApplyInfo:ass_validate_pro")
     public String toReviewPro(@RequestParam Map<String, Object> params, ModelMap map) {
+
+        
         packageAwardTaskId(map, params);
         Map<String, Object> proInfoParams = new HashMap<>();
         proInfoParams.put("id", params.get("groupInfoId"));
@@ -246,6 +306,31 @@ public class QcProcessController extends BaseQcProController {
         List<QcReviewResultRecordDO> reviewResultRecordDOList = qcReviewResultRecordService.list(reviewParams);
         QcReviewResultRecordDO reviewResultRecordDO = reviewResultRecordDOList.size() > 0 ? reviewResultRecordDOList.get(0) : new QcReviewResultRecordDO();
         map.put("reviewResult", reviewResultRecordDO);
+        // ===== 无 iframe 模板所需数据：groupInfo / docUploadDoList / memberList =====
+        String proId = params.get("proId") == null ? null : params.get("proId").toString();
+
+        // 1) 基本信息
+        QcGroupApplyInfoDO groupInfo = new QcGroupApplyInfoDO();
+        if (StringUtils.isNotBlank(proId)) {
+            Map<String, Object> groupParams = new HashMap<>();
+            groupParams.put("proId", proId);
+            List<QcGroupApplyInfoDO> groupList = qcGroupApplyInfoService.list(groupParams);
+            if (groupList != null && !groupList.isEmpty()) {
+                groupInfo = groupList.get(0);
+            }
+        }
+        map.put("groupInfo", groupInfo);
+
+        // 2) 附件列表
+        List<EnterpriseDocUploadDo> docUploadDoList = fileService.listUploadEnterpriseDocs(params);
+        map.put("docUploadDoList", docUploadDoList);
+
+        // 3) 成员列表
+        List<QcGroupMember> memberList = new ArrayList<>();
+        if (StringUtils.isNotBlank(proId)) {
+            memberList = qcGroupMemberService.getByProid(proId);
+        }
+        map.put("memberList", memberList);
         return prefix + "/check/qc_check_template";
     }
 

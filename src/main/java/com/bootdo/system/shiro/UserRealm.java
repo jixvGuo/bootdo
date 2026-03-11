@@ -78,35 +78,35 @@ public class UserRealm extends AuthorizingRealm {
         if ("1".equalsIgnoreCase(currentType)){
 			// 科技
 			for(Long m : roleIdList){
-				if (m == 1 || m == 60 || m == 61 || m == ROLE_SCIENCE_EXTERNAL_EMPLOYMENT_ID || m== ROLE_SPECIALIST_ID){
+				if (m == 1 || m == 60 || m == 61 || m == ROLE_SCIENCE_EXTERNAL_EMPLOYMENT_ID || m== ROLE_SPECIALIST_ID|| m == ROLE_ASSOCIATION_LEADER){
 					isCanLogin = true ;
 				}
 			}
 		}else if("2".equalsIgnoreCase(currentType)){
 			// 优秀勘察
 			for(Long m : roleIdList){
-				if (m == 1 || m == 74 || m == 73 || m == ROLE_SURVER_EXTERNAL_EMPLOYMENT_ID){
+				if (m == 1 || m == 74 || m == 73 || m == ROLE_SURVER_EXTERNAL_EMPLOYMENT_ID|| m == ROLE_ASSOCIATION_LEADER){
 					isCanLogin = true ;
 				}
 			}
 		}else if("3".equalsIgnoreCase(currentType)){
 			// QC
 			for(Long m : roleIdList){
-				if (m == 1 || m == 70 || m == 71 || m == ROLE_QC_EXTERNAL_EMPLOYMENT_ID){
+				if (m == 1 || m == 70 || m == 71 || m == ROLE_QC_EXTERNAL_EMPLOYMENT_ID|| m == ROLE_ASSOCIATION_LEADER){
 					isCanLogin = true ;
 				}
 			}
 		}else if("4".equalsIgnoreCase(currentType)){
 			// 优质工程
 			for(Long m : roleIdList){
-				if (m == 1 || m ==66 || m == 67 || m == ROLE_GOOD_PRO_EMPLOYMENT_ID){
+				if (m == 1 || m ==66 || m == 67 || m == ROLE_GOOD_PRO_EMPLOYMENT_ID|| m == ROLE_ASSOCIATION_LEADER){
 					isCanLogin = true ;
 				}
 			}
 		}else if("5".equalsIgnoreCase(currentType)){
 			// 工法奖
 			for(Long m : roleIdList){
-				if (m == 1 || m == 78 || m == 79 || m == ROLE_GONGFA_EMPLOYMENT_ID){
+				if (m == 1 || m == 78 || m == 79 || m == ROLE_GONGFA_EMPLOYMENT_ID|| m == ROLE_ASSOCIATION_LEADER){
 					isCanLogin = true ;
 				}
 			}

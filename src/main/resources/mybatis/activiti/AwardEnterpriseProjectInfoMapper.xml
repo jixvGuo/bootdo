@@ -119,8 +119,16 @@
             <if test="awardType == 'science_personal'">
                 proD.user_name task_name,
             </if>
+            <if test="awardType == 'qc_group'">
+                qg.group_name task_name,
+            </if>
             IF(pro.pro_result_code IS NULL OR pro.pro_result_code = '', pro.pro_code, pro.pro_result_code) proCode,
-            pro.major,
+            CASE pro.major
+                WHEN 'design' THEN '勘察设计'
+                WHEN 'supervision' THEN '监理与管理'
+                WHEN 'construction' THEN '施工'
+                ELSE pro.major
+            END major,
             sd.`name` enterprise_name,
             (SELECT
                   uid
@@ -145,6 +153,9 @@
         <if test="awardType == 'science_personal'">
             JOIN
             ass_enterpri_personal_info proD on proD.pro_id = pro.id
+        </if>
+        <if test="awardType == 'qc_group'">
+            JOIN ass_qc_group_apply_info qg on qg.pro_id = pro.id and qg.deleted = 0
         </if>
         <where>
              `publish_task_id` = #{taskId}

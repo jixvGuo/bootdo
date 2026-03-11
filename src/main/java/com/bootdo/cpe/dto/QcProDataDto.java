@@ -34,6 +34,71 @@ public class QcProDataDto extends QcGroupApplyInfoDO {
      */
     private String groupMember;
 
+    /**
+     * 最新形审结果：参评/完善后参评/缓评/不评
+     */
+    private String latestReviewResult;
+
+    /**
+     * 最新形审评语
+     */
+    private String latestReviewComment;
+
+    /**
+     * 最新形审时间
+     */
+    private String latestReviewTime;
+
+    /**
+     * 任务阶段编码：WAIT_APPLY/APPLYING/CHECKING/CHECK_END
+     */
+    private String taskStageCode;
+
+    /**
+     * 任务阶段名称：等待申请/申请中/形式审查/形审结束
+     */
+    private String taskStageName;
+
+    public String getTaskStageCode() {
+        return taskStageCode;
+    }
+
+    public void setTaskStageCode(String taskStageCode) {
+        this.taskStageCode = taskStageCode;
+    }
+
+    public String getTaskStageName() {
+        return taskStageName;
+    }
+
+    public void setTaskStageName(String taskStageName) {
+        this.taskStageName = taskStageName;
+    }
+
+    public String getLatestReviewResult() {
+        return latestReviewResult;
+    }
+
+    public void setLatestReviewResult(String latestReviewResult) {
+        this.latestReviewResult = latestReviewResult;
+    }
+
+    public String getLatestReviewComment() {
+        return latestReviewComment;
+    }
+
+    public void setLatestReviewComment(String latestReviewComment) {
+        this.latestReviewComment = latestReviewComment;
+    }
+
+    public String getLatestReviewTime() {
+        return latestReviewTime;
+    }
+
+    public void setLatestReviewTime(String latestReviewTime) {
+        this.latestReviewTime = latestReviewTime;
+    }
+
     public String getGroupMember() {
         return groupMember;
     }

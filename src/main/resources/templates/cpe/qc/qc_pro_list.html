@@ -9,14 +9,20 @@
         <div class="col-sm-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <button  th:disabled="${!isApply}" th:if="${apply_type != null && apply_type != ''}" onclick="toApplyPro()" class="btn btn-primary" style="width:100px" type="button"><i class="fa fa-plus"></i>&nbsp;申报</button>
-
+<!--                    <button  th:disabled="${!isApply}" th:if="${apply_type != null && apply_type != ''}" onclick="toApplyPro()" class="btn btn-primary" style="width:100px" type="button"><i class="fa fa-plus"></i>&nbsp;申报</button>-->
+					<button th:if="${canApplyBtn and apply_type != null && apply_type != ''}"
+							onclick="toApplyPro()"
+							class="btn btn-primary" style="width:100px" type="button">
+						<i class="fa fa-plus"></i>&nbsp;申报
+					</button>
 					<button class="btn btn-success" onclick="printExcelPro()" th:if="${isViewProCode}">导出excel</button>
 					<input id="taskId" name="taskId" th:value="${taskId}"  type="hidden">
+					<input type="hidden" id="isAssociationLeader" th:value="${isAssociationLeader}" />
 					<select class="btn btn-default" id="statusFilter">
 						<option value="">全部</option>
 						<option value="NOT_SUBMITTED">未提交</option>
 						<option value="check">审核中</option>
+						<option value="已驳回">已驳回</option>
 					</select>
 					<div class="columns ui pull-right action input" style="display: none;">
 						<div class="ui floating dropdown  icon button">
@@ -91,6 +97,7 @@
 				</div>
                 <div class="ibox-content">
 					<input type="hidden" id="isViewProCode"  th:value="${isViewProCode}" />
+					<input type="hidden" id="isEnterpriseUser" th:value="${isEnterpriseUser}" />
                     <table id="exampleTable" data-mobile-responsive="true"></table>
                 </div>
             </div>
@@ -137,17 +144,19 @@
 		</script>
 	</div>
 
-	<div shiro:hasPermission="cpe:qcGroupApplyInfo:ass_validate_pro">
+	<div shiro:hasPermission="cpe:qcGroupApplyInfo:ass_validate_pro" th:if="${isReview}">
 		<script type="text/javascript">
 			s_review_h = '';
 		</script>
 	</div>
 
-	<div shiro:hasPermission="cpe:qcGroupApplyInfo:cancelReview">
+	<div th:if="${canShowCancelReviewBtn}">
 		<script type="text/javascript">
 			s_cancel_review_h = '';
 		</script>
 	</div>
+
+	
 
 	<div shiro:hasPermission="cpe:qcGroupApplyInfo:download">
 		<script type="text/javascript">
@@ -163,10 +172,14 @@
 
 <div style="display: none" id="reloadId" onclick="reloadData()"></div>
 <div th:include="include :: footer"></div>
-<script type="text/javascript" src="/js/appjs/cpe/qcGroupApplyInfo/qcGroupApplyInfo.js?v=1.6"></script>
+<script type="text/javascript" src="/js/appjs/cpe/qcGroupApplyInfo/qcGroupApplyInfo.js?v=1.8"></script>
+
 <script th:inline="javascript">
-    let projectTypes =  /*[[${projectTypes}]]*/ [];
-    let classifications =  /*[[${classifications}]]*/ [];
+	let projectTypes =  /*[[${projectTypes}]]*/ [];
+	let classifications =  /*[[${classifications}]]*/ [];
+	let pageTaskStageCode = /*[[${taskStageCode}]]*/ "WAIT_APPLY";
+	window.isEnterpriseUser = /*[[${isEnterpriseUser}]]*/ false;
+	window.isAssociationLeader = /*[[${isAssociationLeader}]]*/ false;
 	function toApplyPro() {
 		let taskId = $("#taskId").val();
 		page('/qcAward/view/apply?taskId=' + taskId, 'QC奖申报', 20220205);

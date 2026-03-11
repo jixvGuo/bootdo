@@ -561,51 +561,159 @@ public class PublishAwardTaskDo {
     }
 
 
+    // public void initStat() {
+    //     //根据申报任务的时间点进行状态设置
+    //     long diff = DateUtils.diffNow(this.applyStartDate);
+    //     if (diff < 0) {
+    //         this.taskStatStr = "等待申请";
+    //         return;
+    //     } else {
+    //         diff = DateUtils.diffNow(this.applyEndDate);
+    //         if (diff < 0) {
+    //             this.taskStatStr = "申请中";
+    //             this.isApply = true;
+    //             return;
+    //         }
+    //     }
+
+
+    //     if (StringUtils.isNotBlank(this.checkStartTime)) {
+    //         long diffEnd = DateUtils.diffNow(this.checkEndTime);
+    //         long diffStart = DateUtils.diffNow(this.checkStartTime);
+    //         if(diffStart < 0 ) {
+    //             //未开始形式审查
+    //             this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "") ||
+    //                             this.awardId.equals(EnumAwardType.QC.getAwrdType() + "") ||
+    //                             this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
+    //             this.taskStatStr = "分派";
+    //             System.out.println("isassign is "+isAssign);
+    //             return;
+    //         }
+    //         if(diffEnd < 0 && diffStart >= 0) {
+    //             //分派外聘，形式审查中
+    //             this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "") ||
+    //                             this.awardId.equals(EnumAwardType.QC.getAwrdType() + "") ||
+    //                             this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
+    //             this.taskStatStr = "形式审查";
+    //             return;
+    //         }
+    //         if(StringUtils.isBlank(this.expertStartTime) && StringUtils.isBlank(this.expertStartTimeSecond)) {
+    //             this.isScore = false;
+    //             this.isScoreOver = true;
+    //             this.taskStatStr = "完成";
+    //             return;
+    //         }
+    //     }
+
+    //     if (StringUtils.isNotBlank(this.expertStartTime)) {
+    //         diff = DateUtils.diffNow(this.expertStartTime);
+    //         String prefixStr = StringUtils.isNotBlank(this.expertStartTimeSecond) ? "第一阶段" : "";
+    //         if (diff < 0) {
+    //             this.isSpecialAdmin = true;
+    //             this.taskStatStr = prefixStr + "分派专家";
+    //             return;
+    //         } else {
+    //             diff = DateUtils.diffNow(this.expertEndTime);
+    //             if (diff < 0) {
+    //                 this.taskStatStr = prefixStr + "专家打分";
+    //                 this.isScore = true;
+    //                 return;
+    //             } else {
+    //                 this.isScore = false;
+    //                 this.isScoreOver = true;
+    //                 this.taskStatStr = "完成";
+    //                 return;
+    //             }
+    //         }
+    //     }
+
+    //     if (StringUtils.isNotBlank(this.expertStartTimeSecond)) {
+    //         diff = DateUtils.diffNow(this.expertStartTimeSecond);
+    //         if (diff < 0) {
+    //             this.isSpecialAdmin = true;
+    //             this.taskStatStr = "第二阶段分派专家";
+    //             return;
+    //         } else {
+    //             diff = DateUtils.diffNow(this.expertEndTimeSecond);
+    //             if (diff < 0) {
+    //                 this.taskStatStr = "第二阶段专家打分";
+    //                 this.isScore = true;
+    //                 return;
+    //             } else {
+    //                 this.isScore = false;
+    //                 this.isScoreOver = true;
+    //                 this.taskStatStr = "完成";
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // }
+
     public void initStat() {
-        //根据申报任务的时间点进行状态设置
-        long diff = DateUtils.diffNow(this.applyStartDate);
-        if (diff < 0) {
+        // 重置易受上次状态影响的字段
+        this.isAssign = false;
+        this.isApply = false;
+        this.isSpecialAdmin = false;
+        this.isScore = false;
+        this.isScoreOver = false;
+    
+        // 1) 申报开始前
+        long diffApplyStart = DateUtils.diffNow(this.applyStartDate);
+        if (diffApplyStart < 0) {
             this.taskStatStr = "等待申请";
             return;
-        } else {
-            diff = DateUtils.diffNow(this.applyEndDate);
-            if (diff < 0) {
-                this.taskStatStr = "申请中";
-                this.isApply = true;
-                return;
-            }
         }
-
-
-        if (StringUtils.isNotBlank(this.checkStartTime)) {
-            long diffEnd = DateUtils.diffNow(this.checkEndTime);
-            long diffStart = DateUtils.diffNow(this.checkStartTime);
-            if(diffStart < 0) {
-                //未开始形式审查
-                this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "") ||
-                                this.awardId.equals(EnumAwardType.QC.getAwrdType() + "") ||
-                                this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
-                this.taskStatStr = "分派";
-                return;
-            }
-            if(diffEnd < 0 && diffStart >= 0) {
-                //分派外聘，形式审查中
-                this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "") ||
-                                this.awardId.equals(EnumAwardType.QC.getAwrdType() + "") ||
-                                this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
+    
+        // 2) 形式审查阶段优先判断（关键修复）
+        if (StringUtils.isNotBlank(this.checkStartTime) && StringUtils.isNotBlank(this.checkEndTime)) {
+            long diffCheckStart = DateUtils.diffNow(this.checkStartTime);
+            long diffCheckEnd = DateUtils.diffNow(this.checkEndTime);
+    
+            // 形式审查中：开始后且未结束
+            if (diffCheckStart >= 0 && diffCheckEnd < 0) {
+                this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "")
+                        || this.awardId.equals(EnumAwardType.QC.getAwrdType() + "")
+                        || this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
                 this.taskStatStr = "形式审查";
                 return;
             }
-            if(StringUtils.isBlank(this.expertStartTime) && StringUtils.isBlank(this.expertStartTimeSecond)) {
-                this.isScore = false;
-                this.isScoreOver = true;
-                this.taskStatStr = "完成";
+    
+            // 形式审查未开始：按申请阶段判定
+            if (diffCheckStart < 0) {
+                long diffApplyEnd = DateUtils.diffNow(this.applyEndDate);
+                if (diffApplyEnd < 0) {
+                    this.taskStatStr = "申请中";
+                    this.isApply = true;
+                    return;
+                } else {
+                    this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "")
+                            || this.awardId.equals(EnumAwardType.QC.getAwrdType() + "")
+                            || this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
+                    this.taskStatStr = "分派";
+                    return;
+                }
+            }
+    
+            // 走到这里表示：形式审查已结束，继续往后判断专家阶段
+        } else {
+            // 没配置形审时间，回退到原申请逻辑
+            long diffApplyEnd = DateUtils.diffNow(this.applyEndDate);
+            if (diffApplyEnd < 0) {
+                this.taskStatStr = "申请中";
+                this.isApply = true;
+                return;
+            } else {
+                this.isAssign = this.awardId.equals(EnumAwardType.SCIENCE.getAwrdType() + "")
+                        || this.awardId.equals(EnumAwardType.QC.getAwrdType() + "")
+                        || this.awardId.equals(EnumAwardType.SURVER.getAwrdType() + "");
+                this.taskStatStr = "分派";
                 return;
             }
         }
-
+    
+        // 3) 专家阶段（基本沿用原逻辑）
         if (StringUtils.isNotBlank(this.expertStartTime)) {
-            diff = DateUtils.diffNow(this.expertStartTime);
+            long diff = DateUtils.diffNow(this.expertStartTime);
             String prefixStr = StringUtils.isNotBlank(this.expertStartTimeSecond) ? "第一阶段" : "";
             if (diff < 0) {
                 this.isSpecialAdmin = true;
@@ -625,9 +733,9 @@ public class PublishAwardTaskDo {
                 }
             }
         }
-
+    
         if (StringUtils.isNotBlank(this.expertStartTimeSecond)) {
-            diff = DateUtils.diffNow(this.expertStartTimeSecond);
+            long diff = DateUtils.diffNow(this.expertStartTimeSecond);
             if (diff < 0) {
                 this.isSpecialAdmin = true;
                 this.taskStatStr = "第二阶段分派专家";
@@ -646,8 +754,11 @@ public class PublishAwardTaskDo {
                 }
             }
         }
+    
+        // 兜底
+        this.taskStatStr = "完成";
     }
-
+    
 
     public boolean isApply() {
         return  "申请中".equals(this.taskStatStr);

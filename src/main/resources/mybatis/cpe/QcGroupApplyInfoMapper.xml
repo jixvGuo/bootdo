@@ -123,7 +123,7 @@
 			<if test="optUid != null">`opt_uid` = #{optUid}, </if>
 			<if test="proId != null">`pro_id` = #{proId}, </if>
 			<if test="taskId != null">`task_id` = #{taskId}, </if>
-			<if test="applyId != null">`apply_id` = #{applyId}, </if>
+			<if test="applyId != null  and applyId != ''">`apply_id` = #{applyId}, </if>
 			<if test="groupName != null">`group_name` = #{groupName}, </if>
 			<if test="topicName != null">`topic_name` = #{topicName}, </if>
 			<if test="topicType != null">`topic_type` = #{topicType}, </if>

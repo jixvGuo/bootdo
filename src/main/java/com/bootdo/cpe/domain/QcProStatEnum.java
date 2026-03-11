@@ -19,9 +19,10 @@ public enum QcProStatEnum {
     PARTAKE_AWARD("partake_award", "参评", false, false, false, true, true),
     NO_AWARD("no_award", "不评",true, false, false, true, true),
     DELAYED_AWARD("delayed_award", "缓评", true, false, false, true, true),
-    REJECT("reject", "驳回", true, false, false, true, true),
+    REJECT("reject", "已驳回", true, false, false, true, true),
+    IMPROVE_PARTAKE("improve_partake", "完善后参评", true, false, false, true, true),
 
-        TO_VALIDATE("to_validate","审核中", false, true, true, false, true),
+    TO_VALIDATE("to_validate","审核中", false, true, true, false, true),
     TO_ASSIGN_EXPERTS("to_assign_experts","分派专家", false, true, false, true, true),
     SCIENCE_EXPERTS_SCORE("experts_score","专家打分", false, true, false, false, true),
 
@@ -126,9 +127,25 @@ public enum QcProStatEnum {
 //                resultList.add(statVal);
 //            }
         Set<String> resultSet = new LinkedHashSet<>();
-        String[] keys = key.split("[,，\\s]+");
+        String[] keys = key.split("[,\\s]+");
         for (String keyword : keys) {
             if (StringUtils.isBlank(keyword)) {
+                continue;
+            }
+            if ("已驳回".equals(keyword)) {
+                resultSet.add(REJECT.getProStat());
+                continue;
+            }
+            if ("未提交".equals(keyword)) {
+                resultSet.add("apply");
+                continue;
+            }
+            if ("审核中".equals(keyword)) {
+                resultSet.add(CHECK.getProStat());
+                continue;
+            }
+            if ("完善后参评".equals(keyword)) {
+                resultSet.add(IMPROVE_PARTAKE.getProStat());
                 continue;
             }
             for(QcProStatEnum stat:QcProStatEnum.values()) {

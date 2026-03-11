@@ -78,6 +78,23 @@
         pt.expert_start_time_second, pt.expert_end_time_second, pt.check_start_time, pt.check_end_time,
         pt.task_stat,
         pro.pro_stat,
+        (SELECT rr.review_result
+        FROM ass_qc_review_result_record rr
+        WHERE rr.pro_id = qa.pro_id
+        ORDER BY rr.created DESC
+        LIMIT 1) AS latestReviewResult,
+
+        (SELECT rr.opinion_desc
+        FROM ass_qc_review_result_record rr
+        WHERE rr.pro_id = qa.pro_id
+        ORDER BY rr.created DESC
+        LIMIT 1) AS latestReviewComment,
+
+        (SELECT DATE_FORMAT(rr.created, '%Y-%m-%d %H:%i:%s')
+        FROM ass_qc_review_result_record rr
+        WHERE rr.pro_id = qa.pro_id
+        ORDER BY rr.created DESC
+        LIMIT 1) AS latestReviewTime,
         qa.apply_id as proCode, <!-- 使用 qa 的 apply_id 作为成果编号 -->
         (SELECT username FROM sys_user where user_id = qa.opt_uid limit 1) opt_account
 

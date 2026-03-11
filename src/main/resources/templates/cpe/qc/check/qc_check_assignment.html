@@ -17,12 +17,10 @@
                         <i class="dropdown icon"></i>
                         <div class="default text" id="reward">专业范围</div>
                         <div class="menu">
-                            <div class="item" data-value="管理">管理</div>
-                            <div class="item" data-value="管理类">管理类</div>
-                            <div class="item" data-value="监理">监理</div>
-                            <div class="item" data-value="监理、管理">监理、管理</div>
-                            <div class="item" data-value="勘察设计">勘察设计</div>
-                            <div class="item" data-value="施工">施工</div>
+                            <div class="item" data-value="design">勘察设计</div>
+                            <div class="item" data-value="supervision">监理与管理</div>
+                            <div class="item" data-value="construction">施工</div>
+                            
                         </div>
                     </div>
                 </div>
@@ -61,7 +59,7 @@
                     </tr>
                     </thead>
                     <tbody id="lefttbody">
-                    <tr th:each=" externalList: ${noAssignList}">
+                    <tr th:each=" externalList: ${noAssignList}" th:attr="data-pro-id=${externalList.id}">
                         <td name="option">
                             <div class="ui fitted checkbox">
                                 <input type="checkbox">
@@ -109,14 +107,13 @@
 
                     </thead>
                     <tbody id="righttbody">
-                    <tr th:each=" externalList: ${assignList}">
+                    <tr th:each=" externalList: ${assignList}" th:attr="data-pro-id=${externalList.id}">
                         <td name="option">
                             <div class="ui fitted checkbox">
                                 <input type="checkbox">
                                 <label></label>
                             </div>
                         </td>
-                        <input type="hidden" name="proId" th:value="${externalList.id}" />
                         <td id="external" th:text="${externalList.serNum}"></td>
                         <td th:text="${externalList.proCode}"></td>
                         <td th:text="${externalList.taskName}"></td>
@@ -196,14 +193,13 @@
         var trStr = "";
         for (var i = 0; i < proList.length; i++) {
             var obj = proList[i];
-            trStr += "<tr> " +
+            trStr += "<tr data-pro-id='" + obj.id + "'> " +
                 "                        <td name=\"option\"> " +
                 "                            <div class=\"ui fitted checkbox\"> " +
                 "                                <input type=\"checkbox\"> " +
                 "                                <label></label> " +
                 "                            </div> " +
                 "                        </td> " +
-                " <input type='hidden' name='proId' value='" + obj.id + "' />" +
                 "                        <td>" + obj.serNum + "</td> " +
                 "                        <td>" + obj.proCode + "</td> " +
                 "                        <td>" + obj.taskName + "</td> " +
@@ -225,7 +221,7 @@
     }
 
     $("#externalMenu").parent().dropdown('set selected', $("#firstWorkerName").val());
-    $("#awardType").parent().dropdown('set selected', 'science');
+    $("#awardType").parent().dropdown('set selected', 'design');
 
     $('#leftthead').click(function (e) {
         if ($(this).find("input").is(':checked')) {

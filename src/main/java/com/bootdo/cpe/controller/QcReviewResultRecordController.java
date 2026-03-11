@@ -8,6 +8,7 @@ import com.bootdo.common.controller.BaseQcProController;
 import com.bootdo.cpe.domain.EnumAwardType;
 import com.bootdo.cpe.domain.EnumProjectType;
 import com.bootdo.cpe.petroleum_engineering_award.service.PetroleumEngineeringService;
+import com.bootdo.cpe.service.QcAwardService;
 import com.bootdo.cpe.service.ProjectCommonService;
 import com.bootdo.oa.domain.NotifyDO;
 import com.bootdo.oa.service.NotifyService;
@@ -29,15 +30,9 @@ import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 
-
 /**
  * QC形式审查模板
- *
- * @author chglee
- * @email mrhouzhibin@163.com
- * @date 2022-02-20 21:57:29
  */
-
 @Controller
 @RequestMapping("/cpe/qcReviewResultRecord")
 public class QcReviewResultRecordController extends BaseQcProController {
@@ -49,6 +44,8 @@ public class QcReviewResultRecordController extends BaseQcProController {
 	private ProjectCommonService projectCommonService;
 	@Autowired
 	private NotifyService notifyService;
+	@Autowired
+	private QcAwardService qcAwardService;
 
 	@GetMapping()
 	@RequiresPermissions("cpe:qcReviewResultRecord:qcReviewResultRecord")
@@ -60,12 +57,10 @@ public class QcReviewResultRecordController extends BaseQcProController {
 	@GetMapping("/list")
 	@RequiresPermissions("cpe:qcReviewResultRecord:qcReviewResultRecord")
 	public PageUtils list(@RequestParam Map<String, Object> params){
-		//查询列表数据
         Query query = new Query(params);
 		List<QcReviewResultRecordDO> qcReviewResultRecordList = qcReviewResultRecordService.list(query);
 		int total = qcReviewResultRecordService.count(query);
-		PageUtils pageUtils = new PageUtils(qcReviewResultRecordList, total);
-		return pageUtils;
+		return new PageUtils(qcReviewResultRecordList, total);
 	}
 
 	@GetMapping("/add")
@@ -87,29 +82,58 @@ public class QcReviewResultRecordController extends BaseQcProController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("cpe:qcReviewResultRecord:add")
+//	@RequiresPermissions("cpe:qcReviewResultRecord:add")
 	public R save(QcReviewResultRecordDO qcReviewResultRecord, String topicName, String groupName){
-	    Integer proId = qcReviewResultRecord.getProId();
-		//更新项目状态值
+		Integer proId = qcReviewResultRecord.getProId();
+		if (proId == null) {
+			return R.error("缺少项目ID");
+		}
+		if (StringUtils.isBlank(qcReviewResultRecord.getReviewResult())) {
+			return R.error("请选择审查结论");
+		}
+
 		Map<String,Object> proStatParams = new HashMap<>();
 		proStatParams.put("proId", proId);
 		proStatParams.put("reviewResult", qcReviewResultRecord.getReviewResult());
-		petroleumEngineeringService.updateProStat(proStatParams);
+		// petroleumEngineeringService.updateProStat(proStatParams);
+		qcAwardService.updateProStat(proStatParams);
 
 		Long uid = getUserId();
 		qcReviewResultRecord.setOptUid(uid.intValue());
-		if(qcReviewResultRecordService.save(qcReviewResultRecord)>0){
-			//发送系统通知给用户
-            long proCreateUid = projectCommonService.getProCreateUid(proId);
-            Long[] uidArr = {proCreateUid};
+
+		// int row;
+		// if (qcReviewResultRecord.getId() != null) {
+		// 	row = qcReviewResultRecordService.update(qcReviewResultRecord);
+		// 	if (row <= 0) {
+		// 		qcReviewResultRecord.setId(null);
+		// 		row = qcReviewResultRecordService.save(qcReviewResultRecord);
+		// 	}
+		// } else {
+		// 	row = qcReviewResultRecordService.save(qcReviewResultRecord);
+		// }
+		qcReviewResultRecord.setId(null); // 强制每次新增，保留审批历史
+		int row = qcReviewResultRecordService.save(qcReviewResultRecord);
+
+		if(row <= 0){
+			return R.error("保存失败");
+		}
+
+		try {
+			long proCreateUid = projectCommonService.getProCreateUid(proId);
+			Long[] uidArr = {proCreateUid};
 			NotifyDO notifyDO = new NotifyDO();
 			notifyDO.setType(EnumAwardType.QC.getAwrdType() + "");
 			notifyDO.setUserIds(uidArr);
 			notifyDO.setCreateBy(getUserId());
-			//TODO 获取奖项名称
-			String applyAwardName = "【QC奖】" + topicName + "-" + groupName;
-			String title = (applyAwardName == null ? "" : applyAwardName) + "形式审查结果";
-			String content = "形式审查结果:"+qcReviewResultRecord.getReviewResult()+";";
+
+			String applyAwardName;
+			if (StringUtils.isNotBlank(topicName) || StringUtils.isNotBlank(groupName)) {
+				applyAwardName = "【QC奖】" + (topicName == null ? "" : topicName) + "-" + (groupName == null ? "" : groupName);
+			} else {
+				applyAwardName = "【QC奖】";
+			}
+			String title = applyAwardName + "形式审查结果";
+			String content = "形式审查结果:" + qcReviewResultRecord.getReviewResult() + ";";
 			if(StringUtils.isNotBlank(qcReviewResultRecord.getOpinionDesc())) {
 				content += qcReviewResultRecord.getOpinionDesc();
 			}
@@ -120,47 +144,38 @@ public class QcReviewResultRecordController extends BaseQcProController {
 			long notifyId = notifyDO.getId();
 			int reviewId = qcReviewResultRecord.getId();
 			notifyService.saveProReviewNotifyShip(notifyId, proId, reviewId, EnumProjectType.QC_PRO_GROUP.getProType());
-
-			int id = qcReviewResultRecord.getId();
-			R r = R.ok();
-			r.put("id", id);
-			return r;
+		} catch (Exception e) {
+			// 通知失败不影响主记录保存
 		}
-		return R.error();
+
+		R r = R.ok();
+		r.put("id", qcReviewResultRecord.getId());
+		return r;
 	}
-	/**
-	 * 修改
-	 */
+
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("cpe:qcReviewResultRecord:edit")
-	public R update( QcReviewResultRecordDO qcReviewResultRecord){
+	public R update(QcReviewResultRecordDO qcReviewResultRecord){
 		qcReviewResultRecordService.update(qcReviewResultRecord);
 		return R.ok();
 	}
 
-	/**
-	 * 删除
-	 */
-	@PostMapping( "/remove")
+	@PostMapping("/remove")
 	@ResponseBody
 	@RequiresPermissions("cpe:qcReviewResultRecord:remove")
-	public R remove( Integer id){
+	public R remove(Integer id){
 		if(qcReviewResultRecordService.remove(id)>0){
-		return R.ok();
+			return R.ok();
 		}
 		return R.error();
 	}
 
-	/**
-	 * 删除
-	 */
-	@PostMapping( "/batchRemove")
+	@PostMapping("/batchRemove")
 	@ResponseBody
 	@RequiresPermissions("cpe:qcReviewResultRecord:batchRemove")
 	public R remove(@RequestParam("ids[]") Integer[] ids){
 		qcReviewResultRecordService.batchRemove(ids);
 		return R.ok();
 	}
-
 }

@@ -33,24 +33,61 @@ public class BaseQcProController extends BaseController {
     @Autowired
     private AwardFlowService awardFlowService;
 
+//    public boolean isTaskIsApply(ModelMap map, Map<String, Object> params) {
+//        boolean isApply = true;
+//        Object taskIdObj = params.get("taskId");
+//        if(taskIdObj == null) {
+//            return false;
+//        }
+//        PublishAwardTaskDo awardTaskDo = awardPublishTaskService.getProTaskByTaskId(taskIdObj.toString());
+//        if (awardTaskDo == null) {
+//            isApply = false;
+//            map.put("msg", "请耐心等待协会工作人员创建申报任务");
+//        } else if (awardTaskDo.isApplyEnd()) {
+//            isApply = false;
+//            map.put("msg", "任务申报时间已结束,需要使用请联系相关协会工作人员");
+//        }
+//        Object readonlyObj = params.get("readonly");
+//        if(readonlyObj != null && "1".equals(readonlyObj.toString())) {
+//            isApply = true;
+//        }
+//        map.put("isApply", isApply);
+//        return isApply;
+//    }
+
+
     public boolean isTaskIsApply(ModelMap map, Map<String, Object> params) {
-        boolean isApply = true;
+        boolean isApply = false;
         Object taskIdObj = params.get("taskId");
-        if(taskIdObj == null) {
+        if (taskIdObj == null) {
+            map.put("isApply", false);
             return false;
         }
+
         PublishAwardTaskDo awardTaskDo = awardPublishTaskService.getProTaskByTaskId(taskIdObj.toString());
         if (awardTaskDo == null) {
-            isApply = false;
             map.put("msg", "请耐心等待协会工作人员创建申报任务");
-        } else if (awardTaskDo.isApplyEnd()) {
-            isApply = false;
+            map.put("isApply", false);
+            return false;
+        }
+
+        // 只在“申报开始且申报未结束”时开放申报按钮
+        boolean isApplyStart = awardTaskDo.isApplyStart();
+        boolean isApplyEnd = awardTaskDo.isApplyEnd();
+        isApply = isApplyStart && !isApplyEnd;
+
+        if (!isApplyStart) {
+            map.put("msg", "申报未开始");
+        } else if (isApplyEnd) {
             map.put("msg", "任务申报时间已结束,需要使用请联系相关协会工作人员");
         }
+
+        // 只读查看场景仍允许进入表单查看
         Object readonlyObj = params.get("readonly");
-        if(readonlyObj != null && "1".equals(readonlyObj.toString())) {
+        if (readonlyObj != null && "1".equals(readonlyObj.toString())) {
             isApply = true;
         }
+
         map.put("isApply", isApply);
         return isApply;
     }

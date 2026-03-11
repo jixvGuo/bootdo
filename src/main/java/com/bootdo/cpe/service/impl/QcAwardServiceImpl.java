@@ -12,7 +12,8 @@ import com.bootdo.cpe.service.QcAwardService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.bootdo.common.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,45 @@ public class QcAwardServiceImpl implements QcAwardService {
                 pro.setGroupMember(proNameMap.get(String.valueOf(pro.getProId())));
             }
         }
+        for (QcProDataDto pro : list) {
+            // 计算任务阶段，用于前端按钮控制
+            String applyStart = pro.getApplyStartDate();
+            String applyEnd = pro.getApplyEndDate();
+            String checkStart = pro.getCheckStartTime();
+            String checkEnd = pro.getCheckEndTime();
+
+            String stageCode = "WAIT_APPLY";
+            String stageName = "等待申请";
+
+            if (StringUtils.isNotBlank(applyStart) && DateUtils.diffNow(applyStart) >= 0) {
+                // 已到申报开始时间
+                if (StringUtils.isNotBlank(applyEnd) && DateUtils.diffNow(applyEnd) >= 0) {
+                    // 申报已结束
+                    if (StringUtils.isNotBlank(checkEnd) && DateUtils.diffNow(checkEnd) >= 0) {
+                        stageCode = "CHECK_END";
+                        stageName = "形审结束";
+                    } else if (StringUtils.isNotBlank(checkStart) && DateUtils.diffNow(checkStart) >= 0) {
+                        stageCode = "CHECKING";
+                        stageName = "形式审查";
+                    } else {
+                        stageCode = "CHECKING";
+                        stageName = "形式审查";
+                    }
+                } else {
+                    // 申报未结束
+                    if (StringUtils.isNotBlank(checkStart) && DateUtils.diffNow(checkStart) >= 0) {
+                        stageCode = "CHECKING";
+                        stageName = "形式审查";
+                    } else {
+                        stageCode = "APPLYING";
+                        stageName = "申请中";
+                    }
+                }
+            }
+
+            pro.setTaskStageCode(stageCode);
+            pro.setTaskStageName(stageName);
+        }
         return list;
     }
 
@@ -114,8 +154,8 @@ public class QcAwardServiceImpl implements QcAwardService {
             String proStat = "";
             if(QcProStatEnum.PARTAKE_AWARD.getStatDesc().equals(reviewRst)) {
                 proStat = QcProStatEnum.PARTAKE_AWARD.getProStat();
-            }else if(QcProStatEnum.REJECT.getStatDesc().equals(reviewRst)) {
-                proStat = QcProStatEnum.REJECT.getProStat();
+            }else if(QcProStatEnum.IMPROVE_PARTAKE.getStatDesc().equals(reviewRst)) {
+                proStat = QcProStatEnum.IMPROVE_PARTAKE.getProStat();
             }else if(QcProStatEnum.DELAYED_AWARD.getStatDesc().equals(reviewRst)) {
                 proStat = QcProStatEnum.DELAYED_AWARD.getProStat();
             }else if(QcProStatEnum.NO_AWARD.getStatDesc().equals(reviewRst)) {

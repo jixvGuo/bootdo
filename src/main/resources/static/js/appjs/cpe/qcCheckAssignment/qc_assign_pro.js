@@ -87,12 +87,14 @@ function assignPro() {
 
     var asWorkerName = $("#asWorkerName").val();
 
-    var proIds = "";
+    var idArr = [];
     $('#righttbody tr').each(function () {
-        let proId = $(this).find('input[name="proId"]').val();
-        console.log("== ", proId);
-        proIds += proId + ",";
+        var proId = $(this).attr('data-pro-id');
+        if (proId !== undefined && proId !== null && $.trim(proId) !== '') {
+            idArr.push($.trim(proId));
+        }
     });
+    var proIds = idArr.join(",");
 
 
     var taskId = $('#taskId').val();

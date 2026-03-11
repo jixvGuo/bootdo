@@ -260,27 +260,82 @@ public class QcBaseProjectInfoDO {
         this.applyAccount = applyAccount;
     }
 
+//    public void initApplyStat() {
+////        OilProStatEnum[] statEnums = OilProStatEnum.values();
+//        QcProStatEnum[] statEnums = QcProStatEnum.values();
+//
+//        if(this.proStat == null) {
+//            this.proStat = "";
+//        }
+//
+//        //检查申请时间是否已结束
+//        boolean isTimeoutFlg = StringUtils.isNotBlank(this.applyEndDate) && isTimeout(this.applyEndDate);
+//        if(isTimeoutFlg) {
+//            this.isCancelReview = false;
+//            this.isEdit = false;
+//        }
+//
+//        for(QcProStatEnum proStatEnum:statEnums) {
+//            if(QcProStatEnum.APPLYING.getProStat().equals(this.proStat) && isTimeoutFlg) {
+//                //如果目前状态为申请中且申报时间结束，则以申报时间结束的判断为准
+//                continue;
+//            }
+//            if(proStatEnum.getProStat().equals(this.proStat)) {
+//                this.applyStat = proStatEnum.getStatDesc();
+//                this.isEdit = proStatEnum.isEdit();
+//                this.isReview = proStatEnum.isReview();
+//                this.isCancelReview = proStatEnum.isCancelReview();
+//                this.isReviewResult = proStatEnum.isReviewResult();
+//                this.isDownloadProDoc = proStatEnum.isDownloadProDoc();
+//                break;
+//            }
+//        }
+//
+//        //检查审核时间是否结束
+//        if(StringUtils.isNotBlank(this.checkEndTime)) {
+//            boolean isCheckTimeoutFlg = isTimeout(this.checkEndTime);
+//            if(isCheckTimeoutFlg) {
+//                this.isEdit = false;
+//                this.isCancelReview = false;
+//                this.isReview = false;
+//            }
+//        }
+//        //检查审核时间是否开始
+//        if(StringUtils.isNotBlank(this.checkStartTime)) {
+//            boolean isStartFlg = isStart(this.checkStartTime);
+//            if(isStartFlg) {
+//                this.isCancelReview = false;
+//            }else {
+//                this.isReview = false;
+//            }
+//        }
+//        if(StringUtils.isNotBlank(this.expertStartTime) && StringUtils.isNotBlank(this.checkEndTime)) {
+//            boolean isCheckEnd = isTimeout(this.checkEndTime);
+//            boolean isStartScore = isStart(this.expertStartTime);
+//            if(isCheckEnd && !isStartScore) {
+//                //分派专家阶段
+//                String prefixStr = StringUtils.isNotBlank(this.expertStartTimeSecond) ? "第一阶段" : "";
+//                this.applyStat = prefixStr + "分派专家";
+//            }
+//        }
+//        if(StringUtils.isNotBlank(this.expertStartTimeSecond) && StringUtils.isNotBlank(this.checkEndTime)) {
+//            boolean isCheckEnd = isTimeout(this.checkEndTime);
+//            boolean isStartScore = isStart(this.expertStartTime);
+//            if(isCheckEnd && !isStartScore) {
+//                //分派专家阶段
+//                this.applyStat = "第二阶段分派专家";
+//            }
+//        }
+//    }
     public void initApplyStat() {
-//        OilProStatEnum[] statEnums = OilProStatEnum.values();
         QcProStatEnum[] statEnums = QcProStatEnum.values();
-
-        if(this.proStat == null) {
+        if (this.proStat == null) {
             this.proStat = "";
         }
 
-        //检查申请时间是否已结束
-        boolean isTimeoutFlg = StringUtils.isNotBlank(this.applyEndDate) && isTimeout(this.applyEndDate);
-        if(isTimeoutFlg) {
-            this.isCancelReview = false;
-            this.isEdit = false;
-        }
-
-        for(QcProStatEnum proStatEnum:statEnums) {
-            if(QcProStatEnum.APPLYING.getProStat().equals(this.proStat) && isTimeoutFlg) {
-                //如果目前状态为申请中且申报时间结束，则以申报时间结束的判断为准
-                continue;
-            }
-            if(proStatEnum.getProStat().equals(this.proStat)) {
+        // 1) 先按状态枚举初始化
+        for (QcProStatEnum proStatEnum : statEnums) {
+            if (proStatEnum.getProStat().equals(this.proStat)) {
                 this.applyStat = proStatEnum.getStatDesc();
                 this.isEdit = proStatEnum.isEdit();
                 this.isReview = proStatEnum.isReview();
@@ -291,43 +346,97 @@ public class QcBaseProjectInfoDO {
             }
         }
 
-        //检查审核时间是否结束
-        if(StringUtils.isNotBlank(this.checkEndTime)) {
-            boolean isCheckTimeoutFlg = isTimeout(this.checkEndTime);
-            if(isCheckTimeoutFlg) {
-                this.isEdit = false;
-                this.isCancelReview = false;
-                this.isReview = false;
-            }
-        }
-        //检查审核时间是否开始
-        if(StringUtils.isNotBlank(this.checkStartTime)) {
-            boolean isStartFlg = isStart(this.checkStartTime);
-            if(isStartFlg) {
-                this.isCancelReview = false;
-            }else {
-                this.isReview = false;
-            }
-        }
-        if(StringUtils.isNotBlank(this.expertStartTime) && StringUtils.isNotBlank(this.checkEndTime)) {
-            boolean isCheckEnd = isTimeout(this.checkEndTime);
-            boolean isStartScore = isStart(this.expertStartTime);
-            if(isCheckEnd && !isStartScore) {
-                //分派专家阶段
-                String prefixStr = StringUtils.isNotBlank(this.expertStartTimeSecond) ? "第一阶段" : "";
-                this.applyStat = prefixStr + "分派专家";
-            }
-        }
-        if(StringUtils.isNotBlank(this.expertStartTimeSecond) && StringUtils.isNotBlank(this.checkEndTime)) {
-            boolean isCheckEnd = isTimeout(this.checkEndTime);
-            boolean isStartScore = isStart(this.expertStartTime);
-            if(isCheckEnd && !isStartScore) {
-                //分派专家阶段
-                this.applyStat = "第二阶段分派专家";
-            }
-        }
-    }
+        // 2) 时间独立判断
+        boolean applyStarted = StringUtils.isNotBlank(this.applyStartDate) && isStart(this.applyStartDate);
+        boolean applyEnded = StringUtils.isNotBlank(this.applyEndDate) && isTimeout(this.applyEndDate);
+        boolean checkStarted = StringUtils.isNotBlank(this.checkStartTime) && isStart(this.checkStartTime);
+        boolean checkEnded = StringUtils.isNotBlank(this.checkEndTime) && isTimeout(this.checkEndTime);
 
+        boolean isReject = QcProStatEnum.REJECT.getProStat().equals(this.proStat);
+        boolean isChecking = QcProStatEnum.CHECK.getProStat().equals(this.proStat);
+        boolean isNotSubmitted = StringUtils.isBlank(this.proStat);
+        boolean isReviewResultStat =
+        QcProStatEnum.PARTAKE_AWARD.getProStat().equals(this.proStat)
+        || QcProStatEnum.IMPROVE_PARTAKE.getProStat().equals(this.proStat)
+        || QcProStatEnum.NO_AWARD.getProStat().equals(this.proStat)
+        || QcProStatEnum.DELAYED_AWARD.getProStat().equals(this.proStat);
+
+        // 默认值
+        this.isSubCheck = 0;
+
+        // A. 申报未开始（形审未开始/开始都按不可申报处理）
+        if (!applyStarted) {
+            this.isEdit = false;
+            this.isCancelReview = false;
+            this.isReview = false;
+            this.isReviewResult = false;
+            this.isSubCheck = 0;
+            this.applyStat = isNotSubmitted ? "未提交" : this.applyStat;
+            return;
+        }
+
+        // B. 形审结束：全部仅查看，形审结果可看
+        if (checkEnded) {
+            this.isEdit = false;
+            this.isCancelReview = false;
+            this.isReview = false;
+            this.isReviewResult = true;
+            this.isSubCheck = 0;
+            return;
+        }
+
+        // C. 申报开始、形审未开始
+        if (!applyEnded && !checkStarted) {
+            // 未提交/已驳回：可编辑、可提交审核
+            if (isNotSubmitted || isReject) {
+                this.isEdit = true;
+                this.isSubCheck = 1;
+            }
+            // 审核中：仅查看，可回收（你原有逻辑）
+            if (isChecking) {
+                this.isEdit = false;
+                this.isCancelReview = true;
+                this.isSubCheck = 0;
+            }
+            this.isReviewResult = false;
+            return;
+        }
+
+        // D. 申报开始、形审开始（重叠）
+        if (!applyEnded && checkStarted) {
+            this.isReviewResult = true;
+            this.isCancelReview = isChecking || isReviewResultStat; // 已提交不可回收
+            if (isNotSubmitted || isReject) {
+                this.isEdit = true;
+                this.isSubCheck = 1;
+            } else {
+                this.isEdit = false;
+                this.isSubCheck = 0;
+            }
+            return;
+        }
+
+        // E. 申报结束、形审开始
+        if (applyEnded && checkStarted) {
+            this.isReviewResult = true;
+            this.isCancelReview = isChecking || isReviewResultStat;
+            if (isReject) {
+                this.isEdit = true;
+                this.isSubCheck = 1;
+            } else {
+                this.isEdit = false;
+                this.isSubCheck = 0;
+            }
+            return;
+        }
+
+        // F. 兜底
+        this.isEdit = false;
+        this.isCancelReview = false;
+        this.isReview = false;
+        this.isReviewResult = false;
+        this.isSubCheck = 0;
+    }
     /**
      * 是否超期
      * @param endDate

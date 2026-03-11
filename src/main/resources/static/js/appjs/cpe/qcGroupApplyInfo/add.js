@@ -1,3 +1,4 @@
+var saving = false;
 $().ready(function() {
 	validateRule();
 });
@@ -8,35 +9,46 @@ $.validator.setDefaults({
 	}
 });
 function save() {
-	$.ajax({
-		cache : true,
-		type : "POST",
-		url : "/qcAward/update/groupInfo",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			parent.layer.alert("Connection error");
-		},
-		success : function(data) {
-			if (data.code == 0) {
-				$("#id").val(data.id);
-				parent.layer.msg("操作成功");
-				let navArr = $("iframe", window.parent.parent.document);
-				console.log(navArr);
-				$.each(navArr, function (i, val) {
-					if(val.src.indexOf('view/proList') != -1) {
-                      val.contentWindow.location.reload(true);
-					}
-				});
-				/*console.log($(".J_menuTab.active", window.parent.parent.document).html());
-				$(".J_menuTab.active i", window.parent.parent.document).trigger('click');*/
-			} else {
-				parent.layer.alert(data.msg)
-			}
+    if (saving) return;
+    saving = true;
 
-		}
-	});
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: "/qcAward/update/groupInfo",
+        dataType: "json",                  // 强制按JSON解析
+        data: $('#signupForm').serialize(),
+        async: true,
+        complete: function () {
+            saving = false;
+        },
+        error: function () {
+            parent.layer.alert("Connection error");
+        },
+        success: function (data) {
+            if (data.code == 0) {
+                // 关键：先回填主键和申报号，保证下一次提交走更新
+                if (data.id) {
+                    $("#id").val(data.id);
+                }
+                if (data.applyId) {
+                    $("input[name='applyId']").val(data.applyId);
+                }
 
+                parent.layer.msg("操作成功");
+				console.log("save resp =>", data);
+                // 仅刷新列表页，不刷新当前编辑页
+                let navArr = $("iframe", window.parent.parent.document);
+                $.each(navArr, function (i, val) {
+                    if (val.src && val.src.indexOf('view/proList') !== -1) {
+                        val.contentWindow.location.reload(true);
+                    }
+                });
+            } else {
+                parent.layer.alert(data.msg || "保存失败");
+            }
+        }
+    });
 }
 function validateRule() {
 

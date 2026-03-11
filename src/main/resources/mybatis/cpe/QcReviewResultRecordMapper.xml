@@ -93,7 +93,7 @@
 			#{taskId}, 
 			#{applyId}, 
 			now(),
-			#{updated}
+			now()
 		)
 	</insert>
 	 

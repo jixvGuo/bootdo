@@ -3,6 +3,194 @@ var prefix = "/award_flow"
 $(function() {
 	load();
 });
+// ================= 第2步修改：QC任务阶段/按钮控制工具函数开始 =================
+
+/**
+ * 第2步修改：判断申报是否结束
+ */
+function isQcApplyClosed(row) {
+    var end = row.applyEndDate || "";
+    if (!end) return false;
+    var endDate = new Date((end + "").replace(/-/g, "/"));
+    if (isNaN(endDate.getTime())) return false;
+    return endDate <= new Date();
+}
+
+/**
+ * 第2步修改：获取QC任务阶段（优先后端taskStageCode，兜底用时间推断）
+ * 返回：WAIT_APPLY / APPLYING / CHECKING / CHECK_END
+ */
+function resolveQcTaskStageCode(row) {
+    if (row.taskStageCode) return row.taskStageCode;
+
+    // 兜底逻辑（如果后端暂未返回 taskStageCode）
+    var now = new Date();
+    var applyStart = row.applyStartDate ? new Date((row.applyStartDate + "").replace(/-/g, "/")) : null;
+    var applyEnd = row.applyEndDate ? new Date((row.applyEndDate + "").replace(/-/g, "/")) : null;
+    var checkStart = row.checkStartTime ? new Date((row.checkStartTime + "").replace(/-/g, "/")) : null;
+    var checkEnd = row.checkEndTime ? new Date((row.checkEndTime + "").replace(/-/g, "/")) : null;
+
+    var applyStarted = applyStart && !isNaN(applyStart.getTime()) && now >= applyStart;
+    var applyClosed = applyEnd && !isNaN(applyEnd.getTime()) && now >= applyEnd;
+    var checkStarted = checkStart && !isNaN(checkStart.getTime()) && now >= checkStart;
+    var checkEnded = checkEnd && !isNaN(checkEnd.getTime()) && now >= checkEnd;
+
+    if (!applyStarted && !checkStarted) return "WAIT_APPLY";
+    if (applyStarted && !checkStarted && !applyClosed) return "APPLYING";
+    if (checkEnded) return "CHECK_END";
+    if (checkStarted) return "CHECKING";
+    if (applyStarted && applyClosed) return "CHECKING";
+    return "WAIT_APPLY";
+}
+
+/**
+ * 第2步修改：QC任务状态展示映射
+ * 需求映射：等待申请 / 申请中 / 形式审查（含CHECK_END可按你们展示策略调整）
+ */
+function resolveQcStageText(stageCode) {
+    if (stageCode === "WAIT_APPLY") return "等待申请";
+    if (stageCode === "APPLYING") return "申请中";
+    if (stageCode === "CHECKING") return "形式审查";
+    if (stageCode === "CHECK_END") return "结束"; // 若你要显示“形审结束”，改这里
+    return "等待申请";
+}
+
+/**
+ * 第2步修改：QC项目申报按钮UI状态
+ * 规则：
+ * WAIT_APPLY：显示但不可点
+ * APPLYING：可点
+ * CHECKING：申报未结束可点，结束则隐藏
+ * CHECK_END：隐藏
+ */
+function resolveQcApplyBtnState(row) {
+    var stageCode = resolveQcTaskStageCode(row);
+    var applyClosed = isQcApplyClosed(row);
+
+    var state = {
+        stageCode: stageCode,
+        stageText: resolveQcStageText(stageCode),
+        showBtn: true,
+        enableBtn: false
+    };
+
+    if (stageCode === "WAIT_APPLY") {
+        state.showBtn = true;
+        state.enableBtn = false;
+    } else if (stageCode === "APPLYING") {
+        state.showBtn = true;
+        state.enableBtn = true;
+    } else if (stageCode === "CHECKING") {
+        if (applyClosed) {
+            state.showBtn = false;
+            state.enableBtn = false;
+        } else {
+            state.showBtn = true;
+            state.enableBtn = true;
+        }
+    } else if (stageCode === "CHECK_END") {
+        state.showBtn = true;
+        state.enableBtn = true;
+    }
+
+    return state;
+}
+
+// ================= 第2步修改：QC任务阶段/按钮控制工具函数结束 =================
+
+// ================= 第3步修改：QC协会角色任务页矩阵开始 =================
+
+/**
+ * 第3步修改：协会领导/联系人任务页按钮矩阵（两者一致）
+ * WAIT_APPLY：QC奖项目列表、查看、编辑、删除
+ * APPLYING：QC奖项目列表、编辑、分派、分组、删除
+ * CHECKING/CHECK_END：QC奖项目列表、导入形式审查结果、查看、编辑、分组、分派、删除
+ */
+function resolveQcManagerTaskOps(stageCode) {
+    var ops = {
+        showQcProList: true,
+        showView: false,
+        showEdit: false,
+        showDelete: false,
+        showAssign: false,
+        showGroup: false,
+        showImportCheckResult: false
+    };
+
+    if (stageCode === "WAIT_APPLY") {
+        ops.showView = true;
+        ops.showEdit = true;
+        ops.showDelete = true;
+    } else if (stageCode === "APPLYING") {
+        ops.showEdit = true;
+        ops.showDelete = true;
+        ops.showAssign = true;
+        ops.showGroup = true;
+		ops.showView = true;
+    } else if (stageCode === "CHECKING" || stageCode === "CHECK_END") {
+        ops.showView = true;
+        ops.showEdit = true;
+        ops.showDelete = true;
+        ops.showAssign = true;
+        ops.showGroup = true;
+        ops.showImportCheckResult = true;
+    }
+
+    return ops;
+}
+
+// /**
+//  * 第3步修复：判断是否协会管理角色（领导/联系人）
+//  * 说明：用现有权限按钮变量做最小侵入识别
+//  */
+// function isQcManagerRole() {
+//     // 推荐后端在页面注入 window.pageRoleType = 'QC_MANAGER' / 'ENTERPRISE' / ...
+//     if (typeof window.pageRoleType !== 'undefined') {
+//         return window.pageRoleType === 'QC_MANAGER';
+//     }
+//     // 兼容旧逻辑（降级）
+//     var canImport = (typeof s_check_result_import !== 'undefined' && s_check_result_import !== 'hidden');
+//     var canManage = (typeof s_management_h !== 'undefined' && s_management_h !== 'hidden');
+//     return canImport || canManage;
+// }
+
+function isQcManagerRole() {
+    // 1) 优先后端明确注入角色（推荐）
+    if (typeof window.pageRoleType !== 'undefined') {
+        return window.pageRoleType === 'QC_MANAGER';
+    }
+
+    // 2) 兜底：使用页面隐藏域（模板已有 isAssociationRole）
+    var isAssociationRole = $("#isAssociationRole").val();
+    if (typeof isAssociationRole !== 'undefined') {
+        return String(isAssociationRole) === 'true';
+    }
+
+    // 3) 最后兜底：仅看“专业组管理”权限，不看导入权限
+    var canManage = (typeof s_management_h !== 'undefined' && s_management_h !== 'hidden');
+    return canManage;
+}
+
+/**
+ * 第3步修改：QC分组入口
+ */
+function qcGroup(taskId) {
+    // 说明：按现有系统路由命名给默认地址，若不一致请替换为真实地址
+    page('/qcProcess/toGroup?taskId=' + taskId, 'QC分组', 2026030401);
+}
+
+// ================= 第3步修改：QC协会角色任务页矩阵结束 =================
+
+// /**
+//  * 第3步修复：判断是否协会管理角色（领导/联系人）
+//  * 说明：用现有权限变量做最小侵入判断
+//  */
+// function isQcManagerRole() {
+//     var canImport = (typeof s_check_result_import !== 'undefined' && s_check_result_import !== 'hidden');
+//     var canManage = (typeof s_management_h !== 'undefined' && s_management_h !== 'hidden');
+//     return canImport || canManage;
+// }
+
 
 function load() {
 	var awrdId =  localStorage.getItem("enterType") + "" ;//输出
@@ -66,6 +254,14 @@ function load() {
                     {
                         field : 'taskStatStr',
                         title : '状态',
+						formatter: function(value, row, index) {
+							// 第2步修改：仅QC奖（awardId=3）使用阶段映射展示
+							if (row.awardId == 3) {
+								var qcState = resolveQcApplyBtnState(row);
+								return qcState.stageText;
+							}
+							return value || '';
+						}
 
                     },
 
@@ -174,11 +370,28 @@ function load() {
 							//取消此种方式的分派专家20220909
 							j = '';
 
-							let qcApplyBtn = row.isApply &&  row.awardId == 3 ? s_apply_qc_btn : 'hidden';
-							//奖项申报按钮
-							var applyQcBtn = '<a class="btn btn-success btn-sm ' + qcApplyBtn + '" href="#" title="QC项目申报"  mce_href="#" onclick="applyAward(\''
-								+ row.id
-								+ '\',\'qc\')">QC项目申报</a> ';
+							// let qcApplyBtn =   row.awardId == 3 ? s_apply_qc_btn : 'hidden';
+							// //奖项申报按钮
+							// var applyQcBtn = '<a class="btn btn-success btn-sm ' + qcApplyBtn + '" href="#" title="QC项目申报"  mce_href="#" onclick="applyAward(\''
+							// 	+ row.id
+							// 	+ '\',\'qc\')">QC项目申报</a> ';
+							// 第2步修改：QC项目申报按钮按阶段控制（显示/可点击）
+							var applyQcBtn = '';
+							if (row.awardId == 3) {
+								var qcApplyState = resolveQcApplyBtnState(row);
+
+								if (qcApplyState.showBtn) {
+									if (qcApplyState.enableBtn) {
+										// 可点击
+										applyQcBtn = '<a class="btn btn-success btn-sm ' + s_apply_qc_btn + '" href="#" title="QC项目申报" mce_href="#" onclick="applyAward(\''
+											+ row.id
+											+ '\',\'qc\')">QC项目申报</a> ';
+									} else {
+										// 第2步修改：显示但置灰不可点击（WAIT_APPLY）
+										applyQcBtn = '<a class="btn btn-default btn-sm ' + s_apply_qc_btn + '" href="javascript:void(0)" title="QC项目申报（当前阶段不可申报）" style="pointer-events:none;opacity:.65;cursor:not-allowed;">QC项目申报</a> ';
+									}
+								}
+							}
 
 							//工法奖项申报按钮
 							let gfApplyBtn = row.isApply &&  row.awardId == 5 ? s_apply_gf_btn : 'hidden';
@@ -202,9 +415,12 @@ function load() {
 								'  <option value="consulting">石油工程建设优秀咨询奖</option>' +
 								'</select>';
 
-							var surverEnterListBtn = '<a class="btn btn-success btn-sm ' + s_surver_enterprise_list_btn + '" href="#" title="企业列表"  mce_href="#" onclick="toEnterpriseList(\''
-								+ row.id
-								+ '\')">企业列表</a> ';
+							// var surverEnterListBtn = '<a class="btn btn-success btn-sm ' + s_surver_enterprise_list_btn + '" href="#" title="企业列表"  mce_href="#" onclick="toEnterpriseList(\''
+							// 	+ row.id
+							// 	+ '\')">企业列表</a> ';
+
+							// 第2步修改：统一删除“企业列表”按钮（尤其QC角色冲突）
+							var surverEnterListBtn = ''; // 第3步修改：显式声明，避免污染全局
 
                             //是否当前是形式审查状态
                             let checkResultFlg = row.isAssign ? s_check_result_import : 'hidden';
@@ -220,7 +436,7 @@ function load() {
                               applyAwardBtn = '<select class="btn btn-success btn-sm '+applyBestProBtn+'" onchange="applyBestProAward(\''+row.id+'\',this.options[this.options.selectedIndex].value,' + readonlyBestPro + ')">' +
                              	'  <option value="">选择申报项目</option>' +
                              	// '  <option value="bestPro">石油优质工程奖</option>' +
-                             	'  <option value="bestProGold">石油优质工程金奖</option>' +
+                             	'  <option value="bestProGold">石油优质工程奖</option>' +
                              	// '  <option value="bestProInstall">石油安装工程</option>' +
                              	'</select>';
                               proListBtn =  '<a class="btn btn-success btn-sm ' + s_best_pro_list_btn + '" href="#" title="优质工程奖项目列表"  mce_href="#" onclick="bestProList(\''
@@ -255,22 +471,74 @@ function load() {
 
 
 
-                            let qcProListBtn = row.awardId == 3 ? s_qc_pro_list_btn : 'hidden';
+                            // let qcProListBtn = row.awardId == 3 ? s_qc_pro_list_btn : 'hidden';
                             // if(row.awardId == 3){
                             //   proListBtn =  '<a class="btn btn-success btn-sm ' + scienceProListBtn + '" href="#" title="QC奖项目列表"  mce_href="#" onclick="QcProList(\''
 							//     	+ row.id
 							// 	    + '\')">QC奖项目列表</a> ';
                             // }
-							if(row.awardId == 3){
-								proListBtn =  '<a class="btn btn-success btn-sm ' + qcProListBtn + '" href="#" title="QC奖项目列表"  mce_href="#" onclick="QcProList(\''
-									+ row.id
-									+ '\')">QC奖项目列表</a> ';
+							if(row.awardId == 3 && isQcManagerRole()){
+								// 第3步修改：按阶段计算协会领导/联系人任务按钮矩阵
+								var stageCode = resolveQcTaskStageCode(row);
+								var qcOps = resolveQcManagerTaskOps(stageCode);
+
+								// 修复：该页面没有 s_qc_pro_list_btn 变量，使用已存在的 qcProListBtn 权限变量
+								var qcProListBtn = '<a class="btn btn-success btn-sm ' + s_qc_pro_list_btn + '" href="#" title="QC奖项目列表" mce_href="#" onclick="QcProList(\'' + row.id + '\')">QC奖项目列表</a> ';
+
+								// 查看
+								var qcViewBtn = qcOps.showView
+									? '<a class="btn btn-primary btn-sm ' + s_watch_h + '" href="#" mce_href="#" title="查看" onclick="watchPro(\''
+										+ row.id + '\')">查看</a> '
+									: '';
+
+								// 编辑
+								var qcEditBtn = qcOps.showEdit
+									? '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
+										+ row.id + '\')">编辑</a> '
+									: '';
+
+								// 删除
+								var qcDeleteBtn = qcOps.showDelete
+									? '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除" mce_href="#" onclick="remove(\''
+										+ row.id + '\')"><i class="fa fa-remove"></i></a> '
+									: '';
+
+								// 分派
+								var qcAssignBtn = qcOps.showAssign
+									? '<a class="btn btn-success btn-sm" href="javascript:page(\'/qcProcess/toAssign?taskId=' + row.id + '\',\'分派\',2022020700)" title="分派项目" mce_href="#">分派</a> '
+									: '';
+
+								// 分组
+								// var qcGroupBtn = qcOps.showGroup
+								// 	? '<a class="btn btn-success btn-sm" href="javascript:void(0)" title="分组" mce_href="#" onclick="qcGroup(\'' + row.id + '\')">分组</a> '
+								// 	: '';
+
+								// 导入形式审查结果
+								var qcImportBtn = qcOps.showImportCheckResult
+									? '<a class="btn btn-success btn-sm ' + checkResultFlg + '" href="#" title="导入形式审查结果" mce_href="#" onclick="uploadFileData(\''
+										+ row.id + '\',\'import_check_result\')">导入形式审查结果</a> '
+									: '';
+
+								// 第3步修改：QC角色冲突按钮不拼（企业列表/其他奖项申报入口）
+								return qcProListBtn + qcImportBtn + qcViewBtn + qcEditBtn +   qcAssignBtn + qcDeleteBtn;
+							}
+
+							if (row.awardId == 3 && isQcManagerRole()) {
+								// 协会矩阵：分派/分组/导入...
+								return qcProListBtn + qcImportBtn + qcViewBtn + qcEditBtn  + qcAssignBtn + qcDeleteBtn;
+							}
+							
+							if (row.awardId == 3 && !isQcManagerRole()) {
+								// 企业矩阵：只保留项目列表 + 申报入口
+								return applyQcBtn+a;
 							}
 
                             let cleanProBtn = '<a class="btn btn-success btn-sm ' + s_task_pro_clean_btn + '" href="#" title="删除全部项目"  mce_href="#" onclick="cleanTaskAllPro(\''
                                               								+ row.id
                                               								+ '\')">删除</a> ';
-							return proListBtn + applyAwardBtn + surverEnterListBtn + checkResultImportBtn + applyQcBtn + applyGfBtn + asssociationProList + a +file + e + d +  i + j + ha + f+ g + cleanProBtn;
+							// return proListBtn + applyAwardBtn + surverEnterListBtn + checkResultImportBtn + applyQcBtn + applyGfBtn + asssociationProList + a +file + e + d +  i + j + ha + f+ g + cleanProBtn;
+							// 第2步修改：不再拼接 surverEnterListBtn（企业列表），保留QC项目申报按钮
+							return proListBtn + applyAwardBtn + checkResultImportBtn + applyQcBtn + applyGfBtn + asssociationProList + a + file + e + d + i + j + ha + f + g + cleanProBtn;
 						}
 					} ],
 				onPostBody:function (data) {
